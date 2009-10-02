@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-gb" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Handlers Overview</title>
+</head>
+
+<body>
+
+<h1>Handlers overview</h1>
+<p>Whenever any request is processed by an OpenRasta application, the URI is 
+associated with a resource type, for which a compatible handler will be 
+selected.</p>
+<p>Handlers do not need to inherit from any base class. A valid handler always 
+gets instantiated through a dependency resolver, be it the OpenRasta internal 
+one or any IoC you have configured yourself. As such, any class can be 
+instantiated, as long as their dependencies can also be resolved. For more 
+information, see the <a href="../Dependencies/DependenciesOverview.html">
+dependency management topic</a>.</p>
+<h2>Method resolution</h2>
+<p>Once the handler is instantiated, OpenRasta enumerates all its the public 
+methods and select the method matching the HTTP method that the client 
+requested.</p>
+<p>For example, when accessing a resource, a user agent such as a browser may 
+issue a GET /product. The name matching being case-insensitive, the following 
+handler will see its Get() method selected.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #00bfff;">
+	public</span> <span style="color: #00bfff;">class</span>
+	<span style="color: #00d2d2;">ProductHandler</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00d2d2;">
+	OperationResult</span> Get() { <span style="color: #a6a0e0;">...</span> }
+	</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
+</div>
+<!--EndFragment-->
+<p>Alternatively, a method can be attributed to override the name matching. In 
+the next example, the GetProduct method will be selected.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<span style="color: #00d2d2;">HttpOperation</span>(<span style="color: #00d2d2;">HttpMethod</span><span style="color: #a6a0e0;">.</span>GET)]</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00d2d2;">
+	OperationResult</span> GetProduct() { <span style="color: #a6a0e0;">...</span> 
+	} </p>
+</div>
+<!--EndFragment-->
+<p>OpenRasta doesn&#39;t care much which http method you implement, and as such 
+supports any existing and future methods.</p>
+<p>Once a list of potential methods has been selected, OpenRasta analyses the 
+list of parameters </p>
+
+</body>
+
+</html>

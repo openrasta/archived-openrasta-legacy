@@ -1,0 +1,1938 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ssfx.Core</name>
+    </assembly>
+    <members>
+        <member name="T:ScriptFX.UI.IEditableText">
+            <summary>
+            Represents a control with text display and edit semantics.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.IEditableText.Text">
+            <summary>
+            The text being displayed or edited by the control.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.IEditableText.TextChanged">
+            <summary>
+            Raised when the text is changed via the user interface.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.IDragSource">
+            <summary>
+            Represents an object that can initiate a drag operation
+            and provide the associated data object.
+            This interface allows the source to monitor the progress
+            of the drag operation it initiates.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.IDragSource.OnDragStart(System.Object)">
+            <summary>
+            Notifies the drag source of the start of the drag/drop operation.
+            </summary>
+            <param name="context">Any context information passed to the DragDropManager along with the drag/drop operation.</param>
+        </member>
+        <member name="M:ScriptFX.UI.IDragSource.OnDrag(System.Object)">
+            <summary>
+            Notifies the drag source as the drag/drop operation continues.
+            </summary>
+            <param name="context">Any context information passed to the DragDropManager along with the drag/drop operation.</param>
+        </member>
+        <member name="M:ScriptFX.UI.IDragSource.OnDragEnd(System.Boolean,System.Object)">
+            <summary>
+            Notifies the drag source of the end of the drag/drop operation.
+            </summary>
+            <param name="canceled">Whether the drag/drop operation was canceled.</param>
+            <param name="context">Any context information passed to the DragDropManager along with the drag/drop operation.</param>
+        </member>
+        <member name="P:ScriptFX.UI.IDragSource.DOMElement">
+            <summary>
+            Retrieves the DOM element associated with the source.
+            This is used to align the top-left corner of the drag visual.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.DragDropData">
+            <summary>
+            Encapsulates information about the data being dragged.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.DragDropData.EnableDataTransfer">
+            <summary>
+            Whether to enable data transfer of the data object.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.DragDropData.Mode">
+            <summary>
+            The type of drag/drop operation.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.DragDropData.DataType">
+            <summary>
+            The type of the data being dragged.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.DragDropData.Data">
+            <summary>
+            The data being dragged.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.DragDropData.#ctor(ScriptFX.UI.DragMode,System.String,System.Object)">
+            <summary>
+            Creates a DragDropData instance with the supplied information about
+            the data, its type, and the type of drag operation to perform.
+            </summary>
+            <param name="mode">The type of drag/drop operation.</param>
+            <param name="dataType">The data type of the object being dragged.</param>
+            <param name="data">The data being dragged.</param>
+        </member>
+        <member name="T:ScriptFX.JSON">
+            <summary>
+            JSON is a utility class to provide serialization and deserialization of
+            object graphs to/from JavaScript Object Notation (JSON) format.
+            JSON is a data format. In other words, the serialized state does not
+            contain type information. It only contains data. Therefore the object
+            graph being serialized should not contain custom types. The only allowable
+            types are JavaScript intrinsic types (Object, Array, String, Boolean, Number,
+            and Date).
+            </summary>
+        </member>
+        <member name="M:ScriptFX.JSON.Deserialize(System.String)">
+            <summary>
+            Deserializes an object graph represented by the specified JSON string.
+            </summary>
+            <param name="s">The serialized object graph.</param>
+            <returns>The deserialized object graph.</returns>
+        </member>
+        <member name="M:ScriptFX.JSON.Serialize(System.Object)">
+            <summary>
+            Serializes the specified object graph into its equivalent JSON string representation.
+            </summary>
+            <param name="o">The object graph to serialize.</param>
+            <returns>The serialized JSON representation.</returns>
+        </member>
+        <member name="T:ScriptFX.IEventManager">
+            <summary>
+            Provides a mechanism for loosely coupled event publishing
+            and subscribing. Each event is associated with a unique
+            type or name.
+            Subscribers can register for events, and publishers can raise
+            events. An event manager routes events without requiring
+            the publisher and subscriber to know about each other.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.IEventManager.RaiseEvent(System.String,System.Object,System.EventArgs)">
+            <summary>
+            Allows an event publisher to raise an event.
+            </summary>
+            <param name="eventType">The unique name of the event.</param>
+            <param name="sender">The event publisher.</param>
+            <param name="e">Any information associated with the event.</param>
+        </member>
+        <member name="M:ScriptFX.IEventManager.RegisterEvent(System.String,System.Object,System.EventArgs)">
+            <summary>
+            Allows an event publisher to raise an event, and at the same
+            time indicate that the event manager should save the event
+            and automatically raise it should a subscriber register to
+            handle it at a later time.
+            </summary>
+            <param name="eventType">The unique name of the event.</param>
+            <param name="sender">The event publisher.</param>
+            <param name="e">Any information associated with the event.</param>
+            <returns>A cookie that should be used to unregister the event.</returns>
+        </member>
+        <member name="M:ScriptFX.IEventManager.RegisterEventHandler(System.String,System.EventHandler)">
+            <summary>
+            Allows an event subscriber to register an event handler to be
+            invoked whenever an event of the specified type is raised.
+            </summary>
+            <param name="eventType">The unique name of the event.</param>
+            <param name="handler">The handler to be invoked when the event occurs.</param>
+        </member>
+        <member name="M:ScriptFX.IEventManager.UnregisterEvent(System.Object)">
+            <summary>
+            Unregisters an event previously registered with the event manager.
+            </summary>
+            <param name="eventCookie">The registration cookie.</param>
+        </member>
+        <member name="M:ScriptFX.IEventManager.UnregisterEventHandler(System.String,System.EventHandler)">
+            <summary>
+            Allows an event subscriber to unregister an event handler that has been
+            registered to handle an event of the specified type.
+            </summary>
+            <param name="eventType">The unique name of the event.</param>
+            <param name="handler">The handler registered to be invoked when the event occurs.</param>
+        </member>
+        <member name="T:ScriptFX.Net.HTTPRequest">
+            <summary>
+            Encapsulates information for communicating with a server in order
+            to send data to the server, or recieve data from the server.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.Abort">
+            <summary>
+            Aborts the request, and ignores any response that might have resulted.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.CreateRequest(System.String,ScriptFX.Net.HTTPVerb)">
+            <summary>
+            Creates a new HTTPRequest to the endpoint specified by the URI.
+            The URI can be a simple string, in which case the default HTTP transport, i.e.
+            XMLHttp is used.
+            The URI can also be a serialized JSON object containing two fields: a string
+            'uri' and a Type 'transportType'. This allows selecting a custom transport to
+            be used to perform the request. The URI can be constructed programmatically via
+            the HTTPTransport.CreateURI method.
+            </summary>
+            <param name="uri">The URI representing the server endpoint.</param>
+            <param name="verb">The HTTP verb to be used for the request.</param>
+            <returns>An HTTPRequest object for use to communicate with the server.</returns>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.CreateURI(System.String,System.Dictionary)">
+            <summary>
+            Creates a URI with the specific base URI, appended with the specified name/value pairs.
+            </summary>
+            <param name="uri">The base URI.</param>
+            <param name="parameters">The set of name/value pairs to add.</param>
+            <returns>The URI with parameters added as query string variables.</returns>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.Dispose">
+            <summary>
+            Disposes an HTTPRequest instance.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.Invoke(ScriptFX.Net.HTTPRequestCompletedCallback)">
+            <summary>
+            Initiates the communication with the server.
+            </summary>
+            <param name="callback">The callback to invoke upon completion of the request.</param>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.Invoke(ScriptFX.Net.HTTPRequestCompletedCallback,System.Object)">
+            <summary>
+            Initiates the communication with the server.
+            </summary>
+            <param name="callback">The callback to invoke upon completion of the request.</param>
+            <param name="context">An optional context object to be passed to the callback.</param>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.SetContentAsForm(System.Dictionary)">
+            <summary>
+            Sets the request body to the form encoded representation
+            of the specified data. The content type of the request is
+            also set to application/x-www-form-urlencoded.
+            </summary>
+            <param name="data">The dictionary representing the request body.</param>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.SetContentAsJSON(System.Dictionary)">
+            <summary>
+            Sets the request body to the JSON serialized representation
+            of the specified data. The content type of the request is
+            also set to text/json.
+            </summary>
+            <param name="data">The dictionary representing the request body.</param>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequest.SetCredentials(System.String,System.String)">
+            <summary>
+            Sets the user name and password of the credentials to use to
+            authenticate the request.
+            </summary>
+            <param name="userName">The user name within the credential.</param>
+            <param name="password">The password within the credential.</param>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.Content">
+            <summary>
+            Any content associated with the request sent as part of the
+            request body. This is only valid in the context of requests
+            using the POST HTTP verb.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.HasCredentials">
+            <summary>
+            Returns true if the request has been associated with custom
+            credentials.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.HasHeaders">
+            <summary>
+            Returns true if the request has been associated with custom
+            request headers.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.Headers">
+            <summary>
+            The set of request headers to be sent along with the request.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.Password">
+            <summary>
+            The password to use to authenticate the request.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.Response">
+            <summary>
+            The response generated by the server. This is only valid
+            when the request has successfully completed.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.State">
+            <summary>
+            The current state of the request.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.Timeout">
+            <summary>
+            The number of milliseconds after which to time out this request.
+            Setting this value to non-zero overrides the default in
+            HTTPRequestManager.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.TimeStamp">
+            <summary>
+            The time stamp recorded when the request was issued.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.TransportType">
+            <summary>
+            The type of transport to use to issue the request. The specified
+            transport type must implement the IHTTPTransport interface.
+            </summary>
+            <seealso cref="T:ScriptFX.Net.HTTPTransport"/>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.URI">
+            <summary>
+            The URI representing the server endpoint to be used for communication.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.UserName">
+            <summary>
+            The user name to use to authenticate the request.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequest.Verb">
+            <summary>
+            The HTTP verb to be used in the communication.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.PopupOptions">
+            <summary>
+            A set of options to customize the behavior of the PopupBehavior.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupOptions.id">
+            <summary>
+            The name of the PopupBehavior to expose it as a top-level property
+            of the element that the Behavior is associated with.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupOptions.referenceElement">
+            <summary>
+            The element used as a reference element for positioning the popup.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupOptions.mode">
+            <summary>
+            The type of positioning used to position the popup.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupOptions.xOffset">
+            <summary>
+            The x offset used in positioning the popup.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupOptions.yOffset">
+            <summary>
+            The y offset used in positioning the popup.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.PopupOptions.#ctor(System.DHTML.DOMElement,ScriptFX.UI.PopupMode)">
+            <summary>
+            Creates and initializes a PopupOptions object with the required
+            set of properties.
+            </summary>
+            <param name="referenceElement">The element used as a reference element for positioning the popup.</param>
+            <param name="mode">The type of positioning used to position the popup.</param>
+        </member>
+        <member name="T:ScriptFX.UI.Control">
+            <summary>
+            A control is a special type of behavior. Unlike other behavior types,
+            only one Control behavior can be associated with a DOM element.
+            It can be thought of as a "primary" behavior, while other behaviors
+            associated with the same DOM element can be thought of as "secondary"
+            behaviors.
+            The fact that a control is a primary behavior manifests itself in
+            various ways:
+            - The ID of a control, which is used as an expando on the DOM element
+              is always "control".
+            - When the control behavior is disposed, it disposes every other
+              behavior associated with the element.
+            - When the control behavior is disposed, it raises a disposing notification.
+              Any objects that are dependent on the life-time of script objects
+              associated with a DOM element can now subscribe to the control behavior's
+              disposing event.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.Behavior">
+            <summary>
+            A behavior represents an extension to an intrinsic DOM element,
+            implemented via script. A behavior can expose an object model
+            that allows it to provide a higher level abstraction over its
+            associated DOM element.
+            A DOM element may have one or more associated behaviors.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.ISupportInitialize">
+            <summary>
+            Allows an object to provide batch updating/initialization
+            semantics, where a number of individual changes can be
+            made and processed at once.
+            Usually this is done for performance reasons, to avoid the
+            cost of processing property changes one at a time, but it
+            can also be used to implement dependent properties.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.ISupportInitialize.BeginInitialize">
+            <summary>
+            Starts a batch initialization.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.ISupportInitialize.EndInitialize">
+            <summary>
+            Ends the current batch initialization. Any changes
+            made during the batch should now be processed.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Behavior.#ctor(System.DHTML.DOMElement,System.String)">
+            <summary>
+            Creates a new instance of a behavior and associates it with
+            the specified DOM element.
+            If an id is provided, an expando with the given value is
+            added to the element to provide an easy reference to the
+            behavior instance. The ID should be unique with respect to
+            the specific DOM element.
+            </summary>
+            <param name="domElement">The associated DOM element.</param>
+            <param name="id">The id of the behavior (optional).</param>
+        </member>
+        <member name="M:ScriptFX.UI.Behavior.BeginInitialize">
+            <summary>
+            Starts a batched initialization, wherein changes to the behavior's
+            state are not processed until EndInitialize is called.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Behavior.Dispose">
+            <summary>
+            Disposes a behavior and disassociates it from its DOM element.
+            It is recommended you call this before you programmatically remove DOM
+            elements from the document. If not explicitly called, the framework
+            ensures this is called when the document is unloaded by the browser.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Behavior.EndInitialize">
+            <summary>
+            Ends a batched initialization, which indicates to the behavior to go
+            ahead and process any state changes made during the batch.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Behavior.GetBehavior(System.DHTML.DOMElement,System.Type)">
+            <summary>
+            Gets an instance of a type of behavior associated with the specified DOM
+            element, if there is one.
+            </summary>
+            <param name="domElement">The DOM element with which the behavior is associated.</param>
+            <param name="type">The type of behavior to look up.</param>
+            <returns>The behavior instance if one exists; null otherwise.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Behavior.GetBehaviors(System.DHTML.DOMElement,System.Type)">
+            <summary>
+            Retrieves the collection of behaviors associated with the specified DOM
+            element. The collection is in arbitrary order. If a type is also specified
+            then only matching behaviors are returned.
+            </summary>
+            <param name="domElement">The DOM element with which the behavior is associated.</param>
+            <param name="type">An optional type to filter the set of behaviors.</param>
+            <returns>The set of behaviors if there are any; null otherwise.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Behavior.GetNamedBehavior(System.DHTML.DOMElement,System.String)">
+            <summary>
+            Gets an instance of a behavior with the given ID associated with the specified
+            DOM element, if there is one. A behavior's ID is set when it is created by
+            passing it into the constructor of the behavior.
+            </summary>
+            <param name="domElement">The DOM element with which the behavior is associated.</param>
+            <param name="id">The ID of the behavior.</param>
+            <returns>The behavior instance if one exists; null otherwise.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Behavior.RaisePropertyChanged(System.String)">
+            <summary>
+            Raises a property changed notification for the specified property.
+            </summary>
+            <param name="propertyName">The name of the property that has changed.</param>
+        </member>
+        <member name="P:ScriptFX.UI.Behavior.DOMElement">
+            <summary>
+            The DOM element associated with the behavior.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Behavior.DOMEvents">
+            <summary>
+            The set of event handlers attached to the associated DOM element.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Behavior.Events">
+            <summary>
+            The set of event handlers for events exposed by the behavior.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Behavior.IsDisposed">
+            <summary>
+            Whether the behavior has been disposed, i.e. it has been detached
+            from the DOM element it was associated with.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Behavior.IsInitializing">
+            <summary>
+            Whether the behavior is in the middle of a batch initialization,
+            and processing state changes should be postponed.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.Behavior.PropertyChanged">
+            <summary>
+            An event to indicate a change in a property value.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.INotifyDisposing">
+            <summary>
+            Allows an object to notify other objects that it is in the
+            process of being disposed.
+            It allows consumers of the notification to access the object's
+            state safely before it is disposed, as well as to dispose
+            themselves if they are dependent objects.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.INotifyDisposing.Disposing">
+            <summary>
+            Raised when the object is being disposed.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Control.#ctor(System.DHTML.DOMElement)">
+            <summary>
+            Creates an instance of a control and associates it with the
+            specified DOM element.
+            </summary>
+            <param name="domElement">The associated DOM element.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Control.Dispose">
+            <summary>
+            Disposes the control associated with a DOM element.
+            In addition to dispoosing itself, a control also is responsible
+            for disposing all other behaviors associated with the same
+            DOM element.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Control.GetControl(System.DHTML.DOMElement)">
+            <summary>
+            Retrieves the control associated with the DOM element if there
+            is one.
+            </summary>
+            <param name="domElement">The DOM element with which the control is associated.</param>
+            <returns>The control associated with the DOM element; null if there is none.</returns>
+        </member>
+        <member name="E:ScriptFX.UI.Control.Disposing">
+            <summary>
+            Raised when the object is being disposed.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.DragDropEventArgs">
+            <summary>
+            Contains information about drag/drop operations.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.DragDropEventArgs.DataObject">
+            <summary>
+            Information about the current drag/drop operation.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.AnimationEasingFunction">
+            <summary>
+            A delegate used to define an easing function that can be used to
+            vary the otherwise normal linear progression of an animation from
+            its start state to end state.
+            An easing function is basically f(t) where t = [0...1] such that
+            it is continuous and f(0) == 0 and f(1) == 1.
+            Easing functions can be used to add the illusion of acceleration
+            and deceleration, as well as other sophisticated movement patterns.
+            </summary>
+            <param name="t">The current progress value derived from linear progression.</param>
+            <returns>The modified value to use as the new progress value.</returns>
+        </member>
+        <member name="T:ScriptFX.HistoryEventHandler">
+            <summary>
+            Represents a delegate that handles history events.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">The history information associated with the event.</param>
+        </member>
+        <member name="T:ScriptFX.UI.PopupMode">
+            <summary>
+            The type of popup positioning.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.Center">
+            <summary>
+            Centered with respect to a reference element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.AnchorTopLeft">
+            <summary>
+            Anchors the popup to the top-left corner of referenced element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.AnchorTopRight">
+            <summary>
+            Anchors the popup to the top-right corner of referenced element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.AnchorBottomRight">
+            <summary>
+            Anchors the popup to the bottom-right corner of referenced element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.AnchorBottomLeft">
+            <summary>
+            Anchors the popup to the bottom-left corner of referenced element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.AlignTopLeft">
+            <summary>
+            Aligns the popup to the top-left corner of referenced element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.AlignTopRight">
+            <summary>
+            Aligns the popup to the top-right corner of referenced element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.AlignBottomRight">
+            <summary>
+            Aligns the popup to the bottom-right corner of referenced element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.PopupMode.AlignBottomLeft">
+            <summary>
+            Aligns the popup to the bottom-left corner of referenced element.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.OverlayBehavior">
+            <summary>
+            A behavior that can be used to place an overlay (typically a translucent
+            one) over the document.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.OverlayBehavior.#ctor(System.DHTML.DOMElement,ScriptFX.UI.OverlayOptions)">
+            <summary>
+            Creates an instance of a OverlayBehavior.
+            </summary>
+            <param name="domElement">The element to associated with this behavior.</param>
+            <param name="options">The options used to customize the behavior.</param>
+        </member>
+        <member name="M:ScriptFX.UI.OverlayBehavior.Dispose">
+            <summary>
+            Disposes the PopupBehavior instance and disassociate it with its
+            DOM element.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.OverlayBehavior.Hide">
+            <summary>
+            Hides the element associated with the PopupBehavior.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.OverlayBehavior.Show">
+            <summary>
+            Shows the element associated with the PopupBehavior.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.OverlayBehavior.IsVisible">
+            <summary>
+            Whether the overlay is currently visible.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.OverlayBehavior.VisibilityChanged">
+            <summary>
+            Raised when the overlay becomes fully visible or invisible. This is useful
+            when using animated fade in and fade out of the overlay.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.FadeEffect">
+            <summary>
+            Fades an element in or out. This can be used to smoothly hide or show an
+            element.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.TimedAnimation">
+            <summary>
+            The base class for all animations that are associated
+            with time characteristics such as a duration, number of
+            repetitions, easing behavior etc.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.Animation">
+            <summary>
+            The base class for all animations that can be scheduled,
+            managed and executed via the centralized AnimationManager.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.#ctor(System.DHTML.DOMElement)">
+            <summary>
+            Creates and initializes an instance of an Animation class
+            with the specified DOM element. If an element is not
+            specified, the root documentElement is used.
+            </summary>
+            <param name="domElement">The DOM element to associate the animation with.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.Dispose">
+            <summary>
+            Disposes the animation instance.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.PerformCleanup">
+            <summary>
+            Allows the animation to perform any cleanup work once the
+            animation is complete.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.PerformRepetition(System.Boolean)">
+            <summary>
+            Allows the animation to perform any work it needs to do
+            so between successive repetitions.
+            </summary>
+            <param name="reversed">Whether the next repetition will take place in revered manner.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.PerformSetup">
+            <summary>
+            Allows the animation to perform any setup work before the
+            animation is started.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.Play">
+            <summary>
+            Starts playing the animation immediately.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.PlayCore">
+            <summary>
+            Plays the animation when it is scheduled for playing by the
+            AnimationManager.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.ProgressCore(System.Boolean,System.Int32)">
+            <summary>
+            Progresses the animation to the new current time.
+            </summary>
+            <param name="startRepetition">Whether the animation is starting a repetition.</param>
+            <param name="timeStamp">The time stamp to progress the animation through.</param>
+            <returns>Whether the animation has completed.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.Stop(ScriptFX.UI.AnimationStopState)">
+            <summary>
+            Stops playing the animation mid-way. The specified stopState determines
+            the state in which the element being animated is left in. 
+            </summary>
+            <param name="stopState">The state of the element upon stopping the animation.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Animation.StopCore(System.Boolean,ScriptFX.UI.AnimationStopState)">
+            <summary>
+            Stops the animation when it is removed from the AnimationManager's
+            scheduled animations.
+            </summary>
+            <param name="completed">Whether the animation has completed naturally.</param>
+            <param name="stopState">The state in which the animation should end if it was interrupted.</param>
+        </member>
+        <member name="E:ScriptFX.UI.Animation.Repeating">
+            <summary>
+            Raised before the animation is repeated. This event can
+            be used to cancel further repeatitions.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.Animation.Starting">
+            <summary>
+            Raised before the animation is started and performs
+            any setup work.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.Animation.Stopped">
+            <summary>
+            Raised after the animation is stopped or completed,
+            and any cleanup work has been performed.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Animation.AutoReverse">
+            <summary>
+            Whether an animation automatically plays in the reverse direction
+            upon repeating.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Animation.Completed">
+            <summary>
+            True if the animation has completely finished playing without
+            being stopped mid-way.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Animation.DOMElement">
+            <summary>
+            The DOM element that this animation is associated with.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Animation.IsPlaying">
+            <summary>
+            Whether the animation is currently playing or not.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Animation.IsReversed">
+            <summary>
+            Whether the animation is currently playing in the reverse direction.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Animation.RepeatCount">
+            <summary>
+            Whether the animation repeats or plays a single time. 0 implies
+            implies endless repetition, and other positive values indicate a fixed
+            number of repetitions. The default value is 1.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Animation.RepeatDelay">
+            <summary>
+            The number of milliseconds to delay the animation between successive
+            repetitions.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Animation.Repetitions">
+            <summary>
+            Returns the number of repeatitions of the animation completed so far.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.TimedAnimation.#ctor(System.DHTML.DOMElement,System.Int32)">
+            <summary>
+            Creates and initializes an animation for the specified
+            duration (in milliseconds).
+            </summary>
+            <param name="domElement">The DOM element to associate the animation with.</param>
+            <param name="duration">The time span over which the animation executes.</param>
+        </member>
+        <member name="M:ScriptFX.UI.TimedAnimation.EaseIn(System.Single)">
+            <summary>
+            Creates the illusion of an animation that starts slow and
+            speeds up.
+            </summary>
+            <param name="t">The current progress value derived from linear progression.</param>
+            <returns>The modified value to use as the new progress value.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.TimedAnimation.EaseInOut(System.Single)">
+            <summary>
+            Creates the illusion of an animation that starts slow and
+            speeds up, and then slows down to a stop.
+            </summary>
+            <param name="t">The current progress value derived from linear progression.</param>
+            <returns>The modified value to use as the new progress value.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.TimedAnimation.EaseOut(System.Single)">
+            <summary>
+            Creates the illusion of an animation that starts fast and
+            slows down to a stop.
+            </summary>
+            <param name="t">The current progress value derived from linear progression.</param>
+            <returns>The modified value to use as the new progress value.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.TimedAnimation.PerformTweening(System.Single)">
+            <summary>
+            Allows the animation to implement its core logic of generating
+            intermediate frames as it progresses from start to end.
+            </summary>
+            <param name="frame">A value between 0 and 1 (inclusive) indicating the current frame.</param>
+        </member>
+        <member name="M:ScriptFX.UI.TimedAnimation.PlayCore">
+            <summary>
+            Plays the animation when it is scheduled for playing by the
+            AnimationManager.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.TimedAnimation.ProgressCore(System.Boolean,System.Int32)">
+            <summary>
+            Progresses the animation to the new current time.
+            </summary>
+            <param name="startRepetition">Whether the animation is starting a repetition.</param>
+            <param name="timeStamp">The time stamp to progress the animation through.</param>
+            <returns>Whether the animation has completed.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.TimedAnimation.StopCore(System.Boolean,ScriptFX.UI.AnimationStopState)">
+            <summary>
+            Stops the animation when it is removed from the AnimationManager's
+            scheduled animations.
+            </summary>
+            <param name="completed">Whether the animation has completed naturally.</param>
+            <param name="stopState">The state in which the animation should end if it was interrupted.</param>
+        </member>
+        <member name="P:ScriptFX.UI.TimedAnimation.Duration">
+            <summary>
+            The duration of time (in milliseconds) that this animation plays over.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.TimedAnimation.EasingFunction">
+            <summary>
+            The easing function used to ease the normal linear progression of
+            the animation from the start to end state.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.FadeEffect.#ctor(System.DHTML.DOMElement,System.Int32,System.Single)">
+            <summary>
+            Creates an instance of a fade effect.
+            </summary>
+            <param name="domElement">The element to fade in or out.</param>
+            <param name="duration"></param>
+            <param name="opacity"></param>
+        </member>
+        <member name="M:ScriptFX.UI.FadeEffect.FadeIn">
+            <summary>
+            Fade the element in.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.FadeEffect.FadeOut">
+            <summary>
+            Fade the element out.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.FadeEffect.IsFadingIn">
+            <summary>
+            Whether the animation is fading in the element or fading it out.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.DragDropManager">
+            <summary>
+            The global drag/drop manager that manages drag and drop functionality on the page.
+            It is used to initiate drag/drop operations in response to user actions.
+            It manages the set of registered drop targets, and is associates with a
+            specific drag/drop implementation based on the browser.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.DragDropManager.RegisterDragDropImplementation(ScriptFX.UI.IDragDrop)">
+            <summary>
+            Enables drag/drop operations on the page using the specified drag/drop
+            implementation.
+            </summary>
+            <param name="dragDrop">The drag/drop implementation to use.</param>
+        </member>
+        <member name="M:ScriptFX.UI.DragDropManager.RegisterDropTarget(ScriptFX.UI.IDropTarget)">
+            <summary>
+            Registers a drop target, that is to be included in the list of potential
+            containers for a dragged object.
+            </summary>
+            <param name="target">The drop target being registered.</param>
+        </member>
+        <member name="M:ScriptFX.UI.DragDropManager.StartDragDrop(ScriptFX.UI.DragDropData,System.DHTML.DOMElement,ScriptFX.UI.Location,ScriptFX.UI.IDragSource,System.Object)">
+            <summary>
+            Starts a drag/drop operation.
+            </summary>
+            <param name="data">The data being dragged.</param>
+            <param name="dragVisual">An element used to provide visual indication of the data being dragged.</param>
+            <param name="dragOffset">The offset between the top-left corner of the object being dragged, and from where the drag operation was initiated.</param>
+            <param name="source">The source of the drag/drop if the source desires tracking the progress of the operation (optional).</param>
+            <param name="context">A context object passed to the drag source while the drag/drop operation continues (optional).</param>
+            <returns>Whether the drag/drop operation is taking place.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.DragDropManager.UnregisterDropTarget(ScriptFX.UI.IDropTarget)">
+            <summary>
+            Unregisters a drop target, so that it is no longer included in the list of
+            potential containers for dragged objects.
+            </summary>
+            <param name="target">The drop target being unregistered.</param>
+        </member>
+        <member name="P:ScriptFX.UI.DragDropManager.CanDragDrop">
+            <summary>
+            Whether drag/drop operations are allowed on the page.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.DragDropManager.SupportsDataTransfer">
+            <summary>
+            Indicates whether the drag/drop operations support data transfer
+            across applications.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.DragDropManager.DragDropEnding">
+            <summary>
+            Raised before a drag/drop operation is complete. This is raised
+            even if the drag/drop operation is canceled.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.DragDropManager.DragDropStarting">
+            <summary>
+            Raised before a drag/drop operation is started.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.Bounds">
+            <summary>
+            The position and size of an element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.Bounds.left">
+            <summary>
+            The left value of the position of the element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.Bounds.top">
+            <summary>
+            The top value of the position of the element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.Bounds.width">
+            <summary>
+            The width of size of the element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.Bounds.height">
+            <summary>
+            The height of the size of the element.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Bounds.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates an initializes a Bounds object.
+            </summary>
+            <param name="left">The left value of the position of the element.</param>
+            <param name="top">The top value of the position of the element.</param>
+            <param name="width">The width of size of the element.</param>
+            <param name="height">The height of size of the element</param>
+        </member>
+        <member name="T:ScriptFX.Net.IHTTPResponse">
+            <summary>
+            Represents a response associated with an HTTP request.
+            </summary>
+            <see cref="T:ScriptFX.Net.HTTPRequest"/>
+        </member>
+        <member name="M:ScriptFX.Net.IHTTPResponse.GetHeader(System.String)">
+            <summary>
+            Retrieves the value of the specified header.
+            </summary>
+            <param name="name">The name of the header.</param>
+            <returns>The associated value; null if there is no such header in the response.</returns>
+        </member>
+        <member name="M:ScriptFX.Net.IHTTPResponse.GetObject">
+            <summary>
+            Gets the response as an object. The object is created by
+            deserializing the response text.
+            </summary>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="M:ScriptFX.Net.IHTTPResponse.GetText">
+            <summary>
+            Gets the raw response text.
+            </summary>
+            <returns>The response text.</returns>
+        </member>
+        <member name="M:ScriptFX.Net.IHTTPResponse.GetXML">
+            <summary>
+            Gets the response as an XML document.
+            </summary>
+            <returns>The XML document.</returns>
+        </member>
+        <member name="P:ScriptFX.Net.IHTTPResponse.ContentLength">
+            <summary>
+            The length of the response content.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.IHTTPResponse.ContentType">
+            <summary>
+            The mime type associated with the response content.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.IHTTPResponse.Headers">
+            <summary>
+            The set of HTTP headers sent along with the response.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.IHTTPResponse.Request">
+            <summary>
+            The request that was invoked to result in this response.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.IHTTPResponse.StatusCode">
+            <summary>
+            The HTTP status code associated with the response.
+            </summary>
+            <see cref="T:ScriptFX.Net.HTTPStatusCode"/>
+        </member>
+        <member name="P:ScriptFX.Net.IHTTPResponse.StatusText">
+            <summary>
+            The textual description associated with the status.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.IHTTPResponse.TimeStamp">
+            <summary>
+            Indicates when the response was recieved on the client.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.EventList">
+            <summary>
+            EventList is a utility class to manage a set of event handlers for events
+            exposed by a class.
+            EventList allows the class to expose several events, without incurring the
+            overhead of several null fields on the class instance, when it is uncommon
+            to have subscribers for all events.
+            To manage event handlers, each event is associated with a key, which
+            is usually the name of the event in the class' object model.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.EventList.AddHandler(System.String,System.Delegate)">
+            <summary>
+            Adds a handler for the specified event.
+            </summary>
+            <param name="key">The key used to identify the event.</param>
+            <param name="handler">The event handler to add.</param>
+        </member>
+        <member name="M:ScriptFX.EventList.GetHandler(System.String)">
+            <summary>
+            Gets the handler for the specified event. If there are multiple handlers
+            associated with the event, a multicast delegate is returned, which
+            transparently multicasts the event to all handlers.
+            </summary>
+            <param name="key">The key used to identify the event.</param>
+            <returns>A delegate representing the handler(s) associated with the event; null if there are none.</returns>
+        </member>
+        <member name="M:ScriptFX.EventList.RemoveHandler(System.String,System.Delegate)">
+            <summary>
+            Removes a handler for the specified event.
+            </summary>
+            <param name="key">The key used to identify the event.</param>
+            <param name="handler">The event handler to remove.</param>
+            <returns>true if there are handlers remaining for the specified event; false otherwise.</returns>
+        </member>
+        <member name="T:ScriptFX.UI.Element">
+            <summary>
+            A set of utility operations associated with DOM elements.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Element.AddCSSClass(System.DHTML.DOMElement,System.String)">
+            <summary>
+            Adds the specified CSS class to the set of CSS classes associated with the
+            element.
+            </summary>
+            <param name="element">The element to update.</param>
+            <param name="className">The CSS class to add.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Element.ContainsCSSClass(System.DHTML.DOMElement,System.String)">
+            <summary>
+            Checks for the existence of the specified CSS class in the set of CSS classes
+            associated with the element.
+            </summary>
+            <param name="element">The element to update.</param>
+            <param name="className">The CSS class to lookup.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Element.GetBounds(System.DHTML.DOMElement)">
+            <summary>
+            Retrieves the location and size of the element.
+            </summary>
+            <param name="element">The element to locate and measure.</param>
+            <returns>The left, top, width and height values of the element's bounds.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Element.GetLocation(System.DHTML.DOMElement)">
+            <summary>
+            Retrieves the location of the element.
+            </summary>
+            <param name="element">The element to locate.</param>
+            <returns>The left and top values of the element's location.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Element.GetSize(System.DHTML.DOMElement)">
+            <summary>
+            Retrieves the size of the element.
+            </summary>
+            <param name="element">The element to measure.</param>
+            <returns>The width and height values of the element's dimensions.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Element.RemoveCSSClass(System.DHTML.DOMElement,System.String)">
+            <summary>
+            Removes the specified CSS class from the set of CSS classes associated with the
+            element.
+            </summary>
+            <param name="element">The element to update.</param>
+            <param name="className">The CSS class to remove.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Element.SetLocation(System.DHTML.DOMElement,ScriptFX.UI.Location)">
+            <summary>
+            Updates the location of the element.
+            </summary>
+            <param name="element">The element to update.</param>
+            <param name="location">The new location of the element.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Element.SetSize(System.DHTML.DOMElement,ScriptFX.UI.Size)">
+            <summary>
+            Updates the size of the element.
+            </summary>
+            <param name="element">The element to measure.</param>
+            <param name="size">The new size of the element.</param>
+        </member>
+        <member name="T:ScriptFX.UI.AnimationStopState">
+            <summary>
+            Used to indicate the final state of an element being animated
+            when the the animation is stopped mid-way.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AnimationStopState.Complete">
+            <summary>
+            Leaves the animated element in its intended final state.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AnimationStopState.Abort">
+            <summary>
+            Leaves the element in its current state.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AnimationStopState.Revert">
+            <summary>
+            Leaves the element back in its original state.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.Net.HTTPStatusCode">
+            <summary>
+            Contains the values of status codes defined for HTTP.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.CanContinue">
+            <summary>
+            HTTP status 100 indicates that the client can continue with its request.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.SwitchingProtocols">
+            <summary
+            >HTTP status 101 indicates that the protocol version or protocol is being changed.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.OK">
+            <summary>
+            HTTP status 200 indicates that the request succeeded and that the requested
+            information is in the response. This is the most common status code to receive.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Created">
+            <summary>
+            HTTP status 201 indicates that the request resulted in a new resource created before the response was sent.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.PartialContent">
+            <summary>
+            HTTP status 206 indicates that the response is a partial response as requested
+            by a GET request that includes a byte range.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Accepted">
+            <summary>
+            HTTP status 202 indicates that the request has been accepted for further processing.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.NonAuthoritativeInformation">
+            <summary>
+            HTTP status 203 indicates that the returned metainformation is from a cached copy
+            instead of the origin server and therefore may be incorrect.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.NoContent">
+            <summary>
+            HTTP status 204 indicates that the request has been successfully processed and that the
+            response is intentionally blank.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.ResetContent">
+            <summary>
+            HTTP status 205 indicates that the client should reset (not reload) the current resource.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Ambiguous">
+            <summary>
+            HTTP status 300 indicates that the requested information has multiple representations.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Moved">
+            <summary>
+            HTTP status 301 indicates that the requested information has been moved to the URI specified in the Location header.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Redirect">
+            <summary>
+            HTTP status 302 indicates that the requested information is located at the URI specified in the Location header.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.RedirectMethod">
+            <summary>
+            HTTP status 303 automatically redirects the client to the URI specified in the Location header
+            as the result of a POST. The request to the resource specified by the Location header will be
+            made with a GET.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.NotModified">
+            <summary>
+            HTTP status 304 indicates that the client's cached copy is up to date.
+            The contents of the resource are not transferred.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.UseProxy">
+            <summary>
+            HTTP status 305 indicates that the request should use the proxy server at the URI specified in the Location header.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.TemporaryRedirect">
+            <summary>
+            HTTP status 307 indicates that the request information is located at the URI specified in the Location header.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.BadRequest">
+            <summary>
+            HTTP status 400 indicates that the request could not be understood by the server.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.MethodNotAllowed">
+            <summary>
+            HTTP status 400 indicates that the request method (POST or GET) is not allowed on the requested resource.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Unauthorized">
+            <summary>
+            HTTP status 401 indicates that the requested resource requires authentication. The WWW-Authenticate header contains the details of how to perform the authentication.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.PaymentRequired">
+            <summary>
+            HTTP status 402 is reserved for future use.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Forbidden">
+            <summary>
+            HTTP status 403 indicates that the server refuses to fulfill the request.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.NotFound">
+            <summary>
+            HTTP status 404 indicates that the requested resource does not exist on the server.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.NotAcceptable">
+            <summary>
+            HTTP status 406 indicates that the client has indicated with Accept headers that it will
+            not accept any of the available representations of the resource.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.ProxyAuthenticationRequired">
+            <summary>
+            HTTP status 407 indicates that the requested proxy requires authentication. The
+            Proxy-authenticate header contains the details of how to perform the authentication.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.RequestTimeout">
+            <summary>
+            HTTP status 408 indicates that the client did not send a request within the time the server was expecting the request.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Conflict">
+            <summary>
+            HTTP status 409 indicates that the request could not be carried out because of a conflict on the server.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.Gone">
+            <summary>
+            HTTP status 410 indicates that the requested resource is no longer available.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.LengthRequired">
+            <summary
+            >HTTP status 411 indicates that the required Content-length header is missing.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.PreconditionFailed">
+            <summary>
+            HTTP status 412 indicates that a condition set for this request failed, and
+            the request cannot be carried out. Conditions are set with conditional request
+            headers like If-Match, If-None-Match, or If-Unmodified-Since.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.RequestEntityTooLarge">
+            <summary>
+            HTTP status 413 indicates that the request is too large for the server to process.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.RequestUriTooLong">
+            <summary>
+            HTTP status 414 indicates that the URI is too long.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.UnsupportedMediaType">
+            <summary>
+            HTTP status 415 indicates that the request is an unsupported type.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.RequestedRangeNotSatisfiable">
+            <summary>
+            HTTP status 416 indicates that the range of data requested from the resource cannot be returned,
+            either because the beginning of the range is before the beginning of the resource, or the end of
+            the range is after the end of the resource.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.ExpectationFailed">
+            <summary>
+            HTTP status 417 indicates that an expectation given in an Expect header could not be met by the server.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.InternalServerError">
+            <summary>
+            HTTP status 500 indicates that a generic error has occurred on the server.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.NotImplemented">
+            <summary>
+            HTTP status 501 indicates that the server does not support the requested function.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.BadGateway">
+            <summary>
+            HTTP status 502 indicates that an intermediate proxy server received a bad response from another proxy or the origin server.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.ServiceUnavailable">
+            <summary
+            >HTTP status 503 indicates that the server is temporarily unavailable, usually due to high load or maintenance.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.GatewayTimeout">
+            <summary>
+            HTTP status 504 indicates that an intermediate proxy server timed out while waiting for a response from another proxy or the origin server.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.Net.HTTPStatusCode.HttpVersionNotSupported">
+            <summary>
+            HTTP status 505 indicates that the requested HTTP version is not supported by the server.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.Net.HTTPRequestManager">
+            <summary>
+            The HTTPRequestManager object manages all out-going HTTP requests.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPRequestManager.AbortAll">
+            <summary>
+            Aborts all currently active HTTP requests.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.Net.HTTPRequestManager.RequestInvoking">
+            <summary>
+            The event raised before an HTTP request is issued. You can
+            subscribe to this event to track requests, as well as
+            suppress requests.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.Net.HTTPRequestManager.RequestInvoked">
+            <summary>
+            The event raised once an HTTP request has been completed (or
+            aborted or timed out). You can subscribe to this event to
+            track requests, and peek at responses.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequestManager.Online">
+            <summary>
+            Indicates if the network is online, and HTTP requests can
+            be issued.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.Net.HTTPRequestManager.TimeoutInterval">
+            <summary>
+            The default time out for all HTTP requests. By default this is
+            0, i.e. there is no enforced time out.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.PopupBehavior">
+            <summary>
+            A behavior that can be associated with an element to show or hide it
+            in a popup style.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.PopupBehavior.#ctor(System.DHTML.DOMElement,ScriptFX.UI.PopupOptions)">
+            <summary>
+            Creates an instance of a PopupBehavior.
+            </summary>
+            <param name="domElement">The element to associated with this behavior.</param>
+            <param name="options">The options used to customize the behavior.</param>
+        </member>
+        <member name="M:ScriptFX.UI.PopupBehavior.Dispose">
+            <summary>
+            Disposes the PopupBehavior instance and disassociate it with its
+            DOM element.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.PopupBehavior.Hide">
+            <summary>
+            Hides the element associated with the PopupBehavior.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.PopupBehavior.Show">
+            <summary>
+            Shows the element associated with the PopupBehavior.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.IValidator">
+            <summary>
+            Represents a control that implements validation rules, and
+            provides a valid/invalid state.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.IValidator.IsValid">
+            <summary>
+            The valid/invalid state of the validator.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.IValidator.ValidationGroup">
+            <summary>
+            The logical validation group that this validator belongs to.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.IAction">
+            <summary>
+            Represents a control that provides the user with a mechanism
+            to perform an action.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.IAction.ActionArgument">
+            <summary>
+            Any argument associated with the action. The semantics of
+            the value depend on the associated ActionName.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.IAction.ActionName">
+            <summary>
+            An indicator of what action was triggered. This is useful
+            if a single control presents multiple actions to the user.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.IAction.Action">
+            <summary>
+            Raised when the action associated with a control is
+            triggered through the user interface.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.ApplicationUnloadingEventArgs">
+            <summary>
+            The event argument associated with the Unloading event of
+            the application.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.ApplicationUnloadingEventArgs.SetUnloadPrompt(System.String)">
+            <summary>
+            Sets the prompt to be displayed to user to confirm unloading
+            of the page. The user is presented with a choice on whether
+            to continue to unload the page, or stay on the page.
+            </summary>
+            <param name="prompt">The prompt to be used.</param>
+        </member>
+        <member name="T:ScriptFX.UI.IStaticText">
+            <summary>
+            Represents a control with text display semantics.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.IStaticText.Text">
+            <summary>
+            The text being displayed by the control.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.HistoryManager">
+            <summary>
+            Provides the ability to implement a logical navigation
+            journal that enables the use of back/forward browser buttons
+            and enhanced bookmarkability.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.HistoryManager.AddEntry(System.String)">
+            <summary>
+            Adds the specified entry into the history journal.
+            </summary>
+            <param name="entryName">A unique identifier for the history entry.</param>
+        </member>
+        <member name="M:ScriptFX.HistoryManager.Dispose">
+            <summary>
+            Disposes the History object.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.HistoryManager.GoBack">
+            <summary>
+            Navigates back in the history journal.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.HistoryManager.GoForward">
+            <summary>
+            Navigates forward in the history journal.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.HistoryManager.IsEnabled">
+            <summary>
+            Whether history functionality is enabled. History functionality
+            requires underlying browser support which is not available across
+            all browsers. This property can allow callers to determine if
+            the history APIs are functional or not.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.HistoryManager.Navigated">
+            <summary>
+            Raised when the user navigates the history journal with information
+            about the history entry that is navigated to.
+            It is also raised initially when the page loads with the
+            current entry as set when loaded.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.Size">
+            <summary>
+            The size of an element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.Size.width">
+            <summary>
+            The horizontal width of the element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.Size.height">
+            <summary>
+            The vertical height of the element.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Size.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates an initializes a Size object.
+            </summary>
+            <param name="width">The horizontal width of the element.</param>
+            <param name="height">The vertical height of the element.</param>
+        </member>
+        <member name="T:ScriptFX.Net.PostHTTPRequestEventHandler">
+            <summary>
+            The delegate type used to handle HTTP request invoked events.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The information associated with the event.</param>
+        </member>
+        <member name="T:ScriptFX.CancelEventArgs">
+            <summary>
+            The event argument associated with cancelable events.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.CancelEventArgs.Canceled">
+            <summary>
+            Whether the event has been canceled.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.IDragDrop">
+            <summary>
+            This is an advanced interface implemented by a specific
+            drag/drop implementation, and consumed by the global
+            DragDropManager.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.IDragDrop.DragDrop(ScriptFX.UI.IDragSource,System.Object,ScriptFX.UI.IDropTarget[],System.DHTML.DOMElement,ScriptFX.UI.Location,ScriptFX.UI.DragDropData)">
+            <summary>
+            Performs a drag/drop operation.
+            </summary>
+            <param name="source">The drag source initiating the operation.</param>
+            <param name="context">The context object to be passed to the drag source.</param>
+            <param name="targets">The set of registered drop targets that accept the current object being dragged.</param>
+            <param name="dragVisual">The element used to provide a visual indication for the object being dragged.</param>
+            <param name="dragOffset">The offset between the top-left corner of the object being dragged, and from where the drag operation was initiated.</param>
+            <param name="dataObject">The information about the object being dragged.</param>
+        </member>
+        <member name="P:ScriptFX.UI.IDragDrop.SupportsDataTransfer">
+            <summary>
+            Indicates whether the drag/drop implementation supports data transfer
+            across applications.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.Net.HTTPTransport.CreateURI(System.String,System.Type,System.Dictionary)">
+            <summary>
+            Creates a URI that contains an embedded transport reference
+            that can then be used to create an HTTPRequest.
+            </summary>
+            <param name="uri">The actual URI of the endpoint.</param>
+            <param name="transportType">The type of the transport to embed into the URI.</param>
+            <param name="parameters">Any additional parameters if needed; null otherwise.</param>
+            <returns>The URI with transport information embedded in it.</returns>
+        </member>
+        <member name="T:ScriptFX.UI.Location">
+            <summary>
+            The position of an element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.Location.left">
+            <summary>
+            The left value of the position of the element.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.Location.top">
+            <summary>
+            The top value of the position of the element.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Location.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates an initializes a Location object.
+            </summary>
+            <param name="left">The left value of the position of the element.</param>
+            <param name="top">The top value of the position of the element.</param>
+        </member>
+        <member name="T:ScriptFX.UI.AnimationSequence">
+            <summary>
+            An animation that composes a set of multiple animations into a
+            sequence with one animation following the other.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.AnimationSequence.#ctor(ScriptFX.UI.Animation[])">
+            <summary>
+            Creates an AnimationSequence with the specified set of individual
+            animations.
+            </summary>
+            <param name="animations"></param>
+        </member>
+        <member name="P:ScriptFX.UI.AnimationSequence.SuccessionDelay">
+            <summary>
+            The delay in milliseconds between animations within the
+            animation sequence.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.HistoryEventArgs">
+            <summary>
+            The event argument associated with history events.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.HistoryEventArgs.EntryName">
+            <summary>
+            The name of the history entry.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.Key">
+            <summary>
+            A set of key codes.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.IToggle">
+            <summary>
+            Represents a control that allows the user to toggle its
+            checked state.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.IToggle.Checked">
+            <summary>
+            The toggled state of the control.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.IToggle.CheckedChanged">
+            <summary>
+            Raised when control's checked state is toggled.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.Net.PreHTTPRequestEventHandler">
+            <summary>
+            The delegate type used to handle HTTP request invoking events.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The information associated with the event.</param>
+        </member>
+        <member name="T:ScriptFX.UI.OverlayOptions">
+            <summary>
+            A set of options to customize an instance of OverlayBehavior.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.OverlayOptions.cssClass">
+            <summary>
+            The name of the CSS class applied to the overlay.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.OverlayOptions.fadeInOutInterval">
+            <summary>
+            The duration over which the overlay is faded in and out. The default
+            is 250ms. Set to 0 to disable the animated effect.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.OverlayOptions.id">
+            <summary>
+            The name of the PopupBehavior to expose it as a top-level property
+            of the element that the Behavior is associated with.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.OverlayOptions.opacity">
+            <summary>
+            The opacity of the overlay when it is visible. It can be atmost 1, and
+            should be greater than 0. By default it is set to 0.75.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.OverlayOptions.#ctor(System.String)">
+            <summary>
+            Creates and initializes an OverlayOptions object with the required
+            set of properties.
+            </summary>
+            <param name="cssClass">The name of the CSS class applied to the overlay.</param>
+        </member>
+        <member name="T:ScriptFX.UI.IDropTarget">
+            <summary>
+            Represents an object that can consume objects being
+            dragged around.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.IDropTarget.SupportsDataObject(ScriptFX.UI.DragDropData)">
+            <summary>
+            Whether the data being dragged can be dropped into the
+            drop target.
+            </summary>
+            <param name="dataObject">The information about the data being dragged.</param>
+            <returns>true if the drop target supports the data; false if not.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.IDropTarget.Drop(ScriptFX.UI.DragDropData)">
+            <summary>
+            Drops the data being dragged into the drop target.
+            </summary>
+            <param name="dataObject">The information about the data being dragged.</param>
+        </member>
+        <member name="M:ScriptFX.UI.IDropTarget.OnDragEnter(ScriptFX.UI.DragDropData)">
+            <summary>
+            Called when the user drags the data being dragged into the
+            bounds of the drop target.
+            </summary>
+            <param name="dataObject">The information about the data being dragged.</param>
+        </member>
+        <member name="M:ScriptFX.UI.IDropTarget.OnDragLeave(ScriptFX.UI.DragDropData)">
+            <summary>
+            Called when the user drags the data being dragged out of the
+            bounds of the drop target.
+            </summary>
+            <param name="dataObject">The information about the data being dragged.</param>
+        </member>
+        <member name="M:ScriptFX.UI.IDropTarget.OnDragOver(ScriptFX.UI.DragDropData)">
+            <summary>
+            Called while the user drags the data within the bounds of the
+            drop target.
+            </summary>
+            <param name="dataObject">The information about the data being dragged.</param>
+        </member>
+        <member name="P:ScriptFX.UI.IDropTarget.DOMElement">
+            <summary>
+            The DOM element associated with the drop target.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.Color">
+            <summary>
+            Represents an HTML color.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Color.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a color object from the individual RGB components.
+            </summary>
+            <param name="red">The red value (0 through 255)</param>
+            <param name="green">The green value (0 through 255)</param>
+            <param name="blue">The blue value (0 through 255)</param>
+        </member>
+        <member name="M:ScriptFX.UI.Color.Format(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates an HTML color representation from the individual RGB components.
+            </summary>
+            <param name="red">The red value (0 through 255)</param>
+            <param name="green">The green value (0 through 255)</param>
+            <param name="blue">The blue value (0 through 255)</param>
+            <returns>The string HTML color representation</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Color.Parse(System.String)">
+            <summary>
+            Parses an HTML color representation into a color object.
+            </summary>
+            <param name="s">The string HTML color representation</param>
+            <returns>A color object with RGB components parsed out</returns>
+        </member>
+        <member name="M:ScriptFX.UI.Color.ToString">
+            <summary>
+            Gets the string HTML color representation corresponding to this color object.
+            </summary>
+            <returns>The string HTML color representation</returns>
+        </member>
+        <member name="P:ScriptFX.UI.Color.Blue">
+            <summary>
+            The value of the blue component in the color.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Color.Green">
+            <summary>
+            The value of the green component in the color.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Color.Red">
+            <summary>
+            The value of the red component in the color.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.DragMode">
+            <summary>
+            The type of drag/drop operation.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.DragMode.Move">
+            <summary>
+            Indicates that the data being dragged is being moved from the drag source to the drop target.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.DragMode.Copy">
+            <summary>
+            Indicates that the data being dragged is being copied from the drag source to the drop target.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.DOMEventList">
+            <summary>
+            DOMEventList is a utility class to represent and manage a set of event
+            handlers attached to a particular DOM element.
+            In addition to attaching and detaching events, it can check if an event
+            has been attached to, as well as provide an easy way to detach all
+            event handlers which is useful at dispose-time.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.DOMEventList.#ctor(System.DHTML.DOMElement)">
+            <summary>
+            Creates an instance of DOMEventList associated with the specified
+            DOM element.
+            </summary>
+            <param name="element">The DOM element associated with this event list.</param>
+        </member>
+        <member name="M:ScriptFX.UI.DOMEventList.Attach(System.String,System.DHTML.DOMEventHandler)">
+            <summary>
+            Attaches an event handler to the specified event.
+            </summary>
+            <param name="eventName">The event to attach the handler to.</param>
+            <param name="handler">The event handler that is to be notified when the event occurs.</param>
+        </member>
+        <member name="M:ScriptFX.UI.DOMEventList.Detach(System.String)">
+            <summary>
+            Detaches the event handler associated with the specified event.
+            </summary>
+            <param name="eventName">The event to detach from.</param>
+            <returns>true if a handler was detached; false if there was no handler.</returns>
+        </member>
+        <member name="M:ScriptFX.UI.DOMEventList.Dispose">
+            <summary>
+            Disposes an event list, which disassociates it from its element, as well as
+            detach all event handlers associated with the element.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.DOMEventList.IsAttached(System.String)">
+            <summary>
+            Checks if an event handler has been attached to the specified event.
+            </summary>
+            <param name="eventName">The event to check for.</param>
+            <returns>true if a handler has been attached; false otherwise.</returns>
+        </member>
+        <member name="T:ScriptFX.UI.AnimationManager">
+            <summary>
+            This class manages the set of active animations and is responsible for
+            scheduling them, and executing them from start to finish.
+            It allows advanced configuration of animations, such as the frames per
+            second setting.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.AnimationManager.FPS">
+            <summary>
+            The number of frames per second to progress the animations
+            over from start to finish.
+            </summary>
+        </member>
+    </members>
+</doc>

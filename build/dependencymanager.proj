@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootPath Condition="'$(RootPath)' == ''">$(MSBuildProjectDirectory)\..\..\..</RootPath>
+    <FrameworkProfile Condition="'$(FrameworkProfile)' == ''">35</FrameworkProfile>
+    <OpenRastaLibPath Condition="'$(OpenRastaLibPath)' == ''">$(RootPath)\lib</OpenRastaLibPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(CastleWindsor)' != ''">
+    <CastleDirectory
+      Condition="'$(CastleDirectory)' == ''">$(OpenRastaLibPath)\castle-$(CastleWindsor)</CastleDirectory>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(OpenRastaDirectory)' == '' And '$(FrameworkProfile)' != ''">
+    <OpenRastaDirectory>$(RootPath)\bin\Release\net-$(FrameworkProfile)</OpenRastaDirectory>
+  </PropertyGroup>
+  <Import Project="$(RootPath)\build\defaults.targets" />
+  
+  
+  <ItemGroup Condition="'$(CastleWindsor)' != ''">
+    <Reference Include="Castle.Core">
+      <HintPath>$(CastleDirectory)\Castle.Core.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="Castle.MicroKernel">
+      <HintPath>$(CastleDirectory)\Castle.MicroKernel.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>$(CastleDirectory)\Castle.Windsor.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OpenRastaAssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta)' != ''">$(OpenRastaDirectory)\OpenRasta.dll</OpenRastaAssemblyPath>
+    <OpenRasta-Hosting-AspNet-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-AspNet)' != ''">$(OpenRastaDirectory)\OpenRasta.Hosting.AspNet.dll</OpenRasta-Hosting-AspNet-AssemblyPath>
+    <OpenRasta-Codecs-WebForms-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-AspNet)' != ''">$(OpenRastaDirectory)\OpenRasta.Codecs.WebForms.dll</OpenRasta-Codecs-WebForms-AssemblyPath>
+    <OpenRasta-DI-WindsorAssemblyPath Condition="'$(OpenRasta-DI-Windsor)' != '' and '$(CastleWindsor)' == '1.0.3' ">$(OpenRastaDirectory)\OpenRasta.DI.Windsor-1.0.rc3.dll</OpenRasta-DI-WindsorAssemblyPath>
+    <OpenRasta-DI-WindsorAssemblyPath Condition="'$(OpenRasta-DI-Windsor)' != '' and '$(CastleWindsor)' == '1.1.b1007' ">$(OpenRastaDirectory)\OpenRasta.DI.Windsor.dll</OpenRasta-DI-WindsorAssemblyPath>
+  
+</PropertyGroup>
+  
+  <!--
+  OpenRasta Core Library
+  -->
+  <ItemGroup Condition="'$(OpenRastaAssemblyPath)' != ''">
+    <Reference Include="OpenRasta">
+      <HintPath>$(OpenRastaAssemblyPath)</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Condition="'$(FrameworkProfile)' == '35'" Include="System.Core" />
+  </ItemGroup>
+
+  <!--
+  Asp.net module
+  -->
+  <ItemGroup Condition="'$(OpenRasta-AspNet)' != '' and '$(OpenRasta-Hosting-AspNet-AssemblyPath)' != ''">
+    <Reference Include="OpenRasta.Hosting.AspNet">
+      <HintPath>$(OpenRasta-Hosting-AspNet-AssemblyPath)</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="OpenRasta.Codecs.WebForms" Condition="'$(OpenRasta-AspNet)' != ''">
+      <HintPath>$(OpenRasta-Codecs-WebForms-AssemblyPath)</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+
+  <!--
+  OpenRasta Windsor support
+  -->
+  <ItemGroup Condition="'$(OpenRasta-DI-WindsorAssemblyPath)' != ''">
+    <Reference Include="OpenRasta.DI.Windsor">
+      <HintPath>$(OpenRasta-DI-WindsorAssemblyPath)</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+  
+  
+  
+  <Target Name="VerifyDependencies">
+    <Error Condition="'$(OpenRasta-DI-Windsor)' != '' and '$(CastleWindsor)' == ''" Text="If you add Windsor as a dependency, you need to specify which version with the CastleWindsor property." />
+    <MSBuild Projects="$(RootPath)\build\core.proj"
+             Condition="'$(OpenRasta)' != '' and !Exists('$(OpenRastaAssemblyPath)'))"
+             Properties="FrameworkProfileVersion=$(FrameworkProfile)" />
+    <MSBuild Projects="$(RootPath)\build\castle.proj"
+             Condition="'$(OpenRasta-DI-WindsorAssemblyPath)' != '' and !Exists('$(OpenRasta-DI-WindsorAssemblyPath)'))"
+             Properties="FrameworkProfileVersion=$(FrameworkProfile)" />
+  </Target>
+  
+  
+  
+  <Target Name="BeforeBuild" DependsOnTargets="VerifyDependencies">
+    <Message Importance="high" Text="$(CastleDirectory)" />
+    <Message Importance="high" Text="@(Reference)" />
+    <!--<MSBuild Condition="!Exists('$(OpenRastaDirectory)\OpenRasta.dll')" Projects="..\..\..\Build\core.proj" Properties="FrameworkProfile=$(FrameworkProfile)" />-->
+  </Target>
+</Project>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
+  <ItemGroup>
+    <Projects Include="$(SourcePath)\OpenRasta.Codecs.SharpView\OpenRasta.Codecs.SharpView.csproj">
+      <MinVersion>35</MinVersion>
+      <Merged>false</Merged>
+      <SignAssembly>true</SignAssembly>
+    </Projects>
+    <Projects Include="$(SourcePath)\OpenRasta.Codecs.SharpView.Tests.Unit\OpenRasta.Codecs.SharpView.Tests.Unit.csproj">
+      <MinVersion>35</MinVersion>
+      <Merged>false</Merged>
+      <UnitTest>true</UnitTest>
+    </Projects>
+  </ItemGroup>
+  <Import Project="module.targets" />
+</Project>

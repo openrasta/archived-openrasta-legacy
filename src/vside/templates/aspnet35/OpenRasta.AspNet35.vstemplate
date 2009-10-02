@@ -1,0 +1,39 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>OpenRasta ASP.NET Application (3.5)</Name>
+    <Description>Provides a default asp.net web application pre-configured for OpenRasta. For .net 3.5 only.</Description>
+    <TemplateGroupID>OpenRasta</TemplateGroupID>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType></ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>OpenRasta.AspNet</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+    <SupportsMasterPage>false</SupportsMasterPage>
+    <RequiredFrameworkVersion>3.5</RequiredFrameworkVersion>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="OpenRasta.Demo.csproj" File="OpenRasta.AspNet35.csproj" ReplaceParameters="true">
+      <Folder Name="App_Data" TargetFolderName="App_Data" />
+      <ProjectItem ReplaceParameters="true" TargetFileName="Configuration.cs">Configuration.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="default.aspx">default.aspx</ProjectItem>
+      <Folder Name="Handlers" TargetFolderName="Handlers">
+        <ProjectItem ReplaceParameters="true" TargetFileName="HomeHandler.cs">HomeHandler.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Properties" TargetFolderName="Properties">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Resources" TargetFolderName="Resources">
+        <ProjectItem ReplaceParameters="true" TargetFileName="HomeResource.cs">HomeResource.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Views" TargetFolderName="Views">
+        <ProjectItem ReplaceParameters="true" TargetFileName="HomeView.aspx">HomeView.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="HomeView.Master">HomeView.Master</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Web.config" OpenInEditor="true">Web.config</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

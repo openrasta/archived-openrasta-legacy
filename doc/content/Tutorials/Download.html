@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-gb" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Download and compile OpenRasta</title>
+<style type="text/css">
+.style1 {
+	text-align: left;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Downloading and compiling OpenRasta</h1>
+<p>OpenRasta is only available in source-code form at the moment.</p>
+<p>For these instructions, you will need to install
+<a href="http://www.collab.net/downloads/subversion/">svn 1.5 or later</a> and
+<a href="http://www.microsoft.com/downloads/details.aspx?familyid=22914587-b4ad-4eae-87cf-b14ae6a939b0&amp;displaylang=en">
+ilmerge</a>. While OpenRasta runs on plain 2.0, it necessitate version 3.5 of 
+the .net framework to compile, and Visual Studio 2008 for your development.</p>
+<p class="style1">To download OpenRasta, first do a checkout of the source code. 
+Using the command line:</p>
+<pre>c:\src&gt; svn co http://svn.caffeine-it.com/openrasta/trunk openrasta</pre>
+<p>This will download the content of the trunk version in the folder c:\src\openrasta. 
+Navigate to that folder, and build using the provided make.bat script.</p>
+<pre>c:\src\openrasta&gt; make.bat</pre>
+<p>This will have generated the OpenRasta dll you will need. All the binaries 
+should now be in the openrasta\bin\release folder.</p>
+<p>Based on the version of .net installed on the server you want to deploy 
+OpenRasta on, you can pick between .net 2.0, 3.0 and 3.5. Some functionality is 
+specific to each version</p>
+
+</body>
+
+</html>

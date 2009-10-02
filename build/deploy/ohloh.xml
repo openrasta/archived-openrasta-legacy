@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package name="OpenRasta 2.0">
+    <releases>
+      <release name="2.0 Daily build">
+        <files>
+          <file name="OpenRasta-2.0.0.exe" />
+        </files>
+      </release>
+    </releases>
+  </package>
+</packages>

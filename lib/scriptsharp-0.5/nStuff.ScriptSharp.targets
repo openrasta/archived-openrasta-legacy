@@ -1,0 +1,58 @@
+﻿<!--
+***********************************************************************************************
+nStuff.ScriptSharp.targets
+This file defines the steps in the standard build process specific for Script# projects.
+
+Copyright (C) 2006. Nikhil Kothari. All rights reserved.
+***********************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+  <PropertyGroup Condition="'$(ScriptSharpPath)' == ''">
+    <ScriptSharpPath>$(ProgramFiles)\nStuff\ScriptSharp\v1.0\</ScriptSharpPath>
+  </PropertyGroup>
+  <UsingTask TaskName="ScriptCompilerTask" AssemblyFile="$(ScriptSharpPath)nStuff.ScriptSharp.dll" />
+
+  <PropertyGroup>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType></DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <Target Name="BeforeCompile">
+    <Delete Files="@(IntermediateAssembly)" />
+  </Target>
+
+  <Target Name="AfterCompile"
+    DependsOnTargets="$(CoreCompile)">
+
+    <ScriptCompilerTask
+      Sources="@(Compile)"
+      Resources="@(EmbeddedResource)"
+      References="@(ReferencePath)"
+      Defines="$(DefineConstants)"
+      OutputPath="$(OutputPath)"
+      ScriptPath="$(ScriptPath)"
+      LocaleSubFolders="$(LocaleSubFolders)"
+      ScriptName="$(ScriptName)"
+      Template="$(TemplateFile)"
+      CopyReferences="$(CopyReferences)"
+      CSharpAssembly="@(IntermediateAssembly)"
+      DocumentationFile="$(DocumentationFile)"
+      SuppressDocumentation="$(SuppressDocumentation)">
+      <Output TaskParameter="DebugScriptFile" ItemName="DebugScriptFile" />
+      <Output TaskParameter="ReleaseScriptFile" ItemName="ReleaseScriptFile" />
+    </ScriptCompilerTask>
+  </Target>
+
+  <Target Name="CopyFilesToOutputDirectory">
+    <Copy SourceFiles="@(IntermediateAssembly)"
+      DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="@(ScriptFile)"
+      DestinationFolder="$(OutDir)" />
+  </Target>
+
+</Project>

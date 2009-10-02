@@ -1,0 +1,203 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+
+<!-- Build setup -->
+  <PropertyGroup>
+    <RunTests Condition="'$(RunTests)' == ''">true</RunTests>
+  </PropertyGroup>
+  <!--
+  
+  Build version definitions
+  
+  
+  Builds are formatted as such
+  
+  {BuildVersionMajor}.{BuildVersionMinor}.{BuildVersionBuild}.{BuildVersionRevision}
+  
+  Major and minor are self explanatory.
+  
+  BuildVersionPrefix
+  ==================
+  
+  The build version build is calculated by adding the prefix defined as a property $(build_version_prefix) and the build counter teamcity reports $(BUILD_NUMBER)
+  
+  -->
+
+  <PropertyGroup>
+    <BuildVersionMajor>$(DefaultBuildVersionMajor)</BuildVersionMajor>
+    <BuildVersionMinor>$(DefaultBuildVersionMinor)</BuildVersionMinor>
+
+    <BuildVersionRevision Condition="'$(BuildVersionRevision)' == '' and '$(build_version_revision)' != ''">$(build_version_revision)</BuildVersionRevision>
+    <BuildVersionRevision Condition="'$(BuildVersionRevision)' == ''">$(DefaultBuildVersionRevision)</BuildVersionRevision>
+
+    <BuildVersionBuildPrefix>$(build_version_prefix)</BuildVersionBuildPrefix>
+    <BuildVersionBuildPrefix Condition="'$(BuildVersionBuildPrefix)' == ''">0</BuildVersionBuildPrefix>
+
+    <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+
+    <PackageName Condition="'$(PackageName)' == ''">OpenRasta UNKNOWN</PackageName>
+  </PropertyGroup>
+
+
+  <!--
+  
+  Common tools and releases paths
+  
+  -->
+
+  <PropertyGroup>
+    <RootPath Condition="'$(RootPath)' == ''">$(MSBuildProjectDirectory)\..</RootPath>
+    <SecurePath>$(RootPath)\build\keys\caff</SecurePath>
+    <OhlohRsaKey Condition="'$(OhlohRsaKey)' == ''">$(SecurePath)\caff.ppk</OhlohRsaKey>
+    <AuthenticodeKey Condition="'$(AuthenticodeKey)' == ''">$(SecurePath)\caff.pfx</AuthenticodeKey>
+    <SecureBuild Condition="'$(SecureBuild)' == '' and Exists('$(OhlohRsaKey)')">true</SecureBuild>
+    <DeployDir>$(RootPath)\build\deploy</DeployDir>
+    <CommonInfoPath>$(RootPath)\src\CommonInfo.cs</CommonInfoPath>
+    <TimeStampUrl>http://timestamp.verisign.com/scripts/timstamp.dll</TimeStampUrl>
+  </PropertyGroup>
+  <Import Project="$(RootPath)\build\common.properties"/>
+
+  <!--
+  
+  Assembly info rewriter
+  
+  -->
+
+  <Target Name="SetVersionInfo">
+    <Message Text="$(build_version_prefix) - $(BUILD_NUMBER)" />
+
+    <PropertyGroup>
+      <BuildVersionBuild Condition="
+                         '$(BuildVersionBuild)' == ''
+                         and
+                         (
+                            '$(BUILD_NUMBER)' == ''
+                            or
+                            '$(build_version_prefix)' == ''
+                         )
+    ">$(DefaultBuildVersionBuild)</BuildVersionBuild>
+    </PropertyGroup>
+    <Math.Add Condition="'$(BuildVersionBuild)' == ''" Numbers="$(build_version_prefix);$(BUILD_NUMBER)">
+      <Output TaskParameter="Result" PropertyName="BuildVersionBuild" />
+    </Math.Add>
+    <PropertyGroup>
+      <BuildVersion>$(BuildVersionMajor).$(BuildVersionMinor).$(BuildVersionBuild).$(BuildVersionRevision)</BuildVersion>
+      <SetupFilePath Condition="'$(SetupFilePath)' == ''">$(RootPath)\bin\Release\OpenRasta-$(BuildVersion).exe</SetupFilePath>
+    </PropertyGroup>
+    <AssemblyInfo CodeLanguage="CS"
+                  OutputFile="$(CommonInfoPath)"
+                  AssemblyVersion="$(BuildVersion)"
+                  AssemblyFileVersion="$(BuildVersion)"
+                  AssemblyConfiguration=""
+                  AssemblyCompany="Caffeine IT- naughtyProd Limited "
+                  AssemblyProduct="$(PackageName) $(BuildVersionMajor).$(BuildVersionMinor) $(ReleaseName)"
+                  AssemblyCopyright="Copyright (c) Caffeine IT - naughtyProd Limited - Sebastien Lambla "
+                  AssemblyTrademark=""
+                  ComVisible="false"
+                  CLSCompliant="false" />
+    <Message Importance="high" Text="##teamcity[buildNumber '$(BuildVersion)']"  />
+    <Message Importance="normal" Text="Setting version for prefix $(BuildVersionBuildPrefix) to $(BuildVersion)" />
+  </Target>
+
+  <Target Name="CleanAll">
+    <MSBuild Projects="@(Module)" Properties="FrameworkProfile=20" Targets="Clean" />
+    <MSBuild Projects="@(Module)" Properties="FrameworkProfile=30" Targets="Clean" />
+    <MSBuild Projects="@(Module)" Properties="FrameworkProfile=35" Targets="Clean" />
+  </Target>
+  <!--
+  
+  Version-specific builds
+  
+  -->
+
+  <Target Name="Build-20" DependsOnTargets="SetVersionInfo">
+    <MSBuild Projects="@(Module)" Properties="FrameworkProfile=20;Configuration=$(Configuration);RunTests=$(RunTests)" BuildInParallel="true">
+      <Output TaskParameter="TargetOutputs" ItemName="BuildResult20"/>
+    </MSBuild>
+  </Target>
+  <Target Name="Build-30" DependsOnTargets="SetVersionInfo">
+    <MSBuild Projects="@(Module)" Properties="FrameworkProfile=30;Configuration=$(Configuration);RunTests=$(RunTests)" BuildInParallel="true">
+      <Output TaskParameter="TargetOutputs" ItemName="BuildResult30"/>
+    </MSBuild>
+  </Target>
+  <Target Name="Build-35" DependsOnTargets="SetVersionInfo">
+    <MSBuild Projects="@(Module)" Properties="FrameworkProfile=35;Configuration=$(Configuration);RunTests=$(RunTests)" BuildInParallel="true">
+      <Output TaskParameter="TargetOutputs" ItemName="BuildResult35"/>
+    </MSBuild>
+  </Target>
+  <Target Name="BuildAll" DependsOnTargets="Build-20;Build-30;Build-35">
+    <Message Importance="high" Text="##teamcity[buildNumber '$(BuildVersion)']"/>
+  </Target>
+
+
+
+  <!-- 
+  
+  Installer builder
+  
+  -->
+  <Target Name="CompileInstaller" DependsOnTargets="BuildAll" >
+    <MSBuild Projects="@(Installer)" Targets="Rebuild" Properties="Platform=x86;Configuration=Release;WixToolPath=$(WixToolPath);WixTargetsPath=$(WixTargetsPath);WixTasksPath=$(WixTasksPath);WinExtDir=$(WinExtDir);BuildVersionMajor=$(BuildVersionMajor);BuildVersionMinor=$(BuildVersionMinor);BuildVersionBuild=$(BuildVersionBuild);BuildVersionRevision=$(BuildVersionRevision);BuildVersionBuildPrefix=$(BuildVersionBuildPrefix);PackageName=$(PackageName);ReleaseName=$(ReleaseName)">
+      <Output  TaskParameter="TargetOutputs" ItemName="MSIFile" />
+    </MSBuild>
+    <Exec Condition="'$(SecureBuild)' == 'true'" Command="signtool.exe sign /f $(AuthenticodeKey) /p &quot;$(authenticode_key_password)&quot; /t $(TimeStampUrl) @(MSIFile)" />
+    <Exec Command="$(WixToolPath)\setupbld.exe -out $(SetupFilePath) -mcsu @(MSIFile) -setup $(WixToolPath)\setup.exe" />
+
+    <Exec Condition="'$(SecureBuild)' == 'true'" Command="signtool.exe sign /f $(AuthenticodeKey) /p &quot;$(authenticode_key_password)&quot; /t $(TimeStampUrl) $(SetupFilePath)" />
+    <Message Importance="high" Text="##teamcity[publishArtifacts '$(SetupFilePath)']" />
+  </Target>
+
+
+
+  <!--
+  
+  Ohloh upload
+  
+  -->
+
+  <Target Name="BuildInstructFile">
+    <ItemGroup>
+      <FileToUpload Include="$(SetupFilePath)" />
+      <InstructFile Include="$(DeployDir)\ohloh.xml" />
+    </ItemGroup>
+    <XmlUpdate Namespace=""
+               XmlFileName="@(InstructFile)"
+               XPath="/packages/package/@name"
+               Value="$(PackageName) $(BuildVersionMajor).$(BuildVersionMinor)" />
+    <XmlUpdate Namespace=""
+               XmlFileName="@(InstructFile)"
+               XPath="/packages/package/releases/release/@name"
+               Value="$(ReleaseName)" />
+    <XmlUpdate Namespace=""
+               XmlFileName="@(InstructFile)"
+               XPath="/packages/package/releases/release/files/file/@name"
+               Value="@(FileToUpload->'%(FileName)%(Extension)')" />
+  </Target>
+  <Target Name="UploadToOhloh" Condition="'$(SecureBuild)' == 'true'" DependsOnTargets="CompileInstaller;BuildInstructFile">
+    <Message Importance="high" Text="##teamcity[progressMessage 'Sending release to ohloh.net']" />
+    <WriteLinesToFile Overwrite="true" File="$(DeployDir)\sftp.batch" Lines="cd openrasta/files"  />
+    <WriteLinesToFile Overwrite="false" File="$(DeployDir)\sftp.batch" Lines="@(FileToUpload -> 'put %(FullPath)')"  />
+    <WriteLinesToFile Overwrite="false" File="$(DeployDir)\sftp.batch" Lines="cd ../instructs"  />
+    <WriteLinesToFile Overwrite="false" File="$(DeployDir)\sftp.batch" Lines="@(InstructFile -> 'put %(FullPath)')"  />
+    <WriteLinesToFile Overwrite="false" File="$(DeployDir)\sftp.batch" Lines="quit"  />
+    <Message Importance="normal" Text="Using Command Line: $(SftpPath) -batch -i '$(OhlohRsaKey)' -b '$(DeployDir)\sftp.batch' -bc serialseb@upload.ohloh.net" />
+    <Error Condition="!Exists('$(SftpPath)')" Text="Couldnt find sftp.exe. Try redefining the SftpPath property." />
+    <Exec Command="&quot;$(SftpPath)&quot; -batch -i &quot;$(OhlohRsaKey)&quot; -b &quot;$(DeployDir)\sftp.batch&quot; -bc serialseb@upload.ohloh.net" />
+
+    <!-- Add the version to TRAC -->
+    <CallTarget Targets="PublishTracVersion" Condition="'$(trac_username)' != '' and '$(trac_password)' != ''"/>
+
+  </Target>
+  <Target Name="PublishTracVersion">
+    <Message Importance="high" Text="##teamcity[progressStart 'Publishing new version to TRAC']" />
+    <Message Importance="normal" Text="Publishing version '$(ReleaseName) - $(BuildVersion)'" />
+    <TracVersion
+          Name="$(ReleaseName) - $(BuildVersion)"
+          Action="Add"
+          Uri="http://trac.caffeine-it.com/openrasta/login/xmlrpc"
+          Username="$(trac_username)"
+          Password="$(trac_password)" />
+  </Target>
+
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+  <Import Project="$(RootPath)\lib\trac-0.1\CaffeineIT.MSBuild.Trac.tasks"/>
+</Project>

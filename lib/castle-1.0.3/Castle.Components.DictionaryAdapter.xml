@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Components.DictionaryAdapter</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Components.DictionaryAdapter.DictionaryAdapterFactory">
+            <summary>
+            Uses Reflection.Emit to expose the properties of a dictionary
+            through a dynamic implementation of a typed interface.
+            </summary>
+        </member>
+        <member name="T:Castle.Components.DictionaryAdapter.IDictionaryAdapterFactory">
+            <summary>
+            Defines the contract for building typed dictionary adapters.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.IDictionaryAdapterFactory.GetAdapter``1(System.Collections.IDictionary)">
+            <summary>
+            Gets a typed adapter bound to the dictionary.
+            </summary>
+            <typeparam name="T">The typed interface.</typeparam>
+            <param name="dictionary">The underlying source of properties.</param>
+            <returns>An implementation of the typed interface bound to the dictionary.</returns>
+            <remarks>
+            The type represented by the T must be an interface with properties.
+            </remarks>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterFactory.GetAdapter``1(System.Collections.IDictionary)">
+            <summary>
+            Gets a typed adapter bound to the dictionary.
+            </summary>
+            <typeparam name="T">The typed interface.</typeparam>
+            <param name="dictionary">The underlying source of properties.</param>
+            <returns>An implementation of the typed interface bound to the dictionary.</returns>
+            <remarks>
+            The type represented by T must be an interface with properties.
+            </remarks>
+        </member>
+        <member name="T:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute">
+            <summary>
+            Assigns a prefix to the keyed properties of an interface.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute.#ctor">
+            <summary>
+            Initializes a default instance of the <see cref="T:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute"/> class.
+            </summary>
+            <param name="keyPrefix">The prefix for the keyed properties of the interface.</param>
+        </member>
+        <member name="P:Castle.Components.DictionaryAdapter.DictionaryAdapterKeyPrefixAttribute.KeyPrefix">
+            <summary>
+            Gets the prefix key added to the properties of the interface.
+            </summary>
+        </member>
+    </members>
+</doc>

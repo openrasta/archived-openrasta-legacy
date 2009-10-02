@@ -1,0 +1,14 @@
+﻿body { 
+	font-family: Calibri, Verdana, sans-serif; 
+}
+
+fieldset 
+{
+	padding: 0.5em;
+}
+
+label
+{
+	float: left;
+	margin-right: 100px;
+}

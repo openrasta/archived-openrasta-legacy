@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.Db4oIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.Db4oIntegration.Db4oFacility">
+            <summary>
+            Enable components to take advantage of the capabilities 
+            offered by the db4objects project.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.Db4oIntegration.Db4oFacility.Dispose">
+            <summary>
+            Performs the tasks associated with freeing, releasing, or resetting
+            the facility resources.
+            </summary>
+            <remarks>It can be overriden.</remarks>
+        </member>
+        <member name="T:Castle.Facilities.Db4oIntegration.ObjectContainerActivatorOverrider">
+            <summary>
+            Overrides the <see cref="T:Db4objects.Db4o.IObjectContainer"/> component initialization.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.Db4oIntegration.ObjectContainerActivatorOverrider.ProcessModel(Castle.MicroKernel.IKernel,Castle.Core.ComponentModel)">
+            <summary>
+            Overrides the <see cref="T:Castle.MicroKernel.IComponentActivator"/>, if the component is the <see cref="T:Db4objects.Db4o.IObjectContainer"/>.
+            </summary>
+            <param name="kernel">The kernel instance</param>
+            <param name="model">The component model</param>
+        </member>
+    </members>
+</doc>

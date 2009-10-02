@@ -1,0 +1,66 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.0</ProductVersion>
+    <ProjectGuid>{934f6f33-5140-4f71-81a4-f24047d1a3d0}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>OpenRasta-$(BuildVersionMajor).$(BuildVersionMinor)</OutputName>
+    <OutputType>Package</OutputType>
+    <RunWixToolsOutOfProc>true</RunWixToolsOutOfProc>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>..\..\..\bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\..\..\bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <BuildVersionMajor Condition="'$(BuildVersionMajor)' == ''">2</BuildVersionMajor>
+    <BuildVersionMinor Condition="'$(BuildVersionMinor)' == ''">0</BuildVersionMinor>
+    <BuildVersionBuild Condition="'$(BuildVersionBuild)' == ''">1</BuildVersionBuild>
+    <BuildVersionRevision Condition="'$(BuildVersionRevision)' == ''">0</BuildVersionRevision>
+    <BuildVersionBuildPrefix Condition="'$(BuildVersionBuildPrefix)' == ''">0</BuildVersionBuildPrefix>
+    <PackageName Condition="'$(PackageName)' == ''">OpenRasta</PackageName>
+    <ReleaseName Condition="'$(ReleaseName)' == ''">LOCAL</ReleaseName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>
+      $(DefineConstants);
+      BuildVersionMajor=$(BuildVersionMajor);
+      BuildVersionMinor=$(BuildVersionMinor);
+      BuildVersionBuild=$(BuildVersionBuild);
+      BuildVersionRevision=$(BuildVersionRevision);
+      BuildVersionBuildPrefix=$(BuildVersionBuildPrefix);
+      PackageName=$(PackageName);
+      ReleaseName=$(ReleaseName);
+    </DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixVSExtension">
+      <HintPath>..\..\..\lib\wix-3.0\WixVSExtension.dll</HintPath>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="license.rtf" />
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <Target Name="BeforeBuild">
+    <Message Importance="normal" Text="BuildConstants: $(DefineConstants)" />
+  </Target>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

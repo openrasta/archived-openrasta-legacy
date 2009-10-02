@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
+  <ItemGroup>
+    <Projects Include="$(SourcePath)\OpenRasta.Hosting.AspNet\OpenRasta.Hosting.AspNet.csproj">
+      <MinVersion>20</MinVersion>
+      <Merged>false</Merged>
+    </Projects>
+    <Projects Include="$(SourcePath)\OpenRasta.Hosting.AspNet.Tests.Integration\OpenRasta.Hosting.AspNet.Tests.Integration.csproj">
+      <UnitTest>true</UnitTest>
+      <NUnit-DisableShadowCopy>true</NUnit-DisableShadowCopy>
+    </Projects>
+    <Projects Include="$(SourcePath)\OpenRasta.Codecs.WebForms\OpenRasta.Codecs.WebForms.csproj">
+      <MinVersion>20</MinVersion>
+      <Merged>false</Merged>
+    </Projects>
+    <Projects Include="$(SourcePath)\OpenRasta.Codecs.WebForms.Tests.Unit\OpenRasta.Codecs.WebForms.Tests.Unit.csproj">
+      <UnitTest>true</UnitTest>
+    </Projects>
+  </ItemGroup>
+  <Import Project="module.targets" />
+</Project>

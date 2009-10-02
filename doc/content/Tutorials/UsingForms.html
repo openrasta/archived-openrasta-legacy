@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-gb" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Untitled 0</title>
+<style type="text/css">
+.style1 {
+	text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Using forms</h1>
+<p>ReST means <em>representational state transfer</em>. As we&#39;ve seen in the 
+previous tutorial, in OpenRasta representations are rendered using a codec.</p>
+<p>When using html forms, what you are 
+effectively doing is sending a <strong>representation </strong>of 
+your resource, using either application/x-www-urlform-encoded or 
+multipart/form-data. The browser will take all the form inputs in the html page, 
+create the representation and send a request to your application using the verb 
+you specified in the method parameter of&nbsp; your form tag.</p>
+<p>OpenRasta provides strong support for handling such forms. To illustrate 
+those requirements, let&#39;s create a new resource of type IList&lt;Product&gt;. You&#39;ll 
+need to create the configuration, a handler called ProductListHandler and a 
+resource of type Product. Refer to <a href="Create-First-Site.html">Creating an 
+OpenRasta website</a> topic for a detailed overview.</p>
+<p>Your configuration should now contain the following section.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00d2d2;">ResourceSpace</span><span style="color: #a6a0e0;">.</span>Has<span style="color: #a6a0e0;">.</span>ResourcesOfType<span style="color: #a6a0e0;">&lt;</span><span style="color: #92e4d6;">IList</span><span style="color: #a6a0e0;">&lt;</span><span style="color: #00d2d2;">Product</span><span style="color: #a6a0e0;">&gt;&gt;</span>()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #a6a0e0;">.</span>AtUri(<span style="color: #fa8072;">&quot;/products&quot;</span>)</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #a6a0e0;">.</span>HandledBy<span style="color: #a6a0e0;">&lt;</span><span style="color: #00d2d2;">ProductListHandler</span><span style="color: #a6a0e0;">&gt;</span>()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #a6a0e0;">.</span>AndRendededByAspx(<span style="color: #fa8072;">&quot;~/Views/ProductListView.aspx&quot;</span>);</p>
+</div>
+<!--EndFragment-->
+<p>For the purpose of this example, we&#39;ll simply store the list of products in a 
+static member on the handler class. In real-world scenarios, you would use a 
+storage back-end such as a database.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px; margin-left: auto; margin-right: auto;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #00bfff;">
+	public</span> <span style="color: #00bfff;">class</span>
+	<span style="color: #00d2d2;">ProductListHandler</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00bfff;">
+	static</span> <span style="color: #92e4d6;">IList</span><span style="color: #a6a0e0;">&lt;</span><span style="color: #00d2d2;">Product</span><span style="color: #a6a0e0;">&gt;</span> 
+	Products { <span style="color: #00bfff;">get</span>;
+	<span style="color: #00bfff;">private</span> <span style="color: #00bfff;">
+	set</span>; }</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> ProductListHandler()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	Products <span style="color: #a6a0e0;">=</span>
+	<span style="color: #00bfff;">new</span> <span style="color: #00d2d2;">List</span><span style="color: #a6a0e0;">&lt;</span><span style="color: #00d2d2;">Product</span><span style="color: #a6a0e0;">&gt;</span> 
+	{</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">new</span> <span style="color: #00d2d2;">
+	Product</span> { Name <span style="color: #a6a0e0;">=</span>
+	<span style="color: #fa8072;">&quot;MacBook Pro&quot;</span> },</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">new</span> <span style="color: #00d2d2;">
+	Product</span> { Name <span style="color: #a6a0e0;">=</span>
+	<span style="color: #fa8072;">&quot;MacBook Air&quot;</span> } </p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	};</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+</div>
+<!--EndFragment-->
+<p>We create the handler&#39;s get method to return the list of products.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00d2d2;">
+	OperationResult</span> Get()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">return</span> <span style="color: #00bfff;">
+	new</span> <span style="color: #00d2d2;">OperationResult</span><span style="color: #a6a0e0;">.</span><span style="color: #00d2d2;">OK</span> 
+	{ ResponseResource <span style="color: #a6a0e0;">=</span> Products };</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+</div>
+<!--EndFragment-->
+<p>Now let&#39;s generate the view. As previously, add a public property of type 
+IList&lt;Product&gt; and name it Products. Add the following code to the template to 
+render the products, as well as a form to add a new product.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">h1</span><span style="color: #7ee0ce;">&gt;</span>List 
+	of products<span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">h1</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">div</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">ul</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #fff977; background: #2a2a2a;">&lt;%</span>
+	<span style="color: #00bfff;">foreach</span> (<span style="color: #00bfff;">var</span> 
+	product <span style="color: #00bfff;">in</span> Products) {
+	<span style="color: #fff977; background: #2a2a2a;">%&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">li</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #fff977; background: #2a2a2a;">&lt;%</span><span style="color: #d0d0d0;">=</span> 
+	product<span style="color: #a6a0e0;">.</span>Name
+	<span style="color: #fff977; background: #2a2a2a;">%&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">li</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #fff977; background: #2a2a2a;">&lt;%</span> }
+	<span style="color: #fff977; background: #2a2a2a;">%&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">ul</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">div</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">div</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">form</span>
+	<span style="color: #fa8072;">method</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;post&quot;</span>
+	<span style="color: #fa8072;">action</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;/products&quot;</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">input</span>
+	<span style="color: #fa8072;">type</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;text&quot;</span>
+	<span style="color: #fa8072;">name</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;name&quot;</span>
+	<span style="color: #7ee0ce;">/&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">input</span>
+	<span style="color: #fa8072;">type</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;submit&quot;</span>
+	<span style="color: #fa8072;">value</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;Add 
+	product&quot;</span> <span style="color: #7ee0ce;">/&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">form</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">div</span><span style="color: #7ee0ce;">&gt;</span></p>
+</div>
+<!--EndFragment-->
+<p>We&#39;re asking the browser to POST the content of the form to /products. If you 
+try to run the page and submit the form, you&#39;ll notice that OpenRasta comes back 
+with a 405 response code, telling us we need to implement a Post method on our 
+handler. Let&#39;s add it to our handler.</p>
+<h2>Using raw form data</h2>
+<p>OpenRasta will try to automatically match the content of a form with the 
+parameters on the method you defined on your handler.</p>
+<p>In the case of our form, we have input elements that have a name. Multiple 
+elements can share the same name.</p>
+<p>At the lowest level, forms can be processed as an IDictionary&lt;string,string[]&gt;, 
+where the keys are the name attributes on form items, and the value is an array 
+of values, one per input element. Let&#39;s go ahead and add a Post method 
+processing the form data and returning the list of products.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00d2d2;">
+	OperationResult</span> Post(<span style="color: #92e4d6;">IDictionary</span><span style="color: #a6a0e0;">&lt;</span><span style="color: #00bfff;">string</span>,
+	<span style="color: #00bfff;">string</span>[]<span style="color: #a6a0e0;">&gt;</span> 
+	formData)</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	Products<span style="color: #a6a0e0;">.</span>Add(<span style="color: #00bfff;">new</span>
+	<span style="color: #00d2d2;">Product</span> { Name
+	<span style="color: #a6a0e0;">=</span> formData[<span style="color: #fa8072;">&quot;name&quot;</span>][<span style="color: #80ff00;">0</span>] 
+	});</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">return</span> <span style="color: #00bfff;">
+	new</span> <span style="color: #00d2d2;">OperationResult</span><span style="color: #a6a0e0;">.</span><span style="color: #00d2d2;">Created</span> 
+	{ ResponseResource <span style="color: #a6a0e0;">=</span> Products };</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+</div>
+<!--EndFragment-->
+<p>You can now run the page and add a product, and the product will have been 
+added.</p>
+<p class="style1">
+<object id="adding_macpro" data="../img/Create-First-Site/adding_macpro.swf" style="width: 599px; height: 327px" type="application/x-shockwave-flash">
+	<param name="movie" value="../img/Create-First-Site/adding_macpro.swf" />
+	<param name="quality" value="High" />
+</object>
+</p>
+<h2>Matching form data by name</h2>
+<p>As our page is now functional, it is time to refactor. In the previous example, we 
+used the input name as a string from the raw dictionary containing all the form 
+data. Let&#39;s refactor our handler to let OpenRasta match names and values on its 
+own.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00d2d2;">
+	OperationResult</span> Post(<span style="color: #00bfff;">string</span> 
+	name)</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	Products<span style="color: #a6a0e0;">.</span>Add(<span style="color: #00bfff;">new</span>
+	<span style="color: #00d2d2;">Product</span> { Name
+	<span style="color: #a6a0e0;">=</span> name });</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">return</span> <span style="color: #00bfff;">
+	new</span> <span style="color: #00d2d2;">OperationResult</span><span style="color: #a6a0e0;">.</span><span style="color: #00d2d2;">OK</span> 
+	{ ResponseResource <span style="color: #a6a0e0;">=</span> Products };</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+</div>
+<!--EndFragment-->
+<p>If you run the page, you&#39;ll notice that the matching algorithm assigned the 
+form data to the name parameter.</p>
+<p>Of course, you&#39;re not limited to strings. Let&#39;s add a StockCount property to 
+our Product class, a stockCount parameter to our Post method, and another text 
+field in the view to enter the values.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

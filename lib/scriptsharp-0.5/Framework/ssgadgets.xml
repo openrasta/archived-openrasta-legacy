@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ssgadgets</name>
+    </assembly>
+    <members>
+        <member name="T:System.Gadgets.TimeService">
+            <summary>
+            A service that enables retrieving time and time zone information.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.EnvironmentService">
+            <summary>
+            Represents the current machine.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.Gadget">
+            <summary>
+            Represents the current gadget.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.GadgetSettings">
+            <summary>
+            Allows reading and writing settings for the gadget.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.SidebarDockSide">
+            <summary>
+            Represents side of the screen where the sidebar is docked.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.GadgetSettingsEvent">
+            <summary>
+            Allows handling cancelation and closing of the gadget's settings dialog.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.SoundService">
+            <summary>
+            A service that enables playing sounds.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.SidebarTimeZone">
+            <summary>
+            Contains information about a particular time zone.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.Sidebar">
+            <summary>
+            Represents the sidebar behavior associated with the gadget.
+            </summary>
+        </member>
+        <member name="T:System.Gadgets.GadgetFlyout">
+            <summary>
+            Represents the flyout associated with the gadget.
+            </summary>
+        </member>
+    </members>
+</doc>

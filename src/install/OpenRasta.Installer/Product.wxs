@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?ifndef RootPath ?>
+<?define RootPath = "..\..\..\bin\Release" ?>
+<?endif?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="4d62afdb-296e-4fb0-8b68-f5c73145b19b"
+           Name="OpenRasta $(var.BuildVersionMajor).$(var.BuildVersionMinor) $(var.ReleaseName)" Language="1033" Version="$(var.BuildVersionMajor).$(var.BuildVersionMinor).$(var.BuildVersionBuild).$(var.BuildVersionRevision)" Manufacturer="Caffeine IT - naughtyProd Limited" UpgradeCode="ed7ee4a1-5eeb-44b8-8ca4-3332ef1e32c5">
+
+
+    <Package Id='*' InstallerVersion="300" Compressed="yes" Description="OpenRasta $(var.BuildVersionMajor).$(var.BuildVersionMinor) $(var.ReleaseName)"  />
+    <Upgrade Id="ed7ee4a1-5eeb-44b8-8ca4-3332ef1e32c5">
+      <UpgradeVersion Property="OLD_VERSIONS"
+                      Minimum="$(var.BuildVersionMajor).$(var.BuildVersionMinor).$(var.BuildVersionBuildPrefix)"
+                      Maximum="$(var.BuildVersionMajor).$(var.BuildVersionMinor).$(var.BuildVersionBuild)"
+                      IncludeMinimum="yes"
+                      IncludeMaximum="no"
+                      MigrateFeatures="yes"
+                      />
+    </Upgrade>
+    <InstallExecuteSequence>
+      <RemoveExistingProducts Before="InstallInitialize" />
+      <Custom Action="VS90InstallVSTemplates" Before="InstallFinalize" />
+    </InstallExecuteSequence>
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <WixVariable Overridable="yes" Id="WixUILicenseRtf" Value="license.rtf" />
+
+    <!-- Pick up Visual Studio properties from WixVSExtension -->
+    <PropertyRef Id="VS90_ITEMTEMPLATES_DIR" />
+    <PropertyRef Id="VS90_PROJECTTEMPLATES_DIR" />
+
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="OPENRASTA_COMMON" Name="OpenRasta">
+          <Directory Id="OPENRASTA_2_0" Name="$(var.BuildVersionMajor).$(var.BuildVersionMinor)">
+            <Directory Id="FWKTARGET_20" Name="net-20">
+              <Component Id="Core_20" Guid="47a8fec2-dbbc-47ca-b216-59db67bfd439">
+                <File Source="$(var.RootPath)\net-20\OpenRasta.dll" Id="OpenRasta.dll.20" />
+                <File Source="$(var.RootPath)\net-20\OpenRasta.pdb" Id="OpenRasta.pdb.20" />
+                <File Source="$(var.RootPath)\net-20\OpenRasta.xml" Id="OpenRasta.xml.20" />
+              </Component>
+              <Component Id="AspNet_20_Hosting" Guid="689bc716-0e30-4c8d-9d89-ba8c13d6e815">
+                <File Source="$(var.RootPath)\net-20\OpenRasta.Hosting.AspNet.dll" Id="OpenRasta.Hosting.AspNet.dll.20" />
+              </Component>
+
+              <Component Id="AspNet_20_WebForms" Guid="66b777c0-c26b-4772-9491-b312da51c01a">
+                <File Source="$(var.RootPath)\net-20\OpenRasta.Codecs.WebForms.dll" Id="OpenRasta.Codecs.WebForms.dll.20" />
+              </Component>
+              <Component Id="CASTLE_10_20" Guid="4228d940-928b-4f34-ace7-cc376325377e">
+                <File Source="$(var.RootPath)\net-20\OpenRasta.DI.Windsor-1.0.rc3.dll" Id="OpenRasta.DI.Windsor_1.0.rc3.dll.20" />
+                <File Source="$(var.RootPath)\net-20\OpenRasta.DI.Windsor-1.0.rc3.pdb" Id="OpenRasta.DI.Windsor_1.0.rc3.pdb.20"/>
+                <File Source="$(var.RootPath)\net-20\OpenRasta.DI.Windsor-1.0.rc3.xml" Id="OpenRasta.DI.Windsor_1.0.rc3.xml.20"/>
+              </Component>
+            </Directory>
+
+            <Directory Id="FWKTARGET_30" Name="net-30">
+              <Component Id="Core_30" Guid="5b6a92ed-97ba-4268-b0b1-8b9a8b766c97">
+                <File Source="$(var.RootPath)\net-30\OpenRasta.dll" Id="OpenRasta.dll.30" />
+                <File Source="$(var.RootPath)\net-30\OpenRasta.pdb" Id="OpenRasta.pdb.30"  />
+                <File Source="$(var.RootPath)\net-30\OpenRasta.xml" Id="OpenRasta.xml.30"  />
+              </Component>
+              <Component Id="AspNet_30_Hosting" Guid="ff72d3da-1778-4f49-bc4c-80ad077d060c">
+                <File Source="$(var.RootPath)\net-30\OpenRasta.Hosting.AspNet.dll" Id="OpenRasta.Hosting.AspNet.dll.30" />
+              </Component>
+
+              <Component Id="AspNet_30_WebForms" Guid="55ca16f8-6542-47cb-a67d-82b48fd08dd3">
+                <File Source="$(var.RootPath)\net-30\OpenRasta.Codecs.WebForms.dll" Id="OpenRasta.Codecs.WebForms.dll.30" />
+              </Component>
+              <Component Id="CASTLE_10_30" Guid="995210a5-d982-45a0-b6a6-37678e7e9dcb">
+                <File Source="$(var.RootPath)\net-30\OpenRasta.DI.Windsor-1.0.rc3.dll" Id="OpenRasta.DI.Windsor_1.0.rc3.dll.30" />
+                <File Source="$(var.RootPath)\net-30\OpenRasta.DI.Windsor-1.0.rc3.pdb" Id="OpenRasta.DI.Windsor_1.0.rc3.pdb.30" />
+                <File Source="$(var.RootPath)\net-30\OpenRasta.DI.Windsor-1.0.rc3.xml" Id="OpenRasta.DI.Windsor_1.0.rc3.xml.30" />
+              </Component>
+
+            </Directory>
+            <Directory Id="FWKTARGET_35" Name="net-35">
+
+              <Component Id="Core_35" Guid="fefc4e6b-82b7-4a78-b246-c09e0438c96a">
+                <File Source="$(var.RootPath)\net-35\OpenRasta.dll" Id="OpenRasta.dll.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.pdb" Id="OpenRasta.pdb.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.xml" Id="OpenRasta.xml.35" />
+              </Component>
+
+              <Component Id="AspNet_35_Hosting" Guid="c73f2f63-7b19-4644-a950-05cac53d3213">
+                <File Source="$(var.RootPath)\net-35\OpenRasta.Hosting.AspNet.dll" Id="OpenRasta.Hosting.AspNet.dll.35" />
+              </Component>
+
+              <Component Id="AspNet_35_WebForms" Guid="ec12403a-1ac3-42fa-a9f8-93707fb44316">
+                <File Source="$(var.RootPath)\net-35\OpenRasta.Codecs.WebForms.dll" Id="OpenRasta.Codecs.WebForms.dll.35" />
+              </Component>
+              <Component Id="CASTLE_10_35" Guid="20d1f037-28f5-4a36-b4aa-d66ba04b305f">
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Windsor-1.0.rc3.dll" Id="OpenRasta.DI.Windsor_1.0.rc3.dll.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Windsor-1.0.rc3.pdb" Id="OpenRasta.DI.Windsor_1.0.rc3.pdb.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Windsor-1.0.rc3.xml" Id="OpenRasta.DI.Windsor_1.0.rc3.xml.35" />
+              </Component>
+              <Component Id="CASTLE_11_35" Guid="3126631a-7f79-4af9-bd98-783359919a05">
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Windsor.dll" Id="OpenRasta.DI.Windsor.dll.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Windsor.pdb" Id="OpenRasta.DI.Windsor.pdb.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Windsor.xml" Id="OpenRasta.DI.Windsor.xml.35" />
+              </Component>
+              <Component Id="NINJECT_20_35" Guid="3d695a43-c2d8-4621-86b6-b79875ff4503">
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Ninject.dll" Id="OpenRasta.DI.Ninject.dll.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Ninject.pdb" Id="OpenRasta.DI.Ninject.pdb.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.DI.Ninject.xml" Id="OpenRasta.DI.Ninject.xml.35" />
+              </Component>
+              <Component Id="SharpView_35" Guid="8a8566dc-121a-4372-8886-5e500d64fc34">
+                <File Source="$(var.RootPath)\net-35\OpenRasta.Codecs.SharpView.dll" Id="OpenRasta.Codecs.SharpView.dll.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.Codecs.SharpView.pdb" Id="OpenRasta.Codecs.SharpView.pdb.35" />
+                <File Source="$(var.RootPath)\net-35\OpenRasta.Codecs.SharpView.xml" Id="OpenRasta.Codecs.SharpView.xml.35" />
+              </Component>
+            </Directory>
+
+            <Directory Id="VS90_PROJECTTEMPLATES_DIR" Name="ProjectTemplates.VS90">
+              <Directory Id="VS90.ProjectTemplates.CS" Name="CSharp">
+                <Component Id="VSIDE_aspnet35_project" Guid="8b6025e5-8928-493c-ac55-13a9c45e2835" Win64="no">
+                  <File Source="$(var.RootPath)\vside\aspnet35.zip" Id="aspnet35.zip" />
+                </Component>
+              </Directory>
+
+            </Directory>
+            <Directory Id="VS90_ITEMTEMPLATES_DIR" Name="ItemTemplates.VS90">
+              <Directory Id="VS90.ItemTemplates.CS" Name="CSharp">
+                <Component Id="VSIDE_aspnet35_item_view" Guid="511f3c1b-f38a-45f6-8861-a9eb0f48c729" Win64="no">
+                  <File Source="$(var.RootPath)\vside\aspnet35-item-view.zip" Id="aspnet35_item_view.zip" KeyPath="yes" />
+                </Component>
+                <Component Id="VSIDE_aspnet35_item_contentview" Guid="41b45176-7ed8-4387-8d1d-daac7fba1d5e" Win64="no">
+                  <File Source="$(var.RootPath)\vside\aspnet35-item-contentview.zip" Id="aspnet35_item_contentview.zip" KeyPath="yes" />
+                </Component>
+                <Component Id="VSIDE_aspnet35_item_masterpage" Guid="8ad5ffc8-ebdc-4d8a-bc90-79be246cc351" Win64="no">
+                  <File Source="$(var.RootPath)\vside\aspnet35-item-masterpage.zip" Id="aspnet35_item_masterpage.zip" KeyPath="yes" />
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="OpenRasta" Title="OpenRasta" Level="1" ConfigurableDirectory="OPENRASTA_COMMON">
+
+      <Feature Id="OpenRasta_Core" Title="Core library" TypicalDefault="install" Level="1">
+        <ComponentRef Id="Core_20"/>
+        <ComponentRef Id="Core_30"/>
+        <ComponentRef Id="Core_35"/>
+      </Feature>
+      <Feature Id="Hosts" Title="Hosting" Level="1" TypicalDefault="install">
+        <Feature Id="AspNetHosting" Title="Asp.net Hosting" Level="1">
+          <ComponentRef Id="AspNet_20_Hosting"/>
+          <ComponentRef Id="AspNet_30_Hosting"/>
+          <ComponentRef Id="AspNet_35_Hosting"/>
+        </Feature>
+      </Feature>
+      <Feature Id="Containers" Title="IoC Containers" Level="1">
+        <Feature Id="CASTLE_10" Title="Castle Integration (1.0-rc3)" Level="1000">
+          <ComponentRef Id="CASTLE_10_20"/>
+          <ComponentRef Id="CASTLE_10_30"/>
+          <ComponentRef Id="CASTLE_10_35"/>
+        </Feature>
+        <Feature Id="CASTLE_11" Title="Castle Integration (2.0)" Level="1">
+          <ComponentRef Id="CASTLE_11_35" />
+        </Feature>
+        <Feature Id="NINJECT_20" Title="Ninject Integration" Level="1">
+		  <ComponentRef Id="NINJECT_20_35"/>
+        </Feature>
+      </Feature>
+      <Feature Id="Codecs" Title="Codecs" Level="1">
+        <Feature Id="SharpView" Title="SharpView Codec (Experimental)" Description="Provides support for the SharpView codec, an html-producing engine that lets you write html pages using C#." Level="1">
+          <ComponentRef Id="SharpView_35" />
+        </Feature>
+        <Feature Id="AspNetWebForms" Title="WebForms support" Description="Provides support for using webforms (aspx pages) as a codec in OpenRasta." Level="1">
+          <ComponentRef Id="AspNet_20_WebForms" />
+          <ComponentRef Id="AspNet_30_WebForms" />
+          <ComponentRef Id="AspNet_35_WebForms" />
+        </Feature>
+      </Feature>
+      <Feature Id="VSIDE_Integration" Title="Visual Studio 2008 Integration" Level="0">
+        <Condition Level="1">
+          VS90_ITEMTEMPLATES_DIR and VS90_PROJECTTEMPLATES_DIR
+        </Condition>
+        <ComponentRef Id="VSIDE_aspnet35_project" />
+        <ComponentRef Id="VSIDE_aspnet35_item_view" />
+        <ComponentRef Id="VSIDE_aspnet35_item_contentview" />
+        <ComponentRef Id="VSIDE_aspnet35_item_masterpage" />
+      </Feature>
+    </Feature>
+
+    <UIRef Id="WixUI_Mondo" />
+  </Product>
+</Wix>

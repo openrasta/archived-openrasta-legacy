@@ -1,0 +1,1882 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.NHibernateIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection">
+            <summary>
+            Defines size, enumerators, and synchronization methods for strongly
+            typed collections of <see cref="T:System.Reflection.FieldInfo"/> elements.
+            </summary>
+            <remarks>
+            <b>IFieldInfoCollection</b> 
+            provides an <see cref="T:System.Collections.ICollection"/> that is strongly typed for 
+            <see cref="T:System.Reflection.FieldInfo"/> elements.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection.CopyTo(System.Reflection.FieldInfo[],System.Int32)">
+            <summary>
+            Copies the entire <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/> 
+            to a one-dimensional <see cref="T:System.Array"/>
+            of <see cref="T:System.Reflection.FieldInfo"/> elements, 
+            starting at the specified index of the target array.
+            </summary>
+            <param name="array">
+            The one-dimensional <see cref="T:System.Array"/> that is the destination 
+            of the <see cref="T:System.Reflection.FieldInfo"/> elements copied 
+            from the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/>.
+            The <b>Array</b> must have zero-based indexing.</param>
+            <param name="arrayIndex">
+            The zero-based index in <paramref name="array"/>
+            at which copying begins.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="array"/> is a null reference.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="arrayIndex"/> is less than zero.</exception>
+            <exception cref="T:System.ArgumentException"><para>
+            <paramref name="arrayIndex"/> is equal to or 
+            greater than the length of <paramref name="array"/>.
+            </para><para>-or-</para><para>
+            The number of elements in the source 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/> is greater
+            than the available space from <paramref name="arrayIndex"/> 
+            to the end of the destination <paramref name="array"/>.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ICollection.CopyTo(System.Array,System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection.GetEnumerator">
+            <summary>
+            Returns an <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator"/> that can
+            iterate through the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/>.
+            </summary>
+            <returns>
+            An <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator"/> for the entire 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/>.</returns>
+            <remarks>
+            Please refer to 
+            <see cref="M:System.Collections.IEnumerable.GetEnumerator"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection.Count">
+            <summary>
+            Gets the number of elements contained in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/>.
+            </summary>
+            <value>
+            The number of elements contained in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/>.
+            </value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ICollection.Count"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection.IsSynchronized">
+            <summary>
+            Gets a value indicating whether access to the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/> 
+            is synchronized (thread-safe).
+            </summary>
+            <value>
+            <c>true</c> if access to the 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/> 
+            is synchronized (thread-safe); otherwise, <c>false</c>. 
+            The default is <c>false</c>.</value>
+            <remarks>
+            Please refer to 
+            <see cref="P:System.Collections.ICollection.IsSynchronized"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection.SyncRoot">
+            <summary>
+            Gets an object that can be used to synchronize access to the 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/>.
+            </summary>
+            <value>
+            An object that can be used to synchronize access to the 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection"/>.
+            </value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ICollection.SyncRoot"/> for details.
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList">
+            <summary>
+            Represents a strongly typed collection 
+            of <see cref="T:System.Reflection.FieldInfo"/> objects 
+            that can be individually accessed by index.
+            </summary>
+            <remarks>
+            <b>IFieldInfoList</b> 
+            provides an <see cref="T:System.Collections.IList"/> that is strongly typed for 
+            <see cref="T:System.Reflection.FieldInfo"/> elements.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.Add(System.Reflection.FieldInfo)">
+            <summary>
+            Adds a <see cref="T:System.Reflection.FieldInfo"/> to the end 
+            of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to be added 
+            to the end of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> index at which 
+            the <paramref name="value"/> has been added.</returns>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> is read-only.
+            </para><para>-or-</para><para>
+            The <b>IFieldInfoList</b> has a fixed size.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IList.Add(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.Clear">
+            <summary>
+            Removes all elements from the 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            </summary>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> is read-only.
+            </para><para>-or-</para><para>
+            The <b>IFieldInfoList</b> has a fixed size.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IList.Clear"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.Contains(System.Reflection.FieldInfo)">
+            <summary>
+            Determines whether the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>
+            contains the specified <see cref="T:System.Reflection.FieldInfo"/> element.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to locate 
+            in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            <c>true</c> if <paramref name="value"/> is found in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>; otherwise, <c>false</c>.
+            </returns>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IList.Contains(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.IndexOf(System.Reflection.FieldInfo)">
+            <summary>
+            Returns the zero-based index of the first occurrence 
+            of the specified <see cref="T:System.Reflection.FieldInfo"/> 
+            in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to locate 
+            in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            The zero-based index of the first occurrence of the specified 
+            <paramref name="value"/> in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>, 
+            if found; otherwise, -1.</returns>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IList.IndexOf(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.Insert(System.Int32,System.Reflection.FieldInfo)">
+            <summary>
+            Inserts a <see cref="T:System.Reflection.FieldInfo"/> element into the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> at the specified index.
+            </summary>
+            <param name="index">
+            The zero-based index at which 
+            <paramref name="value"/> should be inserted.</param>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to insert 
+            into the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            This argument may be a null reference.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="index"/> is greater than
+            <see cref="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection.Count"/>.</para>
+            </exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> is read-only.
+            </para><para>-or-</para><para>
+            The <b>IFieldInfoList</b> has a fixed size.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IList.Insert(System.Int32,System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.Remove(System.Reflection.FieldInfo)">
+            <summary>
+            Removes the first occurrence of the specified 
+            <see cref="T:System.Reflection.FieldInfo"/> from the 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to remove 
+            from the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            This argument may be a null reference.
+            </param>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> is read-only.
+            </para><para>-or-</para><para>
+            The <b>IFieldInfoList</b> has a fixed size.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IList.Remove(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.RemoveAt(System.Int32)">
+            <summary>
+            Removes the element at the specified index of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/>.
+            </summary>
+            <param name="index">
+            The zero-based index of the element to remove.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="index"/> is equal to or greater than
+            <see cref="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection.Count"/>.</para>
+            </exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> is read-only.
+            </para><para>-or-</para><para>
+            The <b>IFieldInfoList</b> has a fixed size.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IList.RemoveAt(System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.IsFixedSize">
+            <summary>
+            Gets a value indicating whether the 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> has a fixed size.
+            </summary>
+            <value>
+            <c>true</c> if the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> 
+            has a fixed size; otherwise, <c>false</c>. 
+            The default is <c>false</c>.</value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.IList.IsFixedSize"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> is read-only.
+            </summary>
+            <value>
+            <c>true</c> if the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> 
+            is read-only; otherwise, <c>false</c>. 
+            The default is <c>false</c>.</value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.IList.IsReadOnly"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:System.Reflection.FieldInfo"/> 
+            element at the specified index.
+            </summary>
+            <param name="index">
+            The zero-based index of the <see cref="T:System.Reflection.FieldInfo"/> 
+            element to get or set.</param>
+            <value>
+            The <see cref="T:System.Reflection.FieldInfo"/> element 
+            at the specified <paramref name="index"/>.
+            </value>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="index"/> is equal to or greater than
+            <see cref="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoCollection.Count"/>.</para>
+            </exception>
+            <exception cref="T:System.NotSupportedException">
+            The property is set, and the 
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoList"/> is read-only.</exception>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.IList.Item(System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator">
+            <summary>
+            Supports type-safe iteration over a collection that contains 
+            <see cref="T:System.Reflection.FieldInfo"/> elements.
+            </summary>
+            <remarks>
+            <b>IFieldInfoEnumerator</b> 
+            provides an <see cref="T:System.Collections.IEnumerator"/> that is strongly typed for 
+            <see cref="T:System.Reflection.FieldInfo"/> elements.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator.MoveNext">
+            <summary>
+            Advances the enumerator to the next element of the collection.
+            </summary>
+            <returns>
+            <c>true</c> if the enumerator was successfully advanced 
+            to the next element; <c>false</c> if the enumerator has 
+            passed the end of the collection.</returns>
+            <exception cref="T:System.InvalidOperationException">
+            The collection was modified after the enumerator was created.
+            </exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IEnumerator.MoveNext"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator.Reset">
+            <summary>
+            Sets the enumerator to its initial position,
+            which is before the first element in the collection.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            The collection was modified after the enumerator was created.
+            </exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.IEnumerator.Reset"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator.Current">
+            <summary>
+            Gets the current <see cref="T:System.Reflection.FieldInfo"/> 
+            element in the collection.
+            </summary>
+            <value>
+            The current <see cref="T:System.Reflection.FieldInfo"/> 
+            element in the collection.</value>
+            <exception cref="T:System.InvalidOperationException"><para>
+            The enumerator is positioned before the first element 
+            of the collection or after the last element.
+            </para><para>-or-</para><para>
+            The collection was modified after the enumerator was created.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.IEnumerator.Current"/> for details, 
+            but note that <b>Current</b> fails if the collection was modified 
+            since the last successful call to <see cref="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator.MoveNext"/> or 
+            <see cref="M:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator.Reset"/>.
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection">
+            <summary>
+            Implements a strongly typed collection
+            of <see cref="T:System.Reflection.FieldInfo"/> elements.
+            </summary>
+            <remarks><para>
+            <b>FieldInfoCollection</b>
+            provides an <see cref="T:System.Collections.ArrayList"/> that is strongly typed for
+            <see cref="T:System.Reflection.FieldInfo"/> elements.
+            </para><para>
+            The <see cref="P:System.Reflection.MemberInfo.Name"/> property
+            of the <see cref="T:System.Reflection.FieldInfo"/> class can be used as a key
+            to locate elements in the <b>FieldInfoCollection</b>.
+            </para><para>
+            The collection may contain multiple identical keys. All key access
+            methods return the first occurrence of the specified key, if found.
+            Access by key is an O(<em>N</em>) operation, where <em>N</em> is the
+            current value of the <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/> property.
+            </para></remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.#ctor(Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Data)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> class
+            with the specified data container.
+            </summary>
+            <param name="data">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Data"/> object to share with another instance.
+            </param>
+            <remarks>
+            This constructor is used to create read-only wrappers.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.#ctor">
+            <overloads>
+            Initializes a new instance of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> class.
+            </overloads>
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> class
+            that is empty and has the default initial capacity.
+            </summary>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.#ctor"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> class
+            that is empty and has the specified initial capacity.
+            </summary>
+            <param name="capacity">
+            The initial number of elements that the new
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> can contain.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="capacity"/> is less than zero.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.#ctor(System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.#ctor(Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> class that
+            contains elements copied from the specified collection and that
+            has the same initial capacity as the number of elements copied.
+            </summary>
+            <param name="collection">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            whose elements are copied to the new collection.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="collection"/> is a null reference.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.#ctor(System.Collections.ICollection)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.#ctor(System.Reflection.FieldInfo[])">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> class
+            that contains elements copied from the specified
+            <see cref="T:System.Reflection.FieldInfo"/> array and that has the
+            same initial capacity as the number of elements copied.
+            </summary>
+            <param name="array">
+            An <see cref="T:System.Array"/> of <see cref="T:System.Reflection.FieldInfo"/>
+            elements that are copied to the new collection.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="array"/> is a null reference.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.#ctor(System.Collections.ICollection)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Add(System.Reflection.FieldInfo)">
+            <summary>
+            Adds a <see cref="T:System.Reflection.FieldInfo"/> to the end
+            of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to be added
+            to the end of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            index at which the <paramref name="value"/> has been added.
+            </returns>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.
+            </para><para>-or-</para><para>
+            The <b>FieldInfoCollection</b>
+            already contains <paramref name="value"/>,
+            and the <b>FieldInfoCollection</b>
+            ensures that all elements are unique.</para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Add(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.System#Collections#IList#Add(System.Object)">
+            <summary>
+            Adds an <see cref="T:System.Object"/> to the end of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="value">
+            The object to be added to the end of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>. This argument
+            must be compatible with <see cref="T:System.Reflection.FieldInfo"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            index at which the <paramref name="value"/> has been added.
+            </returns>
+            <exception cref="T:System.InvalidCastException">
+            <paramref name="value"/> is not compatible with
+            <see cref="T:System.Reflection.FieldInfo"/>.</exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.
+            </para><para>-or-</para><para>
+            The <b>FieldInfoCollection</b>
+            already contains <paramref name="value"/>,
+            and the <b>FieldInfoCollection</b>
+            ensures that all elements are unique.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Add(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.AddRange(Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection)">
+            <overloads>
+            Adds a range of elements to the end of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </overloads>
+            <summary>
+            Adds the elements of another collection to the end of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="collection">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> whose elements
+            should be added to the end of the current collection.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="collection"/> is a null reference.</exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.
+            </para><para>-or-</para><para>
+            The <b>FieldInfoCollection</b> already contains one
+            or more elements in <paramref name="collection"/>,
+            and the <b>FieldInfoCollection</b>
+            ensures that all elements are unique.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.AddRange(System.Collections.ICollection)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.AddRange(System.Reflection.FieldInfo[])">
+            <summary>
+            Adds the elements of a <see cref="T:System.Reflection.FieldInfo"/> array
+            to the end of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="array">
+            An <see cref="T:System.Array"/> of <see cref="T:System.Reflection.FieldInfo"/>
+            elements that should be added to the end of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="array"/> is a null reference.</exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.
+            </para><para>-or-</para><para>
+            The <b>FieldInfoCollection</b> already contains
+            one or more elements in <paramref name="array"/>,
+            and the <b>FieldInfoCollection</b>
+            ensures that all elements are unique.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.AddRange(System.Collections.ICollection)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.BinarySearch(System.Reflection.FieldInfo,System.Collections.IComparer)">
+            <overloads>
+            Uses a binary search algorithm to locate a specific element
+            in the sorted <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            or a portion of it.
+            </overloads>
+            <summary>
+            Searches the entire sorted <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            for an <see cref="T:System.Reflection.FieldInfo"/> element using the
+            specified comparer and returns the zero-based index of the element.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to locate
+            in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <param name="comparer">
+            <para>The <see cref="T:System.Collections.IComparer"/> implementation
+            to use when comparing elements.</para>
+            <para>-or-</para>
+            <para>A null reference to use the <see cref="T:System.IComparable"/>
+            implementation of each element.</para></param>
+            <returns>
+            The zero-based index of <paramref name="value"/> in the sorted
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>, if <paramref name="value"/>
+            is found; otherwise, a negative number, which is the bitwise
+            complement of the index of the next element that is larger than
+            <paramref name="value"/> or, if there is no larger element, the
+            bitwise complement of <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/>.</returns>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="comparer"/> is a null reference,
+            and FieldInfo does not implement
+            the <see cref="T:System.IComparable"/> interface.</exception>
+            <remarks>
+            Please refer to
+            <see cref="M:System.Collections.ArrayList.BinarySearch(System.Object,System.Collections.IComparer)"/>
+            for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.BinarySearch(System.Int32,System.Int32,System.Reflection.FieldInfo,System.Collections.IComparer)">
+            <summary>
+            Searches a section of the sorted
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> for an
+            <see cref="T:System.Reflection.FieldInfo"/> element using the
+            specified comparer and returns the zero-based index of the element.
+            </summary>
+            <param name="index">
+            The zero-based starting index of the range of elements to search.
+            </param>
+            <param name="count">The number of elements to search.</param>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to locate
+            in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <param name="comparer">
+            <para>The <see cref="T:System.Collections.IComparer"/> implementation
+            to use when comparing elements.</para>
+            <para>-or-</para>
+            <para>A null reference to use the <see cref="T:System.IComparable"/>
+            implementation of each element.</para></param>
+            <returns>
+            The zero-based index of <paramref name="value"/> in the sorted
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>, if <paramref name="value"/>
+            is found; otherwise, a negative number, which is the bitwise
+            complement of the index of the next element that is larger than
+            <paramref name="value"/> or, if there is no larger element, the
+            bitwise complement of <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/>.</returns>
+            <exception cref="T:System.ArgumentException"><para>
+            <paramref name="index"/> and <paramref name="count"/>
+            do not denote a valid range of elements in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </para><para>-or-</para><para>
+            <paramref name="comparer"/> is a null reference,
+            and FieldInfo does not implement
+            the <see cref="T:System.IComparable"/> interface.
+            </para></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="count"/> is less than zero.</para>
+            </exception>
+            <remarks>
+            Please refer to
+            <see cref="M:System.Collections.ArrayList.BinarySearch(System.Int32,System.Int32,System.Object,System.Collections.IComparer)"/>
+            for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Clear">
+            <summary>
+            Removes all elements from the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Clear"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Clone">
+            <summary>
+            Creates a shallow copy of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <returns>
+            A shallow copy of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </returns>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Clone"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Contains(System.Reflection.FieldInfo)">
+            <summary>
+            Determines whether the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            contains the specified <see cref="T:System.Reflection.FieldInfo"/> element.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to locate
+            in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            <c>true</c> if <paramref name="value"/> is found in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>; otherwise, <c>false</c>.
+            </returns>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Contains(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.System#Collections#IList#Contains(System.Object)">
+            <summary>
+            Determines whether the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            contains the specified element.
+            </summary>
+            <param name="value">
+            The object to locate in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>. This argument
+            must be compatible with <see cref="T:System.Reflection.FieldInfo"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            <c>true</c> if <paramref name="value"/> is found in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>; otherwise, <c>false</c>.
+            </returns>
+            <exception cref="T:System.InvalidCastException">
+            <paramref name="value"/> is not compatible with
+            <see cref="T:System.Reflection.FieldInfo"/>.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Contains(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.ContainsKey(System.String)">
+            <summary>
+            Determines whether the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> contains
+            the specified <see cref="P:System.Reflection.MemberInfo.Name"/> value.
+            </summary>
+            <param name="key">
+            The <see cref="P:System.Reflection.MemberInfo.Name"/> value to locate
+            in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            <c>true</c> if <paramref name="key"/> is found in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>; otherwise, <c>false</c>.
+            </returns>
+            <remarks>
+            <b>ContainsKey</b> is similar to <see cref="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Contains(System.Reflection.FieldInfo)"/> but
+            compares the specified <paramref name="key"/> to the value
+            of the <see cref="P:System.Reflection.MemberInfo.Name"/> property
+            of each <see cref="T:System.Reflection.FieldInfo"/> element, rather than
+            to the element itself.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.CopyTo(System.Reflection.FieldInfo[])">
+            <overloads>
+            Copies the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            or a portion of it to a one-dimensional array.
+            </overloads>
+            <summary>
+            Copies the entire <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            to a one-dimensional <see cref="T:System.Array"/>
+            of <see cref="T:System.Reflection.FieldInfo"/> elements,
+            starting at the beginning of the target array.
+            </summary>
+            <param name="array">
+            The one-dimensional <see cref="T:System.Array"/> that is the destination
+            of the <see cref="T:System.Reflection.FieldInfo"/> elements copied from the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            The <b>Array</b> must have zero-based indexing.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="array"/> is a null reference.</exception>
+            <exception cref="T:System.ArgumentException">
+            The number of elements in the source
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is greater than
+            the available space in the destination <paramref name="array"/>.
+            </exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.CopyTo(System.Int32,System.Array,System.Int32,System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.CopyTo(System.Reflection.FieldInfo[],System.Int32)">
+            <summary>
+            Copies the entire <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            to a one-dimensional <see cref="T:System.Array"/>
+            of <see cref="T:System.Reflection.FieldInfo"/> elements,
+            starting at the specified index of the target array.
+            </summary>
+            <param name="array">
+            The one-dimensional <see cref="T:System.Array"/> that is the destination
+            of the <see cref="T:System.Reflection.FieldInfo"/> elements copied from the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            The <b>Array</b> must have zero-based indexing.</param>
+            <param name="arrayIndex">
+            The zero-based index in <paramref name="array"/>
+            at which copying begins.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="array"/> is a null reference.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="arrayIndex"/> is less than zero.</exception>
+            <exception cref="T:System.ArgumentException"><para>
+            <paramref name="arrayIndex"/> is equal to or
+            greater than the length of <paramref name="array"/>.
+            </para><para>-or-</para><para>
+            The number of elements in the source
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is greater
+            than the available space from <paramref name="arrayIndex"/>
+            to the end of the destination <paramref name="array"/>.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.CopyTo(System.Int32,System.Array,System.Int32,System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+            <summary>
+            Copies the entire <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            to a one-dimensional <see cref="T:System.Array"/>,
+            starting at the specified index of the target array.
+            </summary>
+            <param name="array">
+            The one-dimensional <see cref="T:System.Array"/> that is the destination
+            of the <see cref="T:System.Reflection.FieldInfo"/> elements copied from the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            The <b>Array</b> must have zero-based indexing.</param>
+            <param name="arrayIndex">
+            The zero-based index in <paramref name="array"/>
+            at which copying begins.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="array"/> is a null reference.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="arrayIndex"/> is less than zero.</exception>
+            <exception cref="T:System.ArgumentException"><para>
+            <paramref name="array"/> is multidimensional.
+            </para><para>-or-</para><para>
+            <paramref name="arrayIndex"/> is equal to or
+            greater than the length of <paramref name="array"/>.
+            </para><para>-or-</para><para>
+            The number of elements in the source
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is greater
+            than the available space from <paramref name="arrayIndex"/>
+            to the end of the destination <paramref name="array"/>.
+            </para></exception>
+            <exception cref="T:System.InvalidCastException">
+            <see cref="T:System.Reflection.FieldInfo"/>
+            cannot be cast automatically to the type of the destination
+            <paramref name="array"/>.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.CopyTo(System.Int32,System.Array,System.Int32,System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.GetByKey(System.String)">
+            <summary>
+            Gets the <see cref="T:System.Reflection.FieldInfo"/> element
+            associated with the first occurrence of the specified
+            <see cref="P:System.Reflection.MemberInfo.Name"/> value.
+            </summary>
+            <param name="key">
+            The <see cref="P:System.Reflection.MemberInfo.Name"/>
+            value whose element to get.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            The <see cref="T:System.Reflection.FieldInfo"/> element associated
+            with the first occurrence of the specified
+            <paramref name="key"/>, if found; otherwise,
+            a null reference.
+            </returns>
+            <remarks>
+            <b>GetByKey</b> compares the specified <paramref name="key"/>
+            to the value of the <see cref="P:System.Reflection.MemberInfo.Name"/>
+            property of each <see cref="T:System.Reflection.FieldInfo"/> element,
+            and returns the first matching element.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.GetEnumerator">
+            <summary>
+            Returns an <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator"/> that can
+            iterate through the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <returns>
+            An <see cref="T:Castle.Facilities.NHibernateIntegration.Util.IFieldInfoEnumerator"/> for the entire
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </returns>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.GetEnumerator"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an <see cref="T:System.Collections.IEnumerator"/> that can iterate through the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> for the entire
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </returns>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.GetEnumerator"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.IndexOf(System.Reflection.FieldInfo)">
+            <summary>
+            Returns the zero-based index of the first occurrence
+            of the specified <see cref="T:System.Reflection.FieldInfo"/> in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object
+            to locate in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            The zero-based index of the first occurrence of
+            <paramref name="value"/> in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>,
+            if found; otherwise, -1.</returns>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.IndexOf(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.System#Collections#IList#IndexOf(System.Object)">
+            <summary>
+            Returns the zero-based index of the first occurrence
+            of the specified <see cref="T:System.Object"/> in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="value">
+            The object to locate in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument must be compatible with <see cref="T:System.Reflection.FieldInfo"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            The zero-based index of the first occurrence of
+            <paramref name="value"/> in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>,
+            if found; otherwise, -1.</returns>
+            <exception cref="T:System.InvalidCastException">
+            <paramref name="value"/> is not compatible with
+            <see cref="T:System.Reflection.FieldInfo"/>.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.IndexOf(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.IndexOfKey(System.String)">
+            <summary>
+            Returns the zero-based index of the first occurrence of the
+            specified <see cref="P:System.Reflection.MemberInfo.Name"/> value
+            in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="key">
+            The <see cref="P:System.Reflection.MemberInfo.Name"/> value
+            to locate in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <returns>
+            The zero-based index of the first occurrence of
+            <paramref name="key"/> in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>,
+            if found; otherwise, -1.</returns>
+            <remarks>
+            <b>IndexOfKey</b> is similar to <see cref="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.IndexOf(System.Reflection.FieldInfo)"/> but
+            compares  the specified <paramref name="key"/> to the value
+            of the <see cref="P:System.Reflection.MemberInfo.Name"/> property
+            of each <see cref="T:System.Reflection.FieldInfo"/> element, rather than
+            to the element itself.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Insert(System.Int32,System.Reflection.FieldInfo)">
+            <summary>
+            Inserts a <see cref="T:System.Reflection.FieldInfo"/> element into the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> at the specified index.
+            </summary>
+            <param name="index">
+            The zero-based index at which <paramref name="value"/>
+            should be inserted.</param>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to insert
+            into the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para><para>
+            <paramref name="index"/> is greater than <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/>.
+            </para></exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.
+            </para><para>-or-</para><para>
+            The <b>FieldInfoCollection</b>
+            already contains <paramref name="value"/>,
+            and the <b>FieldInfoCollection</b>
+            ensures that all elements are unique.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Insert(System.Int32,System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.System#Collections#IList#Insert(System.Int32,System.Object)">
+            <summary>
+            Inserts an element into the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> at the specified index.
+            </summary>
+            <param name="index">
+            The zero-based index at which <paramref name="value"/>
+            should be inserted.</param>
+            <param name="value">
+            The object to insert into the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument must be compatible with <see cref="T:System.Reflection.FieldInfo"/>.
+            This argument may be a null reference.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para><para>
+            <paramref name="index"/> is greater than <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/>.
+            </para></exception>
+            <exception cref="T:System.InvalidCastException"><paramref name="value"/>
+            is not compatible with <see cref="T:System.Reflection.FieldInfo"/>.</exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.
+            </para><para>-or-</para><para>
+            The <b>FieldInfoCollection</b>
+            already contains <paramref name="value"/>,
+            and the <b>FieldInfoCollection</b>
+            ensures that all elements are unique.
+            </para></exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Insert(System.Int32,System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.ReadOnly(Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection)">
+            <summary>
+            Returns a read-only wrapper for the specified
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="collection">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> to wrap.</param>
+            <returns>
+            A read-only wrapper around <paramref name="collection"/>.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="collection"/> is a null reference.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.ReadOnly(System.Collections.IList)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Remove(System.Reflection.FieldInfo)">
+            <summary>
+            Removes the first occurrence of the specified
+            <see cref="T:System.Reflection.FieldInfo"/> from the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.Reflection.FieldInfo"/> object to remove
+            from the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            This argument may be a null reference.
+            </param>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Remove(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.System#Collections#IList#Remove(System.Object)">
+            <summary>
+            Removes the first occurrence of the specified <see cref="T:System.Object"/>
+            from the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="value">
+            The object to remove from the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>. This argument
+            must be compatible with <see cref="T:System.Reflection.FieldInfo"/>.
+            This argument may be a null reference.
+            </param>
+            <exception cref="T:System.InvalidCastException">
+            <paramref name="value"/> is not compatible with
+            <see cref="T:System.Reflection.FieldInfo"/>.</exception>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Remove(System.Object)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.RemoveAt(System.Int32)">
+            <summary>
+            Removes the element at the specified index of the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="index">
+            The zero-based index of the element to remove.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="index"/> is equal to or
+            greater than <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/>.</para></exception>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.RemoveAt(System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            Removes the specified range of elements from the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <param name="index">
+            The zero-based starting index of the range of elements to remove.
+            </param>
+            <param name="count">The number of elements to remove.</param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="index"/> and <paramref name="count"/>
+            do not denote a valid range of elements in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="count"/> is less than zero.</para>
+            </exception>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.RemoveRange(System.Int32,System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Reverse">
+            <overloads>
+            Reverses the order of the elements in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> or a portion of it.
+            </overloads>
+            <summary>
+            Reverses the order of the elements in the entire
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.
+            </exception>
+            <remarks>
+            Please refer to <see cref="M:System.Array.Reverse(System.Array,System.Int32,System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Reverse(System.Int32,System.Int32)">
+            <summary>
+            Reverses the order of the elements in the specified range.
+            </summary>
+            <param name="index">
+            The zero-based starting index of the range of elements to reverse.
+            </param>
+            <param name="count">The number of elements to reverse.</param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="index"/> and <paramref name="count"/>
+            do not denote a valid range of elements in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="count"/> is less than zero.</para>
+            </exception>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.
+            </exception>
+            <remarks>
+            Please refer to <see cref="M:System.Array.Reverse(System.Array,System.Int32,System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Sort">
+            <overloads>
+            Sorts the elements in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            or a portion of it.
+            </overloads>
+            <summary>
+            Sorts the elements in the entire <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            using the <see cref="T:System.IComparable"/> implementation of each element.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            One or more elements in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            do not implement the <see cref="T:System.IComparable"/> interface.
+            </exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.Sort"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Sort(System.Collections.IComparer)">
+            <summary>
+            Sorts the elements in the entire
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> using the specified comparer.
+            </summary>
+            <param name="comparer">
+            <para>The <see cref="T:System.Collections.IComparer"/> implementation
+            to use when comparing elements.</para>
+            <para>-or-</para>
+            <para>A null reference to use the <see cref="T:System.IComparable"/>
+            implementation of each element.</para></param>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.
+            </exception>
+            <remarks>
+            Please refer to
+            <see cref="M:System.Collections.ArrayList.Sort(System.Collections.IComparer)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Sort(System.Int32,System.Int32,System.Collections.IComparer)">
+            <summary>
+            Sorts the elements in the specified range
+            using the specified comparer.
+            </summary>
+            <param name="index">
+            The zero-based starting index of the range of elements to sort.
+            </param>
+            <param name="count">The number of elements to sort.</param>
+            <param name="comparer">
+            <para>The <see cref="T:System.Collections.IComparer"/> implementation
+            to use when comparing elements.</para>
+            <para>-or-</para>
+            <para>A null reference to use the <see cref="T:System.IComparable"/>
+            implementation of each element.</para></param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="index"/> and <paramref name="count"/>
+            do not denote a valid range of elements in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="count"/> is less than zero.</para>
+            </exception>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.
+            </exception>
+            <remarks>
+            Please refer to
+            <see cref="M:System.Collections.ArrayList.Sort(System.Int32,System.Int32,System.Collections.IComparer)"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.ToArray">
+            <summary>
+            Copies the elements of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            to a new <see cref="T:System.Array"/> of
+            <see cref="T:System.Reflection.FieldInfo"/> elements.
+            </summary>
+            <returns>
+            A one-dimensional <see cref="T:System.Array"/> of
+            <see cref="T:System.Reflection.FieldInfo"/> elements containing copies of the
+            elements of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </returns>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.ToArray"/> for details.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.TrimToSize">
+            <summary>
+            Sets the capacity to the actual number of elements in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.</exception>
+            <remarks>
+            Please refer to <see cref="M:System.Collections.ArrayList.TrimToSize"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Capacity">
+            <summary>
+            Gets or sets the capacity of the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <value>
+            The number of elements that the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> can contain.
+            </value>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <b>Capacity</b> is set to a value that is
+            less than <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/>.</exception>
+            <exception cref="T:System.NotSupportedException">
+            The property is set, and the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            is read-only or has a fixed size.</exception>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ArrayList.Capacity"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count">
+            <summary>
+            Gets the number of elements contained in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <value>
+            The number of elements contained in the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ArrayList.Count"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.IsFixedSize">
+            <summary>
+            Gets a value indicating whether the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> has a fixed size.
+            </summary>
+            <value>
+            <c>true</c> if the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            has a fixed size; otherwise, <c>false</c>.
+            The default is <c>false</c>.</value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ArrayList.IsFixedSize"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.
+            </summary>
+            <value>
+            <c>true</c> if the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            is read-only; otherwise, <c>false</c>.
+            The default is <c>false</c>.</value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ArrayList.IsReadOnly"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.IsSynchronized">
+            <summary>
+            Gets a value indicating whether access to the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is synchronized (thread-safe).
+            </summary>
+            <value>
+            <c>true</c> if access to the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            is synchronized (thread-safe); otherwise, <c>false</c>.
+            The default is <c>false</c>.</value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ArrayList.IsSynchronized"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.IsUnique">
+            <summary>
+            Gets or sets a value indicating whether the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            ensures that all elements are unique.
+            </summary>
+            <value>
+            <c>true</c> if the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            ensures that all elements are unique; otherwise,
+            <c>false</c>. The default is <c>false</c>.</value>
+            <exception cref="T:System.InvalidOperationException">
+            The property is set to <c>true</c>, and the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>
+            already contains duplicate elements.</exception>
+            <exception cref="T:System.NotSupportedException">
+            The property is set, and the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.</exception>
+            <remarks><para>
+            <b>IsUnique</b> provides a set-like collection by ensuring that
+            all elements in the <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> 
+            are unique.
+            </para><para>
+            When changed to <c>true</c>, this property throws an 
+            <see cref="T:System.InvalidOperationException"/> if the 
+            <b>FieldInfoCollection</b> already contains duplicate
+            elements. Any subsequent attempt to add an element that is
+            already contained in the <b>FieldInfoCollection</b> 
+            will cause a <see cref="T:System.NotSupportedException"/>.
+            </para></remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:System.Reflection.FieldInfo"/>
+            element at the specified index.
+            </summary>
+            <param name="index">
+            The zero-based index of the <see cref="T:System.Reflection.FieldInfo"/>
+            element to get or set.</param>
+            <value>
+            The <see cref="T:System.Reflection.FieldInfo"/> element
+            at the specified <paramref name="index"/>.
+            </value>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="index"/> is equal to or
+            greater than <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/>.</para></exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The property is set, and the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.
+            </para><para>-or-</para><para>
+            The property is set, the <b>FieldInfoCollection</b>
+            already contains the specified element at a different index,
+            and the <b>FieldInfoCollection</b> ensures
+            that all elements are unique.</para></exception>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ArrayList.Item(System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.System#Collections#IList#Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+            <param name="index">
+            The zero-based index of the element to get or set.</param>
+            <value>
+            The element at the specified <paramref name="index"/>.
+            When the property is set, this value must be compatible
+            with <see cref="T:System.Reflection.FieldInfo"/>.
+            </value>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para><paramref name="index"/> is less than zero.</para>
+            <para>-or-</para>
+            <para><paramref name="index"/> is equal to
+            or greater than <see cref="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.Count"/>.</para></exception>
+            <exception cref="T:System.InvalidCastException">
+            The property is set to a value that is not compatible
+            with <see cref="T:System.Reflection.FieldInfo"/>.</exception>
+            <exception cref="T:System.NotSupportedException"><para>
+            The property is set, and the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/> is read-only.
+            </para><para>-or-</para><para>
+            The property is set, the <b>FieldInfoCollection</b>
+            already contains the specified element at a different index,
+            and the <b>FieldInfoCollection</b> ensures
+            that all elements are unique.</para></exception>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ArrayList.Item(System.Int32)"/> for details.
+            </remarks>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection.SyncRoot">
+            <summary>
+            Gets an object that can be used to synchronize access to the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </summary>
+            <value>
+            An object that can be used to synchronize access to the
+            <see cref="T:Castle.Facilities.NHibernateIntegration.Util.FieldInfoCollection"/>.
+            </value>
+            <remarks>
+            Please refer to <see cref="P:System.Collections.ArrayList.SyncRoot"/> for details.
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil">
+            <summary>
+            Summary description for ReflectionUtil.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetPropertyValue(System.Object,System.String)">
+            <summary>
+            Gets the property value.
+            </summary>
+            <param name="obj">obj.</param>
+            <param name="property">Property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetProperty(System.Object,System.String)">
+            <summary>
+            Gets the PropertyInfo thus named.
+            </summary>
+            <param name="obj">obj.</param>
+            <param name="property">Property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetField(System.Object,System.String)">
+            <summary>
+            Gets the FieldInfo thus named
+            </summary>
+            <param name="obj">obj.</param>
+            <param name="field">Field.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.PropertyHasValue(System.Object,System.Reflection.PropertyInfo)">
+            <summary>
+            Check if the property is not null and can be read and is no indexed.
+            This is done to know if it can be read safely.
+            </summary>
+            <param name="obj">Obj.</param>
+            <param name="prop">Prop.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.IsSimpleType(System.Type)">
+            <summary>
+            Determines whether type is simple enough to need just ToString()
+            to show its state.
+            (string,int, bool, enums are simple.
+            Anything else is false.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.IsSimpleObject(System.Object)">
+            <summary>
+            Determines whether the object is simple.
+            An object is simple if its type is simple or if it's null.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetName(System.Object)">
+            <summary>
+            Gets the name of an object.
+            The name of the object is it's type name or the value of
+            its Name property or field
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetFieldValue(System.Object,System.Reflection.FieldInfo)">
+            <summary>
+            Gets the field value from object, and return 
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetValue(System.Object)">
+            <summary>
+            Gets the value of the object, if the object is simple, the returned string is
+            the object ToString(), otherwise, it's the object name (if it has one) or the object type.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetFieldsWithAttribute(System.Type,System.Type)">
+            <summary>
+            Gets all the fields from the object's type with specified attribute
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.ConvertTo(System.String,System.Type)">
+            <summary>
+            Converts from string to the type.
+            Can covert from string, enums booleans, bytes, int32 and datetime
+            </summary>
+            <param name="text">Text.</param>
+            <param name="type">Type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetFieldsWithOutAttributes(System.Type,System.Type[])">
+            <summary>
+            Gets all the fields WITHOUT ANY of the specified attributes.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetNameOrEmpty(System.Object)">
+            <summary>
+            Gets the value of a property or field name in the object.
+            Or return empty string if there aren't any.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.SetName(System.Object,System.String)">
+            <summary>
+            Sets the name property or value of an object to the value of name.
+            Does nothing if the object doesn't have any fields or properties named 'name'
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetPropertiesDictionary(System.Object)">
+            <summary>
+            Gets the readable (non indexed) properties names and values.
+            The keys holds the names of the properties.
+            The values are the values of the properties
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.GetFieldsDictionary(System.Object)">
+            <summary>
+            Gets the fields names and values.
+            The keys holds the names of the fields.
+            The values hold the value of the field if it's a simple type, 
+            or the name of the field's type.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Util.ReflectionUtil.HasValue(System.Object)">
+            <summary>
+            An object has value if it's not null, 
+            an collection containing elements and a non-empty string
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.DataException">
+            <summary>
+            Summary description for DataException.
+            </summary>
+            <remarks>
+            Contributed by Steve Degosserie &lt;steve.degosserie@vn.netika.com&gt;
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.IGenericDao">
+            <summary>
+            Summary description for IGenericDao.
+            </summary>
+            <remarks>
+            Contributed by Steve Degosserie &lt;steve.degosserie@vn.netika.com&gt;
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.INHibernateGenericDao">
+            <summary>
+            Summary description for INHibernateGenericDao.
+            </summary>
+            <remarks>
+            Contributed by Steve Degosserie &lt;steve.degosserie@vn.netika.com&gt;
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.NHibernateGenericDao">
+            <summary>
+            Summary description for GenericDao.
+            </summary>
+            <remarks>
+            Contributed by Steve Degosserie &lt;steve.degosserie@vn.netika.com&gt;
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Components.SessionWebModule">
+            <summary>
+            HttpModule to set up a session for the request lifetime.
+            <seealso cref="T:Castle.Facilities.NHibernateIntegration.ISessionManager"/>
+            </summary>
+            <remarks>
+            To install the module, you must:
+            <para>
+               <list type="number">
+                 <item>
+                   <description>
+                   Add the module to the <c>httpModules</c> configuration section within <c>system.web</c>
+                   </description>
+                 </item>
+                 <item>
+                   <description>Extend the <see cref="T:System.Web.HttpApplication"/> if you haven't</description>
+                 </item>
+                 <item>
+                   <description>Make your <c>HttpApplication</c> subclass implement
+                   <see cref="T:Castle.Windsor.IContainerAccessor"/> so the module can access the container instance</description>
+                 </item>
+               </list>
+            </para>
+            </remarks>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Internal.AbstractDictStackSessionStore">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.ISessionStore">
+            <summary>
+            Provides the contract for implementors who want to 
+            store valid session so they can be reused in a invocation
+            chain.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.ISessionStore.FindCompatibleSession(System.String)">
+            <summary>
+            Should return a previously stored session 
+            for the given alias if available, otherwise null.
+            </summary>
+            <param name="alias"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.ISessionStore.Store(System.String,Castle.Facilities.NHibernateIntegration.SessionDelegate)">
+            <summary>
+            Should store the specified session instance 
+            </summary>
+            <param name="alias"></param>
+            <param name="session"></param>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.ISessionStore.Remove(Castle.Facilities.NHibernateIntegration.SessionDelegate)">
+            <summary>
+            Should remove the session from the store 
+            only.
+            </summary>
+            <param name="session"></param>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.ISessionStore.IsCurrentActivityEmptyFor(System.String)">
+            <summary>
+            Returns <c>true</c> if the current activity
+            (which is an execution activity context) has no
+            sessions available
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Internal.CallContextSessionStore">
+            <summary>
+            Provides an implementation of <see cref="T:Castle.Facilities.NHibernateIntegration.ISessionStore"/>
+            which relies on <c>CallContext</c>
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Internal.DefaultSessionManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.ISessionManager">
+            <summary>
+            Provides a bridge to NHibernate allowing the implementation
+            to cache created session (through an invocation) and 
+            enlist it on transaction if one is detected on the thread.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.ISessionManager.OpenSession">
+            <summary>
+            Returns a valid opened and connected ISession instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.ISessionManager.OpenSession(System.String)">
+            <summary>
+            Returns a valid opened and connected ISession instance
+            for the given connection alias.
+            </summary>
+            <param name="alias"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.Facilities.NHibernateIntegration.ISessionManager.DefaultFlushMode">
+            <summary>
+            The flushmode the created session gets
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Internal.DefaultSessionManager.#ctor(Castle.Facilities.NHibernateIntegration.ISessionStore,Castle.MicroKernel.IKernel,Castle.Facilities.NHibernateIntegration.Internal.ISessionFactoryResolver)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Facilities.NHibernateIntegration.Internal.DefaultSessionManager"/> class.
+            </summary>
+            <param name="sessionStore">The session store.</param>
+            <param name="kernel">The kernel.</param>
+            <param name="factoryResolver">The factory resolver.</param>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Internal.ISessionFactoryResolver">
+            <summary>
+            Dictates the contract for possible different approach 
+            of session factories obtention.
+            </summary>
+            <remarks>
+            Inspired on Cuyahoga project
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Internal.ISessionFactoryResolver.RegisterAliasComponentIdMapping(System.String,System.String)">
+            <summary>
+            Invoked by the facility while the configuration 
+            node are being interpreted.
+            </summary>
+            <param name="alias">
+            The alias associated with the session factory on the configuration node
+            </param>
+            <param name="componentKey">
+            The component key associated with the session factory on the kernel
+            </param>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Internal.ISessionFactoryResolver.GetSessionFactory(System.String)">
+            <summary>
+            Implementors should return a session factory 
+            instance for the specified alias configured previously.
+            </summary>
+            <param name="alias">
+            The alias associated with the session factory on the configuration node
+            </param>
+            <returns>
+            A session factory instance
+            </returns>
+            <exception cref="T:Castle.MicroKernel.Facilities.FacilityException">
+            If the alias is not associated with a session factory
+            </exception>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Internal.ResourceAdapter">
+            <summary>
+            Adapter to <see cref="T:Castle.Services.Transaction.IResource"/> so a
+            NHibernate transaction can be enlisted within
+            <see cref="T:Castle.Services.Transaction.ITransaction"/> instances.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.SessionDelegate">
+            <summary>
+            Proxies an ISession so the user cannot close a session which
+            is controlled by a transaction, or, when this is not the case, 
+            make sure to remove the session from the storage.
+            <seealso cref="T:Castle.Facilities.NHibernateIntegration.ISessionStore"/>
+            <seealso cref="T:Castle.Facilities.NHibernateIntegration.ISessionManager"/>
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Internal.SessionDisposeSynchronization">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Internal.SessionFactoryResolver">
+            <summary>
+            Default implementation of <see cref="T:Castle.Facilities.NHibernateIntegration.Internal.ISessionFactoryResolver"/>
+            that always queries the kernel instance for the session factory instance.
+            <para>
+            This gives a chance to developers replace the session factory instance 
+            during the application lifetime.
+            </para>
+            </summary>
+            <remarks>
+            Inspired on Cuyahoga project
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Internal.SessionFactoryResolver.#ctor(Castle.MicroKernel.IKernel)">
+            <summary>
+            Constructs a SessionFactoryResolver
+            </summary>
+            <param name="kernel">
+            Kernel instance supplied by the container itself
+            </param>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Internal.SessionFactoryResolver.RegisterAliasComponentIdMapping(System.String,System.String)">
+            <summary>
+            Associated the alias with the component key
+            </summary>
+            <param name="alias">
+            The alias associated with the session 
+            factory on the configuration node
+            </param>
+            <param name="componentKey">
+            The component key associated with 
+            the session factory on the kernel
+            </param>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.Internal.SessionFactoryResolver.GetSessionFactory(System.String)">
+            <summary>
+            Returns a session factory instance associated with the
+            specified alias.
+            </summary>
+            <param name="alias">
+            The alias associated with the session 
+            factory on the configuration node
+            </param>
+            <returns>A session factory instance</returns>
+            <exception cref="T:Castle.MicroKernel.Facilities.FacilityException">
+            If the alias is not associated with a session factory
+            </exception>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Internal.WebSessionStore">
+            <summary>
+            Provides an implementation of <see cref="T:Castle.Facilities.NHibernateIntegration.ISessionStore"/>
+            which relies on <c>HttpContext</c>. Suitable for web projects.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.Constants">
+            <summary>
+            Exposes constants used by the facility and its internal 
+            components
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.NHibernateIntegration.NHibernateFacility">
+            <summary>
+            Provides a basic level of integration with the NHibernate project
+            </summary>
+            <remarks>
+            This facility allows components to gain access to the NHibernate's 
+            objects:
+            <list type="bullet">
+              <item><description>NHibernate.Cfg.Configuration</description></item>
+              <item><description>NHibernate.ISessionFactory</description></item>
+            </list>
+            <para>
+            It also allow you to obtain the ISession instance 
+            through the component <see cref="T:Castle.Facilities.NHibernateIntegration.ISessionManager"/>, which is 
+            transaction aware and save you the burden of sharing session
+            or using a singleton.
+            </para>
+            </remarks>
+            <example>The following sample illustrates how a component 
+            can access the session.
+            <code>
+            public class MyDao
+            {
+              private ISessionManager sessionManager;
+            
+              public MyDao(ISessionManager sessionManager)
+              {
+                this.sessionManager = sessionManager;
+              } 
+              
+              public void Save(Data data)
+              {
+                using(ISession session = sessionManager.OpenSession())
+                {
+                  session.Save(data);
+                }
+              }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.NHibernateFacility.ConfigureReflectionOptimizer(Castle.Core.Configuration.IConfiguration)">
+            <summary>
+            Reads the attribute <c>useReflectionOptimizer</c> and configure
+            the reflection optimizer accordingly.
+            </summary>
+            <remarks>
+            As reported on Jira (FACILITIES-39) the reflection optimizer
+            slow things down. So by default it will be disabled. You
+            can use the attribute <c>useReflectionOptimizer</c> to turn it
+            on. 
+            </remarks>
+            <param name="config"></param>
+        </member>
+        <member name="M:Castle.Facilities.NHibernateIntegration.NHibernateFacility.GenerateMappingFromAttributesIfNeeded(NHibernate.Cfg.Configuration,System.String)">
+            <summary>
+            If <paramref name="targetAssembly"/> has a reference on
+            <c>NHibernate.Mapping.Attributes</c> : use the NHibernate mapping
+            attributes contained in that assembly to update NHibernate
+            configuration (<paramref name="cfg"/>). Else do nothing
+            </summary>
+            <remarks>
+            To avoid an unnecessary dependency on the library
+            <c>NHibernate.Mapping.Attributes.dll</c> when using this
+            facility without NHibernate mapping attributes, all calls to that
+            library are made using reflexion.
+            </remarks>
+            <param name="cfg">NHibernate configuration</param>
+            <param name="targetAssembly">Target assembly name</param>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.MonoRail.JSONSupport</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Monorail.JSONSupport.JSONBinderAttribute">
+             <summary>
+             Extends <see cref="T:Castle.MonoRail.Framework.DataBindAttribute"/> with  the <see cref="T:Newtonsoft.Json.JavaScriptConvert"/> functionality. 
+             In other words, enable biding of JSON formatted values on POCO objects.
+             </summary>
+             <example>
+             <para>
+             The following demonstrates how to bind a JSON querystring value representing a Car object instance 
+             to a POCO Car object instance:
+             </para>
+             The querystring:
+             <code>
+             car={Wheels=4,Year=2007,Model='Cheap'}
+             </code>
+             And you want to bind those values to a instance of yours Car class, which looks like this:
+             <code>
+             public class Car
+            	{
+            		private int wheels, year;
+            		private string model;
+            
+            		public int Wheels
+            		{
+            			get { return wheels; }
+            			set { wheels = value; }
+            		}
+            
+            		public int Year
+            		{
+            			get { return year; }
+            			set { year = value; }
+            		}
+            
+            		public string Model
+            		{
+            			get { return model; }
+            			set { model = value; }
+            		}
+            	}
+             </code>
+             <para>Using the <see cref="T:Castle.Monorail.JSONSupport.JSONBinderAttribute"/> and the <see cref="T:Castle.MonoRail.Framework.SmartDispatcherController"/>, all you have to 
+             do is to mark the method parameter with the attribute, like the following example:</para>
+             <code>
+             public void MyAction([JSONBinder("car")] Car car)
+             </code>
+             </example>
+        </member>
+        <member name="M:Castle.Monorail.JSONSupport.JSONBinderAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Monorail.JSONSupport.JSONBinderAttribute"/> class.
+            For use with <see cref="M:Castle.MonoRail.Framework.Helpers.AjaxHelper.GenerateJSProxy(System.String)"/>,
+            make sure you are using Prototype 1.5.1 or later.
+            </summary>
+            <param name="entryKey">The entry key, which is the form or 
+            querystring key that identifies the JSON persisted content</param>
+        </member>
+        <member name="M:Castle.Monorail.JSONSupport.JSONBinderAttribute.CalculateParamPoints(Castle.MonoRail.Framework.SmartDispatcherController,System.Reflection.ParameterInfo)">
+            <summary>
+            Calculates the param points. Implementors should return value equals or greater than
+            zero indicating whether the parameter can be bound successfully. The greater the value (points)
+            the more successful the implementation indicates to the framework
+            </summary>
+            <param name="controller">The controller.</param>
+            <param name="parameterInfo">The parameter info.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Monorail.JSONSupport.JSONBinderAttribute.Bind(Castle.MonoRail.Framework.SmartDispatcherController,System.Reflection.ParameterInfo)">
+            <summary>
+            Binds the specified parameter for the action.
+            </summary>
+            <param name="controller">The controller.</param>
+            <param name="parameterInfo">The parameter info.</param>
+            <returns>A instance based on the JSON values present in the <see cref="P:Castle.Monorail.JSONSupport.JSONBinderAttribute.EntryKey"/>.</returns>
+        </member>
+        <member name="M:Castle.Monorail.JSONSupport.JSONBinderAttribute.Bind(System.String,System.Type)">
+            <summary>
+            Binds the specified entry value to a instance of a given Type(<paramref name="parameterType"/>).
+            </summary>
+            <param name="entryValue">The entry value containing the JSON formatted content.</param>
+            <param name="parameterType">Type of the binded object.</param>
+            <returns>A instance based on the JSON values present in the <paramref name="entryValue"/>.</returns>
+        </member>
+        <member name="P:Castle.Monorail.JSONSupport.JSONBinderAttribute.EntryKey">
+            <summary>
+            Gets the entry key.
+            </summary>
+            <remarks>
+            The entry key, which is the form or  querystring key that identifies the JSON persisted content.
+            </remarks>
+            <value>The entry key.</value>
+        </member>
+        <member name="T:Castle.Monorail.JSONSupport.JSONHelper">
+            <summary>
+            Provides utilities methods to work with JSON.
+            </summary>
+        </member>
+        <member name="M:Castle.Monorail.JSONSupport.JSONHelper.ToJSON(System.Object)">
+            <summary>
+            Converts a instance of the model to its JSON representation.
+            </summary>
+            <param name="model">The model.</param>
+            <returns>The JSON representation of the model.</returns>
+            <example>
+            You've constructed a car object instance, like this one:
+            <code>
+            Car car = new Car();
+            
+            car.Wheels = 4;
+            car.Model = "Cheap";
+            car.Year = 2007;
+            </code>
+            And to transform it to JSON, you must invoke the method passing the instance.
+            <code>
+            helper.ToJSON(car)
+            </code>
+            Which will generate the JSON string:
+            <code>
+            {Wheels=4,Year=2007,Model='Cheap'}
+            </code>
+            </example>
+        </member>
+    </members>
+</doc>

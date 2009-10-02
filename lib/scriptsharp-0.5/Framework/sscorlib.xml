@@ -1,0 +1,1474 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>sscorlib</name>
+    </assembly>
+    <members>
+        <member name="T:System.RegularExpression">
+            <summary>
+            Equivalent to the RegExp type in Javascript.
+            </summary>
+        </member>
+        <member name="T:System.Object">
+            <summary>
+            Equivalent to the Object type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Object.GetType">
+            <summary>
+            Retrieves the type associated with an object instance.
+            </summary>
+            <returns>The type of the object.</returns>
+        </member>
+        <member name="M:System.Object.Parse(System.String)">
+            <summary>
+            Enables you to parse an object graph using the eval method
+            built into the script engine.
+            </summary>
+            <param name="s">The literal expression to be parsed.</param>
+            <returns>The resulting object graph.</returns>
+        </member>
+        <member name="M:System.Object.ToString">
+            <summary>
+            Converts an object to its string representation.
+            </summary>
+            <returns>The string representation of the object.</returns>
+        </member>
+        <member name="M:System.Object.ToLocaleString">
+            <summary>
+            Converts an object to its culture-sensitive string representation.
+            </summary>
+            <returns>The culture-sensitive string representation of the object.</returns>
+        </member>
+        <member name="T:System.Int64">
+            <summary>
+            The long data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Int64.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Int64.op_Implicit(System.Int64)~System.Number">
+            <internalonly />
+        </member>
+        <member name="M:System.DHTML.DOMElement.AttachEvent(System.String,System.DHTML.DOMEventHandler)">
+            <summary>
+            Attaches an event handler to the specified event.
+            </summary>
+            <param name="eventName">The name of the event such as 'onload'.</param>
+            <param name="handler">A function that should be called in response to the event.</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DHTML.Document.AttachEvent(System.String,System.DHTML.DOMEventHandler)">
+            <summary>
+            Attaches an event handler to the specified event.
+            </summary>
+            <param name="eventName">The name of the event such as 'onload'.</param>
+            <param name="handler">A function that should be called in response to the event.</param>
+            <returns></returns>
+        </member>
+        <member name="T:System.Exception">
+            <summary>
+            Equivalent to the Error type in Javascript.
+            </summary>
+        </member>
+        <member name="T:System.Double">
+            <summary>
+            The double data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Double.ToExponential">
+            <summary>
+            Returns a string containing the value represented in exponential notation.
+            </summary>
+            <returns>The exponential representation</returns>
+        </member>
+        <member name="M:System.Double.ToExponential(System.Int32)">
+            <summary>
+            Returns a string containing the value represented in exponential notation.
+            </summary>
+            <param name="fractionDigits">The number of digits after the decimal point from 0 - 20</param>
+            <returns>The exponential representation</returns>
+        </member>
+        <member name="M:System.Double.ToFixed">
+            <summary>
+            Returns a string representing the value in fixed-point notation.
+            </summary>
+            <returns>The fixed-point notation</returns>
+        </member>
+        <member name="M:System.Double.ToFixed(System.Int32)">
+            <summary>
+            Returns a string representing the value in fixed-point notation.
+            </summary>
+            <param name="fractionDigits">The number of digits after the decimal point from 0 - 20</param>
+            <returns>The fixed-point notation</returns>
+        </member>
+        <member name="M:System.Double.ToPrecision">
+            <summary>
+            Returns a string containing the value represented either in exponential or
+            fixed-point notation with a specified number of digits.
+            </summary>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Double.ToPrecision(System.Int32)">
+            <summary>
+            Returns a string containing the value represented either in exponential or
+            fixed-point notation with a specified number of digits.
+            </summary>
+            <param name="precision">The number of significant digits (in the range 1 to 21)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Double.op_Implicit(System.Double)~System.Number">
+            <internalonly />
+        </member>
+        <member name="T:System.DateTime">
+            <summary>
+            Equivalent to the Date type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.DateTime.#ctor">
+            <summary>
+            Creates a new instance of DateTime initialized to the current time.
+            </summary>
+        </member>
+        <member name="M:System.DateTime.#ctor(System.Int32)">
+            <summary>
+            Creates a new instance of DateTime initialized from the specified number of milliseconds.
+            </summary>
+            <param name="milliseconds">Milliseconds since January 1st, 1970.</param>
+        </member>
+        <member name="M:System.DateTime.#ctor(System.String)">
+            <summary>
+            Creates a new instance of DateTime initialized from parsing the specified date.
+            </summary>
+            <param name="date"></param>
+        </member>
+        <member name="M:System.DateTime.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of DateTime.
+            </summary>
+            <param name="year">The full year.</param>
+            <param name="month">The month (0 through 11)</param>
+            <param name="date">The day of the month (1 through # of days in the specified month)</param>
+        </member>
+        <member name="M:System.DateTime.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of DateTime.
+            </summary>
+            <param name="year">The full year.</param>
+            <param name="month">The month (0 through 11)</param>
+            <param name="date">The day of the month (1 through # of days in the specified month)</param>
+            <param name="hours">The hours (0 through 23)</param>
+        </member>
+        <member name="M:System.DateTime.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of DateTime.
+            </summary>
+            <param name="year">The full year.</param>
+            <param name="month">The month (0 through 11)</param>
+            <param name="date">The day of the month (1 through # of days in the specified month)</param>
+            <param name="hours">The hours (0 through 23)</param>
+            <param name="minutes">The minutes (0 through 59)</param>
+        </member>
+        <member name="M:System.DateTime.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of DateTime.
+            </summary>
+            <param name="year">The full year.</param>
+            <param name="month">The month (0 through 11)</param>
+            <param name="date">The day of the month (1 through # of days in the specified month)</param>
+            <param name="hours">The hours (0 through 23)</param>
+            <param name="minutes">The minutes (0 through 59)</param>
+            <param name="seconds">The seconds (0 through 59)</param>
+        </member>
+        <member name="M:System.DateTime.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of DateTime.
+            </summary>
+            <param name="year">The full year.</param>
+            <param name="month">The month (0 through 11)</param>
+            <param name="date">The day of the month (1 through # of days in the specified month)</param>
+            <param name="hours">The hours (0 through 23)</param>
+            <param name="minutes">The minutes (0 through 59)</param>
+            <param name="seconds">The seconds (0 through 59)</param>
+            <param name="milliseconds">The milliseconds (0 through 999)</param>
+        </member>
+        <member name="M:System.DateTime.op_Subtraction(System.DateTime,System.DateTime)">
+            <summary>
+            Returns the difference in milliseconds between two dates.
+            </summary>
+        </member>
+        <member name="M:System.DateTime.op_Equality(System.DateTime,System.DateTime)">
+            <summary>
+            Compares two dates
+            </summary>
+        </member>
+        <member name="M:System.DateTime.op_Inequality(System.DateTime,System.DateTime)">
+            <summary>
+            Compares two dates
+            </summary>
+        </member>
+        <member name="M:System.DateTime.op_LessThan(System.DateTime,System.DateTime)">
+            <summary>
+            Compares two dates
+            </summary>
+        </member>
+        <member name="M:System.DateTime.op_GreaterThan(System.DateTime,System.DateTime)">
+            <summary>
+            Compares two dates
+            </summary>
+        </member>
+        <member name="M:System.DateTime.op_LessThanOrEqual(System.DateTime,System.DateTime)">
+            <summary>
+            Compares two dates
+            </summary>
+        </member>
+        <member name="M:System.DateTime.op_GreaterThanOrEqual(System.DateTime,System.DateTime)">
+            <summary>
+            Compares two dates
+            </summary>
+        </member>
+        <member name="P:System.DateTime.Now">
+            <summary>
+            Returns the current date and time.
+            </summary>
+        </member>
+        <member name="P:System.DateTime.Today">
+            <summary>
+            Returns the current date with the time part set to 00:00:00.
+            </summary>
+        </member>
+        <member name="T:System.DHTML.Selection">
+            <summary>
+            Represents the active selection, which is a highlighted block of text, and/or other elements in the document on which a user or a script
+            can carry out some action.
+            </summary>
+        </member>
+        <member name="T:System.Type">
+            <summary>
+            The Type data type which is mapped to the Function type in Javascript.
+            </summary>
+        </member>
+        <member name="P:System.Type.Prototype">
+            <summary>
+            Gets the prototype associated with the type.
+            </summary>
+        </member>
+        <member name="T:System.Stack">
+            <summary>
+            The Stack data type which is mapped to the Array type in Javascript.
+            </summary>
+        </member>
+        <member name="T:System.DHTML.Screen">
+            <summary>
+            The screen object represents information about the current desktop.
+            </summary>
+        </member>
+        <member name="T:System.String">
+            <summary>
+            Equivalent to the String type in Javascript.
+            </summary>
+        </member>
+        <member name="F:System.String.Empty">
+            <summary>
+            An empty zero-length string.
+            </summary>
+        </member>
+        <member name="M:System.String.CharAt(System.Int32)">
+            <summary>
+            Retrieves the character at the specified position.
+            </summary>
+            <param name="index">The specified 0-based position.</param>
+            <returns>The character within the string.</returns>
+        </member>
+        <member name="M:System.String.CharCodeAt(System.Int32)">
+            <summary>
+            Retrieves the character code of the character at the specified position.
+            </summary>
+            <param name="index">The specified 0-based position.</param>
+            <returns>The character code of the character within the string.</returns>
+        </member>
+        <member name="M:System.String.Concat(System.String[])">
+            <summary>
+            Concatenates a set of individual strings into a single string.
+            </summary>
+            <param name="strings">The sequence of strings</param>
+            <returns>The concatenated string.</returns>
+        </member>
+        <member name="M:System.String.DecodeURI">
+            <summary>
+            Returns the unencoded version of a complete encoded URI.
+            </summary>
+            <returns>The unencoded string.</returns>
+        </member>
+        <member name="M:System.String.DecodeURIComponent">
+            <summary>
+            Returns the unencoded version of a single part or component of an encoded URI.
+            </summary>
+            <returns>The unencoded string.</returns>
+        </member>
+        <member name="M:System.String.EncodeURI">
+            <summary>
+            Encodes the complete URI.
+            </summary>
+            <returns>The encoded string.</returns>
+        </member>
+        <member name="M:System.String.EncodeURIComponent">
+            <summary>
+            Encodes a single part or component of a URI.
+            </summary>
+            <returns>The encoded string.</returns>
+        </member>
+        <member name="M:System.String.EndsWith(System.Char)">
+            <summary>
+            Determines if the string ends with the specified character.
+            </summary>
+            <param name="ch">The character to test for.</param>
+            <returns>true if the string ends with the character; false otherwise.</returns>
+        </member>
+        <member name="M:System.String.EndsWith(System.String)">
+            <summary>
+            Determines if the string ends with the specified substring or suffix.
+            </summary>
+            <param name="suffix">The string to test for.</param>
+            <returns>true if the string ends with the suffix; false otherwise.</returns>
+        </member>
+        <member name="M:System.String.Escape">
+            <summary>
+            Encodes a string by replacing punctuation, spaces etc. with their escaped equivalents.
+            </summary>
+            <returns>The escaped string.</returns>
+        </member>
+        <member name="M:System.String.Unescape">
+            <summary>
+            Decodes a string by replacing escaped parts with their equivalent textual representation.
+            </summary>
+            <returns>The unescaped string.</returns>
+        </member>
+        <member name="M:System.String.op_Equality(System.String,System.String)">
+            <internalonly />
+        </member>
+        <member name="M:System.String.op_Inequality(System.String,System.String)">
+            <internalonly />
+        </member>
+        <member name="P:System.String.Length">
+            <summary>
+            The number of characters in the string.
+            </summary>
+        </member>
+        <member name="T:System.Single">
+            <summary>
+            The float data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Single.ToExponential">
+            <summary>
+            Returns a string containing the value represented in exponential notation.
+            </summary>
+            <returns>The exponential representation</returns>
+        </member>
+        <member name="M:System.Single.ToExponential(System.Int32)">
+            <summary>
+            Returns a string containing the value represented in exponential notation.
+            </summary>
+            <param name="fractionDigits">The number of digits after the decimal point (0 - 20)</param>
+            <returns>The exponential representation</returns>
+        </member>
+        <member name="M:System.Single.ToFixed">
+            <summary>
+            Returns a string representing the value in fixed-point notation.
+            </summary>
+            <returns>The fixed-point notation</returns>
+        </member>
+        <member name="M:System.Single.ToFixed(System.Int32)">
+            <summary>
+            Returns a string representing the value in fixed-point notation.
+            </summary>
+            <param name="fractionDigits">The number of digits after the decimal point from 0 - 20</param>
+            <returns>The fixed-point notation</returns>
+        </member>
+        <member name="M:System.Single.ToPrecision">
+            <summary>
+            Returns a string containing the value represented either in exponential or
+            fixed-point notation with a specified number of digits.
+            </summary>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Single.ToPrecision(System.Int32)">
+            <summary>
+            Returns a string containing the value represented either in exponential or
+            fixed-point notation with a specified number of digits.
+            </summary>
+            <param name="precision">The number of significant digits (in the range 1 to 21)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Single.op_Implicit(System.Single)~System.Number">
+            <internalonly />
+        </member>
+        <member name="T:System.ScriptLoader">
+            <summary>
+            Enables dynamic loading of a set of scripts references.
+            </summary>
+        </member>
+        <member name="M:System.ScriptLoader.#ctor(System.String[])">
+            <summary>
+            Initializes an instance of a script loader with a
+            set of script references. Each reference is treated
+            as the URL of the script, and is loaded into the
+            current document.
+            </summary>
+            <param name="scriptURLs">The set of script references to load.</param>
+        </member>
+        <member name="M:System.ScriptLoader.Dispose">
+            <summary>
+            Disposes the ScriptLoader instance.
+            </summary>
+        </member>
+        <member name="M:System.ScriptLoader.Load(System.Boolean,System.Int32,System.EventHandler,System.EventHandler)">
+            <summary>
+            Starts the loading process. The specified callback is called
+            upon completition of the loading process.
+            </summary>
+            <param name="loadInParallel">Whether the scripts should be loaded in parallel.</param>
+            <param name="timeout">The number of milliseconds to allow the scripts to load before timing out.</param>
+            <param name="loadedHandler">The callback to invoke upon loading of scripts.</param>
+            <param name="errorHandler">The callback to invoke upon error loading scripts.</param>
+        </member>
+        <member name="T:System.Function">
+            <summary>
+            Equivalent to the Function type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Function.#ctor(System.String)">
+            <summary>
+            Creates a new function with the specified implementation.
+            </summary>
+            <param name="functionBody">The implementation of the function.</param>
+        </member>
+        <member name="M:System.Function.#ctor(System.String,System.String[])">
+            <summary>
+            Creates a new function with the specified implementation, and the
+            set of named parameters.
+            </summary>
+            <param name="functionBody">The implementation of the function.</param>
+            <param name="argNames">The names of the arguments required by the function.</param>
+        </member>
+        <member name="M:System.Function.Apply(System.Object)">
+            <summary>
+            Invokes the function against the specified object instance.
+            </summary>
+            <param name="instance">The object used as the value of 'this' within the function.</param>
+            <returns>Any return value returned from the function.</returns>
+        </member>
+        <member name="M:System.Function.Apply(System.Object,System.Object[])">
+            <summary>
+            Invokes the function against the specified object instance.
+            </summary>
+            <param name="instance">The object used as the value of 'this' within the function.</param>
+            <param name="arguments">The set of arguments to pass in into the function.</param>
+            <returns>Any return value returned from the function.</returns>
+        </member>
+        <member name="M:System.Function.Call(System.Object)">
+            <summary>
+            Invokes the function against the specified object instance.
+            </summary>
+            <param name="instance">The object used as the value of 'this' within the function.</param>
+            <returns>Any return value returned from the function.</returns>
+        </member>
+        <member name="M:System.Function.Call(System.Object,System.Object[])">
+            <summary>
+            Invokes the function against the specified object instance.
+            </summary>
+            <param name="instance">The object used as the value of 'this' within the function.</param>
+            <param name="arguments">One or more arguments to pass in into the function.</param>
+            <returns>Any return value returned from the function.</returns>
+        </member>
+        <member name="P:System.Function.Length">
+            <summary>
+            Gets the number of parameters expected by the function.
+            </summary>
+        </member>
+        <member name="T:System.UInt16">
+            <summary>
+            The ushort data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.UInt16.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.UInt16.op_Implicit(System.UInt16)~System.Number">
+            <internalonly />
+        </member>
+        <member name="T:System.SByte">
+            <summary>
+            The signed byte data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.SByte.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.SByte.op_Implicit(System.SByte)~System.Number">
+            <internalonly />
+        </member>
+        <member name="T:System.Math">
+            <summary>
+            Equivalent to the Math object in Javascript.
+            </summary>
+        </member>
+        <member name="T:System.Int16">
+            <summary>
+            The short data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Int16.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Int16.op_Implicit(System.Int16)~System.Number">
+            <internalonly />
+        </member>
+        <member name="M:System.DHTML.DOMDocument.AttachEvent(System.String,System.Delegate)">
+            <summary>
+            Attaches an event handler to the specified event.
+            </summary>
+            <param name="eventName">The name of the event such as 'onload'.</param>
+            <param name="handler">A delegate to the event handler that should be notified.</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DHTML.SelectElement.Add(System.DHTML.OptionElement)">
+            <summary>
+            Adds an element to the end of the <see cref="P:System.DHTML.SelectElement.Options"/> collection.
+            </summary>
+            <param name="option">Element to add to the <see cref="P:System.DHTML.SelectElement.Options"/> collection.</param>
+        </member>
+        <member name="M:System.DHTML.SelectElement.Add(System.DHTML.OptionElement,System.Int32)">
+            <summary>
+            Adds an element to the <see cref="P:System.DHTML.SelectElement.Options"/> collection (IE only).
+            </summary>
+            <param name="option">Element to add to the <see cref="P:System.DHTML.SelectElement.Options"/> collection.</param>
+            <param name="index">Specifies the index position in the collection where the element is placed.</param>
+        </member>
+        <member name="M:System.DHTML.SelectElement.Add(System.DHTML.OptionElement,System.DHTML.OptionElement)">
+            <summary>
+            Adds an element to the <see cref="P:System.DHTML.SelectElement.Options"/> collection (Firefox only).
+            </summary>
+            <param name="option">Element to add to the <see cref="P:System.DHTML.SelectElement.Options"/> collection.</param>
+            <param name="before">The element before which to add <paramref name="option"/>.</param>
+        </member>
+        <member name="M:System.DHTML.SelectElement.Remove(System.Int32)">
+            <summary>
+            Removes an <see cref="T:System.DHTML.OptionElement"/> from the <see cref="P:System.DHTML.SelectElement.Options"/> collection.
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="T:System.Script">
+            <summary>
+            The Script class contains various methods that represent global
+            methods present in the underlying script engine.
+            </summary>
+        </member>
+        <member name="M:System.Script.Alert(System.String)">
+            <summary>
+            Displays a message box containing the specified message text.
+            </summary>
+            <param name="message">The text of the message.</param>
+        </member>
+        <member name="M:System.Script.Alert(System.Boolean)">
+            <summary>
+            Displays a message box containing the specified value converted
+            into a string.
+            </summary>
+            <param name="b">The boolean to display.</param>
+        </member>
+        <member name="M:System.Script.Alert(System.DateTime)">
+            <summary>
+            Displays a message box containing the specified value converted
+            into a string.
+            </summary>
+            <param name="d">The date to display.</param>
+        </member>
+        <member name="M:System.Script.Alert(System.Number)">
+            <summary>
+            Displays a message box containing the specified value converted
+            into a string.
+            </summary>
+            <param name="n">The number to display.</param>
+        </member>
+        <member name="M:System.Script.Confirm(System.String)">
+            <summary>
+            Prompts the user with a yes/no question.
+            </summary>
+            <param name="message">The text of the question.</param>
+            <returns>true if the user chooses yes; false otherwise.</returns>
+        </member>
+        <member name="M:System.Script.Eval(System.String)">
+            <summary>
+            Enables you to evaluate (or execute) an arbitrary script
+            literal. This includes JSON literals, where the return
+            value is the deserialized object graph.
+            </summary>
+            <param name="s">The script to be evaluated.</param>
+            <returns>The result of the evaluation.</returns>
+        </member>
+        <member name="M:System.Script.IsNull(System.Object)">
+            <summary>
+            Checks if the specified object is null.
+            </summary>
+            <param name="o">The object to test against null.</param>
+            <returns>true if the object is null; false otherwise.</returns>
+        </member>
+        <member name="M:System.Script.IsNullOrUndefined(System.Object)">
+            <summary>
+            Checks if the specified object is null or undefined.
+            The object passed in should be a local variable, and not
+            a member of a class (to avoid potential script warnings).
+            </summary>
+            <param name="o">The object to test against null or undefined.</param>
+            <returns>true if the object is null or undefined; false otherwise.</returns>
+        </member>
+        <member name="M:System.Script.IsUndefined(System.Object)">
+            <summary>
+            Checks if the specified object is undefined.
+            The object passed in should be a local variable, and not
+            a member of a class (to avoid potential script warnings).
+            </summary>
+            <param name="o">The object to test against undefined.</param>
+            <returns>true if the object is undefined; false otherwise.</returns>
+        </member>
+        <member name="M:System.Script.Literal(System.String,System.Object[])">
+            <summary>
+            Enables you to generate an arbitrary (literal) script expression.
+            The script can contain simple String.Format style tokens (such as
+            {0}, {1}, ...) to be replaced with the specified arguments.
+            </summary>
+            <param name="script">The script expression to be evaluated.</param>
+            <param name="args">Optional arguments matching tokens in the script.</param>
+            <returns>The result of the script expression.</returns>
+        </member>
+        <member name="M:System.Script.Prompt(System.String)">
+            <summary>
+            Prompts the user to enter a value.
+            </summary>
+            <param name="message">The text of the prompt.</param>
+            <returns>The value entered by the user.</returns>
+        </member>
+        <member name="M:System.Script.Prompt(System.String,System.String)">
+            <summary>
+            Prompts the user to enter a value, along with providing a default
+            value.
+            </summary>
+            <param name="message">The text of the prompt.</param>
+            <param name="defaultValue">The default value for the prompt.</param>
+            <returns>The value entered by the user.</returns>
+        </member>
+        <member name="T:System.Decimal">
+            <summary>
+            The decimal data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Decimal.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Decimal.op_Implicit(System.Decimal)~System.Number">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Implicit(System.Int32)~System.Decimal">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Implicit(System.Double)~System.Decimal">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Implicit(System.Single)~System.Decimal">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Implicit(System.Int64)~System.Decimal">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Explicit(System.Decimal)~System.Int32">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Explicit(System.Decimal)~System.Double">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Explicit(System.Decimal)~System.Single">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Explicit(System.Decimal)~System.Int64">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_UnaryPlus(System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_UnaryNegation(System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Addition(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Subtraction(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Increment(System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Decrement(System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Multiply(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Division(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Modulus(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Equality(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_Inequality(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_GreaterThan(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_GreaterThanOrEqual(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_LessThan(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="M:System.Decimal.op_LessThanOrEqual(System.Decimal,System.Decimal)">
+            <internalonly />
+        </member>
+        <member name="T:System.DHTML.Window">
+            <summary>
+            The window object represents the current browser window, and is the top-level
+            scripting object.
+            </summary>
+        </member>
+        <member name="M:System.DHTML.Window.AttachEvent(System.String,System.DHTML.DOMEventHandler)">
+            <summary>
+            Attaches an event handler to the specified event.
+            </summary>
+            <param name="eventName">The name of the event such as 'onload'.</param>
+            <param name="handler">A function that should be called in response to the event.</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DHTML.Window.ShowModalDialog(System.String,System.Object,System.String)">
+            <summary>
+            Delegate that indicates the ability of the browser
+            to show a modal dialog.
+            </summary>
+            <remarks>
+            Not all browsers support this function, so code using
+            this needs to check for existence of the feature or the browser.
+            </remarks>
+        </member>
+        <member name="P:System.DHTML.Window.ClipboardData">
+            <summary>
+            IE only.
+            </summary>
+        </member>
+        <member name="P:System.DHTML.Window.Event">
+            <summary>
+            Provides information about the current event being handled.
+            </summary>
+        </member>
+        <member name="T:System.Number">
+            <summary>
+            Equivalent to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Number.ToExponential">
+            <summary>
+            Returns a string containing the number represented in exponential notation.
+            </summary>
+            <returns>The exponential representation</returns>
+        </member>
+        <member name="M:System.Number.ToExponential(System.Int32)">
+            <summary>
+            Returns a string containing the number represented in exponential notation.
+            </summary>
+            <param name="fractionDigits">The number of digits after the decimal point (0 - 20)</param>
+            <returns>The exponential representation</returns>
+        </member>
+        <member name="M:System.Number.ToFixed">
+            <summary>
+            Returns a string representing the number in fixed-point notation.
+            </summary>
+            <returns>The fixed-point notation</returns>
+        </member>
+        <member name="M:System.Number.ToFixed(System.Int32)">
+            <summary>
+            Returns a string representing the number in fixed-point notation.
+            </summary>
+            <param name="fractionDigits">The number of digits after the decimal point from 0 - 20</param>
+            <returns>The fixed-point notation</returns>
+        </member>
+        <member name="M:System.Number.ToPrecision">
+            <summary>
+            Returns a string containing the number represented either in exponential or
+            fixed-point notation with a specified number of digits.
+            </summary>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Number.ToPrecision(System.Int32)">
+            <summary>
+            Returns a string containing the number represented either in exponential or
+            fixed-point notation with a specified number of digits.
+            </summary>
+            <param name="precision">The number of significant digits (in the range 1 to 21)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Number.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Number.op_Implicit(System.Number)~System.Int32">
+            <internalonly />
+        </member>
+        <member name="T:System.Dictionary">
+            <summary>
+            The Dictionary data type which is mapped to the Object type in Javascript.
+            </summary>
+        </member>
+        <member name="T:System.DHTML.WindowInstance">
+            <summary>
+            The window object represents the current browser window, and is the top-level
+            scripting object.
+            </summary>
+        </member>
+        <member name="M:System.DHTML.WindowInstance.AttachEvent(System.String,System.Delegate)">
+            <summary>
+            Attaches an event handler to the specified event.
+            </summary>
+            <param name="eventName">The name of the event such as 'onload'.</param>
+            <param name="handler">A delegate to the event handler that should be notified.</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DHTML.Location.Replace(System.String)">
+            <summary>
+            Navigates the window to a new location without updating the browser's history.
+            </summary>
+            <param name="url">The URL to navigate to.</param>
+        </member>
+        <member name="T:System.Queue">
+            <summary>
+            The Queue data type which is mapped to the Array type in Javascript.
+            </summary>
+        </member>
+        <member name="T:System.IServiceProvider">
+            <summary>
+            Provides access to services. Each service is associated with
+            a type identifier.
+            </summary>
+        </member>
+        <member name="M:System.IServiceProvider.GetService(System.Type)">
+            <summary>
+            Retrieves a service of the specified type if it is available.
+            </summary>
+            <param name="serviceType">The type of service.</param>
+            <returns>An implementation of the service type; null if no service of that type is available.</returns>
+        </member>
+        <member name="T:System.Arguments">
+            <summary>
+            Provides access to the arguments of the current function.
+            </summary>
+        </member>
+        <member name="M:System.Arguments.GetArgument(System.Int32)">
+            <summary>
+            Retrieves the specified actual argument value passed to the
+            function by index.
+            </summary>
+            <param name="index">The index of the argument to retrieve.</param>
+            <returns>The value of the specified argument.</returns>
+        </member>
+        <member name="P:System.Arguments.Length">
+            <summary>
+            Retrieves the number of actual arguments passed to the function.
+            </summary>
+            <returns>The count of arguments.</returns>
+        </member>
+        <member name="T:System.Byte">
+            <summary>
+            The byte data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Byte.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Byte.op_Implicit(System.Byte)~System.Number">
+            <internalonly />
+        </member>
+        <member name="T:System.Boolean">
+            <summary>
+            Equivalent to the Boolean type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Boolean.Parse(System.String)">
+            <summary>
+            Enables you to parse a string representation of a boolean value.
+            </summary>
+            <param name="s">The string to be parsed.</param>
+            <returns>The resulting boolean value.</returns>
+        </member>
+        <member name="T:System.XML.XMLDocument">
+            <summary>
+            Represents the hierarchy of node objects parsed from XML markup.
+            </summary>
+        </member>
+        <member name="T:System.UInt32">
+            <summary>
+            The uint data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.UInt32.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.UInt32.op_Implicit(System.UInt32)~System.Number">
+            <internalonly />
+        </member>
+        <member name="T:System.IServiceContainer">
+            <summary>
+            Provides the ability to register and unregister services.
+            </summary>
+        </member>
+        <member name="M:System.IServiceContainer.RegisterService(System.Type,System.Object)">
+            <summary>
+            Registers a service implementation so it can be accessed by
+            service consumers.
+            </summary>
+            <param name="serviceType">The type of service.</param>
+            <param name="service">The service implementation.</param>
+        </member>
+        <member name="M:System.IServiceContainer.UnregisterService(System.Type)">
+            <summary>
+            Unregisters a previously registered service.
+            </summary>
+            <param name="serviceType">The type of service.</param>
+        </member>
+        <member name="T:System.ArrayList">
+            <summary>
+            Equivalent to the Array type in Javascript.
+            </summary>
+        </member>
+        <member name="T:System.Array">
+            <summary>
+            Equivalent to the Array type in Javascript.
+            </summary>
+        </member>
+        <member name="T:System.DHTML.ErrorHandler">
+            <summary>
+            Delegate for the window unhandled exception handler.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="url">The URL of the script where the error occurred.</param>
+            <param name="line">The line number where the error occurred.</param>
+            <returns>true if the error was handled; false otherwise.</returns>
+        </member>
+        <member name="P:System.DHTML.Style.Accelerator">
+            <summary>Whether the object contains an accelerator key.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Background">
+            <summary>The background properties of an object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BackgroundAttachment">
+            <summary>How the background image is attached to the object within the document.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BackgroundColor">
+            <summary>The color behind the content of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BackgroundImage">
+            <summary>The background image of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BackgroundPosition">
+            <summary>The position of the background of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BackgroundPositionX">
+            <summary>The x-coordinate of the backgroundPosition property.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BackgroundPositionY">
+            <summary>The y-coordinate of the backgroundPosition property.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BackgroundRepeat">
+            <summary>How the background of the object is tiled.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Border">
+            <summary>The properties to draw a border around the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderBottom">
+            <summary>The properties of the bottom border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderBottomColor">
+            <summary>The color of the bottom border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderBottomStyle">
+            <summary>The style of the bottom border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderBottomWidth">
+            <summary>The width of the bottom border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderCollapse">
+            <summary>Whether the row and cell borders of a table are joined in a single border or detached.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderColor">
+            <summary>The border color of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderLeft">
+            <summary>The properties of the left border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderLeftColor">
+            <summary>The color of the left border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderLeftStyle">
+            <summary>The style of the left border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderLeftWidth">
+            <summary>The width of the left border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderRight">
+            <summary>The properties of the right border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderRightColor">
+            <summary>The color of the right border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderRightStyle">
+            <summary>The style of the right border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderRightWidth">
+            <summary>The width of the right border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderStyle">
+            <summary>The style of the borders of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderTop">
+            <summary>The properties of the top border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderTopColor">
+            <summary>The color of the top border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderTopStyle">
+            <summary>The style of the top border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderTopWidth">
+            <summary>The width of the top border of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.BorderWidth">
+            <summary>The width of the borders of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Bottom">
+            <summary>The bottom position of the object in relation to the bottom of the next positioned object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Clear">
+            <summary>Whether the object allows floating objects on its left side, right side, or both, so that the next text displays past the floating objects.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Clip">
+            <summary>Which part of a positioned object is visible.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Color">
+            <summary>The color of the text of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.CssText">
+            <summary>The persisted representation of this style.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Cursor">
+            <summary>The type of cursor to display as the mouse pointer moves over the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Direction">
+            <summary>The reading order of content within the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Display">
+            <summary>Whether the object is rendered.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Filter">
+            <summary>The collection of filters applied to an object. (Specific to Internet Explorer)</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Font">
+            <summary>The font properties of the object or one or more of six user-preference fonts.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.FontFamily">
+            <summary>The name of the font used for text in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.FontSize">
+            <summary>The font size used for text in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.FontStyle">
+            <summary>The font style of the object as italic, normal, or oblique.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.FontVariant">
+            <summary>Whether the text of the object is in small capital letters.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.FontWeight">
+            <summary>The weight of the font of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Height">
+            <summary>The height of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Left">
+            <summary>The position of the object relative to the left edge of the next positioned object in the document hierarchy.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.LetterSpacing">
+            <summary>The amount of additional space between letters in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.LineHeight">
+            <summary>The distance between lines in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.ListStyle">
+            <summary>The listStyle properties of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.ListStyleImage">
+            <summary>The image to use as a list-item marker for the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.ListStylePosition">
+            <summary>SHow the list-item marker is drawn relative to the content of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.ListStyleType">
+            <summary>The type of the list-item marker for the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Margin">
+            <summary>The width of the top, right, bottom, and left margins of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MarginBottom">
+            <summary>The height of the bottom margin of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MarginLeft">
+            <summary>The width of the left margin of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MarginRight">
+            <summary>The width of the right margin of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MarginTop">
+            <summary>The height of the top margin of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MaxHeight">
+            <summary>The maximum height for displayable block level elements.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MaxWidth">
+            <summary>The maximum width for displayable block level elements.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MinHeight">
+            <summary>The minimum height for an element.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MinWidth">
+            <summary>The minimum width for displayable block level element.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.MsInterpolationMode">
+            <summary>The interpolation (resampling) method used to stretch images. (Specific to Internet Explorer)</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Opacity">
+            <summary>How to blend the object into the rendering.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Overflow">
+            <summary>How to manage the content of the object when the content exceeds the height or width of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.OverflowX">
+            <summary>How to manage the content of the object when the content exceeds the width of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.OverflowY">
+            <summary>How to manage the content of the object when the content exceeds the height of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Padding">
+            <summary>The amount of space to insert between the object and its margin or, if there is a border, between the object and its border.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PaddingBottom">
+            <summary>The amount of space to insert between the bottom border of the object and the content.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PaddingLeft">
+            <summary>The amount of space to insert between the left border of the object and the content.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PaddingRight">
+            <summary>The amount of space to insert between the right border of the object and the content.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PaddingTop">
+            <summary>The amount of space to insert between the top border of the object and the content.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PageBreakAfter">
+            <summary>Whether a page break occurs after the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PageBreakBefore">
+            <summary>Whether a page break occurs before the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PixelBottom">
+            <summary>The bottom position of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PixelHeight">
+            <summary>The height of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PixelLeft">
+            <summary>The left position of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PixelRight">
+            <summary>The right position of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PixelTop">
+            <summary>The top position of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PixelWidth">
+            <summary>The width of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PosBottom">
+            <summary>The bottom position of the object in the units specified by the bottom attribute.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PosHeight">
+            <summary>The height of the object in the units specified by the height attribute.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Position">
+            <summary>The type of positioning used for the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PosLeft">
+            <summary>The left position of the object in the units specified by the left attribute.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PosRight">
+            <summary>The right position of the object in the units specified by the right attribute.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PosTop">
+            <summary>The top position of the object in the units specified by the top attribute.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.PosWidth">
+            <summary>The width of the object in the units specified by the width attribute.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Right">
+            <summary>The position of the object relative to the right edge of the next positioned object in the document hierarchy.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.StyleFloat">
+            <summary>The side of the object the text will flow.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TableLayout">
+            <summary>Whether the table layout is fixed.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextAlign">
+            <summary>Whether The text in the object is left-aligned, right-aligned, centered, or justified.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextDecoration">
+            <summary>Indicates whether the text in the object has blink, line-through, overline, or underline decorations.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextDecorationBlink">
+            <summary>Whether the object's text "blinks."</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextDecorationLineThrough">
+            <summary>Whether the text in the object has a line drawn through it.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextDecorationNone">
+            <summary>Whether the textDecoration property for the object has been set to none.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextDecorationOverline">
+            <summary>Whether the text in the object has a line drawn over it.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextDecorationUnderline">
+            <summary>Whether the text in the object is underlined.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextIndent">
+            <summary>The indentation of the first line of text in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextJustify">
+            <summary>The type of alignment used to justify text in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextOverflow">
+            <summary>Indicates whether to render ellipses(...) to indicate text overflow.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.TextTransform">
+            <summary>The rendering of the text in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Top">
+            <summary>The position of the object relative to the top of the next positioned object in the document hierarchy.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.VerticalAlign">
+            <summary>The vertical alignment of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Visibility">
+            <summary>Whether the content of the object is displayed.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.WhiteSpace">
+            <summary>Indicates whether lines are automatically broken inside the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Width">
+            <summary>The width of the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.WordSpacing">
+            <summary>The amount of additional space between words in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.WordWrap">
+            <summary>Whether to break words when the content exceeds the boundaries of its container.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.WritingMode">
+            <summary>The direction and flow of the content in the object.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.ZIndex">
+            <summary>The stacking order of positioned objects.</summary>
+        </member>
+        <member name="P:System.DHTML.Style.Zoom">
+            <summary>The magnification scale of the object.</summary>
+        </member>
+        <member name="T:System.NonScriptableAttribute">
+            <summary>
+            This attribute can be placed on types in system script assemblies that should not
+            be imported. It is only meant to be used within sscorlib.dll.
+            </summary>
+        </member>
+        <member name="T:System.ImportedAttribute">
+            <summary>
+            This attribute can be placed on types that should not be emitted into generated
+            script, as they represent existing script or native types.
+            </summary>
+        </member>
+        <member name="T:System.RecordAttribute">
+            <summary>
+            This attribute can be placed on types that should be emitted as light-weight
+            types into the generated script. Light-weight types only have an optional constructor
+            and no other members besides public fields. As such they are ideal for
+            representing JSON data.
+            </summary>
+        </member>
+        <member name="T:System.ResourcesAttribute">
+            <summary>
+            This attribute can be placed on a static class that only contains static string
+            fields representing a set of resource strings.
+            </summary>
+        </member>
+        <member name="T:System.GlobalMethodsAttribute">
+            <summary>
+            This attribute turns methods on a static class as global methods in the generated
+            script. Note that the class must be static, and must contain only methods.
+            </summary>
+        </member>
+        <member name="T:System.IntrinsicPropertyAttribute">
+            <summary>
+            This attribute denotes a C# property that manifests like a field in the generated
+            JavaScript (i.e. is not accessed via get/set methods). This is really meant only
+            for use when defining OM corresponding to native objects exposed to script.
+            </summary>
+        </member>
+        <member name="T:System.AttachedPropertyAttribute">
+            <summary>
+            This attribute denotes a static method as an attached property accessor.
+            The method must be of the form: Get/Set[PropertyName](object, value) and
+            is converted into object[ClassType.PropertyName] = value.
+            This is only for use for Silverlight types.
+            </summary>
+        </member>
+        <member name="T:System.NamedValuesAttribute">
+            <summary>
+            This attribute marks an enumeration type within a system assembly as as a set of
+            names. Rather than the specific value, the name of the enumeration field is
+            used as a string.
+            </summary>
+        </member>
+        <member name="T:System.NumericValuesAttribute">
+            <summary>
+            This attribute marks an enumeration type within a system assembly as as a set of
+            numeric values. Rather than the enum field, the value of the enumeration field is
+            used as a literal.
+            </summary>
+        </member>
+        <member name="T:System.IgnoreNamespaceAttribute">
+            <summary>
+            This attribute indicates that the namespace of type within a system assembly
+            should be ignored at script generation time. It is useful for creating namespaces
+            for the purpose of c# code that don't exist at runtime.
+            </summary>
+        </member>
+        <member name="T:System.PreserveCaseAttribute">
+            <summary>
+            This attribute allows suppressing the default behavior of converting
+            member names to camel-cased equivalents in the generated JavaScript.
+            </summary>
+        </member>
+        <member name="T:System.PreserveNameAttribute">
+            <summary>
+            This attribute allows suppressing the default behavior of minimizing
+            private type names and member names in the generated JavaScript.
+            </summary>
+        </member>
+        <member name="T:System.ScriptAliasAttribute">
+            <summary>
+            This attribute allows specifying a script name for an imported method.
+            The method is interpreted as a global method. As a result it this attribute
+            only applies to static methods.
+            </summary>
+        </member>
+        <member name="T:System.AlternateSignatureAttribute">
+            <summary>
+            This attribute allows defining an alternate method signature that is not generated
+            into script, but can be used for defining overloads to enable optional parameter semantics
+            for a method. It must be applied on a method defined as extern, since an alternate signature
+            method does not contain an actual method body.
+            </summary>
+        </member>
+        <member name="T:System.BrowsableAttribute">
+            <summary>
+            This attribute marks a field, property, event or method as
+            "browsable", i.e. present in the type descriptor associated with
+            the type.
+            </summary>
+        </member>
+        <member name="T:System.UInt64">
+            <summary>
+            The ulong data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.UInt64.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.UInt64.op_Implicit(System.UInt64)~System.Number">
+            <internalonly />
+        </member>
+        <member name="T:System.Int32">
+            <summary>
+            The int data type which is mapped to the Number type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Int32.ToString(System.Int32)">
+            <summary>
+            Converts the value to its string representation.
+            </summary>
+            <param name="radix">The radix used in the conversion (eg. 10 for decimal, 16 for hexadecimal)</param>
+            <returns>The string representation of the value.</returns>
+        </member>
+        <member name="M:System.Int32.op_Implicit(System.Int32)~System.Number">
+            <internalonly />
+        </member>
+        <member name="T:System.Char">
+            <summary>
+            The char data type which is mapped to the String type in Javascript.
+            </summary>
+        </member>
+        <member name="M:System.Char.op_Explicit(System.Char)~System.String">
+            <internalonly />
+        </member>
+    </members>
+</doc>

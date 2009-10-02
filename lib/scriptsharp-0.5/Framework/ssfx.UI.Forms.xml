@@ -1,0 +1,347 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ssfx.UI.Forms</name>
+    </assembly>
+    <members>
+        <member name="T:ScriptFX.UI.AutoCompleteRequestEventArgs">
+            <summary>
+            Contains information about a request being issued by the AutoComplete dropdown.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.AutoCompleteRequestEventArgs.SetItems(System.Object[])">
+            <summary>
+            Sets the items to use for the current prefix text.
+            </summary>
+            <param name="items">The items to use.</param>
+        </member>
+        <member name="P:ScriptFX.UI.AutoCompleteRequestEventArgs.PrefixText">
+            <summary>
+            The text prefix for which items are being requested.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.WatermarkBehavior">
+            <summary>
+            A behavior that can be attached to a text element to provide a watermark
+            when the text element does not contain user input. The watermark is usable
+            as a prompt.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.WatermarkBehavior.#ctor(System.DHTML.TextElement,ScriptFX.UI.WatermarkOptions)">
+            <summary>
+            Creates an instance of WatermarkBehavior.
+            </summary>
+            <param name="element">The associated text element.</param>
+            <param name="options">The options used to initialize the behavior.</param>
+        </member>
+        <member name="M:ScriptFX.UI.WatermarkBehavior.Update">
+            <summary>
+            Updates the watermark state based on the value in the textbox.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.WatermarkBehavior.IsWatermarked">
+            <summary>
+            Whether the text element is currently displaying a watermark.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.Button">
+            <summary>
+            A control representing an element that can be clicked.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Button.#ctor(System.DHTML.DOMElement)">
+            <summary>
+            Creates a Button control associated with the specified element.
+            </summary>
+            <param name="domElement">The associated element.</param>
+        </member>
+        <member name="M:ScriptFX.UI.Button.PerformClick">
+            <summary>
+            Programmatically performs the click action associated with this button.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Button.ActionArgument">
+            <summary>
+            Any app-specified data related to the action associated with this button.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.Button.ActionName">
+            <summary>
+            The name of the action associated with this button.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.Button.Action">
+            <summary>
+            Raised when the action associated with this button is triggered.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.Button.Click">
+            <summary>
+            Raised when this button is clicked.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.AutoCompleteItemEventHandler">
+            <summary>
+            Represents the signature of an event handler handling an AutoComplete event.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">The information about the item in the AutoComplete dropdown.</param>
+        </member>
+        <member name="T:ScriptFX.UI.WatermarkOptions">
+            <summary>
+            A set of options for use when creating an instance of WatermarkBehavior.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.WatermarkOptions.watermarkText">
+            <summary>
+            The text to use as a watermark.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.WatermarkOptions.watermarkCssClass">
+            <summary>
+            The CSS class to apply to the text element when the watermark is applied.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.WatermarkOptions.#ctor(System.String,System.String)">
+            <summary>
+            Creates an instance of WatermarkOptions.
+            </summary>
+            <param name="watermarkText">The text to use as a watermark.</param>
+            <param name="watermarkCssClass">The CSS class to apply to the text element when the watermark is applied.</param>
+        </member>
+        <member name="T:ScriptFX.UI.Label">
+            <summary>
+            A control representing an element containing static readonly text.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.Label.#ctor(System.DHTML.DOMElement)">
+            <summary>
+            Creates a label control associated with the specified element.
+            </summary>
+            <param name="domElement">The associated element.</param>
+        </member>
+        <member name="P:ScriptFX.UI.Label.Text">
+            <summary>
+            Gets or sets the text of the Label.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.CheckBox">
+            <summary>
+            A control representing an element that can be checked on or off.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.CheckBox.#ctor(System.DHTML.DOMElement)">
+            <summary>
+            Creates a CheckBox control associated with the specified element.
+            </summary>
+            <param name="domElement">The associated element.</param>
+        </member>
+        <member name="P:ScriptFX.UI.CheckBox.Checked">
+            <summary>
+            Gets or sets the current checked state of the CheckBox.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.CheckBox.CheckedChanged">
+            <summary>
+            Raised when this CheckBox is clicked.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.EnterKeyOptions">
+            <summary>
+            A set of options for use when creating an instance of EnterKeyBehavior.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.EnterKeyOptions.clickTarget">
+            <summary>
+            The target element to be clicked.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.EnterKeyOptions.#ctor(System.DHTML.DOMElement)">
+            <summary>
+            Creates an instance of EnterKeyOptions.
+            </summary>
+            <param name="clickTarget">The target element to be clicked.</param>
+        </member>
+        <member name="T:ScriptFX.UI.EnterKeyBehavior">
+            <summary>
+            A behavior that can be attached to a text element that traps and maps enter key presses
+            to clicks on a specified click target. 
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.EnterKeyBehavior.#ctor(System.DHTML.TextElement,ScriptFX.UI.EnterKeyOptions)">
+            <summary>
+            Creates an instance of EnterKeyBehavior.
+            </summary>
+            <param name="element">The associated text element.</param>
+            <param name="options">The options used to initialize the behavior.</param>
+        </member>
+        <member name="T:ScriptFX.UI.TextBox">
+            <summary>
+            A control representing an element that can be used to edit text.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.TextBox.#ctor(System.DHTML.DOMElement)">
+            <summary>
+            Creates a TextBox control associated with the specified element.
+            </summary>
+            <param name="domElement">The associated element.</param>
+        </member>
+        <member name="P:ScriptFX.UI.TextBox.Text">
+            <summary>
+            The text within the TextBox.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.TextBox.TextChanged">
+            <summary>
+            Raised when the text of the TextBox is changed by the user.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.AutoCompleteItemEventArgs">
+            <summary>
+            Contains information about an item in the AutoComplete dropdown.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.AutoCompleteItemEventArgs.Index">
+            <summary>
+            The index of the item in the AutoComplete dropdown.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.AutoCompleteItemEventArgs.Item">
+            <summary>
+            The item present in the AutoComplete dropdown.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.AutoCompleteItemEventArgs.Text">
+            <summary>
+            The textual representation of the item. The contents of this property
+            should be set depending on the event being handled.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.AutoCompleteBehavior">
+            <summary>
+            A behavior that can be associated with a text input element to monitor
+            user input and provide a list of possible completion values.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.AutoCompleteBehavior.#ctor(System.DHTML.DOMElement,ScriptFX.UI.AutoCompleteOptions)">
+            <summary>
+            Creates an instance of an AutoCompleteBehavior.
+            </summary>
+            <param name="domElement">The element to associated with this behavior.</param>
+            <param name="options">The options used to customize the behavior.</param>
+        </member>
+        <member name="M:ScriptFX.UI.AutoCompleteBehavior.ClearCache">
+            <summary>
+            Clears the cache of items associated with previous text inputs
+            entered by the user.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.AutoCompleteBehavior.Dispose">
+            <summary>
+            Disposes the AutoCompleteBehavior instance and disassociate it with
+            its DOM element.
+            </summary>
+        </member>
+        <member name="P:ScriptFX.UI.AutoCompleteBehavior.Arguments">
+            <summary>
+            Represents a dictionary of name/value pairs that are sent to the server
+            when a request for items is invoked. The name/value pairs must be JSON serializable.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.AutoCompleteBehavior.ItemDisplay">
+            <summary>
+            Raised when an item is being rendered to display within the AutoComplete
+            dropdown. This event allows using non-string/non-textual values returned
+            from the service. This event can also be used to render the HTML to be
+            displayed for an item within the dropdown.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.AutoCompleteBehavior.ItemSelected">
+            <summary>
+            Raised when an item has been selected from within the AutoComplete dropdown.
+            This event allows the caller to use the selected item to perform additional
+            work, as well as to specify the text that will be displayed in the textbox.
+            </summary>
+        </member>
+        <member name="E:ScriptFX.UI.AutoCompleteBehavior.RequestingItems">
+            <summary>
+            Raised when a request is about to be issued to determine the set of items
+            to show in the dropdown. This event can be used to either update the
+            custom parameters that are sent to the server, or to supply a list of
+            programmatically generated set of items.
+            </summary>
+        </member>
+        <member name="T:ScriptFX.UI.AutoCompleteRequestEventHandler">
+            <summary>
+            Represents the signature of an event handler handling an AutoComplete Request event.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">The information about the request being issued by the AutoComplete dropdown.</param>
+        </member>
+        <member name="T:ScriptFX.UI.AutoCompleteOptions">
+            <summary>
+            A set of options to customize the behavior of the AutoCompleteBehavior.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.id">
+            <summary>
+            The name of the PopupBehavior to expose it as a top-level property
+            of the element that the Behavior is associated with.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.service">
+            <summary>
+            The RPC end-point on the server used to provide a list of suggestions
+            to populate the auto-complete dropdown.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.cssClass">
+            <summary>
+            The CSS class associated with the auto-complete dropdown.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.itemCSSClass">
+            <summary>
+            The CSS class associated with items in the auto-complete dropdown.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.selectedItemCSSClass">
+            <summary>
+            The CSS class associated with the selected item in the auto-complete dropdown.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.itemCount">
+            <summary>
+            The number of items to display in the auto-complete dropdown.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.itemLookupDelay">
+            <summary>
+            The delay in milliseconds before a request is sent to the service end-point
+            once a key is pressed.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.minimumPrefixLength">
+            <summary>
+            The minimum length of the text that must be entered before a request is sent
+            to the service end-point.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.xOffset">
+            <summary>
+            The horizontal offset used in positioning the auto-complete dropdown.
+            </summary>
+        </member>
+        <member name="F:ScriptFX.UI.AutoCompleteOptions.yOffset">
+            <summary>
+            The vertical offset used in positioning the auto-complete dropdown.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.UI.AutoCompleteOptions.#ctor(System.String)">
+            <summary>
+            Creates an AutoCompleteOptions object with the required set of values.
+            </summary>
+            <param name="service">The RPC service end-point on the server to provide the list of items to display in the auto-complete drop-down.</param>
+        </member>
+    </members>
+</doc>

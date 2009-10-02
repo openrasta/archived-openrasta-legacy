@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.AspNet35", "aspnet35/OpenRasta.AspNet35.csproj", "{5F35FBA7-9DB8-43B1-A80F-8C15433FEFC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A557488-E14C-44D0-B333-DED12E057CEA}"
+	ProjectSection(SolutionItems) = preProject
+		OpenRasta.AspNet35.vstemplate = OpenRasta.AspNet35.vstemplate
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F35FBA7-9DB8-43B1-A80F-8C15433FEFC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F35FBA7-9DB8-43B1-A80F-8C15433FEFC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F35FBA7-9DB8-43B1-A80F-8C15433FEFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F35FBA7-9DB8-43B1-A80F-8C15433FEFC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

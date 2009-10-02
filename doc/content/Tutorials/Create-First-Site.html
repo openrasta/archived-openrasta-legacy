@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-gb" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Creating an OpenRasta website</title>
+</head>
+
+<body>
+
+<h1>Creating an OpenRasta website</h1>
+<p>First, follow the instructions in <a href="Download.html">Downloading and 
+compiling OpenRasta</a>. You should now have the compiled version of OpenRasta, 
+ready for use.</p>
+<h2>Creating the project</h2>
+<p>Open Visual Studio 2008 and create a new Web Application project.</p>
+<p>
+<img alt="" longdesc="Create a new project" src="../img/Create-First-Site/img7.png" /></p>
+<p>Once the project is created, add a reference to the 3.5 version of 
+OpenRasta.dll. It should be in \openrasta\bin\release\net-35\OpenRasta.dll.</p>
+<h2>Modifying web.config</h2>
+<p>Now, edit the web.config file to point to the OpenRasta http handlers and 
+modules. They&#39;re the two components required for OpenRasta to serve requests 
+made against your server.</p>
+<p>In the &lt;system.web&gt; section, in &lt;httpHandlers&gt;, add the following line.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	&lt;add </span><span style="color: #fa8072;">verb</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;*&quot;</span><span style="color: #7ee0ce;">
+	</span><span style="color: #fa8072;">path</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;*.rastahook&quot;</span><span style="color: #7ee0ce;">
+	</span><span style="color: #fa8072;">type</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;OpenRasta.Web.OpenRastaHandler, 
+	OpenRasta&quot;</span><span style="color: #7ee0ce;">/&gt;</span></p>
+</div>
+<!--EndFragment-->
+<p>In &lt;httpModules&gt;, add the following.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	&lt;add </span><span style="color: #fa8072;">name</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;OpenRastaModule&quot;</span><span style="color: #7ee0ce;">
+	</span><span style="color: #fa8072;">type</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;OpenRasta.Web.OpenRastaModule, 
+	OpenRasta&quot;</span><span style="color: #7ee0ce;">/&gt;</span></p>
+</div>
+<!--EndFragment-->
+<p>If you&#39;re using IIS7, the http handlers and modules need to be defined in the 
+&lt;system.webServer&gt; section, as follow.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp; &lt;system.webServer&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp; 
+	&lt;validation </span><span style="color: #fa8072;">
+	validateIntegratedModeConfiguration</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;false&quot;</span><span style="color: #7ee0ce;">/&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp; 
+	&lt;modules&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	&lt;add </span><span style="color: #fa8072;">name</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;OpenRastaModule&quot;</span><span style="color: #7ee0ce;">
+	</span><span style="color: #fa8072;">type</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;OpenRasta.Web.OpenRastaModule, 
+	OpenRasta&quot;</span><span style="color: #7ee0ce;">/&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp; 
+	&lt;/modules&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp; 
+	&lt;handlers&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	&lt;add </span><span style="color: #fa8072;">name</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;OpenRastaHandler&quot;</span><span style="color: #7ee0ce;">
+	</span><span style="color: #fa8072;">verb</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;*&quot;</span><span style="color: #7ee0ce;">
+	</span><span style="color: #fa8072;">path</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;*.rastahook&quot;</span><span style="color: #7ee0ce;">
+	</span><span style="color: #fa8072;">type</span><span style="color: #7ee0ce;">=</span><span style="color: #87df71;">&quot;OpenRasta.Web.OpenRastaHandler, 
+	OpenRasta&quot;</span><span style="color: #7ee0ce;"> /&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp;&nbsp;&nbsp; 
+	&lt;/handlers&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&nbsp; &lt;/system.webServer&gt;</span></p>
+</div>
+<!--EndFragment-->
+<h2>Removing the default page</h2>
+<p>The next step is to get rid of the content in the automatically generated 
+default.aspx page. You need to keep that page at the root of the site, otherwise 
+asp.net won&#39;t recognize OpenRasta. Simply remove all the content until your 
+default.aspx looks like the following.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #fff977; background: #2a2a2a;">
+	&lt;%</span><span style="color: #7ee0ce;">@</span>
+	<span style="color: #63dac5;">Page</span> <span style="color: #fa8072;">
+	Language</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;C#&quot;</span>
+	<span style="color: #fa8072;">AutoEventWireup</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;true&quot;</span>
+	<span style="color: #fa8072;">CodeBehind</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;default.aspx.cs&quot;</span>
+	<span style="color: #fa8072;">Inherits</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;OpenRasta.Demo._default&quot;</span>
+	<span style="color: #fff977; background: #2a2a2a;">%&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #72d89d;">&lt;!-- Nothing to see 
+	here. --&gt;</span></p>
+</div>
+<!--EndFragment-->
+<h2>Configuring OpenRasta</h2>
+<p>
+<img alt="A solution after the folder creation" src="../img/Create-First-Site/img11.png" style="float: right" />The 
+first step in designing your web site is to define what resources you want to 
+serve. One of the first resources you will need is a home page.</p>
+<p>First, create three folders at the root of your solution.</p>
+<ul>
+	<li>Handlers<br />
+	Handlers are the objects responsible to act upon resources through the http 
+	uniform interface, and will always get called first. They&#39;re the equivalent 
+	of Controllers in other frameworks.</li>
+	<li>Resources<br />
+	Your resources are what you expose on various Uris. In OpenRasta, each thing 
+	you want to expose on the web needs to have a Resource class associated with 
+	it.</li>
+	<li>Views<br />
+	Views are responsible for rendering what the handler returned. Often it will 
+	be the resource that was requested.</li>
+</ul>
+<p>Then, create a class in the Resources folder, and call it Home, and add a few 
+properties that will be needed for future rendering.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">namespace</span> 
+	MyRestApplication<span style="color: #a6a0e0;">.</span>Resources</p>
+	<p style="margin: 0px;">{</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #00bfff;">
+	public</span> <span style="color: #00bfff;">class</span>
+	<span style="color: #00d2d2;">Home</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00bfff;">
+	string</span> Title { <span style="color: #00bfff;">get</span>;
+	<span style="color: #00bfff;">set</span>; }</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
+	<p style="margin: 0px;">}</p>
+</div>
+<!--EndFragment-->
+<p>The next step is to create a handler that will generate the Home resource. Go 
+ahead and create an empty HomeHandler class in the Handlers folder.</p>
+<p>All the elements are now in place to create the configuration. OpenRasta is 
+configured through the use of a fluent API. You can either add the configuration 
+to your global.asax, or create a specific class. Let&#39;s do the latter, and add a 
+Configurator class at the root of the site, and implement the 
+IConfigurationSource interface.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> System;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> OpenRasta<span style="color: #a6a0e0;">.</span>Configuration;</p>
+	<p style="margin: 0px;">&nbsp;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">namespace</span> 
+	MyRestApplication</p>
+	<p style="margin: 0px;">{</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #00bfff;">
+	public</span> <span style="color: #00bfff;">class</span>
+	<span style="color: #00d2d2;">Configurator</span> :
+	<span style="color: #92e4d6;">IConfigurationSource</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00bfff;">
+	void</span> Configure()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #bdb76b;">// the configuration goes here</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
+	<p style="margin: 0px;">}</p>
+</div>
+<!--EndFragment-->
+<p>The Configure method is where all your resources will be declared. Let&#39;s 
+define the resource first, using a manual configuration. to do so, declare a <em>
+using</em> block and use the ResourceSpace static class to start your 
+configuration.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">using</span> (<span style="color: #00d2d2;">OpenRastaConfiguration</span><span style="color: #a6a0e0;">.</span>Manual)</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	{</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00d2d2;">ResourceSpace</span><span style="color: #a6a0e0;">.</span>Has<span style="color: #a6a0e0;">.</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	}</p>
+</div>
+<!--EndFragment-->
+<p>The Has word is the root of the configuration options. You&#39;ll find a few 
+options in there, depending on which version of OpenRasta you&#39;re using, and any 
+third-party code that may attach to this word to add their own configuration 
+options.</p>
+<p>First, define the resource Home we created earlier by using the 
+ResourcesOfType generic method. Attach the resource to the /home uri by using 
+the AtUri method. Finally, define that the HomeHandler will be responsible for 
+instantiating (a process called <em>dereferencing</em>) the Home resource. You 
+should now have a configuration looking like the following.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00d2d2;">ResourceSpace</span><span style="color: #a6a0e0;">.</span>Has<span style="color: #a6a0e0;">.</span>ResourcesOfType<span style="color: #a6a0e0;">&lt;</span><span style="color: #00d2d2;">Home</span><span style="color: #a6a0e0;">&gt;</span>()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #a6a0e0;">.</span>AtUri(<span style="color: #fa8072;">&quot;/home&quot;</span>)</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #a6a0e0;">.</span>HandledBy<span style="color: #a6a0e0;">&lt;</span><span style="color: #00d2d2;">HomeHandler</span><span style="color: #a6a0e0;">&gt;</span>();</p>
+</div>
+<!--EndFragment-->
+<h2>Http verbs and status codes</h2>
+<p>If you now try to run this website, you&#39;ll end up with an HTTP 405 error.</p>
+<p>
+<img alt="Internet Explorer returning a 405" height="174" src="../img/Create-First-Site/2008-12-07_1438.png" width="435" />&nbsp;</p>
+<p>OpenRasta leverages the status codes defined in HTTP. A 405 error means that 
+the method used to access the URI is not allowed on the resource.</p>
+<p>Whenever you access any URI over HTTP, a method is used to define what action 
+is to be executed against the resource. Here, the method GET was used to access 
+/home, but OpenRasata didn&#39;t find any matching method. And indeed, your 
+HomeHandler doesn&#39;t have any method defined!</p>
+<p>Let&#39;s create a Get method on the HomeHandler class, and return a new instance 
+of the Home resource.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> 
+	MyRestApplication<span style="color: #a6a0e0;">.</span>Resources;</p>
+	<p style="margin: 0px;">&nbsp;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">namespace</span> 
+	MyRestApplication<span style="color: #a6a0e0;">.</span>Handlers</p>
+	<p style="margin: 0px;">{</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #00bfff;">
+	public</span> <span style="color: #00bfff;">class</span>
+	<span style="color: #00d2d2;">HomeHandler</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00bfff;">
+	object</span> Get()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">return</span> <span style="color: #00bfff;">
+	new</span> <span style="color: #00d2d2;">Home</span> { Title
+	<span style="color: #a6a0e0;">=</span> <span style="color: #fa8072;">
+	&quot;Welcome home.&quot;</span> };</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
+	<p style="margin: 0px;">}</p>
+</div>
+<!--EndFragment-->
+<p>We simply return a new home instance from the handler. Let&#39;s try to run the 
+page again.</p>
+<p>
+<img alt="Internet Explorer returning a 406" height="98" src="../img/Create-First-Site/2008-12-07_1437.png" width="380" />&nbsp;</p>
+<p>New error, at least we made some progress. 406 is the status code a server 
+returns when it cannot find a compatible media type as requested by the browser.</p>
+<h2>Content negotiation and codecs</h2>
+<p>OpenRasta leverages content negotiation. Whenever your browser (or any other 
+http client) sends a request, it can include an Accept header defining what 
+formats it understands. Those usually include html and most of the plugin-supported 
+types a browser can render. These types are called <strong>representations</strong>.</p>
+<p>In our configuration, we haven&#39;t specified specified yet what representations 
+we support for our Home resource, and OpenRasta returns a 406 to let the client 
+know that no compatible representation was found. To enable generating 
+representations, OpenRasta uses codecs, objects that can turn the bytes sent 
+over the wire into objects and back.</p>
+<p>Go go ahead and create a new aspx page in our Views folder, and call it 
+HomeView.aspx. When you use an aspx page as a view in OpenRasta, you essentially 
+create a template to generate content. As such, postbacks and events are not 
+supported. So go ahead and remove the form tag. Your page should look something 
+like the following.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #fff977; background: #2a2a2a;">
+	&lt;%</span><span style="color: #7ee0ce;">@</span>
+	<span style="color: #63dac5;">Page</span> <span style="color: #fa8072;">
+	Language</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;C#&quot;</span>
+	<span style="color: #fa8072;">AutoEventWireup</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;true&quot;</span>
+	<span style="color: #fa8072;">CodeBehind</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;HomeView.aspx.cs&quot;</span>
+	<span style="color: #fa8072;">Inherits</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;MyRestApplication.Views.HomeView&quot;</span>
+	<span style="color: #fff977; background: #2a2a2a;">%&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;!</span><span style="color: #63dac5;">DOCTYPE</span>
+	<span style="color: #fa8072;">html</span> <span style="color: #fa8072;">
+	PUBLIC</span> <span style="color: #87df71;">&quot;-//W3C//DTD XHTML 1.0 
+	Transitional//EN&quot;</span> <span style="color: #87df71;">
+	&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;</p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">html</span>
+	<span style="color: #fa8072;">xmlns</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;http://www.w3.org/1999/xhtml&quot;</span>
+	<span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">head</span>
+	<span style="color: #fa8072;">runat</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;server&quot;</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">title</span><span style="color: #7ee0ce;">&gt;&lt;/</span><span style="color: #63dac5;">title</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">head</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">body</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">div</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome 
+	to my page!</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">div</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">body</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">html</span><span style="color: #7ee0ce;">&gt;</span></p>
+</div>
+<!--EndFragment-->
+<p>Finally, we&#39;re going to add this view to our configuration. Import the 
+configuration elements for webforms by importing the 
+OpenRasta.Configuration.WebForms namespace, and use the AndRenderedByAspx method 
+to define your view. Your configuration should now be looking like this.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> 
+	MyRestApplication<span style="color: #a6a0e0;">.</span>Handlers;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> 
+	MyRestApplication<span style="color: #a6a0e0;">.</span>Resources;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> OpenRasta<span style="color: #a6a0e0;">.</span>Configuration;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> OpenRasta<span style="color: #a6a0e0;">.</span>Configuration<span style="color: #a6a0e0;">.</span>WebForms;</p>
+	<p style="margin: 0px;">&nbsp;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">namespace</span> 
+	MyRestApplication</p>
+	<p style="margin: 0px;">{</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #00bfff;">
+	public</span> <span style="color: #00bfff;">class</span>
+	<span style="color: #00d2d2;">Configurator</span> :
+	<span style="color: #92e4d6;">IConfigurationSource</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00bfff;">
+	void</span> Configure()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">using</span> (<span style="color: #00d2d2;">OpenRastaConfiguration</span><span style="color: #a6a0e0;">.</span>Manual)</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	{</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00d2d2;">ResourceSpace</span><span style="color: #a6a0e0;">.</span>Has<span style="color: #a6a0e0;">.</span>ResourcesOfType<span style="color: #a6a0e0;">&lt;</span><span style="color: #00d2d2;">Home</span><span style="color: #a6a0e0;">&gt;</span>()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #a6a0e0;">.</span>AtUri(<span style="color: #fa8072;">&quot;/home&quot;</span>)</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #a6a0e0;">.</span>HandledBy<span style="color: #a6a0e0;">&lt;</span><span style="color: #00d2d2;">HomeHandler</span><span style="color: #a6a0e0;">&gt;</span>()</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #a6a0e0;">.</span>AndRendededByAspx(<span style="color: #fa8072;">&quot;~/Views/HomeView.aspx&quot;</span>);</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	}</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
+	<p style="margin: 0px;">}</p>
+</div>
+<!--EndFragment-->
+<p>If you now run that page, you&#39;ll notice that we have our content showing! But 
+so far, we&#39;ve only rendered static text.</p>
+<h2>Presenting the resource</h2>
+<p>The handler created an instance of the Home type. It&#39;s now time to put it to 
+good use. Edit the code-behind of your view to add a property of type Home.</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> System;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">using</span> 
+	MyRestApplication<span style="color: #a6a0e0;">.</span>Resources;</p>
+	<p style="margin: 0px;">&nbsp;</p>
+	<p style="margin: 0px;"><span style="color: #00bfff;">namespace</span> 
+	MyRestApplication<span style="color: #a6a0e0;">.</span>Views</p>
+	<p style="margin: 0px;">{</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #00bfff;">
+	public</span> <span style="color: #00bfff;">partial</span>
+	<span style="color: #00bfff;">class</span> <span style="color: #00d2d2;">
+	HomeView</span> : System<span style="color: #a6a0e0;">.</span>Web<span style="color: #a6a0e0;">.</span>UI<span style="color: #a6a0e0;">.</span><span style="color: #00d2d2;">Page</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #00bfff;">public</span> <span style="color: #00d2d2;">
+	Home</span> Home { <span style="color: #00bfff;">get</span>;
+	<span style="color: #00bfff;">set</span>; }</p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
+	<p style="margin: 0px;">}</p>
+</div>
+<p>OpenRasta will associate that property automatically with the value returned 
+by your handler.</p>
+<p>By leveraging the aspx syntax, you can now use the property we defined 
+earlier. Compile the application for visual studio to pick-up our new property 
+in intellisense, and modify the aspx page to render the title property in both 
+the head title tag and the content.&nbsp;</p>
+<div style="font-family: Consolas, Courier New; font-size: 10pt; color: #e0e0e0; background: #252525; padding: 10px;">
+	<p style="margin: 0px;"><span style="color: #fff977; background: #2a2a2a;">
+	&lt;%</span><span style="color: #7ee0ce;">@</span>
+	<span style="color: #63dac5;">Page</span> <span style="color: #fa8072;">
+	Language</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;C#&quot;</span>
+	<span style="color: #fa8072;">AutoEventWireup</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;true&quot;</span>
+	<span style="color: #fa8072;">CodeBehind</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;HomeView.aspx.cs&quot;</span>
+	<span style="color: #fa8072;">Inherits</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;MyRestApplication.Views.HomeView&quot;</span>
+	<span style="color: #fff977; background: #2a2a2a;">%&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;!</span><span style="color: #63dac5;">DOCTYPE</span>
+	<span style="color: #fa8072;">html</span> <span style="color: #fa8072;">
+	PUBLIC</span> <span style="color: #87df71;">&quot;-//W3C//DTD XHTML 1.0 
+	Transitional//EN&quot;</span> <span style="color: #87df71;">
+	&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;</p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">html</span>
+	<span style="color: #fa8072;">xmlns</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;http://www.w3.org/1999/xhtml&quot;</span>
+	<span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">head</span>
+	<span style="color: #fa8072;">runat</span><span style="color: #d0d0d0;">=</span><span style="color: #87df71;">&quot;server&quot;</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">title</span><span style="color: #7ee0ce;">&gt;</span><span style="color: #fff977; background: #2a2a2a;">&lt;%</span><span style="color: #d0d0d0;">=</span> 
+	Home<span style="color: #a6a0e0;">.</span>Title
+	<span style="color: #fff977; background: #2a2a2a;">%&gt;</span><span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">title</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">head</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">body</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;</span><span style="color: #63dac5;">div</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="color: #fff977; background: #2a2a2a;">&lt;%</span><span style="color: #d0d0d0;">=</span> 
+	Home<span style="color: #a6a0e0;">.</span>Title
+	<span style="color: #fff977; background: #2a2a2a;">%&gt;</span></p>
+	<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">div</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">body</span><span style="color: #7ee0ce;">&gt;</span></p>
+	<p style="margin: 0px;"><span style="color: #7ee0ce;">&lt;/</span><span style="color: #63dac5;">html</span><span style="color: #7ee0ce;">&gt;</span></p>
+</div>
+<!--EndFragment-->
+<p style="margin: 0px">&nbsp;</p>
+<p>Run the page, and you should be greeted by our page, with the correct data 
+being displayed.</p>
+
+</body>
+
+</html>

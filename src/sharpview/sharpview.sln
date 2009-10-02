@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Codecs.SharpView", "OpenRasta.Codecs.SharpView\OpenRasta.Codecs.SharpView.csproj", "{E29A4124-5A80-42AD-9B26-DB322D402465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Codecs.SharpView.Tests.Unit", "OpenRasta.Codecs.SharpView.Tests.Unit\OpenRasta.Codecs.SharpView.Tests.Unit.csproj", "{A69D4B3F-1675-4E5D-AF8E-376DC1BAE3E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E29A4124-5A80-42AD-9B26-DB322D402465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E29A4124-5A80-42AD-9B26-DB322D402465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E29A4124-5A80-42AD-9B26-DB322D402465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E29A4124-5A80-42AD-9B26-DB322D402465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A69D4B3F-1675-4E5D-AF8E-376DC1BAE3E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A69D4B3F-1675-4E5D-AF8E-376DC1BAE3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A69D4B3F-1675-4E5D-AF8E-376DC1BAE3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A69D4B3F-1675-4E5D-AF8E-376DC1BAE3E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

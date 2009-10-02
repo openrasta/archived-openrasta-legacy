@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ssfx.Reflection</name>
+    </assembly>
+    <members>
+        <member name="T:ScriptFX.Reflection.Reflector">
+            <summary>
+            The primary class in the Reflection framework that allows retrieving
+            namespaces and types that have been currently declared.
+            </summary>
+        </member>
+        <member name="M:ScriptFX.Reflection.Reflector.GetGlobalTypes">
+            <summary>
+            Retrieves the list of global types, i.e. types that have not been
+            defined within a namespace. These are either native script types
+            or a set of Script# runtime classes.
+            </summary>
+            <returns>The list of global types.</returns>
+        </member>
+        <member name="M:ScriptFX.Reflection.Reflector.GetNamespaces">
+            <summary>
+            Retrieves the list of registered namespaces.
+            </summary>
+            <returns>The list of namespaces.</returns>
+        </member>
+    </members>
+</doc>

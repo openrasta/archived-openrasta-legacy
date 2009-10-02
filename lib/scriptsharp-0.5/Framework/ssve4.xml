@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ssve4</name>
+    </assembly>
+    <members>
+        <member name="T:System.VirtualEarth.MapStyle">
+            <summary>
+            Represents the type of the map display.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapRouteSegment">
+            <summary>
+            Represents one segment of a route.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapViewMouseInfo">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapEventArgs">
+            <summary>
+            Represents the information associated with a map event.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapOrientation">
+            <summary>
+            Represents the orientation of oblique images on the map.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapTileSource">
+            <summary>
+            Represents information about a custom tile source for the map.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapRoute">
+            <summary>
+            Represents route and itinerary information from one location to another.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapLocation">
+            <summary>
+            A location on the map expressed in latitude and longitude coordinates.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapDistanceUnit">
+            <summary>
+            The unit used to express distances.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapLocation2">
+            <summary>
+            A location on the map expressed in latitude and longitude coordinates.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapColor">
+            <summary>
+            Represents an RGB color with an alpha component used in
+            shapes and drawings on a map.
+            </summary>
+        </member>
+        <member name="M:System.VirtualEarth.MapColor.#ctor(System.Int32,System.Int32,System.Int32,System.Single)">
+            <summary>
+            Initalizes an instance of a MapColor from its components.
+            </summary>
+            <param name="r">The red component of the color ranging from 0 to 255.</param>
+            <param name="g">The green component of the color ranging from 0 to 255.</param>
+            <param name="b">The blue component of the color ranging from 0 to 255.</param>
+            <param name="a">The alpha component of the color ranging from 0.0 to 1.0.</param>
+        </member>
+        <member name="P:System.VirtualEarth.MapColor.A">
+            <summary>
+            The alpha component of the color ranging from 0.0 to 1.0.
+            </summary>
+        </member>
+        <member name="P:System.VirtualEarth.MapColor.B">
+            <summary>
+            The blue component of the color ranging from 0 to 255.
+            </summary>
+        </member>
+        <member name="P:System.VirtualEarth.MapColor.G">
+            <summary>
+            The green component of the color ranging from 0 to 255.
+            </summary>
+        </member>
+        <member name="P:System.VirtualEarth.MapColor.R">
+            <summary>
+            The red component of the color ranging from 0 to 255.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapViewInfo">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapException">
+            <summary>
+            Represents the information associated with a map exception.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapView">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapRouteItinerary">
+            <summary>
+            Represents step by step directions information for a route.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapMouseEventArgs">
+            <summary>
+            Represents the information associated with a map event,
+            along with information about location of the mouse
+            when the event was raised.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapLayer">
+            <summary>
+            Represents information about a map layer which is used to overlay
+            data with location information onto a map display.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapLayerCallback">
+            <summary>
+            Represents the signature of the function that can be used as a callback
+            for loading layers into a map.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapLayerType">
+            <summary>
+            Represents the type of the layer.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapMode">
+            <summary>
+            Represents the mode of the map display.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapBounds">
+            <summary>
+            A rectangular area on the map expressed in terms of its top-left
+            and bottom-right coordinates.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapTile">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapRouteLocation">
+            <summary>
+            Represents one, start or end points of a route.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapRouteType">
+            <summary>
+            Represents the type of the map display.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.MapBirdseyeScene">
+            <summary>
+            Represents information about a particular bird's eye image.
+            </summary>
+        </member>
+        <member name="T:System.VirtualEarth.Map">
+            <summary>
+            Represents the Virtual Earth map control.
+            </summary>
+        </member>
+        <member name="M:System.VirtualEarth.Map.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of a map control with the specified
+            DOM element.
+            </summary>
+            <param name="domElementID">The ID of the DOM element that will contain the map.</param>
+        </member>
+        <member name="M:System.VirtualEarth.Map.GetVersion">
+            <summary>
+            Returns the current version of the map control implementation.
+            </summary>
+            <returns>The version of the map control.</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,784 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ssfso</name>
+    </assembly>
+    <members>
+        <member name="T:System.FileSystem.FileFormat">
+            <summary>
+            Represents the format of the file to be opened.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileFormat.ASCII">
+            <summary>
+            Opens the file as ASCII.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileFormat.Unicode">
+            <summary>
+            Opens the file as Unicode.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileFormat.Default">
+            <summary>
+            Opens the file using the system default.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.FolderCollection">
+            <summary>
+            Represents a set of folder.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.FolderCollection.Count">
+            <summary>
+            Gets the number of folder in the collection.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.FolderCollection.Item(System.Int32)">
+            <summary>
+            Gets the specified folder.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.FileSystemObject">
+            <summary>
+            Provides access to the local file system.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.BuildPath(System.String,System.String)">
+            <summary>
+            Appends a name to an existing path to create a new path.
+            </summary>
+            <param name="path">A path to which name is appended. It can be absolute or relative.</param>
+            <param name="name">Name being appended to the existing path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.CopyFile(System.String,System.String)">
+            <summary>
+            Copies one or more files from one location to another. Any existing
+            files are overwritten.
+            </summary>
+            <param name="source">File to be copied (can include wildcards).</param>
+            <param name="destination">Where the file or files from source are to be copied.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.CopyFile(System.String,System.String,System.Boolean)">
+            <summary>
+            Copies one or more files from one location to another.
+            </summary>
+            <param name="source">File to be copied (can include wildcards).</param>
+            <param name="destination">Where the file or files from source are to be copied.</param>
+            <param name="overwrite">Indicates if existing files are to be overwritten.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.CopyFolder(System.String,System.String)">
+            <summary>
+            Recursively copies a folder from one location to another. Any existing
+            folders and files are overwritten.
+            </summary>
+            <param name="source">Folder top be copied (can include wildcards).</param>
+            <param name="destination">Where the specified folders are to be copied.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.CopyFolder(System.String,System.String,System.Boolean)">
+            <summary>
+            Recursively copies a folder from one location to another.
+            </summary>
+            <param name="source">Folder top be copied (can include wildcards).</param>
+            <param name="destination">Where the specified folders are to be copied.</param>
+            <param name="overwrite">Indicates if existing folders and files are to be overwritten.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.CreateFolder(System.String)">
+            <summary>
+            Creates a new folder.
+            </summary>
+            <param name="name">The name of the folder to create.</param>
+            <returns>A folder object representing the new folder.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.CreateTextFile(System.String)">
+            <summary>
+            Creates the specified ASCII text file.
+            </summary>
+            <param name="name">The name of the file to create.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.CreateTextFile(System.String,System.Boolean)">
+            <summary>
+            Creates the specified ASCII text file.
+            </summary>
+            <param name="name">The name of the file to create.</param>
+            <param name="overwrite">Whether an existing file should be overwritten.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.CreateTextFile(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Creates the specified ASCII or Unicode text file.
+            </summary>
+            <param name="name">The name of the file to create.</param>
+            <param name="overwrite">Whether an existing file should be overwritten.</param>
+            <param name="unicode">Whether the file will be unicode or ASCII.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.DeleteFile(System.String)">
+            <summary>
+            Deletes the specified file.
+            </summary>
+            <param name="name">The file to be deleted.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.DeleteFile(System.String,System.Boolean)">
+            <summary>
+            Deletes the specified file.
+            </summary>
+            <param name="name">The file to be deleted.</param>
+            <param name="force">Whether to delete files even if they are marked as read-only.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.DeleteFolder(System.String)">
+            <summary>
+            Deletes the specified folder and its contents.
+            </summary>
+            <param name="name">The folder to be deleted.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.DeleteFolder(System.String,System.Boolean)">
+            <summary>
+            Deletes the specified folder and its contents.
+            </summary>
+            <param name="name">The folder to be deleted.</param>
+            <param name="force">Whether to delete the folder even if it contains files that are marked as read-only.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.DriveExists(System.String)">
+            <summary>
+            Checks if the specified drive exists.
+            </summary>
+            <param name="name">The name of the drive.</param>
+            <returns>True if the drive exists; false otherwise.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.FileExists(System.String)">
+            <summary>
+            Checks if the specified file exists.
+            </summary>
+            <param name="name">The name of the file.</param>
+            <returns>True if the drive exists; false otherwise.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.FolderExists(System.String)">
+            <summary>
+            Checks if the specified folder exists.
+            </summary>
+            <param name="name">The name of the folder.</param>
+            <returns>True if the drive exists; false otherwise.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetAbsolutePathName(System.String)">
+            <summary>
+            Returns a complete and unambiguous path from a provided path name.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The complete path name.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetBaseName(System.String)">
+            <summary>
+            Returns the base path of the specified path by stripping off any extension information.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The base path name.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetDrive(System.String)">
+            <summary>
+            Returns the drive associated with the specified path.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The associated drive name.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetExtensionName(System.String)">
+            <summary>
+            Returns the extension associated with the specified path.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The associated extension name.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetFile(System.String)">
+            <summary>
+            Returns the file associated with the specified path.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The associated file object.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetFileVersion(System.String)">
+            <summary>
+            Returns the version associated with the specified file.
+            </summary>
+            <param name="name">The file name.</param>
+            <returns>The associated version number.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetFileName(System.String)">
+            <summary>
+            Returns the name of the file associated with the specified path.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The associated file name.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetFolder(System.String)">
+            <summary>
+            Returns the folder associated with the specified path.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The associated folder object.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetParentFolderName(System.String)">
+            <summary>
+            Returns the name of the folder associated with the specified path.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The associated folder name.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.GetSpecialFolder(System.String)">
+            <summary>
+            Returns the name of the folder associated with the specified path.
+            </summary>
+            <param name="name">The path name.</param>
+            <returns>The associated folder name.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.MoveFile(System.String,System.String)">
+            <summary>
+            Moves one or more files from one location to another.
+            </summary>
+            <param name="source">File to be copied (can include wildcards).</param>
+            <param name="destination">Where the files are to be copied.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.MoveFolder(System.String,System.String)">
+            <summary>
+            Moves one or more folder from one location to another.
+            </summary>
+            <param name="source">Folder to be copied (can include wildcards).</param>
+            <param name="destination">Where the folders are to be copied.</param>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.OpenTextFile(System.String)">
+            <summary>
+            Opens an existing file for reading/writing ASCII text.
+            </summary>
+            <param name="name">The name of the file to open.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.OpenTextFile(System.String,System.Int32)">
+            <summary>
+            Opens an existing file as ASCII text for reading or writing as specified.
+            </summary>
+            <param name="name">The name of the file to open.</param>
+            <param name="mode">Whether the file should be opened for reading, writing or both.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.OpenTextFile(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Opens a file as ASCII text for reading or writing as specified.
+            </summary>
+            <param name="name">The name of the file to open.</param>
+            <param name="mode">Whether the file should be opened for reading, writing or both.</param>
+            <param name="create">True if a file is to be created, and false otherwise.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.FileSystemObject.OpenTextFile(System.String,System.FileSystem.FileMode,System.Boolean,System.FileSystem.FileFormat)">
+            <summary>
+            Opens a file for reading or writing as specified.
+            </summary>
+            <param name="name">The name of the file to open.</param>
+            <param name="mode">Whether the file should be opened for reading, writing or both.</param>
+            <param name="create">True if a file is to be created, and false otherwise.</param>
+            <param name="format">The format of the text in the file.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="P:System.FileSystem.FileSystemObject.Drives">
+            <summary>
+            Gets the drives on this machine.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.TextStream">
+            <summary>
+            Provides the ability to sequentially read or write text to a file.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.TextStream.Close">
+            <summary>
+            Closes an opened TextStream.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.TextStream.Read(System.Int32)">
+            <summary>
+            Reads the specified number of characters from an opened TextStream.
+            </summary>
+            <param name="characters">The number of characters to read.</param>
+        </member>
+        <member name="M:System.FileSystem.TextStream.ReadAll">
+            <summary>
+            Reads all the text from an opened TextStream.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.TextStream.ReadLine">
+            <summary>
+            Reads all the text until a new line from an opened TextStream.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.TextStream.Skip(System.Int32)">
+            <summary>
+            Skips past the specified number of characters from an opened TextStream.
+            </summary>
+            <param name="characters">The number of characters to skip.</param>
+        </member>
+        <member name="M:System.FileSystem.TextStream.SkipLine">
+            <summary>
+            Skips past text until a new line from an opened TextStream.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.TextStream.Write(System.String)">
+            <summary>
+            Writes the specified text to an opened TextStream.
+            </summary>
+            <param name="text">The text to write.</param>
+        </member>
+        <member name="M:System.FileSystem.TextStream.WriteBlankLines(System.Int32)">
+            <summary>
+            Writes the specified number of new lines to an opened TextStream.
+            </summary>
+            <param name="lines">The number of new lines to write.</param>
+        </member>
+        <member name="M:System.FileSystem.TextStream.WriteLine">
+            <summary>
+            Writes a new line to an opened TextStream.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.TextStream.WriteLine(System.String)">
+            <summary>
+            Writes the specified text followed by a new line to an opened TextStream.
+            </summary>
+            <param name="text">The text to write.</param>
+        </member>
+        <member name="P:System.FileSystem.TextStream.AtEndOfLine">
+            <summary>
+            True if the file pointer is positioned before the end-of-line marker in the file.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.TextStream.AtEndOfStream">
+            <summary>
+            True if the file pointer is positioned before the end-of-file marker in the file.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.TextStream.Column">
+            <summary>
+            The column number of the current character position.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.TextStream.Line">
+            <summary>
+            The line number of the current character position.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.Folder">
+            <summary>
+            Provides access to properties and operations on a folder.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.Folder.Copy(System.String)">
+            <summary>
+            Copies the folder to the specified destination.
+            </summary>
+            <param name="destination">The destination path.</param>
+        </member>
+        <member name="M:System.FileSystem.Folder.Copy(System.String,System.Boolean)">
+            <summary>
+            Copies the folder to the specified destination.
+            </summary>
+            <param name="destination">The destination path.</param>
+            <param name="overwrite">Whether any existing folders and files should be overwritten or not.</param>
+        </member>
+        <member name="M:System.FileSystem.Folder.CreateTextFile(System.String)">
+            <summary>
+            Creates the specified ASCII text file.
+            </summary>
+            <param name="name">The name of the file to create.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.Folder.CreateTextFile(System.String,System.Boolean)">
+            <summary>
+            Creates the specified ASCII text file.
+            </summary>
+            <param name="name">The name of the file to create.</param>
+            <param name="overwrite">Whether an existing file should be overwritten.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.Folder.CreateTextFile(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Creates the specified ASCII or Unicode text file.
+            </summary>
+            <param name="name">The name of the file to create.</param>
+            <param name="overwrite">Whether an existing file should be overwritten.</param>
+            <param name="unicode">Whether the file will be unicode or ASCII.</param>
+            <returns>A TextStream object representing the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.Folder.Delete">
+            <summary>
+            Deletes the folder.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.Folder.Delete(System.Boolean)">
+            <summary>
+            Deletes the folder.
+            </summary>
+            <param name="force">True if the folder should be deleted even if it is read-only.</param>
+        </member>
+        <member name="M:System.FileSystem.Folder.Move(System.String)">
+            <summary>
+            Moves the folder to the specified destination.
+            </summary>
+            <param name="destination">The new location for the folder.</param>
+        </member>
+        <member name="P:System.FileSystem.Folder.Attributes">
+            <summary>
+            Gets or sets the attributes associated with the folder.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.DateCreated">
+            <summary>
+            Gets the date and time the folder was created.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.DateLastAccessed">
+            <summary>
+            Gets the date and time the folder was last accessed.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.DateLastModified">
+            <summary>
+            Gets the date and time the folder was last modified.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.Drive">
+            <summary>
+            The drive letter associated with this folder.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.Files">
+            <summary>
+            Returns a collection of files within this folder.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.Name">
+            <summary>
+            Gets or sets the name associated with this folder.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.ParentFolder">
+            <summary>
+            Gets the folder containing this folder.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.Path">
+            <summary>
+            Gets the path of this file.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.Size">
+            <summary>
+            Gets the size of the file in bytes.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Folder.SubFolders">
+            <summary>
+            Returns a collection of folders within this folder.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.File">
+            <summary>
+            Provides access to properties and operations on a file.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.File.Copy(System.String)">
+            <summary>
+            Copies the file to the specified destination.
+            </summary>
+            <param name="destination">The destination path.</param>
+        </member>
+        <member name="M:System.FileSystem.File.Copy(System.String,System.Boolean)">
+            <summary>
+            Copies the file to the specified destination.
+            </summary>
+            <param name="destination">The destination path.</param>
+            <param name="overwrite">Whether any existing files should be overwritten or not.</param>
+        </member>
+        <member name="M:System.FileSystem.File.Delete">
+            <summary>
+            Deletes the file.
+            </summary>
+        </member>
+        <member name="M:System.FileSystem.File.Delete(System.Boolean)">
+            <summary>
+            Deletes the file.
+            </summary>
+            <param name="force">True if the file should be deleted even if it is read-only.</param>
+        </member>
+        <member name="M:System.FileSystem.File.Move(System.String)">
+            <summary>
+            Moves the file to the specified destination.
+            </summary>
+            <param name="destination">The new location for the file.</param>
+        </member>
+        <member name="M:System.FileSystem.File.OpenAsTextStream">
+            <summary>
+            Opens the file for reading and writing as ASCII text.
+            </summary>
+            <returns>A TextStream to read and write to the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.File.OpenAsTextStream(System.FileSystem.FileMode)">
+            <summary>
+            Opens the file for reading or writing as specified by the mode as ASCII text.
+            </summary>
+            <param name="mode">The mode to determine whether to open the file for reading or writing.</param>
+            <returns>A TextStream to read or write to the file.</returns>
+        </member>
+        <member name="M:System.FileSystem.File.OpenAsTextStream(System.FileSystem.FileMode,System.FileSystem.FileFormat)">
+            <summary>
+            Opens the file for reading or writing as specified by the mode as ASCII or Unicode text.
+            </summary>
+            <param name="mode">The mode to determine whether to open the file for reading or writing.</param>
+            <param name="format">The format of the file.</param>
+            <returns>A TextStream to read or write to the file.</returns>
+        </member>
+        <member name="P:System.FileSystem.File.Attributes">
+            <summary>
+            Gets or sets the attributes associated with the file.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.DateCreated">
+            <summary>
+            Gets the date and time the file was created.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.DateLastAccessed">
+            <summary>
+            Gets the date and time the file was last accessed.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.DateLastModified">
+            <summary>
+            Gets the date and time the file was last modified.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.Drive">
+            <summary>
+            The drive letter associated with this file.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.Name">
+            <summary>
+            Gets or sets the name associated with this file.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.ParentFolder">
+            <summary>
+            Gets the folder containing this file.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.Path">
+            <summary>
+            Gets the path of this file.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.Size">
+            <summary>
+            Gets the size of the file in bytes.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.File.Type">
+            <summary>
+            Gets the type of the file based on its extension.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.FileCollection">
+            <summary>
+            Represents a set of files.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.FileCollection.Count">
+            <summary>
+            Gets the number of files in the collection.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.FileCollection.Item(System.Int32)">
+            <summary>
+            Gets the specified file.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.Drive">
+            <summary>
+            Provides access to properties of a drive or network share.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.AvailableSpace">
+            <summary>
+            Gets the amount of space available to a user on the this drive.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.DriveLetter">
+            <summary>
+            Gets the drive letter associated with this drive.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.DriveType">
+            <summary>
+            Gets the drive type associated with this drive.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.FileSystem">
+            <summary>
+            Gets the file system type associated with this drive.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.IsReady">
+            <summary>
+            Whether or not the drive is ready to be accessed.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.Path">
+            <summary>
+            Gets the path associated with the drive.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.RootFolder">
+            <summary>
+            Gets the top-level folder associated with the drive.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.SerialNumber">
+            <summary>
+            Gets the serial number associated with the drive.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.ShareName">
+            <summary>
+            Gets the share name associated with the drive representing a network share.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.TotalSize">
+            <summary>
+            Gets the amount of space in bytes on this drive.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.Drive.VolumeName">
+            <summary>
+            Gets or sets the volume label associated with the drive.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.FileAttributes">
+            <summary>
+            Attributes associated with a file or folder.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.Normal">
+            <summary>
+            No attributes are set.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.ReadOnly">
+            <summary>
+            Read-only file or folder.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.Hidden">
+            <summary>
+            Hidden file or folder.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.System">
+            <summary>
+            System file or folder.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.Volume">
+            <summary>
+            Volume label for disk (read-only)
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.Directory">
+            <summary>
+            Folder (read-only)
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.Archive">
+            <summary>
+            File changed since last backup
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.Alias">
+            <summary>
+            Link or shortcut (read-only)
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileAttributes.Compressed">
+            <summary>
+            Compressed (read-only)
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.DriveType">
+            <summary>
+            Represents the mode in which a text file is opened.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.DriveType.Unknown">
+            <summary>
+            Unknown drive type
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.DriveType.Removable">
+            <summary>
+            Removable drive
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.DriveType.Fixed">
+            <summary>
+            Fixed drive
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.DriveType.Network">
+            <summary>
+            Network share
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.DriveType.CDROM">
+            <summary>
+            CD-ROM drive
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.DriveType.RAMDisk">
+            <summary>
+            RAM disk
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.DriveCollection">
+            <summary>
+            Represents a set of drives.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.DriveCollection.Count">
+            <summary>
+            Gets the number of drives in the collection.
+            </summary>
+        </member>
+        <member name="P:System.FileSystem.DriveCollection.Item(System.Int32)">
+            <summary>
+            Gets the specified drive.
+            </summary>
+        </member>
+        <member name="T:System.FileSystem.FileMode">
+            <summary>
+            Represents the mode in which a text file is opened.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileMode.ForReading">
+            <summary>
+            Open a file for reading only.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileMode.ForWriting">
+            <summary>
+            Open a file for writing.
+            </summary>
+        </member>
+        <member name="F:System.FileSystem.FileMode.ForAppending">
+            <summary>
+            Open a file for writing at the end.
+            </summary>
+        </member>
+    </members>
+</doc>

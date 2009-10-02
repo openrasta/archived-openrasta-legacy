@@ -1,0 +1,604 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ssagctrl</name>
+    </assembly>
+    <members>
+        <member name="T:System.Silverlight.Presentation.VideoBrush">
+            <summary>
+            Represents a Brush used to fill elements with a video.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Brush">
+            <summary>
+            Represents a Silverlight Brush used to fill elements.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.DependencyObject">
+            <summary>
+            Represents a Silverlight object within the XAML content being
+            hosted by a SilverlightControl.
+            </summary>
+        </member>
+        <member name="M:System.Silverlight.DependencyObject.GetValue(System.String)">
+            <summary>
+            Retrieves the value of the specified property from this object.
+            </summary>
+            <param name="name">The name of the property.</param>
+            <returns>The current value of the specified property.</returns>
+        </member>
+        <member name="M:System.Silverlight.DependencyObject.SetValue(System.String,System.Object)">
+            <summary>
+            Sets the value of the specified property on this object.
+            </summary>
+            <param name="name">The name of the property.</param>
+            <param name="value">The new value of the specified property.</param>
+        </member>
+        <member name="P:System.Silverlight.DependencyObject.Name">
+            <summary>
+            The name of the object.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.TransformGroup">
+            <summary>
+            Represents a set of individual transforms.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Transform">
+            <summary>
+            Represents a Silverlight Transform used to modify coordinates
+            based on rotation, translation, scaling etc.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.GeometryCollection">
+            <summary>
+            Represents a set of individual Geometry instances.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Text.TextElement">
+            <summary>
+            Represents a text Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.UIElement">
+            <summary>
+            Represents a Silverlight UI element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Animation.TimelineMarkerCollection">
+            <summary>
+            Represents a set of individual timeline markers.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Animation.Animation">
+            <summary>
+            Represents an animation Silverlight element with the XAML content
+            being hosted by a Silverlight control.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Animation.Timeline">
+            <summary>
+            Represents a Silverlight timeline within the XAML content.
+            </summary>
+        </member>
+        <member name="M:System.Silverlight.SilverlightControlContent.CreateFromXaml(System.String)">
+            <summary>
+            Creates a Silverlight object from its markup form.
+            </summary>
+            <param name="xaml">The XAML markup representing the object.</param>
+            <returns>The object deserialized from the markup.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightControlContent.CreateFromXaml(System.String,System.Boolean)">
+            <summary>
+            Creates a Silverlight object from its markup form and allows creating
+            a new name scope for the elements.
+            </summary>
+            <param name="xaml">The XAML markup representing the object.</param>
+            <param name="createNamescope">Whether to create a new namescope for the elements.</param>
+            <returns>The object deserialized from the markup.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightControlContent.CreateFromXamlDownloader(System.Silverlight.Downloader)">
+            <summary>
+            Creates a Silverlight object from its markup form that has been downloaded
+            using a Downloader object.
+            </summary>
+            <param name="downloader">The downloaded XAML markup representing the object.</param>
+            <returns>The object deserialized from the markup.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightControlContent.CreateFromXamlDownloader(System.Silverlight.Downloader,System.String)">
+            <summary>
+            Creates a Silverlight object from its markup form that has been downloaded
+            using a Downloader object.
+            </summary>
+            <param name="downloader">The downloaded XAML markup representing the object.</param>
+            <param name="part">The name of the entry within the downloaded content (when the content is a zip file).</param>
+            <returns>The object deserialized from the markup.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightControlContent.FindName(System.String)">
+            <summary>
+            Retrieves a named Silverlight object defined in the XAML content being
+            hosted by this control instance.
+            </summary>
+            <param name="name">The name assigned to the object.</param>
+            <returns>The object if it is present in the XAML; null otherwise.</returns>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlContent.Accessibility">
+            <summary>
+            Gets the accessibility properties of this control.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlContent.ActualHeight">
+            <summary>
+            The height of the rendering area of this control.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlContent.ActualWidth">
+            <summary>
+            The width of the rendering area of this control.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlContent.FullScreen">
+            <summary>
+            Indicates whether this control is in full-screen mode.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlContent.OnFullScreenChange">
+            <summary>
+            Gets or sets the event handler used to consume the FullScreenChange event.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlContent.OnResize">
+            <summary>
+            Gets or sets the event handler used to consume the Resize event.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlContent.Root">
+            <summary>
+            Gets the root, i.e. top-level element within the loaded XAML file.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.TranslateTransform">
+            <summary>
+            Allows moving a object by a specified offset.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Ellipse">
+            <summary>
+            Represents an ellipse shape Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Shape">
+            <summary>
+            Represents a shape Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.TransformCollection">
+            <summary>
+            Represents a set of individual transforms.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Animation.Storyboard">
+            <summary>
+            Represents a Silverlight storyboard within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.GradientStop">
+            <summary>
+            Represents a particular color in a gradient brush.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.SkewTransform">
+            <summary>
+            Allows skews a object by a specified angle.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Animation.TimelineMarker">
+            <summary>
+            Represents a timeline marker.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.RotateTransform">
+            <summary>
+            Allows rotating a object by a specified angle.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.ImageBrush">
+            <summary>
+            Represents a Brush used to fill elements with an image.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Animation.TimelineCollection">
+            <summary>
+            Represents a set of individual timelines.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.PathFigureCollection">
+            <summary>
+            Represents a set of individual PathFigure instances.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.MediaAttribute">
+            <summary>
+            Represents a media attribute.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.SilverlightPluginParameters">
+            <summary>
+            Represents a set of parameters and related information needed to instantiate
+            and add Silverlight controls into the page.
+            Note that each instance of this object should be used to create only one
+            Silverlight control, i.e. it may not be reused to create multiple Silverlight
+            control instances.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.alternateContent">
+            <summary>
+            The alternate content that is used instead of the install prompt
+            if the Silverlight control is not installed.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.background">
+            <summary>
+            An optional background color of the Silverlight control. Colors
+            may be specified by name or using an #AARRGGBB color notation.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.className">
+            <summary>
+            An optional CSS class name associated with the Silverlight control.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.errorCallback">
+            <summary>
+            An optional custom error handler for handling plugin errors.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.id">
+            <summary>
+            An optional ID for the Silverlight control.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.initParams">
+            <summary>
+            A JSON-encoded set of name/value pairs that can be used to set parameter values
+            for use by managed code running within a Silverlight control.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.installPromptImage">
+            <summary>
+            A custom install prompt image to be used if Silverlight is not installed.
+            The install prompt is created using an install prompt image that links
+            to the Silverlight install site or installer.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.installInNewWindow">
+            <summary>
+            Whether the navigation to the installation page happens in a new window.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.maxFrameRate">
+            <summary>
+            An optional maximum frame rate that specifies how often (per second) the
+            Silverlight control refreshes itself.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.parentElement">
+            <summary>
+            The DOM element in the page whose contents will be replaced with the Silverlight
+            control that is instantiated.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.progressCallback">
+            <summary>
+            An optional source download progress handler. This can be used to update the
+            splash screen as the actual source downloads.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.source">
+            <summary>
+            The source to be loaded into the Silverlight control.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.splashScreenSource">
+            <summary>
+            An optional URL to a XAML file to be used to contain splash-screen UI.
+            This property is only supported with version 2.0 and greater.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.startupArguments">
+            <summary>
+            A set of name/value pairs to pass into the Silverlight control.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.style">
+            <summary>
+            An optional inline style for the control to specifying CSS attributes (such as width, height etc).
+            This is especially useful if a CSS className cannot be used.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.suppressInstallPrompt">
+            <summary>
+            Allows suppressing the install prompt creation even if Silverlight is not installed.
+            The default value is false;
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.version">
+            <summary>
+            The minimum version of the Silverlight to be used. This defaults to 1.0.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.windowless">
+            <summary>
+            Whether the control is windowless in the HTML page, i.e. it can participate in
+            z-index, or semi-transparent rendering with respect to the HTML content on the page.
+            This defaults to false.
+            </summary>
+        </member>
+        <member name="F:System.Silverlight.SilverlightPluginParameters.xaml">
+            <summary>
+            An optionally specified XAML markup to be loaded instead of source.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightPluginParameters.Item(System.String)">
+            <summary>
+            Allows the ability to specify and retrieve additional custom parameters
+            that should be set on the Silverlight control.
+            </summary>
+            <param name="name">The name of the custom parameter.</param>
+            <returns>The value of the custom parameter.</returns>
+        </member>
+        <member name="T:System.Silverlight.SilverlightControl">
+            <summary>
+            Represents an instance of the Silverlight activex control or plugin within
+            the HTML document.
+            </summary>
+        </member>
+        <member name="M:System.Silverlight.SilverlightControl.CreateObject(System.String)">
+            <summary>
+            Creates an object that offers services exposed by the this control.
+            </summary>
+            <param name="objectType">The type of the object.</param>
+            <returns>The object instance.</returns>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControl.IsLoaded">
+            <summary>
+            Indicates whether this control has loaded its XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.TextBlock">
+            <summary>
+            Represents a text Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Canvas">
+            <summary>
+            Represents a canvas Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.SolidColorBrush">
+            <summary>
+            Represents a Brush used to fill elements with a single color.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.GradientBrush">
+            <summary>
+            Represents a Brush used to fill elements with a gradient defined
+            by a set of colors.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.TriggerCollection">
+            <summary>
+            Represents a set of individual triggers.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.PathSegmentCollection">
+            <summary>
+            Represents a set of individual PathSegment instances.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Path">
+            <summary>
+            Represents an path Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.ResourceCollection">
+            <summary>
+            Represents a set of resources.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Ink.StylusPointCollection">
+            <summary>
+            Represents a set of individual stylus points.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.SilverlightPlugin">
+            <summary>
+            ControlFactory provides the ability to instantiate and add Silverlight controls into
+            the page. In addition, this helper class also provides the ability to
+            detect if the Silverlight control has been installed on the user's machine,
+            and whether it is supported in the current browser.
+            </summary>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.CreateInstallPrompt(System.DHTML.DOMElement,System.String)">
+            <summary>
+            Creates a Silverlight install prompt within the specified parent element,
+            using the default install prompt image.
+            </summary>
+            <param name="parentElement">The parent HTML element to contain the prompt.</param>
+            <param name="version">The minimum version of the Silverlight control desired.</param>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.CreateInstallPrompt(System.DHTML.DOMElement,System.String,System.String)">
+            <summary>
+            Creates a Silverlight install prompt within the specified parent element using
+            the specified image.
+            </summary>
+            <param name="parentElement">The parent HTML element to contain the prompt.</param>
+            <param name="version">The minimum version of the Silverlight control desired.</param>
+            <param name="installPromptImage">The URL of the image to use as the prompt.</param>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.CreateInstallPrompt(System.DHTML.DOMElement,System.String,System.String,System.Boolean)">
+            <summary>
+            Creates a Silverlight install prompt within the specified parent element using
+            the specified image.
+            </summary>
+            <param name="parentElement">The parent HTML element to contain the prompt.</param>
+            <param name="version">The minimum version of the Silverlight control desired.</param>
+            <param name="installPromptImage">The URL of the image to use as the prompt.</param>
+            <param name="useNewWindow">Whether the navigation to the install page happens in a new window.</param>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.CreateInstance(System.Silverlight.SilverlightPluginParameters)">
+            <summary>
+            Creates an instance of the Silverlight control.
+            </summary>
+            <param name="createParams">A set of parameters describing the control to be created.</param>
+            <returns>A reference to the newly created Silverlight control.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.CreateInstance(System.Silverlight.SilverlightPluginParameters,System.Silverlight.SilverlightPluginLoadCallback)">
+            <summary>
+            Creates an instance of the Silverlight control, and calls the specified callback when
+            the specified source has been loaded into the control.
+            </summary>
+            <param name="createParams">A set of parameters describing the control to be created.</param>
+            <param name="loadCallback">A callback that is invoked once the control has been loaded.</param>
+            <returns>A reference to the newly created Silverlight control.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.CreateInstance(System.Silverlight.SilverlightPluginParameters,System.Silverlight.SilverlightPluginLoadCallback,System.Object)">
+            <summary>
+            Creates an instance of the Silverlight control, and calls the specified callback when
+            the specified source has been loaded into the control along with the specified context object.
+            </summary>
+            <param name="createParams">A set of parameters describing the control to be created.</param>
+            <param name="loadCallback">A callback that is invoked once the control has been loaded.</param>
+            <param name="context">A context object that is passed in into the load callback method.</param>
+            <returns>A reference to the newly created Silverlight control.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.CreateParams(System.String,System.DHTML.DOMElement)">
+            <summary>
+            Creates an instance of ControlParameters with the required source and
+            parent element properties.
+            </summary>
+            <param name="source">The source to be loaded into the Silverlight control.</param>
+            <param name="parentElement">The DOM element that should contain the newly instantiated Silverlight control.</param>
+            <returns>A newly created parameters that can be further customized with optional properties.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.CreateParams(System.String,System.DHTML.DOMElement,System.String,System.String)">
+            <summary>
+            Creates an instance of ControlParameters with the required source and
+            parent element properties.
+            </summary>
+            <param name="source">The source to be loaded into the Silverlight control.</param>
+            <param name="parentElement">The DOM element that should contain the newly instantiated Silverlight control.</param>
+            <param name="id">The ID of the newly instantiated Silverlight control.</param>
+            <param name="className">The CSS class name applied to the Silverlight control.</param>
+            <returns>A newly created parameters that can be further customized with optional properties.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.IsInstalled">
+            <summary>
+            Checks if the Silverlight control is installed on the user's machine.
+            </summary>
+            <returns>true if the control is installed, and false otherwise.</returns>
+        </member>
+        <member name="M:System.Silverlight.SilverlightPlugin.IsInstalled(System.String)">
+            <summary>
+            Checks if a version of the Silverlight control greater than or equal to the
+            specified version is installed on the user's machine.
+            </summary>
+            <param name="version">The minimum version to check for.</param>
+            <returns>true if the control is installed, and false otherwise.</returns>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlSettings.Background">
+            <summary>
+            The background color of this control to be used for blending
+            in windowless mode.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlSettings.EnableFrameRateCounter">
+            <summary>
+            Indicates whether to display information about the current frame rate in the status bar.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlSettings.EnableRedrawRegions">
+            <summary>
+            Indicates whether to indicate areas of this control being redrawn in
+            single frame.
+            </summary>
+        </member>
+        <member name="P:System.Silverlight.SilverlightControlSettings.MaxFrameRate">
+            <summary>
+            Specifies the maximum number of frames to render per second.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.LinearGradientBrush">
+            <summary>
+            Represents a Brush used to fill elements with a gradient defined
+            by a set of colors along a line from the start point to the end point.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.RadialGradientBrush">
+            <summary>
+            Represents a Brush used to fill elements with a gradient defined
+            by a set of colors from a focus point to a specified radius.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.GeometryGroup">
+            <summary>
+            Represents a set of individual geometry objects.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.ScaleTransform">
+            <summary>
+            Allows scaling a object by a specified scale.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Image">
+            <summary>
+            Represents an image Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.GradientStopCollection">
+            <summary>
+            Represents a sequence of GradientStop instances.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Animation.TimelineGroup">
+            <summary>
+            Represents a Silverlight timeline group within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.Rectangle">
+            <summary>
+            Represents an rectangle shape Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.TriggerActionCollection">
+            <summary>
+            Represents a set of individual trigger actions.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.PointCollection">
+            <summary>
+            Represents a set of points.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.DoubleCollection">
+            <summary>
+            Represents a sequence of double values.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.MediaAttributeCollection">
+            <summary>
+            Represents a set of media attributes.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.MediaElement">
+            <summary>
+            Represents a media Silverlight element within the XAML content.
+            </summary>
+        </member>
+        <member name="T:System.Silverlight.Presentation.UIElementCollection">
+            <summary>
+            Represents a set of individual UIElement instances.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenBastard", "OpenBastard\OpenBastard.csproj", "{E29A4124-5A80-42AD-9B26-DB322D402465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenBastard.TestRunner", "OpenBastard.TestRunner\OpenBastard.TestRunner.csproj", "{0747C90D-75D0-489B-A719-8D02C44AF0EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenBastard.Hosting.Iis7", "OpenBastard.Hosting.Iis7\OpenBastard.Hosting.Iis7.csproj", "{481D9D5E-6E9E-4B12-9468-667A41B4B92F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenBastard.Hosting.Iis7.WorkerProcess-32", "OpenBastard.Hosting.Iis7.WorkerProcess-32\OpenBastard.Hosting.Iis7.WorkerProcess-32.csproj", "{63B32B54-3C54-42B7-8533-6E6E6739371E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenBastard.Hosting.Iis7.WorkerProcess-64", "OpenBastard.Hosting.Iis7.WorkerProcess-64\OpenBastard.Hosting.Iis7.WorkerProcess-64.csproj", "{F7152A67-F16E-4EE4-A39A-0450767BC5C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E29A4124-5A80-42AD-9B26-DB322D402465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E29A4124-5A80-42AD-9B26-DB322D402465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E29A4124-5A80-42AD-9B26-DB322D402465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E29A4124-5A80-42AD-9B26-DB322D402465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0747C90D-75D0-489B-A719-8D02C44AF0EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0747C90D-75D0-489B-A719-8D02C44AF0EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0747C90D-75D0-489B-A719-8D02C44AF0EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0747C90D-75D0-489B-A719-8D02C44AF0EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{481D9D5E-6E9E-4B12-9468-667A41B4B92F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{481D9D5E-6E9E-4B12-9468-667A41B4B92F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{481D9D5E-6E9E-4B12-9468-667A41B4B92F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{481D9D5E-6E9E-4B12-9468-667A41B4B92F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B32B54-3C54-42B7-8533-6E6E6739371E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B32B54-3C54-42B7-8533-6E6E6739371E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B32B54-3C54-42B7-8533-6E6E6739371E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B32B54-3C54-42B7-8533-6E6E6739371E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7152A67-F16E-4EE4-A39A-0450767BC5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7152A67-F16E-4EE4-A39A-0450767BC5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7152A67-F16E-4EE4-A39A-0450767BC5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7152A67-F16E-4EE4-A39A-0450767BC5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
+  <ItemGroup>
+    <Projects Include="$(SourcePath)\OpenBastard\OpenBastard.csproj">
+      <MinVersion>20</MinVersion>
+      <Merged>false</Merged>
+    </Projects>
+    <Projects Include="$(SourcePath)\OpenBastard.Hosting.Iis7\OpenBastard.Hosting.Iis7.csproj">
+      <MinVersion>20</MinVersion>
+      <Merged>false</Merged>
+    </Projects>
+    <Projects Include="$(SourcePath)\OpenBastard.Hosting.Iis7.WorkerProcess-32\OpenBastard.Hosting.Iis7.WorkerProcess-32.csproj">
+      <MinVersion>20</MinVersion>
+      <Merged>false</Merged>
+    </Projects>
+    <Projects Include="$(SourcePath)\OpenBastard.Hosting.Iis7.WorkerProcess-64\OpenBastard.Hosting.Iis7.WorkerProcess-64.csproj">
+      <MinVersion>20</MinVersion>
+      <Merged>false</Merged>
+    </Projects>
+    <Projects Include="$(SourcePath)\OpenBastard.TestRunner\OpenBastard.TestRunner.csproj">
+      <MinVersion>20</MinVersion>
+      <UnitTest>true</UnitTest>
+      <NUnit-DisableShadowCopy>true</NUnit-DisableShadowCopy>
+    </Projects>
+  </ItemGroup>
+  <Import Project="module.targets" />
+</Project>

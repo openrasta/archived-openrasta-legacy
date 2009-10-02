@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  
+  Provides common properties for csproj files 
+  
+  -->
+  <PropertyGroup>
+    <RootPath Condition="'$(RootPath)' == ''">$(MSBuildProjectDirectory)\..\..\..</RootPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VSObjDirectory>$(RootPath)\bin\vs\obj\$(Configuration)\$(MSBuildProjectName)\</VSObjDirectory>
+    <VSBinDirectory>$(RootPath)\bin\vs\bin\$(Configuration)\$(MSBuildProjectName)\</VSBinDirectory>
+    <CaffeineSignature>$(RootPath)\build\keys\caff\caff.snk</CaffeineSignature>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <IntermediateOutputPath Condition="'$(IntermediateOutputPath)'==''">$(VSObjDirectory)</IntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(VSBinDirectory)</OutputPath>
+    <DocumentationFile>$(OutputPath)\$(MSBuildProjectName).xml</DocumentationFile>
+    <AssemblyOriginatorKeyFile Condition="!Exists('$(CaffeineSignature)')">$(RootPath)\build\keys\debug.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="Exists('$(CaffeineSignature)')">$(CaffeineSignature)</AssemblyOriginatorKeyFile>
+
+    <NoWarn>1591;$(NoWarn)</NoWarn>
+  </PropertyGroup>
+
+</Project>

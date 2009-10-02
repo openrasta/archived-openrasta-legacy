@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.IBatisNetIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.IBatisNetIntegration.NoSessionAttribute">
+            <summary>
+            Declares that a method does not want to use automatic session creation.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.IBatisNetIntegration.SessionAttribute">
+            <summary>
+            Declares that a component wants to use a specific IBatis DataMapper Instance.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.IBatisNetIntegration.UsesAutomaticSessionCreationAttribute">
+            <summary>
+            Declares that a component wants to use an IBatis's Data Mapper session.
+            </summary>
+        </member>
+    </members>
+</doc>

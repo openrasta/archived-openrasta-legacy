@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Hosting.AspNet", "OpenRasta.Hosting.AspNet\OpenRasta.Hosting.AspNet.csproj", "{FE290BB8-9CB4-454E-89BE-E047674BB34F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Codecs.WebForms", "OpenRasta.Codecs.WebForms\OpenRasta.Codecs.WebForms.csproj", "{B4EC606E-48A7-4653-AD88-3614A5FF360A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Codecs.WebForms.Tests.Unit", "OpenRasta.Codecs.WebForms.Tests.Unit\OpenRasta.Codecs.WebForms.Tests.Unit.csproj", "{FF211867-B05B-4B3D-AF38-A3E836792F33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Hosting.AspNet.Tests.Integration", "OpenRasta.Hosting.AspNet.Tests.Integration\OpenRasta.Hosting.AspNet.Tests.Integration.csproj", "{3638E6F8-EDD6-4175-A216-313E980699C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE290BB8-9CB4-454E-89BE-E047674BB34F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE290BB8-9CB4-454E-89BE-E047674BB34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE290BB8-9CB4-454E-89BE-E047674BB34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE290BB8-9CB4-454E-89BE-E047674BB34F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4EC606E-48A7-4653-AD88-3614A5FF360A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4EC606E-48A7-4653-AD88-3614A5FF360A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4EC606E-48A7-4653-AD88-3614A5FF360A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4EC606E-48A7-4653-AD88-3614A5FF360A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF211867-B05B-4B3D-AF38-A3E836792F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF211867-B05B-4B3D-AF38-A3E836792F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF211867-B05B-4B3D-AF38-A3E836792F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF211867-B05B-4B3D-AF38-A3E836792F33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3638E6F8-EDD6-4175-A216-313E980699C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3638E6F8-EDD6-4175-A216-313E980699C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3638E6F8-EDD6-4175-A216-313E980699C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3638E6F8-EDD6-4175-A216-313E980699C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

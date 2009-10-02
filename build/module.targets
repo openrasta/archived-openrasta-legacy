@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  DefaultTargets="Clean;Package" ToolsVersion="3.5">
+  <UsingTask TaskName="Microsoft.Build.Tasks.CreateItem"                            AssemblyName="Microsoft.Build.Tasks.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask TaskName="Microsoft.Build.Tasks.FindInList"                            AssemblyName="Microsoft.Build.Tasks.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+
+  <PropertyGroup>
+    <RunTests Condition="'$(RunTests)' == ''">true</RunTests>
+  </PropertyGroup>
+
+  <!-- Framework versions for which the core can be built -->
+  <PropertyGroup>
+    <FrameworkProfile Condition="'$(FrameworkProfile)' == ''">35</FrameworkProfile>
+    <TargetFrameworkVersion Condition="'$(FrameworkProfile)'=='35'">v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="'$(FrameworkProfile)'=='30'">v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="'$(FrameworkProfile)'=='20'">v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <Projects>
+      <MinVersion>35</MinVersion>
+      <Merged>false</Merged>
+      <UnitTest>false</UnitTest>
+      <NUnit-DisableShadowCopy>false</NUnit-DisableShadowCopy>
+      <SignAssembly>false</SignAssembly>
+    </Projects>
+  </ItemDefinitionGroup>
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <MergedAssemblyName>OpenRasta.dll</MergedAssemblyName>
+    <CaffeineSignature>$(RootPath)\build\keys\caff\caff.snk</CaffeineSignature>
+    
+  </PropertyGroup>
+
+
+  <!-- Default locations -->
+  <PropertyGroup>
+    <RootPath Condition="'$(RootPath)' == ''">$(MSBuildProjectDirectory)\..</RootPath>
+    <SourcePath>$(RootPath)\src\$(MSBuildProjectName)</SourcePath>
+    <TempPath>$(RootPath)\bin\tmp\$(Configuration)\net-$(FrameworkProfile)</TempPath>
+    <OutputPath>$(RootPath)\bin\$(Configuration)\net-$(FrameworkProfile)</OutputPath>
+    <AssemblyOriginatorKeyFile Condition="!Exists('$(CaffeineSignature)')">$(RootPath)\build\keys\debug.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="Exists('$(CaffeineSignature)')">$(CaffeineSignature)</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+
+
+
+
+
+  <!--Tools locations-->
+  <Import Project="$(RootPath)\build\common.properties"/>
+
+
+
+
+
+
+
+  <Target Name="Clean">
+    <Delete ContinueOnError="true" Files="$(TempPath)\**" />
+    <RemoveDir Directories="$(TempPath)" ContinueOnError="true" />
+  </Target>
+
+
+
+  <Target Name="Verify">
+    <Error Condition="!Exists('$(ILMergePath)')" Text="IlMerge has not been found. Either install it from http://www.microsoft.com/DOWNLOADS/details.aspx?FamilyID=22914587-b4ad-4eae-87cf-b14ae6a939b0&amp;displaylang=en  or specify the path to Ilmerge.exe as the ILMergePath property."/>
+
+    <MakeDir Directories="$(OutputPath)" Condition="!Exists('$(OutputPath)')"/>
+    <MakeDir Directories="$(NUnitReportsDirectory)" Condition="!Exists('$(NUnitReportsDirectory)')"/>
+
+    <MakeDir Directories="$(NUnitDirectory)/addins" Condition="!Exists('$(NUnitDirectory)/addins')" />
+
+
+    <ItemGroup>
+      <NUnitAddinFiles Include="$(teamcity_dotnet_nunitaddin)-2.5.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NUnitAddinFiles)" DestinationFolder="$(NUnitDirectory)/addins" />
+
+  </Target>
+
+
+
+
+
+
+
+
+
+  <Target Name="GetProjectsForCurrentVersion">
+    <Microsoft.Build.Tasks.CreateItem Include="@(Projects)" Condition="%(MinVersion) &lt;= $(FrameworkProfile)" PreserveExistingMetadata="true">
+      <Output TaskParameter="Include" ItemName="VersionSpecificProject" />
+    </Microsoft.Build.Tasks.CreateItem>
+  </Target>
+
+
+
+
+
+
+
+
+
+
+  <Target Name="BuildMerged" DependsOnTargets="Verify;GetProjectsForCurrentVersion">
+    <MSBuild Projects="@(VersionSpecificProject)"
+             Targets="Rebuild"
+             Properties="OutputPath=$(TempPath)\%(Filename);TargetFrameworkVersion=$(TargetFrameworkVersion);Configuration=$(Configuration);RootPath=$(RootPath);SignAssembly=%(SignAssembly)"
+             Condition="'%(Merged)' == 'true'">
+      <Output ItemName="MergedAssemblies" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+  </Target>
+
+
+
+
+
+
+
+
+
+
+
+
+  <Target Name="Merge" DependsOnTargets="BuildMerged" Inputs="@(MergedAssemblies)" Outputs="$(OutputPath)\$(MergedAssemblyName)">
+    
+    <Exec Command="&quot;$(ILMergePath)&quot; /xmldocs /keyfile:&quot;$(AssemblyOriginatorKeyFile)&quot; /out:&quot;$(OutputPath)\$(MergedAssemblyName)&quot; @(MergedAssemblies ->'&quot;%(FullPath)&quot;', ' ')"/>
+
+    <ConvertToAbsolutePath Paths="$(OutputPath)\$(MergedAssemblyName)">
+      <Output ItemName="MergedAssembly" TaskParameter="AbsolutePaths" />
+    </ConvertToAbsolutePath>
+
+    <PropertyGroup>
+      <MergedAssemblyFullPath>@(MergedAssembly->'%(FullPath)')</MergedAssemblyFullPath>
+    </PropertyGroup>
+
+    <Message Importance="high" Text="Merged assembly at $(MergedAssemblyFullPath)" />
+  </Target>
+
+
+
+
+
+
+
+
+
+
+
+
+  <Target Name="BuildNonMerged" DependsOnTargets="GetProjectsForCurrentVersion;Merge">
+    <Message Importance="normal" Text="Building %(GetProjectsForCurrentVersion.Filename)" Condition="'%(Merged)'=='false'" />
+    <MSBuild  Projects="@(VersionSpecificProject)"
+              Targets="Rebuild"
+              Properties="OutputPath=$(TempPath)\%(Filename);TargetFrameworkVersion=$(TargetFrameworkVersion);Configuration=$(Configuration);MergedAssemblyName=$(MergedAssemblyFullPath);RootPath=$(RootPath);SignAssembly=%(SignAssembly)"
+              Condition="'%(Merged)' == 'false'">
+      <Output ItemName="NonMergedAssemblies" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+    <ItemGroup>
+      <AdditionalOutput Include="$(TempPath)\%(GetProjectsForCurrentVersion.AdditionalOutput)" Condition="'%(GetProjectsForCurrentVersion.AdditionalOutput)' != ''"  />
+    </ItemGroup>
+    <Message Importance="high" Text="AdditionalOutput: %(GetProjectsForCurrentVersion.AdditionalOutput)" />
+    <Copy SourceFiles="@(NonMergedAssemblies)" DestinationFolder="$(OutputPath)" />
+    <Copy SourceFiles="@(NonMergedAssemblies->'%(RootDir)\%(Directory)\%(Filename).pdb')" DestinationFolder="$(OutputPath)" ContinueOnError="true" Condition="'@(NonMergedAssemblies->'%(RootDir)\%(Directory)\%(Filename).pdb')' != ''" />
+    <Copy SourceFiles="@(NonMergedAssemblies->'%(RootDir)\%(Directory)\%(Filename).xml')" DestinationFolder="$(OutputPath)" ContinueOnError="true" Condition="'@(NonMergedAssemblies->'%(RootDir)\%(Directory)\%(Filename).xml')' != ''" />
+    
+    <Copy SourceFiles="@(AdditionalOutput)" DestinationFolder="$(OutputPath)" Condition="'@(AdditionalOutput)' != ''" />
+  </Target>
+
+
+
+
+
+
+
+
+  <Target Name="Build" DependsOnTargets="BuildMerged;BuildNonMerged"/>
+
+
+
+
+
+
+  <Target Name="Test" DependsOnTargets="Build" Inputs="@(NonMergedAssemblies)" Outputs="$(NUnitReportsDirectory)\%(NonMergedAssemblies.Filename).xml" Condition="'$(RunTests)' == 'true'">
+
+    <Microsoft.Build.Tasks.FindInList
+      List="@(VersionSpecificProject)"
+      ItemSpecToFind="%(NonMergedAssemblies.MSBuildSourceProjectFile)">
+      <Output TaskParameter="ItemFound" ItemName="OriginalProject" />
+    </Microsoft.Build.Tasks.FindInList>
+    <PropertyGroup>
+      <NUnit-DisableShadowCopy>%(OriginalProject.NUnit-DisableShadowCopy)</NUnit-DisableShadowCopy>
+      <NUnit-DisableShadowCopy Condition="'$(NUnit-DisableShadowCopy)' == ''">false</NUnit-DisableShadowCopy>
+      <UnitTest>%(OriginalProject.UnitTest)</UnitTest>
+    </PropertyGroup>
+
+    <NUnit ToolPath="$(NUnitDirectory)" Assemblies="@(NonMergedAssemblies)" OutputXmlFile="$(NUnitReportsDirectory)\%(UnitTestAssembly.Filename).xml" Condition="'$(UnitTest)' == 'true'" DisableShadowCopy="$(NUnit-DisableShadowCopy)"  />
+  </Target>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <Target Name="Package" DependsOnTargets="Merge;BuildNonMerged;Test">
+  </Target>
+
+
+
+  
+ 
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+</Project>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.Prevalence</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.Prevalence.PrevalenceActivatorOverriderModelInspector">
+            <summary>
+            This inspector registers custom activators for PrevalenceEngines and
+            PrevalenceSystem.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.Prevalence.PrevalenceEngineComponentActivator">
+            <summary>
+            Summary description for PrevalenceEngineComponentActivator.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.Prevalence.PrevalenceFacility">
+            <summary>
+            Summary description for PrevalenceFacility.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.Prevalence.PrevalenceSystemComponentActivator">
+            <summary>
+            Summary description for PrevalenceSystemComponentActivator.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.Prevalence.PrevalenceSystemComponentActivator.Instantiate(Castle.MicroKernel.CreationContext)">
+            <summary>
+            To obtain the system instance, we obtain
+            the engine id that holds this system and use the
+            apropriate property
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

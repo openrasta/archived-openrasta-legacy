@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.MonoRail.ActiveRecordScaffold</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction">
+            <summary>
+            Base abstract class for actions that relate to 
+            Scaffolding support. Provide the basic flow process
+            </summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.modelType">
+            <summary>Holds the AR type</summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.templateEngine">
+            <summary>Reference to the template engine instance</summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.prop2Validation">
+            <summary>A map of PropertyInfo to validation failures</summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.errors">
+            <summary>A list of errors that happened during this process</summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.builder">
+            <summary>Constructs the data source for the binder</summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.binder">
+            <summary>Binder that 'knows' ActiveRecord types</summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.model">
+            <summary>The model for the AR type we're dealing with</summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.useModelName">
+            <summary>Used to define if the model name should be present on the action name (urls)</summary>
+        </member>
+        <member name="F:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.useDefaultLayout">
+            <summary>Indicates that the controller has no layout, so we use ours</summary>
+        </member>
+        <member name="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.#ctor(System.Type,Castle.Components.Common.TemplateEngine.ITemplateEngine,System.Boolean,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction"/> class.
+            </summary>
+            <param name="modelType">Type of the model.</param>
+            <param name="templateEngine">The template engine.</param>
+            <param name="useModelName">Indicates that we should use the model name on urls</param>
+            <param name="useDefaultLayout">Whether we should use our layout.</param>
+        </member>
+        <member name="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.Execute(Castle.MonoRail.Framework.Controller)">
+            <summary>
+            Executes the basic flow which is
+            <list type="number">
+            <item><description>Resolve the <see cref="T:Castle.ActiveRecord.Framework.Internal.ActiveRecordModel"/></description></item>
+            <item><description>Resolve the layout (if not is associated with the controller, defaults to "scaffold")</description></item>
+            <item><description>Invokes <see cref="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.PerformActionProcess(Castle.MonoRail.Framework.Controller)"/> which should perform the correct process for this action</description></item>
+            <item><description>Resolves the template name that the developer might provide by using <see cref="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.ComputeTemplateName(Castle.MonoRail.Framework.Controller)"/></description></item>
+            <item><description>If the template exists, renders it. Otherwise invokes <see cref="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.RenderStandardHtml(Castle.MonoRail.Framework.Controller)"/></description></item>
+            </list>
+            </summary>
+            <param name="controller"></param>
+        </member>
+        <member name="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.ComputeTemplateName(Castle.MonoRail.Framework.Controller)">
+            <summary>
+            Implementors should return the template name 
+            for the current action.
+            </summary>
+            <param name="controller"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.RenderStandardHtml(Castle.MonoRail.Framework.Controller)">
+            <summary>
+            Only invoked if the programmer havent provided
+            a custom template for the current action. Implementors
+            should create a basic html to present.
+            </summary>
+            <param name="controller"></param>
+        </member>
+        <member name="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.PerformActionProcess(Castle.MonoRail.Framework.Controller)">
+            <summary>
+            Implementors should perform the action for the 
+            scaffolding, like new or create.
+            </summary>
+            <param name="controller"></param>
+        </member>
+        <member name="M:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.ObtainPKProperty">
+            <summary>
+            Gets the property that represents the Primary key 
+            for the current <see cref="T:Castle.ActiveRecord.Framework.Internal.ActiveRecordModel"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.UseModelName">
+            <summary>
+            Gets a value indicating whether the name of the model should
+            be used on the url.
+            </summary>
+            <value><c>true</c> if yes, otherwise <c>false</c>.</value>
+        </member>
+        <member name="P:Castle.MonoRail.ActiveRecordScaffold.AbstractScaffoldAction.Model">
+            <summary>
+            Gets the current <see cref="T:Castle.ActiveRecord.Framework.Internal.ActiveRecordModel"/>
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.ConfirmRemoveAction">
+            <summary>
+            Displays a confirmation message before performing 
+            the removal of the instance
+            </summary>
+            <remarks>
+            Searchs for a template named <c>confirm{name}remove</c>
+            </remarks>
+        </member>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.CreateAction">
+            <summary>
+            Performs the inclusion
+            </summary>
+            <remarks>
+            Searchs for a template named <c>create{name}</c>
+            </remarks>
+        </member>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.EditAction">
+            <summary>
+            Renders an edit form
+            </summary>
+            <remarks>
+            Searchs for a template named <c>edit{name}</c>
+            </remarks>
+        </member>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.ListAction">
+            <summary>
+            Renders a list of entities
+            </summary>
+            <remarks>
+            Searchs for a template named <c>list{name}</c>
+            </remarks>
+        </member>
+        <member name="M:Castle.MonoRail.ActiveRecordScaffold.ListAction.RenderStandardHtml(Castle.MonoRail.Framework.Controller)">
+            <summary>
+            Called when the template was not found
+            </summary>
+            <param name="controller"></param>
+        </member>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.NewAction">
+            <summary>
+            Renders an inclusion form
+            </summary>
+            <remarks>
+            Searchs for a template named <c>new{name}</c>
+            </remarks>
+        </member>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.RemoveAction">
+            <summary>
+            Removes the ActiveRecord instance
+            </summary>
+            <remarks>
+            Searchs for a template named <c>{name}removed</c>
+            </remarks>
+        </member>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.ScaffoldingSupport">
+            <summary>
+            Uses the dynamic action infrastructure to 
+            add new actions to an existing controller.
+            </summary>
+            <remarks>
+            Provided that a controller uses <see cref="T:Castle.MonoRail.Framework.ScaffoldingAttribute"/>
+            like the following code:
+            <code>
+            [Scaffolding( typeof(Account) )]
+            public class AdminController : Controller
+            {
+            }
+            </code>
+            Then the following dynamic actions will be added:
+            <list type="bullet">
+            <item><term>newAccount</term>
+            <description>Presents a form to the user fill in order to create the item on the database</description>
+            </item>
+            <item><term>createAccount</term>
+            <description>Takes the information submited by the newAccount and creates the item</description>
+            </item>
+            <item><term>editAccount</term>
+            <description>Presents a form to the user fill in order to update the item on the database</description>
+            </item>
+            <item><term>updateAccount</term>
+            <description>Takes the information submited by the editAccount and changes the item</description>
+            </item>
+            <item><term>listAccount</term>
+            <description>Presents a paginated list of items saved</description>
+            </item>
+            <item><term>confirmAccount</term>
+            <description>Asks the user if he/she confirms the removal of the item</description>
+            </item>
+            <item><term>removeAccount</term>
+            <description>Attempt to remove the item and presents the results</description>
+            </item>
+            </list>
+            </remarks>
+        </member>
+        <member name="T:Castle.MonoRail.ActiveRecordScaffold.UpdateAction">
+            <summary>
+            Performs the update
+            </summary>
+            <remarks>
+            Searchs for a template named <c>create{name}</c>
+            </remarks>
+        </member>
+    </members>
+</doc>

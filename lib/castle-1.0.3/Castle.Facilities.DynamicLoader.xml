@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.DynamicLoader</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.DynamicLoader.DynamicLoaderActivator">
+            <summary>
+            Delegates the creation of components to a <see cref="T:Castle.Facilities.DynamicLoader.RemoteLoader"/>,
+            which creates the component on a different <see cref="T:System.AppDomain"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderActivator.#ctor(Castle.Core.ComponentModel,Castle.MicroKernel.IKernel,Castle.MicroKernel.ComponentInstanceDelegate,Castle.MicroKernel.ComponentInstanceDelegate)">
+            <summary>
+            Creates a new <see cref="T:Castle.Facilities.DynamicLoader.DynamicLoaderActivator"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderActivator.CreateInstance(Castle.MicroKernel.CreationContext,System.Object[],System.Type[])">
+            <summary>
+            Creates the component instance by calling the <see cref="M:Castle.Facilities.DynamicLoader.RemoteLoader.CreateRemoteInstance(Castle.Core.ComponentModel,Castle.MicroKernel.CreationContext,System.Object[],System.Type[])"/>
+            method. The component is then registered with the <see cref="T:System.Runtime.Remoting.Lifetime.ClientSponsor"/>
+            with a renewal time of 2 minutes, in order to stay alive forever.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderActivator.Destroy(System.Object)">
+            <summary>
+            Disposes an object, and unregisters it from the <see cref="T:System.Runtime.Remoting.Lifetime.ClientSponsor"/>.
+            </summary>
+            <param name="instance">The object being destroyed</param>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderActivator.Dispose">
+            <summary>
+            Closes the <see cref="T:System.Runtime.Remoting.Lifetime.ClientSponsor"/> used to keep remote objects alive.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.DynamicLoader.DynamicLoaderFacility">
+            <summary>
+            DynamicLoader facility.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderFacility.Init(Castle.MicroKernel.IKernel,Castle.Core.Configuration.IConfiguration)">
+            <summary>
+            Initializes the facility.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderFacility.Terminate">
+            <summary>
+            Terminates the facility.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderFacility.InitializeBatchComponents(Castle.Facilities.DynamicLoader.RemoteLoader,Castle.Core.Configuration.IConfiguration)">
+            <summary>
+            Register each batch component.
+            </summary>
+            <param name="loader">The <see cref="T:Castle.Facilities.DynamicLoader.RemoteLoader"/> instance in which to register</param>
+            <param name="componentsNode">The component configuration node</param>
+            <remarks>
+            <example>
+            An example of a valid configuration node:
+            <code>
+              &lt;component id="componentid.*"&gt;
+                &lt;providesService service="Company.Project.IService, Company.Project" /&gt;
+              &lt;/component&gt;
+            </code>
+            </example>
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderFacility.NormalizeDirectoryPath(System.String)">
+            <summary>
+            Normalizes a directory path. It includes resolving parent (<c>..</c>) paths
+            and the <c>~</c> prefix, which maps to the root of the current application.
+            </summary>
+            <param name="path">The directory path</param>
+            <returns>The normalized directory path</returns>
+            <seealso cref="M:Castle.Facilities.DynamicLoader.DynamicLoaderFacility.GetCurrentAppRootDirectory"/>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderFacility.GetCurrentAppRootDirectory">
+            <summary>
+            Gets the root directory of the current application.
+            For web applications, it is obtained from <see cref="M:System.Web.HttpServerUtility.MapPath(System.String)"/>.
+            For other applications, <see cref="P:System.AppDomain.BaseDirectory"/> is used.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderFacility.Dispose">
+            <summary>
+            <see cref="T:System.IDisposable"/> implementation. Releases all <see cref="T:Castle.Facilities.DynamicLoader.RemoteLoader"/>s
+            and <see cref="T:System.AppDomain"/>s.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.DynamicLoader.DynamicLoaderInspector">
+            <summary>
+            Inspects component configuration nodes, looking for <c>domain</c>
+            attributes. When found, register a custom activator: <see cref="T:Castle.Facilities.DynamicLoader.DynamicLoaderActivator"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderInspector.#ctor(Castle.Facilities.DynamicLoader.DynamicLoaderRegistry)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderInspector.ProcessModel(Castle.MicroKernel.IKernel,Castle.Core.ComponentModel)">
+            <summary>
+            Performs the inspection on the model.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.DynamicLoader.DynamicLoaderRegistry">
+            <summary>
+            Stores instances of <see cref="T:Castle.Facilities.DynamicLoader.RemoteLoader"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderRegistry.RegisterLoader(System.String,Castle.Facilities.DynamicLoader.RemoteLoader)">
+            <summary>
+            Register a new loader, for the specified <paramref name="domainId"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderRegistry.GetLoader(System.String)">
+            <summary>
+            Gets the <see cref="T:Castle.Facilities.DynamicLoader.RemoteLoader"/> instance for the specified <paramref name="domainId"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderRegistry.RegisterComponentOnDomain(System.String,System.String,System.Type,System.Type)">
+            <summary>
+            Registers a specific component on a specific domain.
+            </summary>
+            <remarks>
+            The implementation simply calls <see cref="M:Castle.Facilities.DynamicLoader.DynamicLoaderRegistry.GetLoader(System.String)"/> to get the correct
+            <see cref="T:Castle.Facilities.DynamicLoader.RemoteLoader"/>, then add the component to the <see cref="P:Castle.Facilities.DynamicLoader.RemoteLoader.Kernel"/>.
+            </remarks>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.DynamicLoaderRegistry.Dispose">
+            <summary>
+            Implementation of <see cref="T:System.IDisposable"/>.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.DynamicLoader.RemoteLoader">
+            <summary>
+            Loads components on an isolated <see cref="P:Castle.Facilities.DynamicLoader.RemoteLoader.AppDomain"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.RemoteLoader.#ctor">
+            <summary>
+            Creates a new <see cref="T:Castle.Facilities.DynamicLoader.RemoteLoader"/>. This constructor should not be called
+            directly in the code, but via <see cref="M:System.AppDomain.CreateInstance(System.String,System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.RemoteLoader.RegisterByServiceProvided(System.String,System.Type[])">
+            <summary>
+            Searches for implementations of the given services in the current <see cref="P:Castle.Facilities.DynamicLoader.RemoteLoader.AppDomain"/>
+            and add as components. Used by <see cref="M:Castle.Facilities.DynamicLoader.DynamicLoaderFacility.InitializeBatchRegistration(Castle.Facilities.DynamicLoader.RemoteLoader,Castle.Core.Configuration.IConfiguration)"/>.
+            </summary>
+            <param name="componentIdMask">The component id mask. Any <c>*</c> (asterisk) character will be replaced by a sequential number, starting by 1 (one).</param>
+            <param name="services">The services in which to test</param>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.RemoteLoader.LoadAllAssemblies">
+            <summary>
+            Loads all assemblies in the current <see cref="P:Castle.Facilities.DynamicLoader.RemoteLoader.AppDomain"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.RemoteLoader.Dispose">
+            <summary>
+            Disposes the <see cref="P:Castle.Facilities.DynamicLoader.RemoteLoader.Kernel"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.RemoteLoader.IsValidServiceImplementation(System.Type,System.Type)">
+            <summary>
+            Checks whether a type <paramref name="t"/> is a valid implementation of a
+            given service <paramref name="serviceType"/>.
+            </summary>
+            <param name="serviceType">The service type</param>
+            <param name="t">The component type</param>
+            <returns>
+            <c>true</c> if <paramref name="t"/> is a valid implementation of the
+            service specified by <paramref name="serviceType"/>, <c>false</c> otherwise.
+            </returns>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.RemoteLoader.GenerateComponentId">
+            <summary>
+            Generates an unique component id, given the <see cref="F:Castle.Facilities.DynamicLoader.RemoteLoader.componentIdMask"/>.
+            </summary>
+            <returns>The unique component id</returns>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.RemoteLoader.CreateRemoteInstance(Castle.Core.ComponentModel,Castle.MicroKernel.CreationContext,System.Object[],System.Type[])">
+            <summary>
+            Creates a component on an isolated <see cref="P:Castle.Facilities.DynamicLoader.RemoteLoader.AppDomain"/>.
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.DynamicLoader.RemoteLoader.InitializeLifetimeService">
+            <summary>
+            Overrides <see cref="M:System.MarshalByRefObject.InitializeLifetimeService"/>,
+            so no lease is returned and the object is kept in memory
+            as long as the host application domain is running.
+            </summary>
+        </member>
+        <member name="P:Castle.Facilities.DynamicLoader.RemoteLoader.Kernel">
+            <summary>
+            The <see cref="T:Castle.MicroKernel.IKernel"/> in which the components are registered.
+            </summary>
+        </member>
+        <member name="P:Castle.Facilities.DynamicLoader.RemoteLoader.AppDomain">
+            <summary>
+            The <see cref="P:Castle.Facilities.DynamicLoader.RemoteLoader.AppDomain"/>.
+            </summary>
+        </member>
+    </members>
+</doc>

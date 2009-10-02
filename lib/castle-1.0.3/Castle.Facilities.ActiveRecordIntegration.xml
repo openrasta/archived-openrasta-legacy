@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.ActiveRecordIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.ActiveRecordIntegration.ActiveRecordFacility">
+            <summary>
+            Provides integration with ActiveRecord framework.
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.ActiveRecordIntegration.SafeSessionProxy">
+            <summary>
+            This class implements <see cref="T:NHibernate.ISession"/>
+            and delegates <see cref="M:Castle.Facilities.ActiveRecordIntegration.SafeSessionProxy.Close"/> and 
+            <see cref="M:Castle.Facilities.ActiveRecordIntegration.SafeSessionProxy.Dispose"/> to <see cref="M:Castle.ActiveRecord.Framework.ISessionFactoryHolder.ReleaseSession(NHibernate.ISession)"/>
+            as the session is in fact managed by ActiveRecord framework
+            </summary>
+        </member>
+        <member name="T:Castle.Facilities.ActiveRecordIntegration.SessionFactoryDelegate">
+            <summary>
+            Implements <see cref="T:NHibernate.ISessionFactory"/> allowing 
+            it to be used by the container as an ordinary component.
+            However only <see cref="M:NHibernate.ISessionFactory.OpenSession(System.Data.IDbConnection)"/>
+            is implemented
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.ActiveRecordIntegration.SessionFactoryDelegate.GetCurrentSession">
+            <remarks>Needed for NHibernate 1.2 from trunk</remarks>
+        </member>
+        <member name="M:Castle.Facilities.ActiveRecordIntegration.TransactionScopeResourceAdapter.#ctor(Castle.Services.Transaction.TransactionMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.Facilities.ActiveRecordIntegration.TransactionScopeResourceAdapter"/> class.
+            </summary>
+            <param name="transactionMode">The transaction mode.</param>
+        </member>
+    </members>
+</doc>

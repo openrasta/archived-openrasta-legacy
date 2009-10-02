@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
+  <PropertyGroup>
+    <RootPath Condition="'$(RootPath)' == ''">$(MSBuildProjectDirectory)\..</RootPath>
+    <OutputPath>$(RootPath)\bin\$(Configuration)\vside</OutputPath>
+    <VSTemplatesPath>$(RootPath)\src\vside\templates</VSTemplatesPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectTemplate Include="$(VSTemplatesPath)\aspnet35\**\*" Exclude="$(VSTemplatesPath)\**\.svn\**">
+      <Package>aspnet35.zip</Package>
+      <WorkingDirectory>$(RootPath)\src\vside\templates\aspnet35</WorkingDirectory>
+    </ProjectTemplate>
+    <ProjectTemplate Include="$(RootPath)\src\vside\templates\aspnet35-item-contentview\**\*" Exclude="$(VSTemplatesPath)\**\.svn\**">
+      <Package>aspnet35-item-contentview.zip</Package>
+      <WorkingDirectory>$(RootPath)\src\vside\templates\aspnet35-item-contentview</WorkingDirectory>
+    </ProjectTemplate>
+    <ProjectTemplate Include="$(RootPath)\src\vside\templates\aspnet35-item-masterpage\**\*" Exclude="$(VSTemplatesPath)\**\.svn\**">
+      <Package>aspnet35-item-masterpage.zip</Package>
+      <WorkingDirectory>$(RootPath)\src\vside\templates\aspnet35-item-masterpage</WorkingDirectory>
+    </ProjectTemplate>
+    <ProjectTemplate Include="$(RootPath)\src\vside\templates\aspnet35-item-view\**\*" Exclude="$(VSTemplatesPath)\**\.svn\**">
+      <Package>aspnet35-item-view.zip</Package>
+      <WorkingDirectory>$(RootPath)\src\vside\templates\aspnet35-item-view</WorkingDirectory>
+    </ProjectTemplate>
+  </ItemGroup>
+  <Target Name="Verify">
+    <MakeDir Directories="$(OutputPath)" Condition="!Exists('$()OutputPath)')" />
+  </Target>
+  <Target Name="Package" DependsOnTargets="Verify">
+    <Zip Files="@(ProjectTemplate)" WorkingDirectory="%(WorkingDirectory)" ZipFileName="$(OutputPath)\%(Package)" />
+  </Target>
+  <Import Project="common.properties" />
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+</Project>

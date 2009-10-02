@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.MonoRail.WindsorExtension</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.MonoRail.WindsorExtension.ControllerTreeAccessor">
+            <summary>
+            Bridge between the windsor controlled controller tree and
+            the monorail service provider.
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.ControllerTreeAccessor.#ctor">
+            <summary>
+            Construct the controller tree accessor
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.ControllerTreeAccessor.AddController(System.String,System.String,System.Type)">
+            <summary>
+            Register a controller on the tree. If the specified
+            area name matches the current node, the controller is
+            register on the node itself, otherwise on the right or 
+            on the left node.
+            </summary>
+            <remarks>
+            Note that the controller is an <c>object</c>. That allows
+            different implementation of a controller factory to register
+            different representation of what a controller is (a name, a descriptor etc)
+            </remarks>
+            <param name="areaName">The area name, or <c>String.Empty</c></param>
+            <param name="controllerName">The controller name</param>
+            <param name="controller">The controller representation</param>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.ControllerTreeAccessor.GetController(System.String,System.String)">
+            <summary>
+            Returns a controller previously registered. 
+            </summary>
+            <param name="areaName">The area name, or <c>String.Empty</c></param>
+            <param name="controllerName">The controller name</param>
+            <returns>The controller representation or null</returns>
+        </member>
+        <member name="T:Castle.MonoRail.WindsorExtension.DefaultWizardPageFactory">
+            <summary>
+            Default implementation of <see cref="T:Castle.MonoRail.WindsorExtension.IWizardPageFactory"/>
+            which requests components from the <see cref="T:Castle.MicroKernel.IKernel"/>
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.WindsorExtension.IWizardPageFactory">
+            <summary>
+            This interface allow a wizard controller
+            to request wizard steps from the IKernel without
+            directly refering to it
+            </summary>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.IWizardPageFactory.CreatePage(System.String)">
+            <summary>
+            Requests a <see cref="T:Castle.MonoRail.Framework.WizardStepPage"/> by
+            the key the component was registered on the 
+            controller
+            </summary>
+            <param name="key">The key used to register the component</param>
+            <returns>The step page instance</returns>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.IWizardPageFactory.CreatePage(System.Type)">
+            <summary>
+            Requests a <see cref="T:Castle.MonoRail.Framework.WizardStepPage"/> by
+            the key the component was registered on the 
+            controller
+            </summary>
+            <param name="stepPageType"></param>
+            <returns>The step page instance</returns>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.DefaultWizardPageFactory.#ctor(Castle.MicroKernel.IKernel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Castle.MonoRail.WindsorExtension.DefaultWizardPageFactory"/> class.
+            </summary>
+            <param name="kernel">The kernel.</param>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.DefaultWizardPageFactory.CreatePage(System.String)">
+            <summary>
+            Requests a <see cref="T:Castle.MonoRail.Framework.WizardStepPage"/> by
+            the key the component was registered on the 
+            controller
+            </summary>
+            <param name="key">The key used to register the component</param>
+            <returns>The step page instance</returns>
+        </member>
+        <member name="M:Castle.MonoRail.WindsorExtension.DefaultWizardPageFactory.CreatePage(System.Type)">
+            <summary>
+            Requests a <see cref="T:Castle.MonoRail.Framework.WizardStepPage"/> by
+            the key the component was registered on the 
+            controller
+            </summary>
+            <param name="stepPageType"></param>
+            <returns>The step page instance</returns>
+        </member>
+        <member name="T:Castle.MonoRail.WindsorExtension.RailsFacility">
+            <summary>
+            Facility responsible for registering the controllers in
+            the controllerTree.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.WindsorExtension.WindsorControllerFactory">
+            <summary>
+            Custom implementation of <see cref="T:Castle.MonoRail.Framework.IControllerFactory"/>
+            that uses the WindsorContainer to obtain the 
+            controller instances.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.WindsorExtension.WindsorFilterFactory">
+            <summary>
+            Custom implementation of <see cref="T:Castle.MonoRail.Framework.IFilterFactory"/>
+            that uses the WindsorContainer to obtain <see cref="T:Castle.MonoRail.Framework.IFilter"/>
+            instances, and, if not available, uses the default implementation
+            of <see cref="T:Castle.MonoRail.Framework.IFilterFactory"/>.
+            </summary>
+        </member>
+        <member name="T:Castle.MonoRail.WindsorExtension.WindsorMonoRailSectionHandler">
+            <summary>
+            Pendent
+            </summary>
+        </member>
+    </members>
+</doc>

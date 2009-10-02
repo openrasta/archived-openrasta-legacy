@@ -1,0 +1,13 @@
+<Configuration>
+  <NamespaceFolders>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:application/d:octet-stream</SkipFolder>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:application/d:x-www-form-urlencoded</SkipFolder>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:application/d:xhtml+xml</SkipFolder>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:application/d:xml</SkipFolder>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:application</SkipFolder>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:multipart/d:form-data</SkipFolder>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:multipart</SkipFolder>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:text/d:plain</SkipFolder>
+    <SkipFolder>C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647/d:Codecs/d:text</SkipFolder>
+  </NamespaceFolders>
+</Configuration>

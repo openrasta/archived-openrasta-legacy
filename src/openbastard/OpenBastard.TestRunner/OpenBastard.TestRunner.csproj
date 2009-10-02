@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0747C90D-75D0-489B-A719-8D02C44AF0EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OpenBastard</RootNamespace>
+    <AssemblyName>OpenBastard.TestRunner</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.core, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nunit-2.5\lib\nunit.core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.core.interfaces, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nunit-2.5\lib\nunit.core.interfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nunit-2.5\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\CommonInfo.cs">
+      <Link>Properties\CommonInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\core\OpenRasta.Testing\SpecExtensions.cs">
+      <Link>Infrastructure\SpecExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Environments\HttpListenerEnvironment.cs" />
+    <Compile Include="Environments\HttpWebRequestEnvironment.cs" />
+    <Compile Include="Environments\FileBasedAspNetEnvironment.cs" />
+    <Compile Include="Environments\Iis7\Iis7ClassicEnvironment.cs" />
+    <Compile Include="Environments\Iis7\Iis7Environment.cs" />
+    <Compile Include="Environments\Iis7\Iis7IntegratedEnvironment.cs" />
+    <Compile Include="Environments\InMemoryEnvironment.cs" />
+    <Compile Include="Environments\WebRequestResponse.cs" />
+    <Compile Include="IisConfigFiles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IisConfigFiles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\SuiteProvider.cs" />
+    <Compile Include="Scenarios\accessing_the_homepage.cs" />
+    <Compile Include="Environments\IEnvironment.cs" />
+    <Compile Include="Infrastructure\RequestExtensions.cs" />
+    <Compile Include="Scenarios\manipulating_users.cs" />
+    <Compile Include="Scenarios\uploading_files.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dependencies.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenBastard.Hosting.Iis7.WorkerProcess-32\OpenBastard.Hosting.Iis7.WorkerProcess-32.csproj">
+      <Project>{63B32B54-3C54-42B7-8533-6E6E6739371E}</Project>
+      <Name>OpenBastard.Hosting.Iis7.WorkerProcess-32</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenBastard.Hosting.Iis7.WorkerProcess-64\OpenBastard.Hosting.Iis7.WorkerProcess-64.csproj">
+      <Project>{F7152A67-F16E-4EE4-A39A-0450767BC5C9}</Project>
+      <Name>OpenBastard.Hosting.Iis7.WorkerProcess-64</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenBastard.Hosting.Iis7\OpenBastard.Hosting.Iis7.csproj">
+      <Project>{481D9D5E-6E9E-4B12-9468-667A41B4B92F}</Project>
+      <Name>OpenBastard.Hosting.Iis7</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenBastard\OpenBastard.csproj">
+      <Project>{E29A4124-5A80-42AD-9B26-DB322D402465}</Project>
+      <Name>OpenBastard</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="IisConfigFiles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>IisConfigFiles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iis7.applicationHost.config" />
+    <None Include="Resources\web.config" />
+  </ItemGroup>
+  <Import Project="dependencies.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

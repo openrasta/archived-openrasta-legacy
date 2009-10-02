@@ -1,0 +1,55 @@
+﻿<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:schemas-ohloh:instructfule">
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      Download Instruction XML Format for Ohloh.new
+      Copyright 2008 Ohloh.net. All rights reserved.
+    </xsd:documentation>
+  </xsd:annotation>
+
+
+
+
+
+  <xsd:complexType name="FileType">
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="date" type="xsd:dateTime"/>
+    <xsd:attribute name="platform" type="xsd:string"/>
+    <xsd:attribute name="icon" type="xsd:string"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="ReleaseType">
+    <xsd:all>
+      <xsd:element name="notes" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="files" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="file" type="FileType" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:all>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="date" type="xsd:dateTime"/>
+  </xsd:complexType>
+  <xsd:complexType name="ReleasesType">
+    <xsd:sequence>
+      <xsd:element name="release" minOccurs="0" maxOccurs="unbounded" type="ReleaseType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PackageType">
+    <xsd:all>
+      <xsd:element name="description" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+      <xsd:element name="releases" minOccurs="0" maxOccurs="1" type="ReleasesType"/>
+    </xsd:all>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="deprecated" type="xsd:boolean"/>
+  </xsd:complexType>
+  <xsd:complexType name="PackagesType">
+    <xsd:sequence>
+      <xsd:element name="package" minOccurs="0" maxOccurs="unbounded" type="PackageType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="packages" type="PackagesType"/>
+
+</xsd:schema>
+

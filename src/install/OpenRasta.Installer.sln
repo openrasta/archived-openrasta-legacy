@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "OpenRasta.Installer", "OpenRasta.Installer\OpenRasta.Installer.wixproj", "{934F6F33-5140-4F71-81A4-F24047D1A3D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{E6DA4727-8AD3-4D85-BA18-6E25A0419322}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\build\build.proj = ..\..\build\build.proj
+		..\..\build\defaults.targets = ..\..\build\defaults.targets
+		..\..\build\releasebuilder.targets = ..\..\build\releasebuilder.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{934F6F33-5140-4F71-81A4-F24047D1A3D0}.Debug|x86.ActiveCfg = Debug|x86
+		{934F6F33-5140-4F71-81A4-F24047D1A3D0}.Debug|x86.Build.0 = Debug|x86
+		{934F6F33-5140-4F71-81A4-F24047D1A3D0}.Release|x86.ActiveCfg = Release|x86
+		{934F6F33-5140-4F71-81A4-F24047D1A3D0}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

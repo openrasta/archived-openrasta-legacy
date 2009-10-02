@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\src\caff\openrasta\trunk\bin\tmp\Release\net-35\OpenRasta.Tests.Integration\OpenRasta.Tests.Integration.dll" total="16" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2009-09-30" time="21:12:33">
+  <environment nunit-version="2.5.1.9189" clr-version="2.0.50727.4918" os-version="Microsoft Windows NT 6.1.7100.0" platform="Win32NT" cwd="C:\src\caff\openrasta\trunk\build" machine-name="CHERENKOV" user="sebastien.lambla" user-domain="CAFFEINEIT" />
+  <culture-info current-culture="en-GB" current-uiculture="en-US" />
+  <test-suite name="C:\src\caff\openrasta\trunk\bin\tmp\Release\net-35\OpenRasta.Tests.Integration\OpenRasta.Tests.Integration.dll" executed="True" success="True" time="20.155" asserts="0">
+    <results>
+      <test-suite name="DigestAuthentication_Specification" executed="True" success="True" time="3.806" asserts="0">
+        <results>
+          <test-suite name="when_using_the_correct_credentials" executed="True" success="True" time="3.806" asserts="0">
+            <results>
+              <test-case name="DigestAuthentication_Specification.when_using_the_correct_credentials.a_protected_resource_fails_with_unauthorized_error_when_no_credentials_are_provided" executed="True" success="True" time="1.139" asserts="1" />
+              <test-case name="DigestAuthentication_Specification.when_using_the_correct_credentials.an_unprotected_resource_returns_200_even_with_invalid_credentials" executed="True" success="True" time="0.078" asserts="1" />
+              <test-case name="DigestAuthentication_Specification.when_using_the_correct_credentials.the_user_authentication_is_successfull_on_URIs_with_encoded_characters" executed="True" success="True" time="0.218" asserts="1" />
+              <test-case name="DigestAuthentication_Specification.when_using_the_correct_credentials.the_user_is_authenticated_and_a_200_response_is_returned" executed="True" success="True" time="0.000" asserts="1" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite name="HtmlForm_Specification" executed="True" success="True" time="1.919" asserts="0">
+        <results>
+          <test-suite name="when_receiving_an_entity_body" executed="True" success="True" time="1.919" asserts="0">
+            <results>
+              <test-case name="HtmlForm_Specification.when_receiving_an_entity_body.the_key_value_pairs_are_matched_to_string_parameters" executed="True" success="True" time="0.718" asserts="1" />
+              <test-case name="HtmlForm_Specification.when_receiving_an_entity_body.the_pairs_are_matched_to_complex_parameters" executed="True" success="True" time="0.047" asserts="2" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite name="Json_Specification" executed="True" success="True" time="2.839" asserts="0">
+        <results>
+          <test-suite name="when_sending_json_content" executed="True" success="True" time="2.839" asserts="0">
+            <results>
+              <test-case name="Json_Specification.when_sending_json_content.the_content_is_parsed_as_the_correct_object_type" executed="True" success="True" time="1.607" asserts="3" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite name="MultipartFormData_Specification" executed="True" success="True" time="1.763" asserts="0">
+        <results>
+          <test-suite name="when_the_request_contains_a_multipart_form_data_entity" executed="True" success="True" time="1.763" asserts="0">
+            <results>
+              <test-case name="MultipartFormData_Specification.when_the_request_contains_a_multipart_form_data_entity.the_multipart_entity_is_received" executed="True" success="True" time="0.562" asserts="1" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite name="MultipleThreads_Specification" executed="True" success="True" time="3.182" asserts="0">
+        <results>
+          <test-suite name="test_case" executed="False">
+            <reason>
+              <message><![CDATA[No suitable constructor was found]]></message>
+            </reason>
+          </test-suite>
+          <test-suite name="test_container" executed="True" success="True" time="3.167" asserts="0">
+            <results>
+              <test-case name="MultipleThreads_Specification.test_container.testing_multiple_concurrent_requests" executed="True" success="True" time="1.919" asserts="2000">
+                <properties>
+                  <property name="APARTMENT_STATE" value="MTA" />
+                </properties>
+              </test-case>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite name="OpenRasta" executed="True" success="True" time="4.664" asserts="0">
+        <results>
+          <test-suite name="Tests" executed="True" success="True" time="4.664" asserts="0">
+            <results>
+              <test-suite name="Integration" executed="True" success="True" time="4.664" asserts="0">
+                <results>
+                  <test-suite name="Regressions" executed="True" success="True" time="2.137" asserts="0">
+                    <results>
+                      <test-suite name="Handlers_not_selected_correctly" executed="True" success="True" time="2.044" asserts="0">
+                        <results>
+                          <test-case name="OpenRasta.Tests.Integration.Regressions.Handlers_not_selected_correctly.the_handler_for_individual_items_is_selected" executed="True" success="True" time="0.686" asserts="2" />
+                          <test-case name="OpenRasta.Tests.Integration.Regressions.Handlers_not_selected_correctly.the_handler_with_the_most_attributes_is_selected" executed="True" success="True" time="0.140" asserts="4" />
+                        </results>
+                      </test-suite>
+                      <test-suite name="when_httplistenerhost_resolveraccessor_is_accessed_multiple_times" executed="True" success="True" time="0.094" asserts="0">
+                        <results>
+                          <test-case name="OpenRasta.Tests.Integration.Regressions.when_httplistenerhost_resolveraccessor_is_accessed_multiple_times.the_results_should_be_the_same_instance" executed="True" success="True" time="0.094" asserts="1" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                  <test-suite name="server_context" executed="False">
+                    <reason>
+                      <message><![CDATA[OpenRasta.Tests.Integration.server_context is an abstract class]]></message>
+                    </reason>
+                  </test-suite>
+                  <test-suite name="UriDecorators" executed="True" success="True" time="2.527" asserts="0">
+                    <results>
+                      <test-suite name="when_file_extensions_are_activated" executed="True" success="True" time="2.527" asserts="0">
+                        <results>
+                          <test-case name="OpenRasta.Tests.Integration.UriDecorators.when_file_extensions_are_activated.a_request_on_the_extension_uri_returns_the_correct_entity" executed="True" success="True" time="1.061" asserts="1" />
+                          <test-case name="OpenRasta.Tests.Integration.UriDecorators.when_file_extensions_are_activated.a_request_on_the_generic_uri_returns_the_correct_entity" executed="True" success="True" time="0.062" asserts="1" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite name="TextPlain_Specification" executed="True" success="True" time="1.888" asserts="0">
+        <results>
+          <test-suite name="when_using_text_plain" executed="True" success="True" time="1.888" asserts="0">
+            <results>
+              <test-case name="TextPlain_Specification.when_using_text_plain.the_request_is_matched_to_the_parameter" executed="True" success="True" time="0.655" asserts="2" />
+              <test-case name="TextPlain_Specification.when_using_text_plain.the_response_is_formatted_in_text_plain" executed="True" success="True" time="0.016" asserts="2" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

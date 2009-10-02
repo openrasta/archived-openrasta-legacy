@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
+  <ItemGroup>
+    <Projects Include="$(SourcePath)\OpenRasta\OpenRasta.csproj">
+      <MinVersion>20</MinVersion>
+      <Merged>true</Merged>
+    </Projects>
+
+    <Projects Include="$(SourcePath)\OpenRasta.Net30\OpenRasta.Net30.csproj">
+      <MinVersion>30</MinVersion>
+      <Merged>true</Merged>
+    </Projects>
+
+    <Projects Include="$(SourcePath)\OpenRasta.Net35\OpenRasta.Net35.csproj">
+      <MinVersion>35</MinVersion>
+      <Merged>true</Merged>
+    </Projects>
+
+    <Projects Include="$(SourcePath)\OpenRasta.Testing\OpenRasta.Testing.csproj">
+      <MinVersion>35</MinVersion>
+      <Merged>false</Merged>
+    </Projects>
+    
+    <Projects Include="$(SourcePath)\OpenRasta.Tests.Unit\OpenRasta.Tests.Unit.csproj">
+      <MinVersion>35</MinVersion>
+      <Merged>false</Merged>
+      <UnitTest>true</UnitTest>
+    </Projects>
+    
+    <Projects Include="$(SourcePath)\OpenRasta.Tests.Integration\OpenRasta.Tests.Integration.csproj">
+      <MinVersion>35</MinVersion>
+      <Merged>false</Merged>
+      <UnitTest>true</UnitTest>
+      <NUnit-DisableShadowCopy>true</NUnit-DisableShadowCopy>
+    </Projects>
+  </ItemGroup>
+  <Import Project="module.targets" />
+</Project>

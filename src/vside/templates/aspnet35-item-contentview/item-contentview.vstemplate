@@ -1,0 +1,21 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <DefaultName>View.aspx</DefaultName>
+    <Name>OpenRasta Content View</Name>
+    <Description>Provides a view dependent on a master page.</Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>10</SortOrder>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>OpenRasta</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>OpenRasta.Codecs.WebForms</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$.aspx" ReplaceParameters="true">item-contentview.aspx</ProjectItem>
+  </TemplateContent>
+</VSTemplate>
