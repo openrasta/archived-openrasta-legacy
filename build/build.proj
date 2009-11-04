@@ -8,7 +8,7 @@
     <DefaultBuildVersionSuffix>0</DefaultBuildVersionSuffix>
 
     <PackageName>OpenRasta</PackageName>
-    <ReleaseName>Trunk</ReleaseName>
+    <ReleaseName>Release Candidate</ReleaseName>
 
   </PropertyGroup>
   
