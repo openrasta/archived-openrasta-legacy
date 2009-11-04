@@ -14,12 +14,12 @@ namespace OpenRasta.Configuration.Fluent.Implementation
 
         public ICodecDefinition TranscodedBy<TCodec>(object configuration) where TCodec : ICodec
         {
-            return _resourceDefinition.TranscodedBy<TCodec>();
+            return _resourceDefinition.TranscodedBy<TCodec>(configuration);
         }
 
         public ICodecDefinition TranscodedBy(Type type, object configuration)
         {
-            return _resourceDefinition.TranscodedBy(type);
+            return _resourceDefinition.TranscodedBy(type, configuration);
         }
     }
 }

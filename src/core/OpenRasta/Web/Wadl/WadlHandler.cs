@@ -43,10 +43,10 @@ namespace OpenRasta.Web.Configuration.Wadl
 
             foreach (var uriMap in _uriRepository)
             {
-                var resource = new WadlResource { Path = uriMap.Key };
+                var resource = new WadlResource { Path = uriMap.UriTemplate };
 
-                var templateParameters = templateProcessor.GetTemplateParameterNamesFor(uriMap.Key);
-                var queryParameters = templateProcessor.GetQueryParameterNamesFor(uriMap.Key);
+                var templateParameters = templateProcessor.GetTemplateParameterNamesFor(uriMap.UriTemplate);
+                var queryParameters = templateProcessor.GetQueryParameterNamesFor(uriMap.UriTemplate);
 
                 
                 resource.Parameters = new System.Collections.ObjectModel.Collection<WadlResourceParameter>();

@@ -13,6 +13,7 @@ using System;
 using OpenRasta.Diagnostics;
 using OpenRasta.Web;
 using OpenRasta.Pipeline;
+using OpenRasta.Web.Internal;
 
 namespace OpenRasta.Pipeline.Contributors
 {
@@ -37,10 +38,7 @@ namespace OpenRasta.Pipeline.Contributors
         {
             if (context.PipelineData.SelectedResource == null)
             {
-                var uriToMath = context.ApplicationBaseUri
-                    .EnsureHasTrailingSlash()
-                    .MakeRelativeUri(context.Request.Uri)
-                    .MakeAbsolute("http://localhost");
+                var uriToMath = context.GetRequestUriRelativeToRoot();
                 var uriMatch = _uriRepository.Match(uriToMath);
                 if (uriMatch != null)
                 {

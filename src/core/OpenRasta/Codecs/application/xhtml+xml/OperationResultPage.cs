@@ -5,7 +5,7 @@ using System.Text;
 using OpenRasta.Web;
 using OpenRasta.Web.Markup.Elements;
 
-namespace OpenRasta.Codecs.application.xhtml_xml
+namespace OpenRasta.Codecs
 {
     public class OperationResultPage : Element
     {

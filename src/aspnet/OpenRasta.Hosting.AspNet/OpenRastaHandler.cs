@@ -45,6 +45,10 @@ namespace OpenRasta.Hosting.AspNet
 
     public class OpenRastaRewriterHandler : IHttpHandler
     {
+        public OpenRastaRewriterHandler()
+        {
+            Log = NullLogger.Instance;
+        }
         public bool IsReusable
         {
             get { return true; }
@@ -64,6 +68,10 @@ namespace OpenRasta.Hosting.AspNet
 
     public class OpenRastaIntegratedHandler : IHttpHandler
     {
+        public OpenRastaIntegratedHandler()
+        {
+            Log = NullLogger.Instance;
+        }
         public bool IsReusable
         {
             get { return true; }

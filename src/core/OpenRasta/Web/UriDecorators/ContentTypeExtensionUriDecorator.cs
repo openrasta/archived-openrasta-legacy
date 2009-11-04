@@ -11,7 +11,6 @@
 using System;
 using OpenRasta.Codecs;
 using OpenRasta.TypeSystem;
-using OpenRasta.Pipeline;
 
 namespace OpenRasta.Web.UriDecorators
 {
@@ -28,23 +27,39 @@ namespace OpenRasta.Web.UriDecorators
         readonly ICodecRepository _codecs;
         readonly ICommunicationContext _context;
         readonly IUriResolver _uris;
-        readonly ITypeSystem _typeSystem;
         UriRegistration _resourceMatch;
         CodecRegistration _selectedCodec;
 
         public ContentTypeExtensionUriDecorator(ICommunicationContext context, IUriResolver uris, ICodecRepository codecs, ITypeSystem typeSystem)
         {
             _context = context;
-            _typeSystem = typeSystem;
             _codecs = codecs;
             _uris = uris;
+        }
+
+        public void Apply()
+        {
+            // other decorators may change the url later on and the match will have the wrong values
+            // the content type however shouldn't change
+            var entity = _context.Response.Entity;
+            _context.PipelineData.ResponseCodec = _selectedCodec;
+
+            // TODO: Check if this still works. 
+            entity.ContentType = _selectedCodec.MediaType;
         }
 
         public bool Parse(Uri uri, out Uri processedUri)
         {
             processedUri = null;
+
+            var appBaseUri = _context.ApplicationBaseUri.EnsureHasTrailingSlash();
+            var fakeBaseUri = new Uri("http://localhost/", UriKind.Absolute);
+
+            var uriRelativeToAppBase = appBaseUri
+                .MakeRelativeUri(uri)
+                .MakeAbsolute(fakeBaseUri);
             // find the resource type for the uri
-            string lastUriSegment = uri.GetSegments()[uri.GetSegments().Length - 1];
+            string lastUriSegment = uriRelativeToAppBase.GetSegments()[uriRelativeToAppBase.GetSegments().Length - 1];
 
             int lastDot = lastUriSegment.LastIndexOf(".");
 
@@ -53,7 +68,7 @@ namespace OpenRasta.Web.UriDecorators
                 return false;
             }
 
-            Uri uriWithoutExtension = ChangePath(uri,
+            var uriWithoutExtension = ChangePath(uriRelativeToAppBase, 
                                                  srcUri =>
                                                  srcUri.AbsolutePath.Substring(0, srcUri.AbsolutePath.LastIndexOf(".")));
 
@@ -62,36 +77,25 @@ namespace OpenRasta.Web.UriDecorators
                 return false;
 
             string potentialExtension = lastUriSegment.Substring(lastDot + 1);
-            //_codecs.
-            
+
+// _codecs.
             _selectedCodec = _codecs.FindByExtension(_resourceMatch.ResourceKey as IType, potentialExtension);
 
             if (_selectedCodec == null)
             {
                 return false;
             }
-            else
-            {
-                processedUri = uriWithoutExtension;
-                // TODO: Ensure that if the Accept: is not compatible with the overriden value a 406 is returned.
-                return true;
-            }
-        }
 
-        public void Apply()
-        {
-            // other decorators may change the url later on and the match will have the wrong values
-            // the content type however shouldn't change
+            processedUri = fakeBaseUri.MakeRelativeUri(uriWithoutExtension)
+                .MakeAbsolute(appBaseUri);
 
-            IHttpEntity entity = _context.Response.Entity;
-            _context.PipelineData.ResponseCodec = _selectedCodec;
-            //TODO: Check if this still works. 
-            entity.ContentType = _selectedCodec.MediaType;
+// TODO: Ensure that if the Accept: is not compatible with the overriden value a 406 is returned.
+            return true;
         }
 
         Uri ChangePath(Uri uri, Func<Uri, string> getPath)
         {
-            UriBuilder builder = new UriBuilder(uri);
+            var builder = new UriBuilder(uri);
             builder.Path = getPath(uri);
             return builder.Uri;
         }
@@ -99,7 +103,6 @@ namespace OpenRasta.Web.UriDecorators
 }
 
 #region Full license
-//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -107,10 +110,8 @@ namespace OpenRasta.Web.UriDecorators
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -118,5 +119,4 @@ namespace OpenRasta.Web.UriDecorators
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
 #endregion

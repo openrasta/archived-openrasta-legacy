@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using OpenRasta.Diagnostics;
 using OpenRasta.Web;
@@ -10,7 +9,6 @@ namespace OpenRasta.OperationModel.Filters
     public class HttpMethodOperationFilter : IOperationFilter
     {
         readonly IRequest _request;
-        public ILogger Log { get; set; }
 
         public HttpMethodOperationFilter(IRequest request)
         {
@@ -18,12 +16,14 @@ namespace OpenRasta.OperationModel.Filters
             Log = NullLogger.Instance;
         }
 
+        public ILogger Log { get; set; }
+
         public IEnumerable<IOperation> Process(IEnumerable<IOperation> operations)
         {
             operations = operations.ToList();
             var operationWithMatchingName = OperationsWithMatchingName(operations);
             var operationWithMatchingAttribute = OperationsWithMatchingAttribute(operations);
-            Log.WriteDebug("Found {0} operation(s) with a matching name.",operationWithMatchingName.Count());
+            Log.WriteDebug("Found {0} operation(s) with a matching name.", operationWithMatchingName.Count());
             Log.WriteDebug("Found {0} operation(s) with matching [HttpOperation] attribute.", operationWithMatchingAttribute.Count());
             return operationWithMatchingName.Union(operationWithMatchingAttribute);
         }

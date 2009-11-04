@@ -1,8 +1,16 @@
 ﻿<%@ Page Language="C#" %>
-
 <!-- Nothing to see here. -->
 <html>
 <head>
-    <meta http-equiv="Refresh" content="0;url=/home" />
+    <title>Redirection page</title>
 </head>
+<body>
+<%
+string originalPath = Request.Path;
+HttpContext.Current.RewritePath(Request.ApplicationPath, false);
+IHttpHandler httpHandler = new OpenRasta.Hosting.AspNet.OpenRastaIntegratedHandler();
+httpHandler.ProcessRequest(HttpContext.Current);
+HttpContext.Current.RewritePath(originalPath, false);
+%>
+</body>
 </html>

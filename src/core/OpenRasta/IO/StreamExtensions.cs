@@ -1,5 +1,4 @@
 #region License
-
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:
@@ -16,14 +15,18 @@ namespace OpenRasta.IO
 {
     public static class StreamExtensions
     {
-        public static void CopyTo(this Stream stream, Stream destinationStream)
+        public static long CopyTo(this Stream stream, Stream destinationStream)
         {
             var buffer = new byte[4096];
             int readCount = 0;
+            long totalWritten = 0;
             while ((readCount = stream.Read(buffer, 0, buffer.Length)) > 0)
             {
+                totalWritten += readCount;
                 destinationStream.Write(buffer, 0, readCount);
             }
+
+            return totalWritten;
         }
 
         public static byte[] ReadToEnd(this Stream stream)
@@ -35,9 +38,13 @@ namespace OpenRasta.IO
                 stream.CopyTo(streamToReturn);
                 streamToReturn.Position = 0;
             }
+
             var destinationBytes = new byte[streamToReturn.Length - streamToReturn.Position];
-            Buffer.BlockCopy(streamToReturn.GetBuffer(), (int) streamToReturn.Position, destinationBytes, 0,
-                             (int) (streamToReturn.Length - streamToReturn.Position));
+            Buffer.BlockCopy(streamToReturn.GetBuffer(),
+                             (int)streamToReturn.Position, 
+                             destinationBytes, 
+                             0, 
+                             (int)(streamToReturn.Length - streamToReturn.Position));
             return destinationBytes;
         }
 
@@ -49,7 +56,6 @@ namespace OpenRasta.IO
 }
 
 #region Full license
-
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -66,5 +72,4 @@ namespace OpenRasta.IO
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 #endregion

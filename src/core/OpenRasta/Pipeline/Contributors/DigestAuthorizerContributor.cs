@@ -58,10 +58,8 @@ namespace OpenRasta.Pipeline.Contributors
 
             _authentication = _resolver.Resolve<IAuthenticationProvider>();
 
-            string header = context.Request.Headers["Authorization"];
-            if (string.IsNullOrEmpty(header))
-                return PipelineContinuation.Continue;
-            DigestHeader authorizeHeader = DigestHeader.Parse(header);
+            DigestHeader authorizeHeader = GetDigestHeader(context);
+
             if (authorizeHeader == null)
                 return PipelineContinuation.Continue;
 
@@ -79,7 +77,6 @@ namespace OpenRasta.Pipeline.Contributors
                 Password = creds.Password,
                 Uri = authorizeHeader.Uri
             };
-
             string hashedDigest = checkHeader.GetCalculatedResponse(context.Request.HttpMethod);
 
             if (authorizeHeader.Response == hashedDigest)
@@ -91,6 +88,15 @@ namespace OpenRasta.Pipeline.Contributors
             return NotAuthorized(context);
         }
 
+        static DigestHeader GetDigestHeader(ICommunicationContext context)
+        {
+            string header = context.Request.Headers["Authorization"];
+            return string.IsNullOrEmpty(header) ? null : DigestHeader.Parse(header);
+        }
+        static bool HasDigestHeader(ICommunicationContext context)
+        {
+            return GetDigestHeader(context) != null;
+        }
         static PipelineContinuation ClientError(ICommunicationContext context)
         {
             context.OperationResult = new OperationResult.BadRequest();

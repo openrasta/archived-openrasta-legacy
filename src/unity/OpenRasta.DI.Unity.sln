@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.DI.Unity", "OpenRasta.DI.Unity\OpenRasta.DI.Unity.csproj", "{F87AD4E8-6877-4010-9D90-FEB442D6FEFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.DI.Unity.Tests.Unit", "OpenRasta.DI.Unity.Tests.Unit\OpenRasta.DI.Unity.Tests.Unit.csproj", "{20C2AA4A-6979-4ABA-9B3A-00C3C7F54D66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.DI.Unity.Sample", "OpenRasta.DI.Unity.Sample\OpenRasta.DI.Unity.Sample.csproj", "{ABA976B6-3DB8-406D-A14E-D0B5A24643D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F87AD4E8-6877-4010-9D90-FEB442D6FEFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F87AD4E8-6877-4010-9D90-FEB442D6FEFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F87AD4E8-6877-4010-9D90-FEB442D6FEFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F87AD4E8-6877-4010-9D90-FEB442D6FEFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C2AA4A-6979-4ABA-9B3A-00C3C7F54D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C2AA4A-6979-4ABA-9B3A-00C3C7F54D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C2AA4A-6979-4ABA-9B3A-00C3C7F54D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C2AA4A-6979-4ABA-9B3A-00C3C7F54D66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABA976B6-3DB8-406D-A14E-D0B5A24643D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABA976B6-3DB8-406D-A14E-D0B5A24643D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABA976B6-3DB8-406D-A14E-D0B5A24643D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABA976B6-3DB8-406D-A14E-D0B5A24643D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

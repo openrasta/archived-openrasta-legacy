@@ -23,7 +23,7 @@
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == ''">v3.5</TargetFrameworkVersion>
-    <RuntimeTargetFrameworkVersion>$(TargetFrameworkVersion)</RuntimeTargetFrameworkVersion>
+    <RuntimeTargetFrameworkVersion Condition="'$(RuntimeTargetFrameworkVersion)' == ''">$(TargetFrameworkVersion)</RuntimeTargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +32,6 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <RuntimeTargetFrameworkVersion>v3.5</RuntimeTargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -121,7 +120,7 @@
     <Compile Include="Diagnostics\LogSource.cs" />
     <Compile Include="Diagnostics\NullErrorCollector.cs" />
     <Compile Include="Diagnostics\OperationContextErrorCollector.cs" />
-    <Compile Include="Diagnostics\PipelineLogSource.cs" />
+    <Compile Include="Pipeline\Diagnostics\PipelineLogSource.cs" />
     <Compile Include="DI\Internal\ContextStoreDependency.cs" />
     <Compile Include="DI\Internal\ContextStoreExtensions.cs" />
     <Compile Include="Error.cs" />
@@ -297,6 +296,7 @@
     <Compile Include="Web\Handlers\HttpMethodNameHandlerMethodSelector.cs" />
     <Compile Include="Web\HttpEntityFile.cs" />
     <Compile Include="Web\IHttpMessage.cs" />
+    <Compile Include="Web\Internal\CommunicationContextExtensions.cs" />
     <Compile Include="Web\ISupportsTextWriter.cs" />
     <Compile Include="Web\IUriTemplateParser.cs" />
     <Compile Include="Web\Markup\Attributes\Annotations\CharsetAttribute.cs" />
@@ -470,6 +470,7 @@
     <Compile Include="Pipeline\Contributors\ResponseEntityCodecResolverContributor.cs" />
     <Compile Include="Pipeline\PipelineStage.cs" />
     <Compile Include="Web\ServerErrorList.cs" />
+    <Compile Include="Web\TemplatedUriResolverLegacyExtensions.cs" />
     <Compile Include="Web\UriDecorators\HttpMethodOverrideUriDecorator.cs" />
     <Compile Include="Web\UriDecorators\PathSegmentAsParameterUriDecorator.cs" />
     <Compile Include="Web\UriDecorators\ContentTypeExtensionUriDecorator.cs" />

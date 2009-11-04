@@ -1,5 +1,4 @@
 #region License
-
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:
@@ -22,11 +21,9 @@ namespace OpenRasta.IO
         readonly byte[] _beginBoundary;
         readonly string _beginBoundaryAsString;
         readonly byte[] _localBuffer;
-        readonly byte[] crLf = new byte[] {13, 10};
-        byte[] _firstBoundary;
+        readonly byte[] _newLine = new byte[] { 13, 10 };
         int _localBufferLength;
         BoundarySubStream _previousStream;
-        public ILogger Log { get; set; }
 
         public BoundaryStreamReader(string boundary, Stream baseStream)
             : this(boundary, baseStream, Encoding.ASCII)
@@ -55,7 +52,7 @@ namespace OpenRasta.IO
             // or that it should depend on the source page.
             // Need to test what browsers do in the wild.
             Encoding = streamEncoding;
-            _firstBoundary = Encoding.GetBytes("--" + boundary);
+            Encoding.GetBytes("--" + boundary);
             _beginBoundary = Encoding.GetBytes("\r\n--" + boundary);
             _localBuffer = new byte[bufferLength];
             _beginBoundaryAsString = "--" + boundary;
@@ -67,6 +64,7 @@ namespace OpenRasta.IO
         public bool AtPreamble { get; private set; }
         public Stream BaseStream { get; private set; }
         public Encoding Encoding { get; private set; }
+        public ILogger Log { get; set; }
 
         public Stream GetNextPart()
         {
@@ -75,7 +73,7 @@ namespace OpenRasta.IO
             SkipPreamble();
             if (AtEndBoundary)
                 return null;
-            TerminateExistingStream(true);
+            TerminateExistingStream();
             return _previousStream = new BoundarySubStream(this);
         }
 
@@ -91,18 +89,20 @@ namespace OpenRasta.IO
 
         public string ReadLine(out bool crlfFound)
         {
-            TerminateExistingStream(true);
+            TerminateExistingStream();
             if (AtEndBoundary)
             {
                 crlfFound = true;
                 return null;
             }
-            byte[] toConvert = ReadUntil(crLf, true, out crlfFound);
+
+            var toConvert = ReadUntil(_newLine, true, out crlfFound);
             if (toConvert == null)
             {
                 AtEndBoundary = true; // reached the end of the steam
                 return null;
             }
+
             string convertedLine = toConvert.Length == 0 ? string.Empty : Encoding.GetString(toConvert).TrimEnd();
             if (string.Compare(convertedLine, _beginBoundaryAsString, StringComparison.OrdinalIgnoreCase) == 0)
             {
@@ -110,13 +110,15 @@ namespace OpenRasta.IO
                 AtBoundary = true;
                 return convertedLine;
             }
-            else if (string.Compare(convertedLine, _beginBoundaryAsString + "--", StringComparison.OrdinalIgnoreCase) == 0)
+
+            if (string.Compare(convertedLine, _beginBoundaryAsString + "--", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 AtPreamble = false;
                 AtBoundary = true;
                 AtEndBoundary = true;
                 return convertedLine;
             }
+
             return convertedLine;
         }
 
@@ -127,7 +129,7 @@ namespace OpenRasta.IO
             var part = new MemoryStream();
             long count = ReadNextPart(part, true);
             var result = new byte[count];
-            Buffer.BlockCopy(part.GetBuffer(), 0, result, 0, (int) count);
+            Buffer.BlockCopy(part.GetBuffer(), 0, result, 0, (int)count);
             return result;
         }
 
@@ -135,46 +137,44 @@ namespace OpenRasta.IO
         {
             if (AtEndBoundary)
                 return 0;
-            TerminateExistingStream(true);
+            TerminateExistingStream();
             if (AtEndBoundary)
                 return 0;
             long bytesRead = 0;
-            long lastRead = 0;
+            long lastRead;
+            if (TryReadPreamble(destinationStream, ref bytesRead))
+                return bytesRead;
+
             bool markerFound;
+            while ((lastRead = ReadUntil(destinationStream, _beginBoundary, false, out markerFound)) >= 0)
             {
-                if (TryReadPreamble(destinationStream, ref bytesRead))
-                    return bytesRead;
-
-                while ((lastRead = ReadUntil(destinationStream, _beginBoundary, false, out markerFound)) >= 0)
+                bytesRead += lastRead;
+                if (markerFound)
                 {
-                    bool lastReadWasPreamble = AtPreamble;
-                    bytesRead += lastRead;
-                    if (markerFound)
-                    {
-                        BaseStream.Read(new byte[2], 0, 2);
+                    BaseStream.Read(new byte[2], 0, 2);
 
-                        string line = ReadLine();
+                    string line = ReadLine();
 
-                        if (AtBoundary || AtEndBoundary)
-                        {
-                            if (bytesRead == 0 && continueToNextBoundaryOnEmptyRead) // no data between boundaries
-                                continue;
-                            break;
-                        }
-                        destinationStream.Write(crLf, 0, 2);
-                        byte[] encodedLine = Encoding.GetBytes(line);
-                        destinationStream.Write(encodedLine, 0, encodedLine.Length);
-                        destinationStream.Write(crLf, 0, 2);
-                        bytesRead += encodedLine.Length + 4;
-                    }
-                    else
+                    if (AtBoundary || AtEndBoundary)
                     {
+                        if (bytesRead == 0 && continueToNextBoundaryOnEmptyRead) // no data between boundaries
+                            continue;
                         break;
                     }
-                }
 
-                return bytesRead;
+                    destinationStream.Write(_newLine, 0, 2);
+                    var encodedLine = Encoding.GetBytes(line);
+                    destinationStream.Write(encodedLine, 0, encodedLine.Length);
+                    destinationStream.Write(_newLine, 0, 2);
+                    bytesRead += encodedLine.Length + 4;
+                }
+                else
+                {
+                    break;
+                }
             }
+
+            return bytesRead;
         }
 
         public long SeekToNextPart()
@@ -187,6 +187,7 @@ namespace OpenRasta.IO
                 SkipPreamble();
                 return 0;
             }
+
             return ReadNextPart(Stream.Null, false);
         }
 
@@ -197,10 +198,9 @@ namespace OpenRasta.IO
             long count = ReadUntil(dataToSendBack, marker, swallowMarker, out markerFound);
             if (count == 0 && markerFound)
                 return new byte[0];
-            else if (count == 0 && !markerFound)
+            if (count == 0 && !markerFound)
                 return null;
-            else
-                return dataToSendBack.ToArray();
+            return dataToSendBack.ToArray();
         }
 
         int ReadUntil(byte[] buffer, int offset, int count, byte[] marker, out MatchState lastMatch)
@@ -212,32 +212,33 @@ namespace OpenRasta.IO
             int lastReadCount = BaseStream.Read(_localBuffer, _localBufferLength, maxReadLength);
             if (lastReadCount > 0)
             {
-                MatchResult searchResult = _localBuffer.Match(0L, marker, 0, lastReadCount + _localBufferLength);
+                var searchResult = _localBuffer.Match(0L, marker, 0, lastReadCount + _localBufferLength);
                 lastMatch = searchResult.State;
                 if (searchResult.State == MatchState.Found)
                 {
                     if (searchResult.Index > 0)
-                        Buffer.BlockCopy(_localBuffer, 0, buffer, offset, (int) searchResult.Index);
+                        Buffer.BlockCopy(_localBuffer, 0, buffer, offset, (int)searchResult.Index);
 
                     long leftOver = (_localBufferLength + lastReadCount) - searchResult.Index;
-                    BaseStream.Seek(leftOver*-1, SeekOrigin.Current);
+                    BaseStream.Seek(leftOver * -1, SeekOrigin.Current);
                     _localBufferLength = 0;
-                    totalRead = (int) searchResult.Index;
+                    totalRead = (int)searchResult.Index;
                 }
                 else if (searchResult.State == MatchState.NotFound)
                 {
-                    Buffer.BlockCopy(_localBuffer, 0, buffer, offset, lastReadCount + _localBufferLength);
-                    totalRead = lastReadCount;
+                    totalRead = lastReadCount + _localBufferLength;
+                    Buffer.BlockCopy(_localBuffer, 0, buffer, offset, totalRead);
+
                     _localBufferLength = 0;
                 }
                 else if (searchResult.State == MatchState.Truncated)
                 {
-                    totalRead = (int) searchResult.Index;
+                    totalRead = (int)searchResult.Index;
                     Buffer.BlockCopy(_localBuffer, 0, buffer, offset, totalRead);
 
                     int datalength = lastReadCount + _localBufferLength;
-                    int leftover = datalength - (int) searchResult.Index;
-                    Buffer.BlockCopy(_localBuffer, (int) searchResult.Index, _localBuffer, 0, leftover);
+                    int leftover = datalength - (int)searchResult.Index;
+                    Buffer.BlockCopy(_localBuffer, (int)searchResult.Index, _localBuffer, 0, leftover);
                     _localBufferLength = leftover;
                 }
             }
@@ -247,6 +248,7 @@ namespace OpenRasta.IO
                 totalRead = _localBufferLength;
                 _localBufferLength = 0;
             }
+
             return totalRead;
         }
 
@@ -257,7 +259,7 @@ namespace OpenRasta.IO
             markerFound = false;
             AtBoundary = false;
             AtEndBoundary = false;
-            int lastReadCount = 0;
+            int lastReadCount;
             long totalCount = 0;
             MatchState lastState;
 
@@ -266,12 +268,14 @@ namespace OpenRasta.IO
                 destinationStream.Write(buffer, 0, lastReadCount);
                 totalCount += lastReadCount;
             }
+
             if (lastState == MatchState.Found)
             {
                 markerFound = true;
                 if (swallowMarker)
                     BaseStream.Seek(marker.Length, SeekOrigin.Current);
             }
+
             return totalCount;
         }
 
@@ -285,16 +289,15 @@ namespace OpenRasta.IO
             Log.WriteDebug("Preamble found: {0} of size {1}", preambleRead, preambleSize);
         }
 
-        void TerminateExistingStream(bool seekToNextPart)
+        void TerminateExistingStream()
         {
             Log.WriteDebug("TerminateExistingStream(), previous stream was " + _previousStream == null ? "null" : "not null");
             if (_previousStream != null)
             {
-                _previousStream.atEnd = true;
+                _previousStream.AtEnd = true;
                 _previousStream = null;
                 SeekToNextPart();
             }
-            
         }
 
         bool TryReadPreamble(Stream destinationStream, ref long bytesRead)
@@ -316,35 +319,40 @@ namespace OpenRasta.IO
                     {
                         if (preambleRead)
                         {
-                            destinationStream.Write(crLf);
+                            destinationStream.Write(_newLine);
                             bytesRead += 2;
                         }
-                        byte[] encodedLine = Encoding.GetBytes(currentLine);
+
+                        var encodedLine = Encoding.GetBytes(currentLine);
                         destinationStream.Write(encodedLine);
                         bytesRead += encodedLine.Length;
                     }
+
                     preambleRead = true;
                 }
                 else
                     lastPreambleCrLfPending = false;
             }
+
             if (wasAtPreamble && lastPreambleCrLfPending && bytesRead > 0)
             {
-                destinationStream.Write(crLf);
+                destinationStream.Write(_newLine);
                 bytesRead += 2;
             }
+
             return wasAtPreamble;
         }
 
         class BoundarySubStream : Stream
         {
-            public bool atEnd;
             readonly BoundaryStreamReader _reader;
 
             public BoundarySubStream(BoundaryStreamReader reader)
             {
                 _reader = reader;
             }
+
+            public bool AtEnd { get; set; }
 
             public override bool CanRead
             {
@@ -381,12 +389,12 @@ namespace OpenRasta.IO
 
             public override int Read(byte[] buffer, int offset, int count)
             {
-                if (atEnd)
+                if (AtEnd)
                     return 0;
                 MatchState state;
                 int resultCount = _reader.ReadUntil(buffer, offset, count, _reader._beginBoundary, out state);
                 if (state == MatchState.Found) // reached a boundary
-                    atEnd = true;
+                    AtEnd = true;
 
                 return resultCount;
             }
@@ -410,7 +418,6 @@ namespace OpenRasta.IO
 }
 
 #region Full license
-
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -427,5 +434,4 @@ namespace OpenRasta.IO
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 #endregion

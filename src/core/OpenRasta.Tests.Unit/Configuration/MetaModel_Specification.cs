@@ -289,7 +289,17 @@ namespace Configuration_Specification
                     FirstRegistration.Codecs[0].CodecType.ShouldBe<CustomerCodec>();
                 });
         }
+        [Test]
+        public void can_add_a_codec_configuration()
+        {
+            ExecuteTest(parent =>
+            {
+                var configurationObject = new object();
+                parent.TranscodedBy(typeof(CustomerCodec),configurationObject);
 
+                FirstRegistration.Codecs[0].Configuration.ShouldBe(configurationObject);
+            });
+        }
         [Test]
         public void can_add_a_specific_media_type_for_a_codec()
         {
@@ -383,6 +393,7 @@ namespace Configuration_Specification
         void ExecuteTest(Action<ICodecParentDefinition> test)
         {
             test(ResourceSpaceHas.ResourcesOfType<Frodo>().AtUri("/theshrine").HandledBy<CustomerHandler>());
+            MetaModel.ResourceRegistrations.Clear();
             test(ResourceSpaceHas.ResourcesOfType<Frodo>().WithoutUri);
         }
     }

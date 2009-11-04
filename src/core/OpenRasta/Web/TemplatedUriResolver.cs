@@ -29,53 +29,35 @@ namespace OpenRasta.Web
             TypeSystem = new ReflectionBasedTypeSystem();
         }
 
+        public int Count
+        {
+            get { return _templates.KeyValuePairs.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return _templates.IsReadOnly; }
+        }
+
         /// <summary>
         /// The TypeSystem to use for any resource key that is a type
         /// </summary>
         public ITypeSystem TypeSystem { get; set; }
 
-        /// <exception cref="InvalidOperationException">There is no Uri mapping to the resource you requested.</exception>
-        /// <exception cref="ArgumentNullException"><c>resourceKey</c> is null.</exception>
-        public Uri CreateUriFor(Uri baseAddress, object resourceKey, string[] parameters)
-        {
-            if (resourceKey == null) throw new ArgumentNullException("resourceKey");
-            var templatePair =
-                _templates.KeyValuePairs.FirstOrDefault(pair => ((UrlDescriptor)pair.Value).ResourceKey == resourceKey);
-
-            if (templatePair.Key == null)
-                throw new InvalidOperationException("There is no Uri mapping to the resource you requested.");
-            return templatePair.Key.BindByPosition(_templates.BaseAddress, parameters).ReplaceAuthority(baseAddress);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-        {
-            foreach (var pair in _templates.KeyValuePairs)
-            {
-                yield return
-                    new KeyValuePair<string, object>(pair.Key.ToString(), ((UrlDescriptor)pair.Value).ResourceKey);
-            }
-        }
-
         /// <exception cref="InvalidOperationException">Cannot add a Uri mapping once the configuration has been done.</exception>
-        /// <exception cref="ArgumentException">Cannot use a Type as the resourceKey. Use an IType instead or assign the TypeSystem property.</exception>
-        public void AddUriMapping(string uri, object resourceKey, CultureInfo ci, string uriName)
+        /// <exception cref="ArgumentException">Cannot use a Type as the resourceKey. Use an <see cref="IType"/> instead or assign the <see cref="TypeSystem"/> property.</exception>
+        public void Add(UriRegistration registration)
         {
             if (_templates.IsReadOnly)
                 throw new InvalidOperationException("Cannot add a Uri mapping once the configuration has been done.");
-
-            resourceKey = EnsureTypeSystemUsage(resourceKey);
-
+            var resourceKey = EnsureTypeSystemUsage(registration.ResourceKey);
             var descriptor = new UrlDescriptor
             {
-                Uri = new UriTemplate(uri), 
-                Culture = ci, 
+                Uri = new UriTemplate(registration.UriTemplate), 
+                Culture = registration.UriCulture, 
                 ResourceKey = resourceKey, 
-                UriName = uriName
+                UriName = registration.UriName, 
+                Registration = registration
             };
             _templates.KeyValuePairs.Add(new KeyValuePair<UriTemplate, object>(descriptor.Uri, descriptor));
             _templates.BaseAddress = new Uri("http://localhost/").IgnoreAuthority();
@@ -84,6 +66,41 @@ namespace OpenRasta.Web
         public void Clear()
         {
             _templates = new UriTemplateTable();
+        }
+
+        public bool Contains(UriRegistration item)
+        {
+            return this.Any(x => x == item);
+        }
+
+        public void CopyTo(UriRegistration[] array, int arrayIndex)
+        {
+            this.ToList().CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(UriRegistration item)
+        {
+            var pairToRemove = _templates.KeyValuePairs
+                .Where(x => ((UrlDescriptor)x.Value).Registration == item)
+                .ToList();
+
+            if (pairToRemove.Count > 0)
+            {
+                _templates.KeyValuePairs.Remove(pairToRemove[0]);
+                return true;
+            }
+
+            return false;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<UriRegistration> GetEnumerator()
+        {
+            return _templates.KeyValuePairs.Select(x => ((UrlDescriptor)x.Value).Registration).GetEnumerator();
         }
 
         /// <exception cref="InvalidOperationException"><c>InvalidOperationException</c>.</exception>
@@ -100,7 +117,8 @@ namespace OpenRasta.Web
                         resourceKey, 
                         keyValues.ToHtmlFormEncoding()));
             }
-            return template.BindByName(_templates.BaseAddress, keyValues).ReplaceAuthority(baseAddress);
+
+            return template.BindByName(baseAddress, keyValues);
         }
 
         public UriRegistration Match(Uri uriToMatch)
@@ -122,6 +140,7 @@ namespace OpenRasta.Web
                 };
                 result.UriTemplateParameters.Add(allVariables);
             }
+
             return result;
         }
 
@@ -192,6 +211,7 @@ namespace OpenRasta.Web
         class UrlDescriptor
         {
             public CultureInfo Culture { get; set; }
+            public UriRegistration Registration { get; set; }
             public object ResourceKey { get; set; }
             public UriTemplate Uri { get; set; }
             public string UriName { get; set; }

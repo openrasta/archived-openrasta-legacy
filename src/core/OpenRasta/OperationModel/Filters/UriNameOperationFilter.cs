@@ -9,13 +9,14 @@ namespace OpenRasta.OperationModel.Filters
     public class UriNameOperationFilter : IOperationFilter
     {
         readonly ICommunicationContext _commContext;
-        public ILogger<OperationModelLogSource> Log { get; set; }
 
         public UriNameOperationFilter(ICommunicationContext commContext)
         {
             _commContext = commContext;
             Log = NullLogger<OperationModelLogSource>.Instance;
         }
+
+        public ILogger<OperationModelLogSource> Log { get; set; }
 
         public IEnumerable<IOperation> Process(IEnumerable<IOperation> operations)
         {
@@ -26,12 +27,10 @@ namespace OpenRasta.OperationModel.Filters
                 return operations;
             }
 
-            List<IOperation> attribOperations = OperationsWithMatchingAttribute(operations).ToList();
+            var attribOperations = OperationsWithMatchingAttribute(operations).ToList();
             Log.FoundOperations(attribOperations);
             return attribOperations.Count > 0 ? attribOperations : operations;
         }
-
-       
 
         IEnumerable<IOperation> OperationsWithMatchingAttribute(IEnumerable<IOperation> operations)
         {

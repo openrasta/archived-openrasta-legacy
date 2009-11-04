@@ -9,6 +9,7 @@
 #endregion
 
 using System;
+using System.IO;
 using System.Text;
 using NUnit.Framework;
 using OpenRasta.IO;
@@ -197,7 +198,23 @@ namespace BoundaryStreamReader_Specification
             Reader.SeekToNextPart();
             Reader.GetNextPart().ReadToEnd().ShouldBe(TextInASCII("content3"));
         }
+        [Test]
+        public void reading_over_truncated_values_doesnt_corrupt_the_stream()
+        {
+            byte[] content = new byte[9000];
+            for (int i = 0; i < content.Length; i++)
+            {
+                content[i] = (byte)(i % 255);
+            }
+            content[4095] = 13;
+            GivenAMemoryStreamContaining(TextInASCII("--boundary\r\n"), content, TextInASCII("\r\n--boundary--"));
 
+            GivenABoundaryStreamReader("boundary");
+
+            Reader.SeekToNextPart();
+
+            Reader.GetNextPart().ReadToEnd().ShouldBe(content);
+        }
         [Test]
         public void the_buffer_of_the_reader_must_be_big_enough_to_seek_for_a_boundary()
         {

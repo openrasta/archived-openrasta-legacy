@@ -149,9 +149,9 @@ namespace OpenRasta.Codecs
                             using (var fileStream = CreateTempFile(out filePath))
                             {
                                 memoryStream.Position = 0;
-                                memoryStream.CopyTo(fileStream);
+                                var memoryStreamLength = memoryStream.CopyTo(fileStream);
                                 fileStream.Write(_buffer, 0, lastRead);
-                                requestPart.Stream.CopyTo(fileStream);
+                                var leftoverLength = requestPart.Stream.CopyTo(fileStream);
                             }
                             memoryStream = null;
                             requestPart.SwapStream(filePath);
@@ -166,8 +166,7 @@ namespace OpenRasta.Codecs
                     }
                     var listOfEntities = formData[requestPart.Headers.ContentDisposition.Name]
                                          ??
-                                         (formData[requestPart.Headers.ContentDisposition.Name] =
-                                          new List<IMultipartHttpEntity>());
+                                         (formData[requestPart.Headers.ContentDisposition.Name] = new List<IMultipartHttpEntity>());
                     if (requestPart.ContentType == null)
                         requestPart.ContentType = MediaType.TextPlain;
                     listOfEntities.Add(requestPart);

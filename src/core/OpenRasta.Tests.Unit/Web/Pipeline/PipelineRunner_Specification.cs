@@ -16,6 +16,7 @@ using OpenRasta.DI;
 using OpenRasta.Diagnostics;
 using OpenRasta.Hosting.InMemory;
 using OpenRasta.Pipeline.Contributors;
+using OpenRasta.Pipeline.Diagnostics;
 using OpenRasta.Testing;
 using OpenRasta.Web;
 using OpenRasta.Pipeline;
@@ -207,7 +208,7 @@ namespace PipelineRunner_Specification
             resolver.AddDependency<IPipelineContributor, BootstrapperContributor>();
             foreach (var type in contributorTypes)
                 resolver.AddDependency(typeof(IPipelineContributor), type, DependencyLifetime.Singleton);
-            var runner = new PipelineRunner(resolver) { Log = new TraceSourceLogger() };
+            var runner = new PipelineRunner(resolver) { PipelineLog = new TraceSourceLogger<PipelineLogSource>() };
             runner.Initialize();
             return runner;
         }

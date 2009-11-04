@@ -2,6 +2,7 @@
 using System.Linq;
 using OpenRasta.Diagnostics;
 using OpenRasta.OperationModel;
+using OpenRasta.Pipeline.Diagnostics;
 using OpenRasta.Web;
 using OpenRasta.Pipeline;
 

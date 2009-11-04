@@ -81,7 +81,7 @@
     </Math.Add>
     <PropertyGroup>
       <BuildVersion>$(BuildVersionMajor).$(BuildVersionMinor).$(BuildVersionBuild).$(BuildVersionRevision)</BuildVersion>
-      <SetupFilePath Condition="'$(SetupFilePath)' == ''">$(RootPath)\bin\Release\OpenRasta-$(BuildVersion).exe</SetupFilePath>
+      <SetupFilePath Condition="'$(SetupFilePath)' == ''">$(RootPath)\bin\$(Configuration)\OpenRasta-$(BuildVersion).exe</SetupFilePath>
     </PropertyGroup>
     <AssemblyInfo CodeLanguage="CS"
                   OutputFile="$(CommonInfoPath)"
@@ -136,7 +136,7 @@
   
   -->
   <Target Name="CompileInstaller" DependsOnTargets="BuildAll" >
-    <MSBuild Projects="@(Installer)" Targets="Rebuild" Properties="Platform=x86;Configuration=Release;WixToolPath=$(WixToolPath);WixTargetsPath=$(WixTargetsPath);WixTasksPath=$(WixTasksPath);WinExtDir=$(WinExtDir);BuildVersionMajor=$(BuildVersionMajor);BuildVersionMinor=$(BuildVersionMinor);BuildVersionBuild=$(BuildVersionBuild);BuildVersionRevision=$(BuildVersionRevision);BuildVersionBuildPrefix=$(BuildVersionBuildPrefix);PackageName=$(PackageName);ReleaseName=$(ReleaseName)">
+    <MSBuild Projects="@(Installer)" Targets="Rebuild" Properties="Platform=x86;Configuration=$(Configuration);WixToolPath=$(WixToolPath);WixTargetsPath=$(WixTargetsPath);WixTasksPath=$(WixTasksPath);WinExtDir=$(WinExtDir);BuildVersionMajor=$(BuildVersionMajor);BuildVersionMinor=$(BuildVersionMinor);BuildVersionBuild=$(BuildVersionBuild);BuildVersionRevision=$(BuildVersionRevision);BuildVersionBuildPrefix=$(BuildVersionBuildPrefix);PackageName=$(PackageName);ReleaseName=$(ReleaseName)">
       <Output  TaskParameter="TargetOutputs" ItemName="MSIFile" />
     </MSBuild>
     <Exec Condition="'$(SecureBuild)' == 'true'" Command="signtool.exe sign /f $(AuthenticodeKey) /p &quot;$(authenticode_key_password)&quot; /t $(TimeStampUrl) @(MSIFile)" />

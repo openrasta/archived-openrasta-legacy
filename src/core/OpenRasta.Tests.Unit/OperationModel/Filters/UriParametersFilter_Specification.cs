@@ -24,8 +24,11 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
                 when_filtering_operations();
 
                 FilteredOperations.ShouldHaveSameElementsAs(Operations);
+                Errors.Errors.Count.ShouldBe(0);
+
             }
         }
+        
         public class when_there_is_one_uri_parameter_list : uriparameters_context
         {
             [Test]
@@ -38,6 +41,8 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
                 when_filtering_operations();
 
                 FilteredOperations.ShouldHaveCountOf(1).First().Name.ShouldBe("Post");
+                Errors.Errors.Count.ShouldBe(0);
+                
             }
             [Test]
             public void operations_not_having_the_correct_parameter_is_excluded()
@@ -60,6 +65,8 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
                 when_filtering_operations();
 
                 FilteredOperations.ShouldHaveCountOf(0);
+                Errors.Errors.Count.ShouldNotBe(0);
+
             }
         }
     }
@@ -70,12 +77,11 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
             base.SetUp();
             Context.PipelineData.SelectedResource = new UriRegistration(null,null);// { UriTemplateParameters = new List<NameValueCollection>() };
         }
-        protected FakeErrorCollector ErrorCollector { get; set; }
 
         protected override UriParametersFilter create_filter()
         {
-            ErrorCollector = new FakeErrorCollector();
-            return new UriParametersFilter(Context, ErrorCollector);
+         
+            return new UriParametersFilter(Context, Errors);
         }
     }
 
@@ -89,20 +95,5 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
         {
             return null;
         }
-    }
-    public class FakeErrorCollector : IErrorCollector
-    {
-        public FakeErrorCollector()
-        {
-            Errors = new List<Error>();
-        }
-        public void AddServerError(Error error)
-        {
-
-            Errors.Add(error);
-
-        }
-
-        public IList<Error> Errors { get; set; }
     }
 }

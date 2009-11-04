@@ -15,6 +15,7 @@ using System.Linq;
 using OpenRasta.Collections.Specialized;
 using OpenRasta.DI;
 using OpenRasta.Diagnostics;
+using OpenRasta.Pipeline.Diagnostics;
 using OpenRasta.Web;
 
 namespace OpenRasta.Pipeline
@@ -33,11 +34,14 @@ namespace OpenRasta.Pipeline
             Contributors = new ReadOnlyCollection<IPipelineContributor>(_contributors);
 
             _resolver = resolver;
+            PipelineLog = NullLogger<PipelineLogSource>.Instance;
+            Log = NullLogger.Instance;
         }
 
         public IList<IPipelineContributor> Contributors { get; private set; }
 
         public bool IsInitialized { get; private set; }
+        public ILogger<PipelineLogSource> PipelineLog { get; set; }
         public ILogger Log { get; set; }
 
         IEnumerable<ContributorCall> IPipeline.CallGraph
@@ -53,24 +57,24 @@ namespace OpenRasta.Pipeline
         {
             if (IsInitialized)
                 return;
-            using (Log.Operation(this, "Initializing the pipeline."))
+            using (PipelineLog.Operation(this, "Initializing the pipeline."))
             {
                 foreach (var item in _resolver.ResolveAll<IPipelineContributor>())
                 {
-                    Log.WriteDebug("Initialized contributor {0}.", item.GetType());
+                    PipelineLog.WriteDebug("Initialized contributor {0}.", item.GetType().Name);
                     _contributors.Add(item);
                 }
                 _callGraph = GenerateCallGraph();
             }
             IsInitialized = true;
-            Log.WriteInfo("Pipeline has been successfully initialized.");
+            PipelineLog.WriteInfo("Pipeline has been successfully initialized.");
         }
 
         public IPipelineExecutionOrder Notify(Func<ICommunicationContext, PipelineContinuation> action)
         {
             if (IsInitialized)
             {
-                Log.WriteWarning("A pipeline registration through Notify() has been done after the pipeline was initialized. Ignoring.");
+                PipelineLog.WriteWarning("A pipeline registration through Notify() has been done after the pipeline was initialized. Ignoring.");
                 return new Notification(this,action);
             }
             var notification = new Notification(this, action);
@@ -118,10 +122,10 @@ namespace OpenRasta.Pipeline
         }
         void RenderNow(ICommunicationContext context, PipelineStage stage)
         {
-            Log.WriteDebug("Pipeline is in RenderNow mode.");
+            PipelineLog.WriteDebug("Pipeline is in RenderNow mode.");
             if (!stage.ResumeFrom<KnownStages.IOperationResultInvocation>())
             {
-                using (Log.Operation(this, "Rendering contributor has already been executed. Calling a nested pipeline to render the error."))
+                using (PipelineLog.Operation(this, "Rendering contributor has already been executed. Calling a nested pipeline to render the error."))
                 {
                     var nestedPipeline = new PipelineStage(this);
                     if (!nestedPipeline.ResumeFrom<KnownStages.IOperationResultInvocation>())
@@ -130,64 +134,12 @@ namespace OpenRasta.Pipeline
                 }
             }
         }
-        //void RunCallGraph(ICommunicationContext context, bool renderNow)
-        //{
-        //    bool renderStageExecuted = false;
-        //    bool ignoreUntilRenderer = renderNow;
-
-        //    foreach (var call in _callGraph)
-        //    {
-        //        if (!CanBeExecuted(call))
-        //            continue;
-
-        //        if (call.Target == _renderStage)
-        //            renderStageExecuted = true;
-        //        if (ignoreUntilRenderer)
-        //        {
-        //            if (call.Target != _renderStage)
-        //            {
-        //                Log.WriteDebug("Waiting for renderer contributor. Ignoring {0}.", call.ContributorTypeName);
-        //                continue;
-        //            }
-        //            ignoreUntilRenderer = false;
-        //        }
-        //        PipelineContinuation nextStep;
-        //        using (
-        //            Log.Operation(this,
-        //                          "Executing contributor {0}.{1}".With(call.ContributorTypeName, call.Action.Method.Name))
-        //            )
-        //        {
-        //            nextStep = ExecuteContributor(context, call);
-        //        }
-        //        if (nextStep == PipelineContinuation.Abort)
-        //        {
-        //            AbortPipeline(context);
-        //            nextStep = PipelineContinuation.RenderNow;
-        //        }
-        //        if (nextStep == PipelineContinuation.Finished)
-        //            FinishPipeline(context);
-        //        if (nextStep == PipelineContinuation.RenderNow)
-        //        {
-        //            Log.WriteDebug("Pipeline is in RenderNow mode.");
-        //            if (renderStageExecuted && !renderNow)
-        //            {
-        //                using (
-        //                    Log.Operation(this,
-        //                                  "Rendering contributor has already been executed. Calling a nested pipeline to render the error.")
-        //                    )
-        //                    RunCallGraph(context, true);
-        //                return;
-        //            }
-        //            ignoreUntilRenderer = true;
-        //        }
-        //    }
-        //}
 
         bool CanBeExecuted(ContributorCall call)
         {
             if (call.Action == null)
             {
-                Log.WriteWarning("Contributor call for {0} had a null Action.", call.ContributorTypeName);
+                PipelineLog.WriteWarning("Contributor call for {0} had a null Action.", call.ContributorTypeName);
                 return false;
             }
             return true;
@@ -195,7 +147,7 @@ namespace OpenRasta.Pipeline
 
         protected virtual void AbortPipeline(ICommunicationContext context)
         {
-            Log.WriteError("Aborting the pipeline and rendering the errors.");
+            PipelineLog.WriteError("Aborting the pipeline and rendering the errors.");
             context.OperationResult = new OperationResult.InternalServerError
             {
                 Title =
@@ -206,11 +158,13 @@ namespace OpenRasta.Pipeline
             context.Response.Entity.Instance = context.ServerErrors;
             context.Response.Entity.Codec = null;
             context.Response.Entity.ContentLength = null;
+
+            Log.WriteError("An error has occurred and the processing of the request has stopped.\r\n{0}", context.ServerErrors.Aggregate(string.Empty, (str, error) => str + "\r\n" + error.ToString()));
         }
 
         protected virtual PipelineContinuation ExecuteContributor(ICommunicationContext context, ContributorCall call)
         {
-            using (Log.Operation(this, "Executing contributor {0}.{1}".With(call.ContributorTypeName, call.Action.Method.Name)))
+            using (PipelineLog.Operation(this, "Executing contributor {0}.{1}".With(call.ContributorTypeName, call.Action.Method.Name)))
             {
                 PipelineContinuation nextStep;
                 try
@@ -219,11 +173,11 @@ namespace OpenRasta.Pipeline
                 }
                 catch (Exception e)
                 {
-                    Log.WriteException(e);
                     context.ServerErrors.Add(new Error
                     {
-                        Title = "An exception was thrown while processing a pipeline contributor",
-                        Message = e.ToString()
+                        Title = "Fatal error",
+                        Message = "An exception was thrown while processing a pipeline contributor",
+                        Exception = e
                     });
                     nextStep = PipelineContinuation.Abort;
                 }
@@ -233,7 +187,7 @@ namespace OpenRasta.Pipeline
 
         protected virtual void FinishPipeline(ICommunicationContext context)
         {
-            Log.WriteInfo("Pipeline finished.");
+            PipelineLog.WriteInfo("Pipeline finished.");
         }
 
 
@@ -246,7 +200,7 @@ namespace OpenRasta.Pipeline
             foreach (var contrib in _contributors.Where(x=>x != bootstrapper))
             {
                 _notificationRegistrations.Clear();
-                using (Log.Operation(this, "Initializing contributor {0}.".With(contrib.GetType().Name)))
+                using (PipelineLog.Operation(this, "Initializing contributor {0}.".With(contrib.GetType().Name)))
                     contrib.Initialize(this);
                 foreach (var reg in _notificationRegistrations.DefaultIfEmpty(new Notification(this, null)))
                 {
@@ -289,10 +243,10 @@ namespace OpenRasta.Pipeline
 
         void LogContributorCallChainCreated(IEnumerable<ContributorCall> callGraph)
         {
-            Log.WriteInfo("Contributor call chain has been processed and results in the following pipeline:");
+            PipelineLog.WriteInfo("Contributor call chain has been processed and results in the following pipeline:");
             int pos = 0;
             foreach (var contributor in callGraph)
-                Log.WriteInfo("{0} {1}", pos++, contributor.ContributorTypeName);
+                PipelineLog.WriteInfo("{0} {1}", pos++, contributor.ContributorTypeName);
         }
 
         void VerifyContributorIsRegistered(Type contributorType)

@@ -34,12 +34,12 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
 
         protected void when_filtering_operations()
         {
-            FilteredOperations = Filter.Process(Operations);
+            FilteredOperations = Filter.Process(Operations).ToList();
         }
 
         protected void given_operation_value(string methodName, string parameterName, object parameterValue)
         {
-            Enumerable.First<IOperation>(Operations, x => x.Name == methodName).Inputs.Required().First(x => x.Member.Name == parameterName).Binder.SetInstance(parameterValue)
+            Operations.First(x => x.Name == methodName).Inputs.Required().First(x => x.Member.Name == parameterName).Binder.SetInstance(parameterValue)
                 .ShouldBeTrue();
         }
     }

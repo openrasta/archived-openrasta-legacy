@@ -12,8 +12,9 @@ namespace OpenBastard.Scenarios
     {
         public void the_homepage_can_be_retrieved_using_xml()
         {
-            Debug.WriteLine("New test");
-            given_request_to("/").Get().Accept(MediaType.Xml);
+            given_request_to("/")
+                .Get()
+                .Accept(MediaType.Xml);
             when_retrieving_the_response();
 
             Response.StatusCode.ShouldBe(200);
@@ -21,7 +22,6 @@ namespace OpenBastard.Scenarios
             Response.Entity.ContentLength.Value.ShouldBeGreaterThan(0);
         }
     }
-
 
     namespace context
     {

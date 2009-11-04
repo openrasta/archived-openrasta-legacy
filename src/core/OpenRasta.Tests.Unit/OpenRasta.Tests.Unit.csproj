@@ -97,6 +97,7 @@
     <Compile Include="IO\ByteArrayExtension_Specification.cs" />
     <Compile Include="IO\DeterministicStreamWriter_Specification.cs" />
     <Compile Include="IO\LengthTrackingStream_Specification.cs" />
+    <Compile Include="openrasta_context.cs" />
     <Compile Include="OperationModel\CodecSelectors\RequestCodecSelector_Specification.cs" />
     <Compile Include="OperationModel\Filters\HttpMethodOperationFilter_Specification.cs" />
     <Compile Include="OperationModel\Filters\operation_filter_context.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="IO\MultipartReader_Specification.cs" />
     <Compile Include="Codecs\CodecRepository_Specification.cs" />
     <Compile Include="TypeSystem\Extensions_Specification.cs" />
-    <Compile Include="contributor_context.cs" />
+    <Compile Include="TestErrorCollector.cs" />
     <Compile Include="Web\IUriResolverExtensions_Specification.cs" />
     <Compile Include="Web\Markup\FormElement_Specification.cs" />
     <Compile Include="Web\Markup\IIframeModule_Specification.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Web\Reflection_Specification.cs" />
     <Compile Include="Web\TemplatedUriResolver_Specification.cs" />
     <Compile Include="Web\MediaType_Specification.cs" />
+    <Compile Include="Web\UriDecorators\ContentTypeExtension_Specification.cs" />
     <Compile Include="Web\WhenUsingCollectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(MergedAssemblyName)' == ''">
