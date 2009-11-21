@@ -12,21 +12,40 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
+using HandlerRepository_Specification;
 using NUnit.Framework;
 using OpenRasta;
 using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Fakes;
+using OpenRasta.TypeSystem;
 using OpenRasta.Web;
 
 namespace TemplatedUriResolver_Specification
 {
-    [TestFixture]
-    public class creating_uris : context
+    public class matching_uris : context.templated_uri_resolver_context
     {
-        TemplatedUriResolver Resolver;
+        UriRegistration matching_result;
 
-        Uri ThenTheResult;
+        [Test]
+        public void https_uris_are_supported()
+        {
+            given_uri_mapping("/Valinor/Olorin", typeof(Gandalf), CultureInfo.CurrentCulture, null);
+            when_matching_uri("https://localhost/Valinor/Olorin");
 
+            matching_result
+                .ShouldNotBeNull()
+                .ResourceKey.ShouldBeOfType<IType>()
+                .Equals<Gandalf>().ShouldBeTrue();
+        }
+
+        void when_matching_uri(string uri)
+        {
+            matching_result = Resolver.Match(new Uri(uri));
+        }
+    }
+    [TestFixture]
+    public class creating_uris : context.templated_uri_resolver_context
+    {
         [Test]
         public void a_uri_by_name_is_found()
         {
@@ -38,12 +57,6 @@ namespace TemplatedUriResolver_Specification
             ThenTheResult.ShouldBe("http://localhost/location2");
         }
 
-        [SetUp]
-        public void before_each_behavior()
-        {
-            ThenTheResult = null;
-            Resolver = new TemplatedUriResolver();
-        }
 
         [Test]
         public void the_correct_values_replace_the_variable_declarations()
@@ -69,9 +82,9 @@ namespace TemplatedUriResolver_Specification
         [Test]
         public void the_generated_uri_is_correct_when_injecting_in_query_string_variables()
         {
-            given_uri_mapping("/test?query={variable1}", 
-                                    typeof(IList<object>), 
-                                    CultureInfo.CurrentCulture, 
+            given_uri_mapping("/test?query={variable1}",
+                                    typeof(IList<object>),
+                                    CultureInfo.CurrentCulture,
                                     null);
 
             when_creating_uri<IList<object>>(new NameValueCollection { { "variable1", "injected1" } });
@@ -105,7 +118,7 @@ namespace TemplatedUriResolver_Specification
         {
             given_uri_mapping("/theshire", typeof(Frodo), CultureInfo.InvariantCulture, null);
 
-            when_creating_uri<Frodo>("http://localhost/lotr/".ToUri(),null);
+            when_creating_uri<Frodo>("http://localhost/lotr/".ToUri(), null);
 
             ThenTheResult.ShouldBe("http://localhost/lotr/theshire");
         }
@@ -119,24 +132,41 @@ namespace TemplatedUriResolver_Specification
 
             ThenTheResult.ShouldBe("http://localhost/lotr/theshire");
         }
-        void when_creating_uri<T>(Uri baseUri, NameValueCollection templateParameters)
+    }
+    namespace context
+    {
+        public class templated_uri_resolver_context : OpenRasta.Testing.context
         {
-            ThenTheResult = Resolver.CreateUriFor(baseUri, typeof(T), templateParameters);
-        }
 
-        void given_uri_mapping(string uri, Type type, CultureInfo cultureInfo, string alias)
-        {
-            Resolver.Add(new UriRegistration(uri, type, alias, cultureInfo));
-        }
+            protected TemplatedUriResolver Resolver;
 
-        void when_creating_uri<T1>(NameValueCollection nameValueCollection)
-        {
-            ThenTheResult = Resolver.CreateUriFor(new Uri("http://localhost"), typeof(T1), nameValueCollection);
-        }
+            protected Uri ThenTheResult;
 
-        void when_creating_uri<T1>(string uriName, NameValueCollection nameValueCollection)
-        {
-            ThenTheResult = Resolver.CreateUriFor(new Uri("http://localhost"), typeof(T1), uriName, nameValueCollection);
+            [SetUp]
+            public void before_each_behavior()
+            {
+                ThenTheResult = null;
+                Resolver = new TemplatedUriResolver();
+            }
+            protected void when_creating_uri<T>(Uri baseUri, NameValueCollection templateParameters)
+            {
+                ThenTheResult = Resolver.CreateUriFor(baseUri, typeof(T), templateParameters);
+            }
+
+            protected void given_uri_mapping(string uri, Type type, CultureInfo cultureInfo, string alias)
+            {
+                Resolver.Add(new UriRegistration(uri, type, alias, cultureInfo));
+            }
+
+            protected void when_creating_uri<T1>(NameValueCollection nameValueCollection)
+            {
+                ThenTheResult = Resolver.CreateUriFor(new Uri("http://localhost"), typeof(T1), nameValueCollection);
+            }
+
+            protected void when_creating_uri<T1>(string uriName, NameValueCollection nameValueCollection)
+            {
+                ThenTheResult = Resolver.CreateUriFor(new Uri("http://localhost"), typeof(T1), uriName, nameValueCollection);
+            }
         }
     }
 }

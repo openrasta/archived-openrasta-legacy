@@ -32,6 +32,7 @@
       <Folder Name="Views" TargetFolderName="Views">
         <ProjectItem ReplaceParameters="true" TargetFileName="HomeView.aspx">HomeView.aspx</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="HomeView.Master">HomeView.Master</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Web.config">Web.config</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="Web.config" OpenInEditor="true">Web.config</ProjectItem>
     </Project>

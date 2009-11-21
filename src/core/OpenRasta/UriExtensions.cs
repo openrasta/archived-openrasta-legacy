@@ -36,6 +36,15 @@ namespace OpenRasta.Web
             builder.Port = 80;
             return builder.Uri;
         }
+
+        public static Uri IgnoreSchemePortAndAuthority(this Uri uri)
+        {
+            UriBuilder builder = new UriBuilder(uri);
+            builder.Scheme = "http:";
+            builder.Host = "uritemplate";
+            builder.Port = 80;
+            return builder.Uri;
+        }
         public static Uri ReplaceAuthority(this Uri uri, Uri baseUri)
         {
             if (baseUri == null)
