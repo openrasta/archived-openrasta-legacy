@@ -3,42 +3,47 @@ using System.Linq;
 using System.Text;
 using OpenRasta;
 using OpenRasta.IO;
+using OpenRasta.Security;
 using OpenRasta.Web;
 
 namespace OpenBastard.Infrastructure
 {
     public static class RequestExtensions
     {
-        public static IRequest Accept(this IRequest request, params MediaType[] acceptedMediaTypes)
+        public static TRequest Accept<TRequest>(this TRequest request, params MediaType[] acceptedMediaTypes) where TRequest:IRequest
         {
             return request.Accept(acceptedMediaTypes.Select(x => x.ToString()).ToArray());
         }
 
-        public static IRequest Accept(this IRequest request, params string[] acceptedMediaTypes)
+        public static TRequest Accept<TRequest>(this TRequest request, params string[] acceptedMediaTypes) where TRequest : IRequest
         {
             request.Headers["Accept"] = string.Join(",", acceptedMediaTypes);
             return request;
         }
 
-        public static IRequest ContentLength(this IRequest request, long length)
+        public static TRequest ContentLength<TRequest>(this TRequest request, long length) where TRequest : IRequest
         {
             request.Entity.ContentLength = length;
             return request;
         }
 
-        public static IRequest ContentType(this IRequest request, string contentType)
+        public static TRequest ContentType<TRequest>(this TRequest request, string contentType) where TRequest : IRequest
         {
             request.Entity.ContentType = new MediaType(contentType);
             return request;
         }
 
-        public static IRequest Delete(this IRequest request)
+        public static TRequest Delete<TRequest>(this TRequest request) where TRequest : IRequest
         {
             request.HttpMethod = "DELETE";
             return request;
         }
-
-        public static IRequest EntityAsMultipartFormData(this IRequest request, params FormData[] entities)
+        public static TRequest Credentials<TRequest>(this TRequest request, string username, string password) where TRequest:IClientRequest
+        {
+            request.Credentials = new Credentials { Username = username, Password = password };
+            return request;
+        }
+        public static TRequest EntityAsMultipartFormData<TRequest>(this TRequest request, params FormData[] entities) where TRequest : IRequest
         {
             string boundary = "mordor";
 
@@ -57,31 +62,31 @@ namespace OpenBastard.Infrastructure
                 .EntityBody(memoryStream.ReadToEnd());
         }
 
-        public static IRequest EntityBody(this IRequest request, byte[] bytesToWrite)
+        public static TRequest EntityBody<TRequest>(this TRequest request, byte[] bytesToWrite) where TRequest : IRequest
         {
             new MemoryStream(bytesToWrite).CopyTo(request.Entity.Stream);
             return request;
         }
 
-        public static IRequest Get(this IRequest request)
+        public static TRequest Get<TRequest>(this TRequest request) where TRequest : IRequest
         {
             request.HttpMethod = "GET";
             return request;
         }
 
-        public static IRequest Method(this IRequest request, string httpMethod)
+        public static TRequest Method<TRequest>(this TRequest request, string httpMethod) where TRequest : IRequest
         {
             request.HttpMethod = httpMethod;
             return request;
         }
 
-        public static IRequest Post(this IRequest request)
+        public static TRequest Post<TRequest>(this TRequest request) where TRequest : IRequest
         {
             request.HttpMethod = "POST";
             return request;
         }
 
-        public static IRequest Put(this IRequest request)
+        public static TRequest Put<TRequest>(this TRequest request) where TRequest : IRequest
         {
             request.HttpMethod = "PUT";
             return request;

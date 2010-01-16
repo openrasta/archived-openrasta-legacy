@@ -5,7 +5,8 @@ using System.Reflection;
 using NUnit.Core;
 using NUnit.Core.Extensibility;
 using NUnit.Framework;
-using OpenBastard.Scenarios;
+using OpenBastard.Environments;
+using OpenRasta.Security;
 using OpenRasta.Testing;
 using OpenRasta.Web;
 
@@ -113,7 +114,7 @@ public class EnvironmentTestSuite : TestSuite
 public abstract class environment_context
 {
     protected IEnvironment Environment { get; set; }
-    protected IRequest Request { get; set; }
+    protected IClientRequest Request { get; set; }
     protected IResponse Response { get; set; }
 
     public void SetEnvironment(IEnvironment environment)
@@ -121,7 +122,7 @@ public abstract class environment_context
         Environment = environment;
     }
 
-    protected IRequest given_request_to(string uri)
+    protected IClientRequest given_request_to(string uri)
     {
         Request = Environment.CreateRequest(uri);
         return Request;
@@ -136,4 +137,9 @@ public abstract class environment_context
     {
         Response = Environment.ExecuteRequest(Request);
     }
+}
+
+public interface IClientRequest : IRequest
+{
+    Credentials Credentials { get; set; }
 }

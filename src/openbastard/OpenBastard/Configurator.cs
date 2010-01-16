@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OpenBastard.Handlers;
 using OpenBastard.Resources;
 using OpenRasta.Configuration;
+using OpenRasta.DI;
+using OpenRasta.Security;
 
 namespace OpenBastard
 {
@@ -11,6 +14,7 @@ namespace OpenBastard
         {
             using (OpenRastaConfiguration.Manual)
             {
+                ResourceSpace.Uses.CustomDependency<IAuthenticationProvider, StaticAuthenticationProvider>(DependencyLifetime.Singleton);
                 ResourceSpace.Has.ResourcesOfType<Home>()
                     .AtUri("/")
                     .HandledBy<HomeHandler>()
@@ -19,7 +23,7 @@ namespace OpenBastard
                 /* File upload resources */
                 ResourceSpace.Has.ResourcesOfType<UploadedFile>()
                     .AtUri(Uris.FILES)
-                    .And.AtUri(Uris.FILES_IFILE).Named("iFile")
+                    .And.AtUri(Uris.FILES_IFILE).Named("IFile")
                     .And.AtUri(Uris.FILES_COMPLEX_TYPE).Named("complexType")
                     .And
                     .AtUri("/files/{id}")
@@ -34,19 +38,9 @@ namespace OpenBastard
 
                 ResourceSpace.Has.ResourcesOfType<User>()
                     .AtUri(Uris.USER)
-                    .HandledBy<UserListHandler>()
+                    .HandledBy<UserHandler>()
                     .AsXmlSerializer();
             }
         }
-    }
-
-    public static class Uris
-    {
-        public const string FILES = "/files";
-        public const string FILES_COMPLEX_TYPE = "/files/complexType";
-        public const string FILES_IFILE = "/files/iFile";
-        public const string HOME = "/";
-        public const string USERS = "/users";
-        public static string USER = "/users/{id}";
     }
 }

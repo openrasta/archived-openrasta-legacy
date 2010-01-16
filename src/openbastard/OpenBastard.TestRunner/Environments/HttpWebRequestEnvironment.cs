@@ -1,6 +1,5 @@
 using System;
 using System.Net;
-using OpenBastard.Scenarios;
 using OpenRasta.Hosting.InMemory;
 using OpenRasta.IO;
 using OpenRasta.Web;
@@ -17,9 +16,9 @@ namespace OpenBastard.Environments
         public abstract string Name { get; }
         public int Port { get; set; }
 
-        public IRequest CreateRequest(string uri)
+        public IClientRequest CreateRequest(string uri)
         {
-            return new InMemoryRequest
+            return new InMemoryClientRequest
                 {
                     Uri = new Uri(new Uri("http://localhost:" + Port, UriKind.Absolute), new Uri(uri, UriKind.Relative))
                 };
@@ -27,7 +26,7 @@ namespace OpenBastard.Environments
 
         public abstract void Dispose();
 
-        public IResponse ExecuteRequest(IRequest request)
+        public IResponse ExecuteRequest(IClientRequest request)
         {
             var webRequest = ConvertRequestToWebClient(request);
             HttpWebResponse response;
@@ -47,12 +46,14 @@ namespace OpenBastard.Environments
 
         public abstract void Initialize();
 
-        WebRequest ConvertRequestToWebClient(IRequest request)
+        WebRequest ConvertRequestToWebClient(IClientRequest request)
         {
             var webRequest = WebRequest.Create(request.Uri);
             webRequest.Method = request.HttpMethod;
             if (request.Entity.ContentType != null)
                 webRequest.ContentType = request.Entity.ContentType.ToString();
+            if (request.Credentials != null)
+                webRequest.Credentials = new NetworkCredential(request.Credentials.Username, request.Credentials.Password);
             foreach (var header in request.Headers)
             {
                 try

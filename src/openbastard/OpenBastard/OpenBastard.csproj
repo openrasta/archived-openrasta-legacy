@@ -40,11 +40,14 @@
     </Compile>
     <Compile Include="Configurator.cs" />
     <Compile Include="Handlers\UploadedFileHandler.cs" />
+    <Compile Include="Handlers\UserHandler.cs" />
     <Compile Include="Handlers\UserListHandler.cs" />
     <Compile Include="Resources\UploadedFile.cs" />
     <Compile Include="Resources\Home.cs" />
     <Compile Include="Handlers\HomeHandler.cs" />
     <Compile Include="Resources\User.cs" />
+    <Compile Include="StaticAuthenticationProvider.cs" />
+    <Compile Include="Uris.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dependencies.targets" />

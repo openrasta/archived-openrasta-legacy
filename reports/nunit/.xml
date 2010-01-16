@@ -1,98 +1,106 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\src\caff\openrasta\20rc\bin\tmp\Release\net-35\OpenBastard.TestRunner\OpenBastard.TestRunner.dll" total="28" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2009-11-04" time="11:53:01">
+<test-results name="C:\src\caff\openrasta\20rc\bin\tmp\Debug\net-35\OpenBastard.TestRunner\OpenBastard.TestRunner.dll" total="36" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2010-01-16" time="16:47:14">
   <environment nunit-version="2.5.1.9189" clr-version="2.0.50727.4927" os-version="Microsoft Windows NT 6.1.7100.0" platform="Win32NT" cwd="C:\src\caff\openrasta\20rc\build" machine-name="CHERENKOV" user="sebastien.lambla" user-domain="CAFFEINEIT" />
   <culture-info current-culture="en-GB" current-uiculture="en-US" />
-  <test-suite name="C:\src\caff\openrasta\20rc\bin\tmp\Release\net-35\OpenBastard.TestRunner\OpenBastard.TestRunner.dll" executed="True" success="True" time="25.659" asserts="0">
+  <test-suite name="C:\src\caff\openrasta\20rc\bin\tmp\Debug\net-35\OpenBastard.TestRunner\OpenBastard.TestRunner.dll" executed="True" success="True" time="28.276" asserts="0">
     <results>
-      <test-suite name="HttpListener environment" executed="True" success="True" time="4.404" asserts="0">
+      <test-suite name="HttpListener environment" executed="True" success="True" time="5.151" asserts="0">
         <results>
-          <test-suite name="accessing the homepage" executed="True" success="True" time="2.909" asserts="0">
+          <test-suite name="accessing the homepage" executed="True" success="True" time="3.421" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.accessing_the_homepage.the_homepage_can_be_retrieved_using_xml" executed="True" success="True" time="2.896" asserts="3" />
+              <test-case name="OpenBastard.Scenarios.accessing_the_homepage.the_homepage_can_be_retrieved_using_xml" executed="True" success="True" time="3.386" asserts="3" />
             </results>
           </test-suite>
-          <test-suite name="manipulating users" executed="True" success="True" time="0.604" asserts="0">
+          <test-suite name="manipulating users" executed="True" success="True" time="0.755" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.manipulating_users.can_create_a_user" executed="True" success="True" time="0.604" asserts="4" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.can_create_a_user" executed="True" success="True" time="0.571" asserts="4" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.can_delete_user_with_correct_credentials" executed="True" success="True" time="0.167" asserts="1" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.cannot_delete_user_with_wrong_credentials" executed="True" success="True" time="0.016" asserts="1" />
             </results>
           </test-suite>
-          <test-suite name="uploading files" executed="True" success="True" time="0.139" asserts="0">
+          <test-suite name="uploading files" executed="True" success="True" time="0.100" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_a_complex_type" executed="True" success="True" time="0.068" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_app_octet_stream" executed="True" success="True" time="0.000" asserts="0" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_enumerable_multipart" executed="True" success="True" time="0.037" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_ifile" executed="True" success="True" time="0.018" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_file_with_specific_content_type" executed="True" success="True" time="0.013" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_a_complex_type" executed="True" success="True" time="0.045" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_app_octet_stream" executed="True" success="True" time="0.001" asserts="0" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_enumerable_multipart" executed="True" success="True" time="0.025" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_ifile" executed="True" success="True" time="0.013" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_file_with_specific_content_type" executed="True" success="True" time="0.014" asserts="10002" />
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="IIS 7 - Classic Mode" executed="True" success="True" time="9.590" asserts="0">
+      <test-suite name="IIS 7 - Classic Mode" executed="True" success="True" time="11.071" asserts="0">
         <results>
-          <test-suite name="accessing the homepage" executed="True" success="True" time="6.262" asserts="0">
+          <test-suite name="accessing the homepage" executed="True" success="True" time="7.369" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.accessing_the_homepage.the_homepage_can_be_retrieved_using_xml" executed="True" success="True" time="6.262" asserts="3" />
+              <test-case name="OpenBastard.Scenarios.accessing_the_homepage.the_homepage_can_be_retrieved_using_xml" executed="True" success="True" time="7.369" asserts="3" />
             </results>
           </test-suite>
-          <test-suite name="manipulating users" executed="True" success="True" time="0.519" asserts="0">
+          <test-suite name="manipulating users" executed="True" success="True" time="0.810" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.manipulating_users.can_create_a_user" executed="True" success="True" time="0.519" asserts="4" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.can_create_a_user" executed="True" success="True" time="0.739" asserts="4" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.can_delete_user_with_correct_credentials" executed="True" success="True" time="0.063" asserts="1" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.cannot_delete_user_with_wrong_credentials" executed="True" success="True" time="0.007" asserts="1" />
             </results>
           </test-suite>
-          <test-suite name="uploading files" executed="True" success="True" time="0.125" asserts="0">
+          <test-suite name="uploading files" executed="True" success="True" time="0.114" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_a_complex_type" executed="True" success="True" time="0.061" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_a_complex_type" executed="True" success="True" time="0.040" asserts="10002" />
               <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_app_octet_stream" executed="True" success="True" time="0.000" asserts="0" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_enumerable_multipart" executed="True" success="True" time="0.026" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_ifile" executed="True" success="True" time="0.018" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_file_with_specific_content_type" executed="True" success="True" time="0.017" asserts="10002" />
-            </results>
-          </test-suite>
-        </results>
-      </test-suite>
-      <test-suite name="IIS 7 - Integrated Mode" executed="True" success="True" time="11.527" asserts="0">
-        <results>
-          <test-suite name="accessing the homepage" executed="True" success="True" time="8.138" asserts="0">
-            <results>
-              <test-case name="OpenBastard.Scenarios.accessing_the_homepage.the_homepage_can_be_retrieved_using_xml" executed="True" success="True" time="8.138" asserts="3" />
-            </results>
-          </test-suite>
-          <test-suite name="manipulating users" executed="True" success="True" time="0.570" asserts="0">
-            <results>
-              <test-case name="OpenBastard.Scenarios.manipulating_users.can_create_a_user" executed="True" success="True" time="0.570" asserts="4" />
-            </results>
-          </test-suite>
-          <test-suite name="uploading files" executed="True" success="True" time="0.135" asserts="0">
-            <results>
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_a_complex_type" executed="True" success="True" time="0.068" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_app_octet_stream" executed="True" success="True" time="0.000" asserts="0" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_enumerable_multipart" executed="True" success="True" time="0.028" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_ifile" executed="True" success="True" time="0.019" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_enumerable_multipart" executed="True" success="True" time="0.024" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_ifile" executed="True" success="True" time="0.029" asserts="10002" />
               <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_file_with_specific_content_type" executed="True" success="True" time="0.018" asserts="10002" />
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite name="In memory environment" executed="True" success="True" time="0.120" asserts="0">
+      <test-suite name="IIS 7 - Integrated Mode" executed="True" success="True" time="11.934" asserts="0">
         <results>
-          <test-suite name="accessing the homepage" executed="True" success="True" time="0.017" asserts="0">
+          <test-suite name="accessing the homepage" executed="True" success="True" time="8.108" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.accessing_the_homepage.the_homepage_can_be_retrieved_using_xml" executed="True" success="True" time="0.017" asserts="3" />
+              <test-case name="OpenBastard.Scenarios.accessing_the_homepage.the_homepage_can_be_retrieved_using_xml" executed="True" success="True" time="8.108" asserts="3" />
             </results>
           </test-suite>
-          <test-suite name="manipulating users" executed="True" success="True" time="0.006" asserts="0">
+          <test-suite name="manipulating users" executed="True" success="True" time="1.013" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.manipulating_users.can_create_a_user" executed="True" success="True" time="0.005" asserts="4" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.can_create_a_user" executed="True" success="True" time="0.685" asserts="4" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.can_delete_user_with_correct_credentials" executed="True" success="True" time="0.265" asserts="1" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.cannot_delete_user_with_wrong_credentials" executed="True" success="True" time="0.062" asserts="1" />
             </results>
           </test-suite>
-          <test-suite name="uploading files" executed="True" success="True" time="0.070" asserts="0">
+          <test-suite name="uploading files" executed="True" success="True" time="0.151" asserts="0">
             <results>
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_a_complex_type" executed="True" success="True" time="0.018" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_a_complex_type" executed="True" success="True" time="0.074" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_app_octet_stream" executed="True" success="True" time="0.002" asserts="0" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_enumerable_multipart" executed="True" success="True" time="0.026" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_ifile" executed="True" success="True" time="0.030" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_file_with_specific_content_type" executed="True" success="True" time="0.018" asserts="10002" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite name="In memory environment" executed="True" success="True" time="0.089" asserts="0">
+        <results>
+          <test-suite name="accessing the homepage" executed="True" success="True" time="0.012" asserts="0">
+            <results>
+              <test-case name="OpenBastard.Scenarios.accessing_the_homepage.the_homepage_can_be_retrieved_using_xml" executed="True" success="True" time="0.011" asserts="3" />
+            </results>
+          </test-suite>
+          <test-suite name="manipulating users" executed="True" success="True" time="0.013" asserts="0">
+            <results>
+              <test-case name="OpenBastard.Scenarios.manipulating_users.can_create_a_user" executed="True" success="True" time="0.006" asserts="4" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.can_delete_user_with_correct_credentials" executed="True" success="True" time="0.003" asserts="1" />
+              <test-case name="OpenBastard.Scenarios.manipulating_users.cannot_delete_user_with_wrong_credentials" executed="True" success="True" time="0.002" asserts="1" />
+            </results>
+          </test-suite>
+          <test-suite name="uploading files" executed="True" success="True" time="0.047" asserts="0">
+            <results>
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_a_complex_type" executed="True" success="True" time="0.010" asserts="10002" />
               <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_app_octet_stream" executed="True" success="True" time="0.000" asserts="0" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_enumerable_multipart" executed="True" success="True" time="0.015" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_ifile" executed="True" success="True" time="0.015" asserts="10002" />
-              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_file_with_specific_content_type" executed="True" success="True" time="0.015" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_enumerable_multipart" executed="True" success="True" time="0.012" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_a_file_as_an_ifile" executed="True" success="True" time="0.012" asserts="10002" />
+              <test-case name="OpenBastard.Scenarios.uploading_files.can_upload_file_with_specific_content_type" executed="True" success="True" time="0.011" asserts="10002" />
             </results>
           </test-suite>
         </results>

@@ -54,7 +54,7 @@ namespace OpenRasta.Web
         {
             context.Response.StatusCode = StatusCode;
             if (RedirectLocation != null)
-                context.Response.Headers["Location"] = RedirectLocation.ToString();
+                context.Response.Headers["Location"] = RedirectLocation.AbsoluteUri;
 
             OnExecute(context);
         }

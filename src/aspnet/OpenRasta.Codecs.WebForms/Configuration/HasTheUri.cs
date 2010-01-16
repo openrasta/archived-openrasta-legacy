@@ -27,7 +27,7 @@ namespace OpenRasta.Codecs.WebForms.Configuration
 
         public HasTheUri ForThePage(string pageVPath)
         {
-            _model.ResourceKey = BuildManager.GetCompiledType(pageVPath);
+            _model.ResourceKey = pageVPath;
             return this;
         }
 

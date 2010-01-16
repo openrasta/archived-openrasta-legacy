@@ -17,19 +17,19 @@ namespace OpenBastard.Handlers
         {
             AddUser(userToAdd);
             return new OperationResult.Created
-                {
-                    RedirectLocation = userToAdd.CreateUri(), 
-                    ResponseResource = userToAdd
-                };
+            {
+                RedirectLocation = userToAdd.CreateUri(), 
+                ResponseResource = userToAdd
+            };
         }
 
         public OperationResult Put(List<User> users)
         {
             _userRepository = users;
             return new OperationResult.OK
-                {
-                    ResponseResource = users
-                };
+            {
+                ResponseResource = users
+            };
         }
 
         void AddUser(User userToAdd)

@@ -18,7 +18,6 @@ namespace OpenBastard.Handlers
                 return new OperationResult.NotFound();
             var streamToSend = _files[id];
             streamToSend.OpenStream().Position = 0;
-
             
             return new OperationResult.OK(streamToSend);
         }
@@ -42,7 +41,7 @@ namespace OpenBastard.Handlers
             return new OperationResult.BadRequest { ResponseResource = "Sent multiple files, cannot process the request" };
         }
 
-        [HttpOperation(ForUriName = "iFile")]
+        [HttpOperation(ForUriName = "IFile")]
         public OperationResult Post(IFile file)
         {
             return new OperationResult.SeeOther
@@ -70,7 +69,7 @@ namespace OpenBastard.Handlers
         {
             return new OperationResult.SeeOther
             {
-                RedirectLocation = typeof(UploadedFile).CreateUri(new { id = ReceiveStream(MediaType.ApplicationOctetStream,fileStream) })
+                RedirectLocation = typeof(UploadedFile).CreateUri(new { id = ReceiveStream(MediaType.ApplicationOctetStream, fileStream) })
             };
         }
 
@@ -79,7 +78,7 @@ namespace OpenBastard.Handlers
             var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
 
-            var file = new InMemoryFile(memoryStream) {ContentType = streamType};
+            var file = new InMemoryFile(memoryStream) { ContentType = streamType };
             _files.Add(file);
             return _files.IndexOf(file);
         }

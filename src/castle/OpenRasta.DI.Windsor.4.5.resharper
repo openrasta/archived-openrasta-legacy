@@ -6,13 +6,36 @@
     <AgentSmithCSharpStyleSettings version="1">
       <CodeStyleSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <CustomDictionaries>
-          <Dictionaries />
+          <Dictionaries>
+            <CustomDictionary>
+              <Name>en-GB</Name>
+              <CaseSensitive>false</CaseSensitive>
+              <UserWords>Codec
+Rasta
+Multipart
+Locator
+Codecs
+Http
+seekable
+crlf
+Html
+openrasta
+args
+localhost
+Accessor</UserWords>
+            </CustomDictionary>
+            <CustomDictionary>
+              <Name>en-GB</Name>
+              <CaseSensitive>false</CaseSensitive>
+              <UserWords />
+            </CustomDictionary>
+          </Dictionaries>
         </CustomDictionaries>
-        <StringsDictionary>en-US</StringsDictionary>
-        <IdentifierDictionary>en-US</IdentifierDictionary>
-        <LastSelectedCustomDictionary>en-US</LastSelectedCustomDictionary>
+        <StringsDictionary>en-GB</StringsDictionary>
+        <IdentifierDictionary>en-GB</IdentifierDictionary>
+        <LastSelectedCustomDictionary>en-GB</LastSelectedCustomDictionary>
         <CommentsSettings>
-          <DictionaryName>en-US</DictionaryName>
+          <DictionaryName>en-GB</DictionaryName>
           <CommentMatch>
             <Match>
               <AccessLevel>Public Protected ProtectedInternal</AccessLevel>
@@ -22,7 +45,8 @@
               <ParamDirection>Any</ParamDirection>
             </Match>
           </CommentMatch>
-          <SuppressIfBaseHasComment>false</SuppressIfBaseHasComment>
+          <CommentNotMatch />
+          <SuppressIfBaseHasComment>true</SuppressIfBaseHasComment>
           <MaxLineLength>80</MaxLineLength>
         </CommentsSettings>
         <NamingConventionSettings>
@@ -58,7 +82,6 @@
               <Description>Classes, Enumerations, Enumeration values should be named in Pascal</Description>
               <MustHavePrefixes />
               <MustNotHavePrefixes>
-                <string>_</string>
                 <string>m_</string>
               </MustNotHavePrefixes>
               <Rule>Pascal</Rule>
@@ -105,7 +128,7 @@
               <MustNotHaveSuffixes />
             </NamingConventionRule>
             <NamingConventionRule>
-              <IsDisabled>false</IsDisabled>
+              <IsDisabled>true</IsDisabled>
               <Matches>
                 <Match>
                   <AccessLevel>Private</AccessLevel>
@@ -277,7 +300,7 @@
               <Regex>^(?&gt;(XML|SQL|[A-Z]{0,2})[A-Z]?([^A-Z]|$)|[^A-Z]+)*$</Regex>
             </NamingConventionRule>
             <NamingConventionRule>
-              <IsDisabled>false</IsDisabled>
+              <IsDisabled>true</IsDisabled>
               <Matches>
                 <Match>
                   <AccessLevel>Any</AccessLevel>
@@ -329,7 +352,7 @@
               <Regex>(?&lt;remove&gt;_)</Regex>
             </NamingConventionRule>
             <NamingConventionRule>
-              <IsDisabled>false</IsDisabled>
+              <IsDisabled>true</IsDisabled>
               <Matches>
                 <Match>
                   <AccessLevel>Any</AccessLevel>
@@ -352,7 +375,7 @@
               <MustNotHaveSuffixes />
             </NamingConventionRule>
             <NamingConventionRule>
-              <IsDisabled>false</IsDisabled>
+              <IsDisabled>true</IsDisabled>
               <Matches>
                 <Match>
                   <AccessLevel>Any</AccessLevel>
@@ -727,6 +750,7 @@
             <ParamDirection>Any</ParamDirection>
           </Match>
         </IdentifiersToSpellCheck>
+        <IdentifiersNotToSpellCheck />
         <PatternsToIgnore>
           <string>(?#email)\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*</string>
           <string>(?#url)http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&amp;=]*)?</string>
@@ -736,15 +760,13 @@
     <CSharp>
       <FormatSettings>
         <ANONYMOUS_METHOD_DECLARATION_BRACES>NEXT_LINE</ANONYMOUS_METHOD_DECLARATION_BRACES>
+        <BLANK_LINES_INSIDE_REGION>0</BLANK_LINES_INSIDE_REGION>
         <CASE_BLOCK_BRACES>NEXT_LINE</CASE_BLOCK_BRACES>
         <EXPLICIT_PRIVATE_MODIFIER>False</EXPLICIT_PRIVATE_MODIFIER>
-        <FORCE_ATTRIBUTE_STYLE>SEPARATE</FORCE_ATTRIBUTE_STYLE>
         <INDENT_ANONYMOUS_METHOD_BLOCK>False</INDENT_ANONYMOUS_METHOD_BLOCK>
         <INDENT_EMBRACED_INITIALIZER_BLOCK>False</INDENT_EMBRACED_INITIALIZER_BLOCK>
         <INDENT_SIZE>4</INDENT_SIZE>
         <INITIALIZER_BRACES>NEXT_LINE</INITIALIZER_BRACES>
-        <KEEP_BLANK_LINES_IN_CODE>1</KEEP_BLANK_LINES_IN_CODE>
-        <KEEP_BLANK_LINES_IN_DECLARATIONS>1</KEEP_BLANK_LINES_IN_DECLARATIONS>
         <MODIFIERS_ORDER IsNull="False">
           <Item>public</Item>
           <Item>protected</Item>
@@ -761,13 +783,21 @@
           <Item>unsafe</Item>
           <Item>volatile</Item>
         </MODIFIERS_ORDER>
-        <PLACE_CONSTRUCTOR_INITIALIZER_ON_SAME_LINE>False</PLACE_CONSTRUCTOR_INITIALIZER_ON_SAME_LINE>
-        <PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>False</PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>
-        <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
-        <WRAP_LIMIT>180</WRAP_LIMIT>
-        <WRAP_MULTIPLE_TYPE_PARAMEER_CONSTRAINTS_STYLE>CHOP_ALWAYS</WRAP_MULTIPLE_TYPE_PARAMEER_CONSTRAINTS_STYLE>
+        <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
+        <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
+        <SPACE_BEFORE_SIZEOF_PARENTHESES>False</SPACE_BEFORE_SIZEOF_PARENTHESES>
+        <SPACE_BEFORE_TYPEOF_PARENTHESES>False</SPACE_BEFORE_TYPEOF_PARENTHESES>
+        <SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES>True</SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES>
+        <WRAP_ARGUMENTS_STYLE>CHOP_IF_LONG</WRAP_ARGUMENTS_STYLE>
+        <WRAP_EXTENDS_LIST_STYLE>CHOP_IF_LONG</WRAP_EXTENDS_LIST_STYLE>
+        <WRAP_LIMIT>200</WRAP_LIMIT>
+        <WRAP_PARAMETERS_STYLE>CHOP_IF_LONG</WRAP_PARAMETERS_STYLE>
       </FormatSettings>
-      <UsingsSettings />
+      <UsingsSettings>
+        <KeepImports IsNull="False">
+          <Item>System</Item>
+        </KeepImports>
+      </UsingsSettings>
       <Naming2>
         <ExceptionName IsNull="False">
         </ExceptionName>
@@ -783,201 +813,259 @@
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+        <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
+        <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
       </Naming2>
-      <CustomMemberReorderingPatterns><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+      <CustomMemberReorderingPatterns><![CDATA[<Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns">
 
-<!--
-I. Overall
+    <!-- Do not reorder COM interfaces -->
+    <Pattern>
+        <Match>
+            <And Weight="2000">
+                <Kind Is="interface"/>
+                <HasAttribute CLRName="System.Runtime.InteropServices.InterfaceTypeAttribute"
+                              Inherit="true"/>
+            </And>
+        </Match>
+    </Pattern>
 
-I.1 Each pattern can have <Match>....</Match> element. For the given type declaration, the pattern with the match, evaluated to 'true' with the largest weight, will be used 
-I.2 Each pattern consists of the sequence of <Entry>...</Entry> elements. Type member declarations are distributed between entries
-I.3 If pattern has RemoveAllRegions="true" attribute, then all regions will be cleared prior to reordering. Otherwise, only auto-generated regions will be cleared
-I.4 The contents of each entry is sorted by given keys (First key is primary,  next key is secondary, etc). Then the declarations are grouped and en-regioned by given property
+    <!-- Do not reorder P/Invoke structs -->
+    <Pattern>
+        <Match>
+            <And Weight="2000">
+                <Or>
+                    <Kind Is="struct"/>
+                    <Kind Is="class"/>
+                </Or>
+                <HasAttribute CLRName="System.Runtime.InteropServices.StructLayoutAttribute"
+                              Inherit="true"/>
+            </And>
+        </Match>
+    </Pattern>
 
-II. Available match operands
+    <!-- Do not reorder P/Invoke classes (called xxxNativeMethods) -->
+    <Pattern>
+        <Match>
+            <And Weight="2000">
+                <Kind Is="class"/>
+                <Name Is=".*NativeMethods" />
+            </And>
+        </Match>
+    </Pattern>
 
-Each operand may have Weight="..." attribute. This weight will be added to the match weight if the operand is evaluated to 'true'.
-The default weight is 1
+    <!-- StyleCop pattern -->
+    <Pattern RemoveAllRegions="true">
+        <Match>
+            <Or Weight="1000" >
+                <Kind Is="class" />
+                <Kind Is="struct" />
+            </Or>
+        </Match>
 
-II.1 Boolean functions:
-II.1.1 <And>....</And>
-II.1.2 <Or>....</Or>
-II.1.3 <Not>....</Not>
+        <!-- constants and fields -->
+        <Entry>
+            <Match>
+                <Or>
+                    <Kind Is="constant"/>
+                    <Kind Is="field"/>
+                </Or>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private"/>
+                <Kind Order="constant field"/>
+                <Readonly/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
 
-II.2 Operands
-II.2.1 <Kind Is="..."/>. Kinds are: class, struct, interface, enum, delegate, type, constructor, destructor, property, indexer, method, operator, field, constant, event, member
-II.2.2 <Name Is="..." [IgnoreCase="true/false"] />. The 'Is' attribute contains regular expression
-II.2.3 <HasAttribute CLRName="..." [Inherit="true/false"] />. The 'CLRName' attribute contains regular expression
-II.2.4 <Access Is="..."/>. The 'Is' values are: public, protected, internal, protected internal, private
-II.2.5 <Static/>
-II.2.6 <Abstract/>
-II.2.7 <Virtual/>
-II.2.8 <Override/>
-II.2.9 <Sealed/>
-II.2.10 <Readonly/>
-II.2.11 <ImplementsInterface CLRName="..."/>. The 'CLRName' attribute contains regular expression
-II.2.12 <HandlesEvent />
--->
+        <!-- constructors -->
+        <Entry>
+            <Match>
+                <Or Weight="200">
+                    <Kind Is="constructor"/>
+                    <Kind Is="destructor"/>
+                </Or>
+            </Match>
+            <Sort>
+                <Static/>
+                <Kind Order="constructor destructor"/>
+                <Access Order="public internal protected-internal protected private"/>
+            </Sort>
+        </Entry>
 
-<Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns">
+        <!-- delegates and events -->
+        <Entry>
+            <Match>
+                <Or>
+                    <Kind Is="delegate"/>
+                    <Kind Is="event"/>
+                </Or>
+            </Match>
+            <Sort>
+                <Kind Order="delegate event"/>
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
 
-  <!--Do not reorder COM interfaces and structs marked by StructLayout attribute-->
-  <Pattern>
-    <Match>
-      <Or Weight="100">
-        <And>
-          <Kind Is="interface"/>
-          <Or>
-            <HasAttribute CLRName="System.Runtime.InteropServices.InterfaceTypeAttribute"/>
-            <HasAttribute CLRName="System.Runtime.InteropServices.ComImport"/>
-          </Or>
-        </And>
-        <HasAttribute CLRName="System.Runtime.InteropServices.StructLayoutAttribute"/>
-      </Or>
-    </Match>
-  </Pattern>
+        <!-- enum -->
+        <Entry>
+            <Match>
+                <Kind Is="enum"/>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
 
-  <!--Special formatting of NUnit test fixture-->
-  <Pattern RemoveAllRegions="true">
-    <Match>
-      <And Weight="100">
-        <Kind Is="class"/>
-        <HasAttribute CLRName="NUnit.Framework.TestFixtureAttribute" Inherit="true"/>
-      </And>
-    </Match>
+        <!-- interfaces -->
+        <Entry>
+            <Match>
+                <Kind Is="interface" />
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
 
-    <!--Setup/Teardow-->
-    <Entry>
-      <Match>
-        <And>
-          <Kind Is="method"/>
-          <Or>
-            <HasAttribute CLRName="NUnit.Framework.SetUpAttribute" Inherit="true"/>
-            <HasAttribute CLRName="NUnit.Framework.TearDownAttribute" Inherit="true"/>
-            <HasAttribute CLRName="NUnit.Framework.FixtureSetUpAttribute" Inherit="true"/>
-            <HasAttribute CLRName="NUnit.Framework.FixtureTearDownAttribute" Inherit="true"/>
-          </Or>
-        </And>
-      </Match>
-    </Entry>
-    
-    <!--All other members-->
-    <Entry/>
-    
-    <!--Test methods-->
-    <Entry>
-      <Match>
-        <And Weight="100">
-          <Kind Is="method"/>
-          <HasAttribute CLRName="NUnit.Framework.TestAttribute" Inherit="false"/>
-        </And>
-      </Match>
-      <Sort>
-        <Name/>
-      </Sort>
-    </Entry>
-  </Pattern>
+        <!-- properties -->
+        <Entry>
+            <Match>
+                <Kind Is="property"/>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private"/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
 
-  <!--Default pattern-->
-  <Pattern>
+        <!-- indexers -->
+        <Entry>
+            <Match>
+                <Kind Is="indexer"
+                      Weight="300" />
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private" />
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
 
-    <!--public delegate-->
-    <Entry>
-      <Match>
-        <And Weight="100">
-          <Access Is="public"/>
-          <Kind Is="delegate"/>
-        </And>
-      </Match>
-      <Sort>
-        <Name/>
-      </Sort>
-    </Entry>
-    
-    <!--public enum-->
-    <Entry>
-      <Match>
-        <And Weight="100">
-          <Access Is="public"/>
-          <Kind Is="enum"/>
-        </And>
-      </Match>
-      <Sort>
-        <Name/>
-      </Sort>
-    </Entry>
+        <!-- operator -->
+        <Entry>
+            <Match>
+                <Kind Is="operator"/>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private" />
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
 
-    <!--fields and constants-->
-    <Entry>
-      <Match>
-        <Or>
-          <Kind Is="constant"/>
-          <Kind Is="field"/>
-        </Or>
-      </Match>
-      <Sort>
-        <Kind Order="constant field"/>
-        <Static/>
-        <Readonly/>
-        <Name/>
-      </Sort>
-    </Entry>
+        <!-- public methods -->
+        <Entry>
+            <Match>
+                <And>
+                    <Kind Is="method"/>
+                    <Access Is="public"/>
+                </And>
+            </Match>
+            <Sort>
+                <Access Order="public"/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
 
-    <!--Constructors. Place static one first-->
-    <Entry>
-      <Match>
-        <Kind Is="constructor"/>
-      </Match>
-      <Sort>
-        <Static/>
-      </Sort>
-    </Entry>
-    
-    <!--properties, indexers-->
-    <Entry>
-      <Match>
-        <Or>
-          <Kind Is="property"/>
-          <Kind Is="indexer"/>
-        </Or>
-      </Match>
-    </Entry>
-    
-    <!--interface implementations-->
-    <Entry>
-      <Match>
-        <And Weight="100">
-          <Kind Is="member"/>
-          <ImplementsInterface/>
-        </And>
-      </Match>
-      <Sort>
-        <ImplementsInterface Immediate="true"/>
-      </Sort>
-    </Entry>
-    
-    <!--all other members-->
-    <Entry/>
-    
-    <!--nested types-->
-    <Entry>
-      <Match>
-        <Kind Is="type"/>
-      </Match>
-      <Sort>
-        <Name/>
-      </Sort>
-    </Entry>
-  </Pattern>
-  
-</Patterns>
-]]></CustomMemberReorderingPatterns>
+        <!-- Implemented Interfaces -->
+        <Entry>
+            <Match>
+                <And Weight="500">
+                    <Kind Is="method"/>
+                    <ImplementsInterface CLRName=".*"/>
+                </And>
+            </Match>
+            <Sort>
+                <ImplementsInterface />
+                <Access Order="public internal protected-internal protected private"/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- other methods -->
+        <Entry>
+            <Match>
+                <Kind Is="method"/>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private"/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- Event handlers -->
+        <Entry>
+            <Match>
+                <HandlesEvent Weight="400" />
+            </Match>
+            <Sort>
+                <Static />
+                <Access Order="public internal protected-internal protected private" />
+                <Override/>
+                <Name/>
+            </Sort>
+        </Entry>
+        <!-- Nested structs -->
+        <Entry>
+            <Match>
+                <Kind Is="struct"
+                      Weight="600" />
+            </Match>
+            <Sort>
+                <Static />
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- Nested classes -->
+        <Entry>
+            <Match>
+                <Kind Is="class"
+                      Weight="700" />
+            </Match>
+            <Sort>
+                <Static />
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- all other members -->
+        <Entry/>
+
+    </Pattern>
+</Patterns>]]></CustomMemberReorderingPatterns>
     </CSharp>
     <VB>
       <FormatSettings>
         <INDENT_SIZE>4</INDENT_SIZE>
       </FormatSettings>
-      <ImportsSettings />
+      <ImportsSettings>
+        <KeepImports IsNull="False">
+          <Item>System</Item>
+        </KeepImports>
+      </ImportsSettings>
       <Naming2 />
     </VB>
     <GenerateMemberBody />
@@ -989,7 +1077,7 @@ II.2.12 <HandlesEvent />
       <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
       <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Locals" />
-      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="LocalConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="Constants" />
@@ -998,8 +1086,9 @@ II.2.12 <HandlesEvent />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
       <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
       <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
-      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
-      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateStaticReadonly" />
+      <Abbreviation Text="OK" />
     </Naming2>
   </CodeStyleSettings>
 </Configuration>

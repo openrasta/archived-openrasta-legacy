@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Web.Compilation;
 using System.Web.UI;
 using OpenRasta.DI;
 using OpenRasta.TypeSystem;
@@ -18,12 +19,14 @@ namespace OpenRasta.Codecs.WebForms
     public class WebFormsDefaultHandler
     {
         readonly ICommunicationContext _context;
+        readonly ITypeSystem _typeSystem;
         readonly IType _pageType;
         readonly IDependencyResolver _resolver;
 
         public WebFormsDefaultHandler(ICommunicationContext context, ITypeSystem typeSystem, IDependencyResolver resolver)
         {
             _context = context;
+            _typeSystem = typeSystem;
             _resolver = resolver;
             _pageType = typeSystem.FromClr<Page>();
         }
@@ -31,6 +34,17 @@ namespace OpenRasta.Codecs.WebForms
         public OperationResult Get()
         {
             var resourceKey = _context.PipelineData.ResourceKey as IType;
+
+            if (resourceKey == null && _context.PipelineData.ResourceKey is string)
+            {
+                try
+                {
+                    resourceKey = _typeSystem.FromClr( BuildManager.GetCompiledType((string)_context.PipelineData.ResourceKey));
+                }
+                catch
+                {
+                }
+            }
 
             if (resourceKey != null && resourceKey.CompareTo(_pageType) == 0)
             {

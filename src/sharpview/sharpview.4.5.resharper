@@ -8,17 +8,34 @@
         <CustomDictionaries>
           <Dictionaries>
             <CustomDictionary>
-              <Name>en-US</Name>
+              <Name>en-GB</Name>
+              <CaseSensitive>false</CaseSensitive>
+              <UserWords>Codec
+Rasta
+Multipart
+Locator
+Codecs
+Http
+seekable
+crlf
+Html
+openrasta
+args
+localhost
+Accessor</UserWords>
+            </CustomDictionary>
+            <CustomDictionary>
+              <Name>en-GB</Name>
               <CaseSensitive>false</CaseSensitive>
               <UserWords />
             </CustomDictionary>
           </Dictionaries>
         </CustomDictionaries>
-        <StringsDictionary>en-US</StringsDictionary>
-        <IdentifierDictionary>en-US</IdentifierDictionary>
-        <LastSelectedCustomDictionary>en-US</LastSelectedCustomDictionary>
+        <StringsDictionary>en-GB</StringsDictionary>
+        <IdentifierDictionary>en-GB</IdentifierDictionary>
+        <LastSelectedCustomDictionary>en-GB</LastSelectedCustomDictionary>
         <CommentsSettings>
-          <DictionaryName>en-US</DictionaryName>
+          <DictionaryName>en-GB</DictionaryName>
           <CommentMatch>
             <Match>
               <AccessLevel>Public Protected ProtectedInternal</AccessLevel>
@@ -28,7 +45,8 @@
               <ParamDirection>Any</ParamDirection>
             </Match>
           </CommentMatch>
-          <SuppressIfBaseHasComment>false</SuppressIfBaseHasComment>
+          <CommentNotMatch />
+          <SuppressIfBaseHasComment>true</SuppressIfBaseHasComment>
           <MaxLineLength>80</MaxLineLength>
         </CommentsSettings>
         <NamingConventionSettings>
@@ -64,7 +82,6 @@
               <Description>Classes, Enumerations, Enumeration values should be named in Pascal</Description>
               <MustHavePrefixes />
               <MustNotHavePrefixes>
-                <string>_</string>
                 <string>m_</string>
               </MustNotHavePrefixes>
               <Rule>Pascal</Rule>
@@ -111,7 +128,7 @@
               <MustNotHaveSuffixes />
             </NamingConventionRule>
             <NamingConventionRule>
-              <IsDisabled>false</IsDisabled>
+              <IsDisabled>true</IsDisabled>
               <Matches>
                 <Match>
                   <AccessLevel>Private</AccessLevel>
@@ -283,7 +300,7 @@
               <Regex>^(?&gt;(XML|SQL|[A-Z]{0,2})[A-Z]?([^A-Z]|$)|[^A-Z]+)*$</Regex>
             </NamingConventionRule>
             <NamingConventionRule>
-              <IsDisabled>false</IsDisabled>
+              <IsDisabled>true</IsDisabled>
               <Matches>
                 <Match>
                   <AccessLevel>Any</AccessLevel>
@@ -335,7 +352,7 @@
               <Regex>(?&lt;remove&gt;_)</Regex>
             </NamingConventionRule>
             <NamingConventionRule>
-              <IsDisabled>false</IsDisabled>
+              <IsDisabled>true</IsDisabled>
               <Matches>
                 <Match>
                   <AccessLevel>Any</AccessLevel>
@@ -358,7 +375,7 @@
               <MustNotHaveSuffixes />
             </NamingConventionRule>
             <NamingConventionRule>
-              <IsDisabled>false</IsDisabled>
+              <IsDisabled>true</IsDisabled>
               <Matches>
                 <Match>
                   <AccessLevel>Any</AccessLevel>
@@ -733,6 +750,7 @@
             <ParamDirection>Any</ParamDirection>
           </Match>
         </IdentifiersToSpellCheck>
+        <IdentifiersNotToSpellCheck />
         <PatternsToIgnore>
           <string>(?#email)\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*</string>
           <string>(?#url)http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&amp;=]*)?</string>
@@ -741,11 +759,14 @@
     </AgentSmithCSharpStyleSettings>
     <CSharp>
       <FormatSettings>
+        <ANONYMOUS_METHOD_DECLARATION_BRACES>NEXT_LINE</ANONYMOUS_METHOD_DECLARATION_BRACES>
         <BLANK_LINES_INSIDE_REGION>0</BLANK_LINES_INSIDE_REGION>
+        <CASE_BLOCK_BRACES>NEXT_LINE</CASE_BLOCK_BRACES>
         <EXPLICIT_PRIVATE_MODIFIER>False</EXPLICIT_PRIVATE_MODIFIER>
         <INDENT_ANONYMOUS_METHOD_BLOCK>False</INDENT_ANONYMOUS_METHOD_BLOCK>
         <INDENT_EMBRACED_INITIALIZER_BLOCK>False</INDENT_EMBRACED_INITIALIZER_BLOCK>
         <INDENT_SIZE>4</INDENT_SIZE>
+        <INITIALIZER_BRACES>NEXT_LINE</INITIALIZER_BRACES>
         <MODIFIERS_ORDER IsNull="False">
           <Item>public</Item>
           <Item>protected</Item>
@@ -772,7 +793,11 @@
         <WRAP_LIMIT>200</WRAP_LIMIT>
         <WRAP_PARAMETERS_STYLE>CHOP_IF_LONG</WRAP_PARAMETERS_STYLE>
       </FormatSettings>
-      <UsingsSettings />
+      <UsingsSettings>
+        <KeepImports IsNull="False">
+          <Item>System</Item>
+        </KeepImports>
+      </UsingsSettings>
       <Naming2>
         <ExceptionName IsNull="False">
         </ExceptionName>
@@ -1036,7 +1061,11 @@
       <FormatSettings>
         <INDENT_SIZE>4</INDENT_SIZE>
       </FormatSettings>
-      <ImportsSettings />
+      <ImportsSettings>
+        <KeepImports IsNull="False">
+          <Item>System</Item>
+        </KeepImports>
+      </ImportsSettings>
       <Naming2 />
     </VB>
     <GenerateMemberBody />
@@ -1058,7 +1087,8 @@
       <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
       <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateConstants" />
-      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateStaticReadonly" />
+      <Abbreviation Text="OK" />
     </Naming2>
   </CodeStyleSettings>
 </Configuration>

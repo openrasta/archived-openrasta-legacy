@@ -11,21 +11,8 @@ using OpenRasta.Web;
 
 namespace DigestAuthentication_Specification
 {
-    public class when_using_the_correct_credentials : server_context
+    public class when_using_the_correct_credentials : context.http_digest_context
     {
-        public when_using_the_correct_credentials()
-        {
-            ConfigureServer(() =>
-            {
-                DependencyManager.GetService<IDependencyResolver>()
-                    .AddDependency<IAuthenticationProvider, FakeAuthProvider>();
-
-                ResourceSpace.Has.ResourcesOfType<Customer>()
-                    .AtUri("/{somewhere}")
-                    .AndAt("/unprotected").Named("unprotected")
-                    .HandledBy<ProtectedCustomerHandler>();
-            });
-        }
 
         [Test]
         public void a_protected_resource_fails_with_unauthorized_error_when_no_credentials_are_provided()
@@ -35,17 +22,6 @@ namespace DigestAuthentication_Specification
             when_reading_response();
 
             TheResponse.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
-        }
-
-        [Test]
-        public void an_unprotected_resource_returns_200_even_with_invalid_credentials()
-        {
-            given_client_credentials("username", "wrongpassword");
-            given_request("GET", "/unprotected");
-
-            when_reading_response_as_a_string(Encoding.ASCII);
-
-            TheResponse.StatusCode.ShouldBe(HttpStatusCode.OK);
         }
 
         [Test]
@@ -68,15 +44,62 @@ namespace DigestAuthentication_Specification
             TheResponse.StatusCode.ShouldBe(HttpStatusCode.OK);
         }
     }
-
-    public class FakeAuthProvider : IAuthenticationProvider
+    public class when_using_incorrect_credentials : context.http_digest_context
     {
-        public Credentials GetByUsername(string p)
+        [Test]
+        public void a_request_for_a_protected_resource_fails_with_401_response()
         {
-            return new Credentials { Username = p, Password = "password" };
+            given_client_credentials("username", "wrongpassword");
+            given_request("GET", "/home");
+
+            when_reading_response();
+
+            TheResponse.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
+
+            when_reading_response();
+
+            TheResponse.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
+        }
+        [Test]
+        public void an_unprotected_resource_returns_200_even_with_invalid_credentials()
+        {
+            given_client_credentials("username", "wrongpassword");
+            given_request("GET", "/unprotected");
+
+            when_reading_response_as_a_string(Encoding.ASCII);
+
+            TheResponse.StatusCode.ShouldBe(HttpStatusCode.OK);
+        }
+
+    }
+    namespace context
+    {
+        public class http_digest_context : server_context
+        {
+
+            public http_digest_context()
+        {
+            ConfigureServer(() =>
+            {
+                DependencyManager.GetService<IDependencyResolver>()
+                    .AddDependency<IAuthenticationProvider, FakeAuthProvider>();
+
+                ResourceSpace.Has.ResourcesOfType<Customer>()
+                    .AtUri("/{somewhere}")
+                    .AndAt("/unprotected").Named("unprotected")
+                    .HandledBy<ProtectedCustomerHandler>();
+            });
+        }
         }
     }
-
+    public class FakeAuthProvider : IAuthenticationProvider
+    {
+        public Credentials GetByUsername(string username)
+        {
+            return new Credentials { Username = username, Password = "password" };
+        }
+    }
+    
     public class ProtectedCustomerHandler
     {
         [RequiresAuthentication]

@@ -144,7 +144,7 @@ namespace OpenRasta.Hosting.AspNet
                 stage.SuspendAfter<KnownStages.IUriMatching>();
                 Host.RaiseIncomingRequestReceived(context);
 
-                if (context.PipelineData.ResourceKey != null)
+                if (context.PipelineData.ResourceKey != null || context.OperationResult != null)
                 {
                     HttpContext.Current.Items[ORIGINAL_PATH_KEY] = HttpContext.Current.Request.Path;
                     HttpContext.Current.RewritePath(VirtualPathUtility.ToAppRelative("~/ignoreme.rastahook"), false);

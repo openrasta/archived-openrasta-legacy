@@ -22,7 +22,7 @@ namespace OpenRasta.IO
         long Length { get; }
         Stream OpenStream();
     }
-    [Obsolete("IReiceivedFile has been depreciated. Please use IFile instead.")]
+    [Obsolete("IReiceivedFile has been depreciated. Please use the IFile interface instead.")]
     public interface IReceivedFile : IFile
     {
         string OriginalName { get; }

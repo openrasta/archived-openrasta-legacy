@@ -19,8 +19,8 @@ namespace OpenBastard.Scenarios
             given_request_to(Uris.USERS)
                 .Post()
                 .EntityAsMultipartFormData(
-                FormData.Text("FirstName", "Frodo"), 
-                FormData.Text("LastName", "Baggins")
+                    FormData.Text("FirstName", "Frodo"), 
+                    FormData.Text("LastName", "Baggins")
                 );
 
             when_retrieving_the_response_as_user();
@@ -31,7 +31,26 @@ namespace OpenBastard.Scenarios
             then_user.LastName.ShouldBe("Baggins");
             then_user.Id.ShouldNotBeNull();
         }
+        public void cannot_delete_user_with_wrong_credentials()
+        {
+            given_request_to(Uris.User(2))
+                .Delete()
+                .Credentials("username", "wrongpassword");
 
+            when_retrieving_the_response();
+
+            Response.StatusCode.ShouldBe(401);
+        }
+        public void can_delete_user_with_correct_credentials()
+        {
+            given_request_to(Uris.User(2))
+                .Delete()
+                .Credentials("username", "password");
+
+            when_retrieving_the_response();
+
+            Response.StatusCode.ShouldBe(200);
+        }
         void then_response_should_be_201_created()
         {
             Response.StatusCode.ShouldBe(201);

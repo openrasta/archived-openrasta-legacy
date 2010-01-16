@@ -8,7 +8,7 @@
         <CustomDictionaries>
           <Dictionaries>
             <CustomDictionary>
-              <Name>en-US</Name>
+              <Name>en-GB</Name>
               <CaseSensitive>false</CaseSensitive>
               <UserWords>Codec
 Rasta
@@ -31,11 +31,11 @@ Accessor</UserWords>
             </CustomDictionary>
           </Dictionaries>
         </CustomDictionaries>
-        <StringsDictionary>en-US</StringsDictionary>
-        <IdentifierDictionary>en-US</IdentifierDictionary>
+        <StringsDictionary>en-GB</StringsDictionary>
+        <IdentifierDictionary>en-GB</IdentifierDictionary>
         <LastSelectedCustomDictionary>en-GB</LastSelectedCustomDictionary>
         <CommentsSettings>
-          <DictionaryName>en-US</DictionaryName>
+          <DictionaryName>en-GB</DictionaryName>
           <CommentMatch>
             <Match>
               <AccessLevel>Public Protected ProtectedInternal</AccessLevel>
@@ -46,7 +46,7 @@ Accessor</UserWords>
             </Match>
           </CommentMatch>
           <CommentNotMatch />
-          <SuppressIfBaseHasComment>false</SuppressIfBaseHasComment>
+          <SuppressIfBaseHasComment>true</SuppressIfBaseHasComment>
           <MaxLineLength>80</MaxLineLength>
         </CommentsSettings>
         <NamingConventionSettings>
@@ -82,7 +82,6 @@ Accessor</UserWords>
               <Description>Classes, Enumerations, Enumeration values should be named in Pascal</Description>
               <MustHavePrefixes />
               <MustNotHavePrefixes>
-                <string>_</string>
                 <string>m_</string>
               </MustNotHavePrefixes>
               <Rule>Pascal</Rule>
