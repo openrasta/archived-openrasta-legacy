@@ -256,7 +256,7 @@ namespace OpenRasta.Configuration
             resolver.AddDependency(typeof(IOperationCreator), OperationCreatorType, DependencyLifetime.Transient);
             resolver.AddDependency(typeof(IOperationExecutor), OperationExecutorType, DependencyLifetime.Transient);
             resolver.AddDependency(typeof(IErrorCollector), ErrorCollectorType, DependencyLifetime.Transient);
-            resolver.AddDependency(typeof(IOperationInterceptorProvider), OperationInterceptorProviderType, DependencyLifetime.Singleton);
+            resolver.AddDependency(typeof(IOperationInterceptorProvider), OperationInterceptorProviderType, DependencyLifetime.Transient);
         }
 
         [Conditional("DEBUG")]

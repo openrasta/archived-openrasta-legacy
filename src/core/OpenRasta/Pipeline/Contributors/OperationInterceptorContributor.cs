@@ -10,12 +10,10 @@ namespace OpenRasta.Pipeline.Contributors
     public class OperationInterceptorContributor : IPipelineContributor
     {
         readonly IDependencyResolver _resolver;
-        readonly IOperationInterceptorProvider _operationInterceptorProvider;
 
-        public OperationInterceptorContributor(IDependencyResolver resolver, IOperationInterceptorProvider operationInterceptorProvider)
+        public OperationInterceptorContributor(IDependencyResolver resolver)
         {
             _resolver = resolver;
-            _operationInterceptorProvider = operationInterceptorProvider;
         }
 
         public void Initialize(IPipeline pipelineRunner)
@@ -29,8 +27,7 @@ namespace OpenRasta.Pipeline.Contributors
         PipelineContinuation WrapOperations(ICommunicationContext context)
         {
             context.PipelineData.Operations = from op in context.PipelineData.Operations
-                                              let interceptors = _resolver.ResolveAll<IOperationInterceptor>()
-                                                  .Concat(_operationInterceptorProvider.GetInterceptors(op))
+                                              let interceptors = _resolver.Resolve<IOperationInterceptorProvider>().GetInterceptors(op)
                                               select (IOperation)new OperationWithInterceptors(op, interceptors);
 
             return PipelineContinuation.Continue;
