@@ -120,9 +120,24 @@ namespace KeyedValuesBinder_Specification
             customer.Orders[1].IsSelected.ShouldBeTrue();
             customer.Orders[2].IsSelected.ShouldBeFalse();
         }
+        [Test]
+        public void multiple_values_with_the_same_name_for_an_icollection_appends_to_the_collection()
+        {
+            var binder = new KeyedValuesBinder(TypeOf<Customer>(), "firstname");
+            ValueConverter<string> valueConverter = (str, type) => BindingResult.Success(type.CreateInstanceFrom(str));
+            binder.SetProperty("Attributes", new[] { "blue eyes" }, valueConverter)
+                .ShouldBeTrue();
+            binder.SetProperty("Attributes", new[] { "green eyes" }, valueConverter)
+                .ShouldBeTrue();
+
+            var customer = binder.BuildObject().Instance as Customer;
+            customer.Attributes.Count().ShouldBe(2);
+            customer.Attributes.First().ShouldBe("blue eyes");
+            customer.Attributes.Skip(1).First().ShouldBe("green eyes");
+        }
         protected IType TypeOf<T>()
         {
-            return new ReflectionBasedTypeSystem().FromClr(typeof(T));
+            return TypeSystems.Default.FromClr(typeof(T));
         }
     }
 }

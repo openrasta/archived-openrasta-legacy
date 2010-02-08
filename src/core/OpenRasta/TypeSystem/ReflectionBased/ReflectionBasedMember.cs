@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using OpenRasta.Binding;
-using OpenRasta.TypeSystem.ReflectionBased.Surrogates;
 
 namespace OpenRasta.TypeSystem.ReflectionBased
 {
     public abstract class ReflectionBasedMember<T> : IMember, INativeMember
         where T : IMemberBuilder
     {
-        public IPathManager PathManager { get; set; }
-
         readonly Dictionary<string, IProperty> _propertiesCachedByPath =
             new Dictionary<string, IProperty>(StringComparer.OrdinalIgnoreCase);
 
@@ -22,30 +18,36 @@ namespace OpenRasta.TypeSystem.ReflectionBased
 
         ILookup<string, IMethod> _methodsCache;
 
-        protected ReflectionBasedMember(Type targetType)
+        protected ReflectionBasedMember(ITypeSystem typeSystem, Type targetType)
         {
-            TypeSystem = new ReflectionBasedTypeSystem();
+            TypeSystem = typeSystem;
+            SurrogateProvider = typeSystem.SurrogateProvider;
+            PathManager = typeSystem.PathManager;
             TargetType = targetType;
-            SurrogateFactory = new DefaultSurrogateFactory();
-            PathManager = new PathManager();
         }
-        public virtual bool IsCollection
+
+        public virtual bool IsEnumerable
         {
-            get
-            {
-                return TargetType.IsArray || TargetType.Implements(typeof(IEnumerable<>));
-            }
+            get { return TargetType.IsArray || (TargetType.Implements(typeof(IEnumerable<>)) && !TargetType.Implements(typeof(IDictionary<,>))); }
         }
+
         public virtual string Name
         {
             get { return TargetType.Name; }
         }
 
-        public ISurrogateFactory SurrogateFactory { get; set; }
+        public Type NativeType
+        {
+            get { return TargetType; }
+        }
+
+        public IPathManager PathManager { get; set; }
+
+        public ISurrogateProvider SurrogateProvider { get; set; }
 
         public Type TargetType { get; set; }
 
-        public IType Type
+        public virtual IType Type
         {
             get
             {
@@ -58,6 +60,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                             _memberType = TypeSystem.FromClr(TargetType);
                     }
                 }
+
                 return _memberType;
             }
         }
@@ -69,23 +72,6 @@ namespace OpenRasta.TypeSystem.ReflectionBased
 
         public ITypeSystem TypeSystem { get; set; }
 
-        public abstract T CreateBuilder();
-
-        public virtual int CompareTo(IMember parent)
-        {
-            ReflectionBasedMember<T> otherReflection;
-            if (parent == null || (otherReflection = parent as ReflectionBasedMember<T>) == null)
-                return -1;
-            return TargetType.GetInheritanceDistance(otherReflection.TargetType);
-        }
-
-        public virtual bool CanSetValue(object value)
-        {
-            return
-                (TargetType.IsValueType && value != null && TargetType.IsAssignableFrom(value.GetType()))
-                || (!TargetType.IsValueType && (value == null || TargetType.IsAssignableFrom(value.GetType())));
-        }
-
         public TAttribute FindAttribute<TAttribute>() where TAttribute : class
         {
             return FindAttributes<TAttribute>().FirstOrDefault();
@@ -96,27 +82,18 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             return Attribute.GetCustomAttributes(TargetType, true).OfType<TAttribute>();
         }
 
-        public virtual IProperty GetLocalIndexer(string indexerParameter)
+        public virtual bool CanSetValue(object value)
         {
-            KeyValuePair<PropertyInfo, object[]>? indexer = TargetType.FindIndexers(1).FindIndexer(indexerParameter);
-
-            return indexer != null ? SurrogateIfNeeded(new ReflectionBasedProperty(this, indexer.Value.Key, indexer.Value.Value)) : null;
+            return
+                (TargetType.IsValueType && value != null && TargetType.IsAssignableFrom(value.GetType()))
+                || (!TargetType.IsValueType && (value == null || TargetType.IsAssignableFrom(value.GetType())));
         }
 
-        public virtual IProperty GetLocalProperty(string propertyName)
+        public virtual IProperty GetIndexer(string indexerParameter)
         {
-            lock (_syncRoot)
-            {
-                if (_propertiesCachedByPath.ContainsKey(propertyName))
-                    return _propertiesCachedByPath[propertyName];
-                PropertyInfo pi = TargetType.FindPropertyCaseInvariant(propertyName);
-                if (pi == null)
-                    return null;
+            var indexer = TargetType.FindIndexers(1).FindIndexer(indexerParameter);
 
-                IProperty pa = SurrogateIfNeeded(new ReflectionBasedProperty(this, pi, null));
-                _propertiesCachedByPath.Add(propertyName, pa);
-                return pa;
-            }
+            return indexer != null ? SurrogateProperty(new ReflectionBasedProperty(TypeSystem, this, indexer.Value.Key, indexer.Value.Value)) : null;
         }
 
         public IMethod GetMethod(string methodName)
@@ -134,37 +111,24 @@ namespace OpenRasta.TypeSystem.ReflectionBased
 
         public virtual IProperty GetProperty(string propertyName)
         {
-            IMember sourceMember = this;
-            IProperty property = null;
-            foreach (var parseResult in PathManager.ReadComponents(propertyName).Where(x => x.Type != PathComponentType.None))
+            lock (_syncRoot)
             {
-                if (parseResult.Type == PathComponentType.Indexer)
-                    property = sourceMember.GetLocalIndexer(parseResult.ParsedValue);
-                else if (parseResult.Type == PathComponentType.Member)
-                    property = sourceMember.GetLocalProperty(parseResult.ParsedValue);
-
-                if (property == null)
+                if (_propertiesCachedByPath.ContainsKey(propertyName))
+                    return _propertiesCachedByPath[propertyName];
+                var pi = TargetType.FindPropertyCaseInvariant(propertyName);
+                if (pi == null)
                     return null;
 
-                sourceMember = property;
+                var pa = SurrogateProperty(new ReflectionBasedProperty(TypeSystem, this, pi, null));
+                _propertiesCachedByPath.Add(propertyName, pa);
+                return pa;
             }
-
-            return property;
         }
 
-        public bool IsAssignableTo(IMember member)
+        IProperty SurrogateProperty(IProperty property)
         {
-            return member != null && CompareTo(member) >= 0;
-        }
-
-        IMemberBuilder IMember.CreateBuilder()
-        {
-            return CreateBuilder();
-        }
-
-        IProperty SurrogateIfNeeded(IProperty property)
-        {
-            return SurrogateFactory != null ? SurrogateFactory.FindSurrogate(property) ?? property : property;
+            if (TypeSystem.SurrogateProvider == null) return property;
+            return TypeSystem.SurrogateProvider.FindSurrogate(property);
         }
 
         void VerifyMethodsInitialized()
@@ -180,19 +144,10 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                         _methodsCache = (from method in TargetType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy)
                                          where !allProperties.Any(x => x.GetGetMethod() == method || x.GetSetMethod() == method)
                                          select new ReflectionBasedMethod(TypeSystem.FromClr(method.DeclaringType), method) as IMethod)
-                                        .ToLookup(x => x.Name, StringComparer.OrdinalIgnoreCase);
+                            .ToLookup(x => x.Name, StringComparer.OrdinalIgnoreCase);
                     }
                 }
             }
-        }
-
-        public Type NativeType
-        {
-            get { return TargetType; }
-        }
-        public override string ToString()
-        {
-            return TargetType.ToString();
         }
     }
 }

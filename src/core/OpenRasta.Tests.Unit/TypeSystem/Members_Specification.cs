@@ -19,7 +19,6 @@ using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Fakes;
 using OpenRasta.TypeSystem;
 using OpenRasta.TypeSystem.ReflectionBased;
-using OpenRasta.TypeSystem.ReflectionBased.Surrogates;
 
 namespace Accessors_Specification
 {
@@ -28,14 +27,14 @@ namespace Accessors_Specification
         [Test]
         public void a_reference_type_can_be_assigned_a_null_value()
         {
-            new ReflectionBasedType(typeof(string)).CanSetValue(null)
+            new ReflectionBasedType(_typeSystem,typeof(string)).CanSetValue(null)
                 .ShouldBe(true);
         }
 
         [Test]
         public void a_reflection_type_cannot_be_equal_to_null()
         {
-            new ReflectionBasedType(typeof(string)).Equals(null)
+            new ReflectionBasedType(_typeSystem,typeof(string)).Equals(null)
                 .ShouldBeFalse();
         }
 
@@ -43,7 +42,7 @@ namespace Accessors_Specification
         public void a_type_can_be_created()
         {
             object result;
-            new ReflectionBasedType(typeof(string)).TryCreateInstance(new[] { "value" }, (str, type) => BindingResult.Success(str), out result)
+            new ReflectionBasedType(_typeSystem,typeof(string)).TryCreateInstance(new[] { "value" }, (str, type) => BindingResult.Success(str), out result)
                 .ShouldBeTrue();
             result.ShouldBe("value");
         }
@@ -52,21 +51,21 @@ namespace Accessors_Specification
         public void a_type_creation_resulting_in_a_failure_doesnt_get_created()
         {
             object result;
-            new ReflectionBasedType(typeof(string)).TryCreateInstance(new[] { "value" }, (str, type) => BindingResult.Failure(), out result)
+            new ReflectionBasedType(_typeSystem,typeof(string)).TryCreateInstance(new[] { "value" }, (str, type) => BindingResult.Failure(), out result)
                 .ShouldBeFalse();
         }
 
         [Test]
         public void a_value_type_cannot_be_assigned_a_null_value()
         {
-            new ReflectionBasedType(typeof(int)).CanSetValue(null)
+            new ReflectionBasedType(_typeSystem,typeof(int)).CanSetValue(null)
                 .ShouldBeFalse();
         }
 
         [Test]
         public void an_incorrect_type_cannot_be_assigned()
         {
-            new ReflectionBasedType(typeof(int)).CanSetValue("hello")
+            new ReflectionBasedType(_typeSystem,typeof(int)).CanSetValue("hello")
                 .ShouldBeFalse();
         }
 
@@ -80,15 +79,15 @@ namespace Accessors_Specification
         [Test]
         public void the_name_is_the_type_name()
         {
-            new ReflectionBasedType(typeof(string)).Name
+            new ReflectionBasedType(_typeSystem,typeof(string)).Name
                 .ShouldBe("String");
         }
 
         [Test]
         public void two_reflection_based_types_are_equal_if_built_from_the_same_native_type()
         {
-            var type1 = new ReflectionBasedType(typeof(string));
-            var type2 = new ReflectionBasedType(typeof(string));
+            var type1 = new ReflectionBasedType(_typeSystem,typeof(string));
+            var type2 = new ReflectionBasedType(_typeSystem,typeof(string));
             type1.Equals(type2).ShouldBeTrue();
             type1.GetHashCode().ShouldBe(type2.GetHashCode());
         }
@@ -96,8 +95,8 @@ namespace Accessors_Specification
         [Test]
         public void two_reflection_based_types_are_not_equal_if_built_from_different_native_types()
         {
-            var type1 = new ReflectionBasedType(typeof(string));
-            var type2 = new ReflectionBasedType(typeof(object));
+            var type1 = new ReflectionBasedType(_typeSystem,typeof(string));
+            var type2 = new ReflectionBasedType(_typeSystem,typeof(object));
             type1.Equals(type2).ShouldBeFalse();
             type1.GetHashCode().ShouldNotBe(type2.GetHashCode());
         }
@@ -108,14 +107,14 @@ namespace Accessors_Specification
         [Test]
         public void a_type_compared_to_a_null_results_in_minus_one()
         {
-            new ReflectionBasedType(typeof(int)).CompareTo(null)
+            new ReflectionBasedType(_typeSystem,typeof(int)).CompareTo(null)
                 .ShouldBe(-1);
         }
 
         [Test]
         public void two_types_not_in_an_inheritance_hierarchy_compare_to_minus_one()
         {
-            new ReflectionBasedType(typeof(int)).CompareTo(new ReflectionBasedType(typeof(string)))
+            new ReflectionBasedType(_typeSystem,typeof(int)).CompareTo(new ReflectionBasedType(_typeSystem,typeof(string)))
                 .ShouldBe(-1);
         }
     }
@@ -143,7 +142,7 @@ namespace Accessors_Specification
         public void a_nested_property_is_returned()
         {
             GivenTypeFor<Type>();
-            ThenTheProperty("Namespace.Length").TargetType.ShouldBe<int>();
+            ThenTheProperty("Namespace.Length").Type.Equals<int>().ShouldBeTrue();
         }
 
         [Test]
@@ -151,14 +150,14 @@ namespace Accessors_Specification
         {
             GivenTypeFor<string>();
 
-            ThenTheProperty("Length").TargetType.ShouldBe<int>();
+            ThenTheProperty("Length").Type.Equals<int>().ShouldBeTrue();
         }
 
         [Test]
         public void a_property_on_the_result_of_an_indexer_is_found()
         {
             GivenTypeFor<House>();
-            ThenTheProperty("Customers:0.FirstName").TargetType.ShouldBe<string>();
+            ThenTheProperty("Customers:0.FirstName").Type.Equals<string>().ShouldBeTrue();
         }
 
         [Test]
@@ -179,7 +178,7 @@ namespace Accessors_Specification
         public void an_indexer_is_found_and_recognized()
         {
             GivenTypeFor<House>();
-            ThenTheProperty("Customers:0").TargetType.ShouldBe<Customer>();
+            ThenTheProperty("Customers:0").Type.Equals<Customer>().ShouldBeTrue();
         }
 
         [Test]
@@ -231,9 +230,9 @@ namespace Accessors_Specification
             ThenTheProperty("Length").Name.ShouldBe("Length");
         }
 
-        ReflectionBasedProperty ThenTheProperty(string propertyName)
+        IProperty ThenTheProperty(string propertyName)
         {
-            return ThenTheType.GetProperty(propertyName) as ReflectionBasedProperty;
+            return Type.FindPropertyByPath(propertyName);
         }
     }
     public class when_accessing_methods : IType_context
@@ -256,7 +255,7 @@ namespace Accessors_Specification
         {
             GivenTypeFor<RingOfPower>();
 
-            var wornByMethod = ThenTheType.GetMethod("WornBy");
+            var wornByMethod = Type.GetMethod("WornBy");
             wornByMethod
                 .ShouldNotBeNull()
                 .InputMembers.Count().ShouldBe(1);
@@ -270,17 +269,17 @@ namespace Accessors_Specification
         {
             GivenTypeFor<RingOfPower>();
 
-            ThenTheType.GetMethod("WornBy")
-                .ShouldBeTheSameInstanceAs(ThenTheType.GetMethod("wornby"));
+            Type.GetMethod("WornBy")
+                .ShouldBeTheSameInstanceAs(Type.GetMethod("wornby"));
         }
         [Test]
         public void a_method_defined_in_the_base_type_has_the_correct_base_type_owner()
         {
             GivenTypeFor<RingOfPower>();
 
-            ThenTheType.GetMethod("ToString").Owner.TypeName.ShouldBe("Object");
+            Type.GetMethod("ToString").Owner.TypeName.ShouldBe("Object");
         }
-        protected ICollection<IMethod> TheMethods { get { return ThenTheType.GetMethods(); } }
+        protected ICollection<IMethod> TheMethods { get { return Type.GetMethods(); } }
     }
 
     public class RingOfPower
@@ -291,7 +290,7 @@ namespace Accessors_Specification
 
     public class when_building_types_from_the_type_system : context
     {
-        readonly ITypeSystem TypeSystem = new ReflectionBasedTypeSystem();
+        readonly ITypeSystem TypeSystem = TypeSystems.Default;
 
         [Test]
         public void the_instance_cannot_be_null()
@@ -310,16 +309,23 @@ namespace Accessors_Specification
 
     public class IType_context : context
     {
-        protected IType ThenTheType;
+        
+        protected ITypeSystem _typeSystem;
+
+        public IType_context()
+        {
+            _typeSystem = TypeSystems.Default;
+        }
+        protected IType Type;
 
         protected void GivenTypeFor<TTarget>()
         {
-            ThenTheType = TypeForClr<TTarget>();
+            Type = TypeForClr<TTarget>();
         }
 
         protected IType TypeForClr<TTarget>()
         {
-            return new ReflectionBasedTypeSystem { SurrogateFactory = new DefaultSurrogateFactory() }.FromClr(typeof(TTarget));
+            return _typeSystem.FromClr(typeof(TTarget));
         }
     }
 }

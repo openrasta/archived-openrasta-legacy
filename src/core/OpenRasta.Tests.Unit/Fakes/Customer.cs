@@ -24,6 +24,7 @@ namespace OpenRasta.Tests.Unit.Fakes
     public class Customer : Person
     {
         public List<Order> Orders { get; set; }
+        public ICollection<string> Attributes { get; set; }
     }
 
     public class Order

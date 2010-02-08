@@ -1,4 +1,4 @@
-namespace OpenRasta.TypeSystem.ReflectionBased
+namespace OpenRasta.TypeSystem
 {
     public class PathComponent
     {

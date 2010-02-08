@@ -56,15 +56,17 @@ namespace OpenRasta.Web.Markup
 
         public static ISelectElement Select(this IXhtmlAnchor hook, Expression<Func<object>> propertyName, IEnumerable<string> options)
         {
-            return Select(hook, propertyName, options.Select(val => Document.CreateElement<IOptionElement>()[val]));
+            return Select(hook, propertyName, options.Select(val => Document.CreateElement<IOptionElement>()[val]).ToList());
         }
         public static ISelectElement Select(this IXhtmlAnchor hook, Expression<Func<object>> propertyName, IDictionary<string, string> options)
         {
-            return Select(hook, propertyName, options.Select(kv => Document.CreateElement<IOptionElement>().Value(kv.Key)[kv.Value]));
+            return Select(hook, propertyName, options.Select(kv => Document.CreateElement<IOptionElement>().Value(kv.Key)[kv.Value]).ToList());
         }
         public static ISelectElement Select(this IXhtmlAnchor hook, Expression<Func<object>> propertyName, IEnumerable<IOptionElement> options)
         {
             var et = new PropertyPathForInstance<object>(propertyName);
+
+
             var select = Document.CreateElement<ISelectElement>().Name(et.FullPath);
             //TODOD: Special case multiple values 
             if (et.Value != null)
@@ -122,7 +124,7 @@ namespace OpenRasta.Web.Markup
         public static ISelectElement Select<T>(this IXhtmlAnchor hook, Expression<Func<T, object>> propertyName, IEnumerable<string> options)
         {
             return Select<T>(hook, propertyName,
-                              options.Select(val => Document.CreateElement<IOptionElement>()[val]));
+                              options.Select(val => Document.CreateElement<IOptionElement>()[val]).ToList());
         }
 
         public static ISelectElement Select<T>(this IXhtmlAnchor hook, Expression<Func<T, object>> propertyName, IEnumerable<IOptionElement> options)

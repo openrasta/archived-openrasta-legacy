@@ -1,5 +1,4 @@
 ﻿#region License
-
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:
@@ -19,19 +18,19 @@ namespace OpenRasta.TypeSystem
 {
     public class TypeBuilder : MemberBuilder, ITypeBuilder
     {
-        readonly Dictionary<IMember, IPropertyBuilder> _propertyInstancesCache =
-            new Dictionary<IMember, IPropertyBuilder>();
-
-        object _generatedValue;
-
-        bool _generatedValueIsCached;
-        object _objectBeingAppliedTo;
-        object _rootValue;
+        object _cacheValue;
 
         public TypeBuilder(IType type)
-            : base(type)
+            : base(null, type)
         {
             Changes = new PropertyDictionary(this);
+        }
+
+        public IDictionary<string, IPropertyBuilder> Changes { get; private set; }
+
+        public override bool HasValue
+        {
+            get { return _cacheValue != null || Changes.Count > 0; }
         }
 
         public IType Type
@@ -39,182 +38,70 @@ namespace OpenRasta.TypeSystem
             get { return Member as IType; }
         }
 
-        public IDictionary<string, IPropertyBuilder> Changes { get; private set; }
-
-        public override bool HasValue
-        {
-            get { return _rootValue != null || Changes.Count > 0; }
-        }
-
-        public override IPropertyBuilder GetProperty(string propertyPath)
-        {
-            EnsureWriteable();
-            return base.GetProperty(propertyPath);
-        }
-
         public override object Value
         {
-            get { return _generatedValueIsCached ? _generatedValue : _objectBeingAppliedTo ?? _rootValue; }
+            get { return _cacheValue; }
+        }
+
+        public override object Apply(object target, out object assignedValue)
+        {
+            assignedValue = _cacheValue ?? target;
+            if (_cacheValue != null)
+                return _cacheValue;
+            return target;
         }
 
         public override bool TrySetValue(object value)
         {
-            EnsureWriteable();
             if (Type.CanSetValue(value))
             {
-                _rootValue = value;
+                _cacheValue = value;
                 return true;
             }
+
             return false;
         }
 
         public override bool TrySetValue<T>(IEnumerable<T> values, ValueConverter<T> converter)
         {
-            EnsureWriteable();
-
             object result;
             if (!Type.TryCreateInstance(values, converter, out result))
                 return false;
-            _rootValue = result;
+            _cacheValue = result;
             return true;
         }
 
         /// <exception cref="ArgumentNullException"><c>instance</c> is null.</exception>
         public object Create()
         {
-            if (_generatedValueIsCached)
-                return _generatedValue;
-
-            bool rootIsNew = _rootValue == null;
-            _rootValue = _rootValue ?? Type.CreateInstance();
-
-            ProcessAllProperties();
-
-            _generatedValue = _rootValue;
-            _generatedValueIsCached = true;
-            if (rootIsNew)
-                _rootValue = null;
-            return _generatedValue;
+            return AssignFrame(_cacheValue ?? Type.CreateInstance(), Assignment);
         }
 
         /// <exception cref="ArgumentNullException"><c>instance</c> is null.</exception>
-        public void Apply(object instance)
+        public object Update(object instance)
         {
             if (instance == null) throw new ArgumentNullException("instance");
-
-            _objectBeingAppliedTo = instance;
-            ProcessAllProperties();
-            _objectBeingAppliedTo = null;
+            return AssignFrame(instance, Assignment);
         }
-
-        void ProcessAllProperties()
+        object AssignFrame(object instance, AssignmentFrame currentFrame)
         {
-            foreach (var propertyAssignment in BuildPropertyAssignments())
+            object assignedValue;
+            var hasChildren = currentFrame.Children.Any();
+            
+            instance = currentFrame.Builder.Apply(instance, out assignedValue);
+
+            object newValue = assignedValue;
+            foreach (var childFrame in currentFrame.Children.Values)
+                newValue = AssignFrame(newValue, childFrame);
+
+            if (hasChildren && currentFrame.Builder.Value != newValue)
             {
-                IMemberBuilder currentBuilder = this;
-                foreach (var traversedAccessor in propertyAssignment.CallStack)
-                {
-                    // ignore the root
-                    if (traversedAccessor.Equals(Type))
-                        continue;
-
-                    IPropertyBuilder currentPropertyBuilder = null;
-
-                    // we have an intermediary property to create alongst the chain path
-                    if (!traversedAccessor.Equals(propertyAssignment.Builder.Property))
-                    {
-                        var property = (IProperty) traversedAccessor;
-                        try
-                        {
-                            if (currentBuilder.Value != null)
-                            {
-                                object existingValue = property.GetValue(currentBuilder.Value);
-                                currentPropertyBuilder = GetRealPropertyInstance(traversedAccessor, existingValue);
-                            }
-                        }
-                        catch
-                        {
-                        }
-                        if (currentPropertyBuilder == null)
-                            currentPropertyBuilder = GetRealPropertyInstance(traversedAccessor);
-                    }
-                    else
-                    {
-                        // we have the last property in the chain to create
-                        currentPropertyBuilder = GetRealPropertyInstance(
-                            propertyAssignment.Builder.Property,
-                            propertyAssignment.Builder.Value);
-                    }
-
-                    if (currentPropertyBuilder.Owner == null)
-                        currentPropertyBuilder.SetOwner(currentBuilder);
-                    currentBuilder = currentPropertyBuilder;
-                }
+                var oldValue = currentFrame.Builder.Value;
+                currentFrame.Builder.TrySetValue(newValue);
+                instance = currentFrame.Builder.Apply(instance, out assignedValue);
+                currentFrame.Builder.TrySetValue(oldValue);
             }
-        }
-
-        IPropertyBuilder GetRealPropertyInstance(IMember accessor)
-        {
-            return GetRealPropertyInstance(accessor, null);
-        }
-
-        IPropertyBuilder GetRealPropertyInstance(IMember accessor, object value)
-        {
-            IPropertyBuilder pi;
-            if (_propertyInstancesCache.TryGetValue(accessor, out pi))
-            {
-                if (value != null)
-                    pi.TrySetValue(value);
-            }
-            else
-            {
-                var propertyAccessor = (IProperty) accessor;
-                pi = propertyAccessor.CreateBuilder();
-                if (value != null)
-                    pi.TrySetValue(value);
-                _propertyInstancesCache.Add(accessor, pi);
-            }
-            return pi;
-        }
-
-        void EnsureWriteable()
-        {
-            if (!_generatedValueIsCached) return;
-
-            _propertyInstancesCache.Clear();
-            _generatedValueIsCached = false;
-        }
-
-        IList<PropertyAssignment> BuildPropertyAssignments()
-        {
-            var props = new List<PropertyAssignment>();
-
-            foreach (PropertyBuilder property in Changes.Values)
-            {
-                var assignment = new PropertyAssignment {Builder = property};
-                var callStack = new List<IMember>(property.Property.GetCallStack());
-                callStack.Reverse();
-                assignment.CallStack = callStack.AsReadOnly();
-                props.Add(assignment);
-            }
-
-            // we sort so that the smaller callstacks get called first.
-            props.Sort();
-            return props.AsReadOnly();
-        }
-
-        struct PropertyAssignment : IComparable<PropertyAssignment>
-        {
-            public IList<IMember> CallStack;
-            public IPropertyBuilder Builder;
-
-            public int CompareTo(PropertyAssignment other)
-            {
-                int stackComparison = CallStack.Count.CompareTo(other.CallStack.Count);
-                return stackComparison == 0
-                           ? Builder.IndexAtCreation.CompareTo(other.Builder.IndexAtCreation)
-                           : stackComparison;
-            }
+            return instance;
         }
 
         class PropertyDictionary : IDictionary<string, IPropertyBuilder>
@@ -224,45 +111,14 @@ namespace OpenRasta.TypeSystem
                 Owner = owner;
             }
 
-            public TypeBuilder Owner { get; private set; }
-
-            public bool ContainsKey(string key)
+            public int Count
             {
-                return Owner._propertiesCache.ContainsKey(key) && Owner._propertiesCache[key] != null &&
-                       Owner._propertiesCache[key].HasValue;
+                get { return TheOnesWithValues().Count(); }
             }
 
-            public void Add(string key, IPropertyBuilder value)
+            public bool IsReadOnly
             {
-                throw new NotSupportedException();
-            }
-
-            public bool Remove(string key)
-            {
-                throw new NotSupportedException();
-            }
-
-            public bool TryGetValue(string key, out IPropertyBuilder value)
-            {
-                if (ContainsKey(key))
-                {
-                    value = Owner._propertiesCache[key];
-                    return true;
-                }
-                value = null;
-                return false;
-            }
-
-            public IPropertyBuilder this[string key]
-            {
-                get
-                {
-                    IPropertyBuilder property;
-                    if (!TryGetValue(key,out property))
-                        throw new ArgumentOutOfRangeException();
-                    return property;
-                }
-                set { throw new NotSupportedException(); }
+                get { return true; }
             }
 
             public ICollection<string> Keys
@@ -270,20 +126,27 @@ namespace OpenRasta.TypeSystem
                 get { return TheOnesWithValues().Select(kv => kv.Key).ToList(); }
             }
 
+            public TypeBuilder Owner { get; private set; }
+
             public ICollection<IPropertyBuilder> Values
             {
                 get { return TheOnesWithValues().Select(kv => kv.Value).ToList(); }
             }
 
-            public IEnumerator<KeyValuePair<string, IPropertyBuilder>> GetEnumerator()
+            public IPropertyBuilder this[string key]
             {
-                foreach (var value in TheOnesWithValues())
-                    yield return value;
-            }
+                get
+                {
+                    IPropertyBuilder property;
+                    if (!TryGetValue(key, out property))
+                        throw new ArgumentOutOfRangeException();
+                    return property;
+                }
 
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
+                set
+                {
+                    throw new NotSupportedException();
+                }
             }
 
             public void Add(KeyValuePair<string, IPropertyBuilder> item)
@@ -311,26 +174,54 @@ namespace OpenRasta.TypeSystem
                 throw new NotSupportedException();
             }
 
-            public int Count
+            public void Add(string key, IPropertyBuilder value)
             {
-                get { return TheOnesWithValues().Count(); }
+                throw new NotSupportedException();
             }
 
-            public bool IsReadOnly
+            public bool ContainsKey(string key)
             {
-                get { return true; }
+                return Owner.PropertiesCache.ContainsKey(key) && Owner.PropertiesCache[key] != null &&
+                       Owner.PropertiesCache[key].HasValue;
+            }
+
+            public bool Remove(string key)
+            {
+                throw new NotSupportedException();
+            }
+
+            public bool TryGetValue(string key, out IPropertyBuilder value)
+            {
+                if (ContainsKey(key))
+                {
+                    value = Owner.PropertiesCache[key];
+                    return true;
+                }
+
+                value = null;
+                return false;
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            public IEnumerator<KeyValuePair<string, IPropertyBuilder>> GetEnumerator()
+            {
+                foreach (var value in TheOnesWithValues())
+                    yield return value;
             }
 
             IEnumerable<KeyValuePair<string, IPropertyBuilder>> TheOnesWithValues()
             {
-                return Owner._propertiesCache.Where(kv => kv.Value != null && kv.Value.HasValue);
+                return Owner.PropertiesCache.Where(kv => kv.Value != null && kv.Value.HasValue);
             }
         }
     }
 }
 
 #region Full license
-
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -347,5 +238,4 @@ namespace OpenRasta.TypeSystem
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 #endregion

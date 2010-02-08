@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace OpenRasta.Binding
 {
     /// <summary>
-    /// Represent a string key associated with a series of values and a converter, used to match key and values pairs with the keyvalue binder.
+    /// Represent a key associated with a series of typed values and a converter, used to match key and values pairs with binders.
     /// </summary>
     /// <typeparam name="T">The type of the values.</typeparam>
     public class KeyedValues<T> : KeyedValues
@@ -27,6 +27,7 @@ namespace OpenRasta.Binding
             Values = values;
             Converter = converter;
         }
+
 
         public ValueConverter<T> Converter { get; private set; }
         public IEnumerable<T> Values { get; private set; }

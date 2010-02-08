@@ -14,10 +14,14 @@ using OpenRasta.TypeSystem;
 
 namespace OpenRasta.Binding
 {
+    /// <summary>
+    /// Represents a binder for the ChangeSet type.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ChangeSetBinder<T> : KeyedValuesBinder where T : class
     {
         /// <summary>
-        /// Constructs a new binder for types of type ChangeSet.
+        /// Constructs a new binder for types of type <see cref="ChangeSet"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="objectName"></param>

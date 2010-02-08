@@ -78,7 +78,7 @@ namespace OpenRasta.Codecs
             var codecInstance = CreateCodec(Context);
             var codec = codecInstance as IMediaTypeReader;
             if (codec != null)
-                _theResult = codec.ReadFrom(Context.Request.Entity, new ReflectionBasedTypeSystem().FromClr(typeof(T)), paramName);
+                _theResult = codec.ReadFrom(Context.Request.Entity,TypeSystems.Default.FromClr(typeof(T)), paramName);
             else
             {
                 throw new NullReferenceException();

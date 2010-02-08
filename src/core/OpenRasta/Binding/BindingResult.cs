@@ -10,6 +10,9 @@
 
 namespace OpenRasta.Binding
 {
+    /// <summary>
+    /// Represents the result of a binding.
+    /// </summary>
     public class BindingResult
     {
         BindingResult(bool successfull, object instance)
@@ -19,14 +22,33 @@ namespace OpenRasta.Binding
                 Instance = instance;
         }
 
+        /// <summary>
+        /// Gets the instance of the built object.
+        /// </summary>
+        /// <remarks>
+        /// The value of this property is undefined when the binding has not been successful.
+        /// </remarks>
         public object Instance { get; private set; }
+
+        /// <summary>
+        /// Gets a value defining if the binding was successful.
+        /// </summary>
         public bool Successful { get; private set; }
 
+        /// <summary>
+        /// Creates a binding result for failing bindings.
+        /// </summary>
+        /// <returns></returns>
         public static BindingResult Failure()
         {
             return new BindingResult(false, null);
         }
 
+        /// <summary>
+        /// Creates a binding result for successful bindings.
+        /// </summary>
+        /// <param name="instance">The object successful built by the binder.</param>
+        /// <returns>An instance of the <see cref="BindingResult"/> type.</returns>
         public static BindingResult Success(object instance)
         {
             return new BindingResult(true, instance);

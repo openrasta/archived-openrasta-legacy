@@ -49,6 +49,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
 
             return Activator.CreateInstance(type);
         }
+
         /// <summary>
         /// Creates a type using the provided string to initialize its values.
         /// </summary>
@@ -68,11 +69,13 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             {
                 return type.CreateInstanceFrom(parameterValueAsString);
             }
+
             string[] parameterValueAsStringArray;
             if ((parameterValueAsStringArray = content as string[]) != null)
             {
                 return type.CreateInstanceFrom(parameterValueAsStringArray);
             }
+
             if (type.IsAssignableFrom(content.GetType()))
                 return content;
             throw new NotSupportedException("You can only pass an array of strings or a single string");
@@ -95,29 +98,34 @@ namespace OpenRasta.TypeSystem.ReflectionBased
 
                 var values = Array.CreateInstance(elementType, propertyValuesAsArray.Length);
                 int i = 0;
-                TryConvert(propertyValuesAsArray, elementType, converter, converted => values.SetValue(converted, i++));
-                return values;
+                if (TryConvert(propertyValuesAsArray,
+                           elementType,
+                           converter,
+                           converted => values.SetValue(converted, i++)))
+                    return values;
+                throw new NotSupportedException("Could not convert he values to an array");
             }
+            // IEnumerable<>
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
             {
-                type = typeof(IList<>).MakeGenericType(type.GetGenericTypeDefinition());
+                type = typeof(IList<>).MakeGenericType(type.GetGenericArguments());
             }
 
             // ICollection<T>
-            if (type == typeof(ICollection<>) || type.Implements(typeof(ICollection<>)))
+            if (type.Implements(typeof(ICollection<>)))
             {
                 var collection = type.CreateInstance();
                 var elementType = type.GetGenericArguments()[0];
                 var interfaceMethod = typeof(ICollection<>).MakeGenericType(elementType).GetMethod("Add",
                                                                                                    new[] { elementType });
 
-                TryConvert(propertyValuesAsArray,
+                if (TryConvert(propertyValuesAsArray,
                            elementType,
                            converter,
-                           converted => interfaceMethod.Invoke(collection, new[] { converted }));
-
-                return collection;
+                           converted => interfaceMethod.Invoke(collection, new[] { converted })))
+                    return collection;
             }
+
             if (propertyValuesAsArray.Length == 1)
             {
                 var bindingResult = converter(propertyValuesAsArray[0], type);
@@ -137,9 +145,9 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                 }
                 return list;
             }
+
             throw new NotSupportedException(
-                string.Format("TargetType {0} cannot be instantiated from an array of values",
-                              type.Name));
+                string.Format("TargetType {0} couldn't be instantiated from the provided values", type.Name));
         }
 
         public static object CreateInstanceFrom(this Type type, string[] propertyValues)
@@ -175,8 +183,10 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                 {
                     continue;
                 }
+
                 return new KeyValuePair<PropertyInfo, object[]>(indexer.Key, results);
             }
+
             return null;
         }
 
@@ -255,7 +265,8 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             {
                 yield return type;
                 type = type.BaseType;
-            } while (type != null);
+            }
+            while (type != null);
         }
 
         /// <summary>
@@ -301,6 +312,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                 builder.Append(GetTypeString(type.DeclaringType, true));
                 builder.Append('.');
             }
+
             if (type.IsGenericType)
             {
                 if (type.IsGenericTypeDefinition && !flattenGenericTypeDefinitions)
@@ -319,6 +331,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                         builder.Append(genericTypeArguments[i].Name);
                         if (i > 0) builder.Append(',');
                     }
+
                     builder.Append(')');
                 }
             }
@@ -326,6 +339,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             {
                 builder.Append(type.Name);
             }
+
             return builder.ToString();
         }
 
@@ -345,17 +359,17 @@ namespace OpenRasta.TypeSystem.ReflectionBased
         }
 
         /// <summary>
-        /// Returns true if the type implements the interface.
+        /// Returns <c>true</c> if the type implements the interface.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="interfaceType"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">interfaceType is not an interface. Use InheritsFrom instead.</exception>
+        /// <exception cref="ArgumentException"><paramref name="interfaceType"/> is not an interface. Use the <see cref="InheritsFrom"/> method instead.</exception>
         public static bool Implements(this Type type, Type interfaceType)
         {
             if (!interfaceType.IsInterface)
                 throw new ArgumentException("interfaceType is not an interface. Use InheritsFrom instead.", "interfaceType");
-            if (type == null || type.IsInterface || !interfaceType.IsInterface)
+            if (type == null)
                 return false;
             return type.FindInterface(interfaceType) != null;
         }
@@ -366,11 +380,15 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                 return type.GetGenericTypeDefinition() == superType;
             return superType.IsAssignableFrom(type);
         }
-
+        public static bool IsAssignableTo(this Type type, Type destinationType)
+        {
+            return destinationType.IsAssignableFrom(type);
+        }
         public static bool IsAssignableTo<T>(this Type type)
         {
-            return typeof(T).IsAssignableFrom(type);
+            return type.IsAssignableTo(typeof(T));
         }
+
         static object CreateInstanceFromString(this Type type, string propertyValue, Stack<Type> recursionDefender)
         {
             if (type == null || propertyValue == null) return null;
@@ -427,6 +445,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                 {
                     recursionDefender.Pop();
                 }
+
                 if (value != null)
                     return constructor.Invoke(new[] { value });
             }
@@ -443,18 +462,26 @@ namespace OpenRasta.TypeSystem.ReflectionBased
         }
 
         /// <exception cref="NotSupportedException">Could not convert element {0} to {1}.</exception>
-        static void TryConvert<T>(T[] source,
+        static bool TryConvert<T>(T[] source,
                                   Type destinationType,
                                   ValueConverter<T> converter,
                                   Action<object> onConvertSuccessful)
         {
             for (int i = 0; i < source.Length; i++)
             {
-                var bindingResult = converter(source[i], destinationType);
-                if (!bindingResult.Successful)
-                    throw new NotSupportedException("Could not convert element {0} to {1}.");
-                onConvertSuccessful(bindingResult.Instance);
+                try
+                {
+                    var bindingResult = converter(source[i], destinationType);
+                    if (!bindingResult.Successful)
+                        return false;
+                    onConvertSuccessful(bindingResult.Instance);
+                }
+                catch
+                {
+                    return false;
+                }
             }
+            return true;
         }
     }
 }

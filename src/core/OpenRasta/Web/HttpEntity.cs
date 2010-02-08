@@ -32,7 +32,17 @@ namespace OpenRasta.Web
         public string FileName { get { return null; } }
 
         public ICodec Codec { get; set; }
-        public MediaType ContentType { get { return Headers.ContentType; } set { Headers.ContentType = value; } }
+        public MediaType ContentType
+        {
+            get
+            {
+                return Headers.ContentType;
+            }
+            set
+            {
+                Headers.ContentType = value;
+            }
+        }
 
         public object Instance { get; set; }
 
@@ -41,7 +51,7 @@ namespace OpenRasta.Web
         public HttpHeaderDictionary Headers { get; private set; }
 
         public Stream Stream { get; private set; }
-        public IList<Error> Errors { get; set; } 
+        public IList<Error> Errors { get; set; }
     }
 }
 

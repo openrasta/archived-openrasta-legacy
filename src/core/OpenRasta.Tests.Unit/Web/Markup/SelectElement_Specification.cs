@@ -19,9 +19,13 @@ using OpenRasta.Web.Markup.Modules;
 
 namespace SelectElement_Specification
 {
-    public class when_there_is_a_value : markup_element_context<ISelectElement>
+    public class when_the_property_returns_a_value_for_enumerations : markup_element_context<ISelectElement>
     {
-        public AttributeTargets PropertyReturningFalse { get{ return AttributeTargets.Interface;} }
+        public AttributeTargets PropertyReturningFalse
+        {
+            get{ return AttributeTargets.Interface; }
+        }
+        [Test]
         public void the_option_element_is_selected()
         {
             WhenCreatingElement(()=>((IXhtmlAnchor) null).Select(() => this.PropertyReturningFalse));
@@ -32,72 +36,24 @@ namespace SelectElement_Specification
             ThenTheElementAsString.Contains("<option value=\"Method\" />");
         }
     }
-    //public class when_setting_a_value_before_adding_option_elements : context
-    //{
-    //    [Test]
-    //    public void the_value_is_stored()
-    //    {
-    //        var element = new SelectElement();
-    //        element.Value = "25";
-    //        element.Children.Add(new OptionElement {Content = "26"});
-    //        element.Value.ShouldBe("25");
-    //    }
-    //    [Test]
-    //    public void the_selected_property_is_set_on_the_option_element()
-    //    {
-    //        var element = new SelectElement();
-    //        element.Value = "25";
-    //        element.Children.Add(new OptionElement {Content = "25"});
-    //        element.Children.First().Selected.ShouldBe(true);
-    //    }
-    //    [Test]
-    //    public void the_selected_property_on_the_option_element_is_reset_if_the_assigned_value_is_different()
-    //    {
+    public class when_building_an_option_tag : context
+    {
+        [Test]
+        public void the_markup_for_selected_options_is_correct()
+        {
+            var element = Document.CreateElement<IOptionElement>().Value("value")["content"];
+            element.Selected = true;
+            element.ToString().ShouldBe("<option value=\"value\" selected=\"selected\">content</option>");
+        }
+        [Test]
+        public void the_markup_for_not_selected_options_is_correct()
+        {
 
-    //        var element = new SelectElement();
-    //        element.Value = "25";
-    //        element.Children.Add(new OptionElement { Content = "26", Selected = true });
-    //        element.Children.First().Selected.ShouldBe(false);
-    //    }
-    //    [Test]
-    //    public void rendering_the_element_when_the_value_doesnt_match_an_option_results_in_an_error()
-    //    {
-    //        var element = new SelectElement() {Value = "24"};
-    //        element.Children.Add(new OptionElement {Content = "25"});
-    //        Executing(() => element.ToString())
-    //            .ShouldThrow<InvalidOperationException>();
-    //    }
-    //}
-    //public class when_setting_a_value_after_adding_option_elements : context
-    //{
-    //    [Test]
-    //    public void the_value_is_stored()
-    //    {
-    //        var element = new SelectElement();
-    //        element.Children.Add(new OptionElement { Content = "26" });
-    //        element.Value = "25";
-    //        element.Value.ShouldBe("25");
-    //    }
-    //    [Test]
-    //    public void the_selected_property_is_set_on_the_option_element()
-    //    {
-
-    //        var element = new SelectElement();
-    //        element.Children.Add(new OptionElement { Content = "25" });
-    //        element.Value = "25";
-    //        element.Children.First().Selected.ShouldBe(true);
-    //    }
-    //    [Test]
-    //    public void the_value_is_stored_after_removing_an_option_element()
-    //    {
-    //        var element = new SelectElement();
-    //        element.Children.Add(new OptionElement { Content = "25" });
-    //        element.Value = "25";
-            
-    //        element.Children.RemoveAt(0);
-    //        element.Value.ShouldBe("25");
-    //    }
-    //}
+            var element = Document.CreateElement<IOptionElement>().Value("value")["content"];
+            element.Selected = false;
+            element.ToString().ShouldBe("<option value=\"value\">content</option>");
+        }
+    }
 }
 
 #region Full license

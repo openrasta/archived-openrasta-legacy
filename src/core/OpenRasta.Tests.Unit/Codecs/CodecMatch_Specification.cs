@@ -68,7 +68,7 @@ namespace CodecMatch_Specification
                 new CodecMatch(
                     new CodecRegistration(
                         typeof (string), 
-                        new ReflectionBasedTypeSystem().FromClr(typeof (object)), new MediaType(mediaType)), score, matchingParameters);
+                        TypeSystems.Default.FromClr(typeof (object)), new MediaType(mediaType)), score, matchingParameters);
         }
     }
 }

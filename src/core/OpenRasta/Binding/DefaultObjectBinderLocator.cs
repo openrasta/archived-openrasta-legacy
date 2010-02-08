@@ -21,7 +21,7 @@ namespace OpenRasta.Binding
         public DefaultObjectBinderLocator()
         {
             Logger = NullLogger.Instance;
-            TypeSystem = new ReflectionBasedTypeSystem();
+            TypeSystem = TypeSystems.Default;
         }
 
         public ILogger Logger { get; set; }
@@ -29,10 +29,10 @@ namespace OpenRasta.Binding
 
         public IObjectBinder GetBinder(IMember member)
         {
-            BinderBaseAttribute binderAttribute = member.FindAttribute<BinderBaseAttribute>() ?? member.Type.FindAttribute<BinderBaseAttribute>();
+            var abstractObjectBinderAttribute = member.FindAttribute<BinderAttribute>() ?? member.Type.FindAttribute<BinderAttribute>();
 
-            if (binderAttribute != null)
-                return binderAttribute.GetBinder(member);
+            if (abstractObjectBinderAttribute != null)
+                return abstractObjectBinderAttribute.GetBinder(member);
 
             IMethod binderMethod = member.GetMethod("GetBinder");
             if (binderMethod != null)

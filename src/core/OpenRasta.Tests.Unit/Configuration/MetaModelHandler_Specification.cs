@@ -135,7 +135,7 @@ namespace MetaModelHandler_Specification
             given_handler_registration();
 
             Handler.Process(MetaModel);
-            var typeSystem = new ReflectionBasedTypeSystem().FromClr(typeof(Customer));
+            var typeSystem = TypeSystems.Default.FromClr(typeof(Customer));
             var registeredHandlers = HandlerRepository.GetHandlerTypesFor(typeSystem);
 
             registeredHandlers.Any(x => x.Name == "CustomerHandler").ShouldBeTrue();
@@ -145,7 +145,7 @@ namespace MetaModelHandler_Specification
 
         void given_handler_registration()
         {
-            var typeSystem = new ReflectionBasedTypeSystem();
+            var typeSystem = TypeSystems.Default;
             MetaModel.ResourceRegistrations.Add(new ResourceModel
             {
                 ResourceKey = typeSystem.FromClr(typeof(Customer)),
@@ -159,12 +159,12 @@ namespace MetaModelHandler_Specification
     }
     public class when_registering_non_IType_resource_keys : metamodelhandler_context<TypeRewriterMetaModelHandler>
     {
-        ReflectionBasedTypeSystem TypeSystem;
+        ITypeSystem TypeSystem;
 
         protected override void SetUp()
         {
             base.SetUp();
-            TypeSystem = new ReflectionBasedTypeSystem();
+            TypeSystem = TypeSystems.Default;
             Handler = new TypeRewriterMetaModelHandler(TypeSystem);
         }
         [Test]
@@ -237,7 +237,7 @@ namespace MetaModelHandler_Specification
 
         void given_unknown_type_registered_as_codec()
         {
-            var typeSystem = new ReflectionBasedTypeSystem();
+            var typeSystem = TypeSystems.Default;
             MetaModel.ResourceRegistrations.Add(new ResourceModel
             {
                 ResourceKey = typeSystem.FromClr<Customer>(),
@@ -250,7 +250,7 @@ namespace MetaModelHandler_Specification
 
         void given_codec_registration()
         {
-            var typeSystem = new ReflectionBasedTypeSystem();
+            var typeSystem = TypeSystems.Default;
             MetaModel.ResourceRegistrations.Add(new ResourceModel
             {
                 ResourceKey = typeSystem.FromClr(typeof(Customer)),

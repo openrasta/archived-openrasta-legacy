@@ -93,7 +93,7 @@ namespace ResponseEntityWriter_Specification
 
             Context.PipelineData.ResponseCodec = CodecRegistration.FromResourceType(typeof(object),
                                                                        typeof(TCodec),
-                                                                       new ReflectionBasedTypeSystem(),
+                                                                       TypeSystems.Default,
                                                                        new MediaType("application/unknown"),
                                                                        null,
                                                                        config, false);

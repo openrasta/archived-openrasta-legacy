@@ -88,7 +88,7 @@ namespace Configuration_Specification
         [Test]
         public void a_resource_with_IType_is_registered()
         {
-            ResourceSpaceHas.ResourcesOfType(new ReflectionBasedTypeSystem().FromClr(typeof(Customer)));
+            ResourceSpaceHas.ResourcesOfType(TypeSystems.Default.FromClr(typeof(Customer)));
 
             MetaModel.ResourceRegistrations[0].ResourceKey.ShouldBeOfType<IType>().Name.ShouldBe("Customer");
         }
@@ -208,7 +208,7 @@ namespace Configuration_Specification
         public void a_handler_from_itype_is_registered()
         {
             ResourceSpaceHas.ResourcesOfType(typeof(Frodo)).AtUri("/theshrine")
-                .HandledBy(new ReflectionBasedTypeSystem().FromClr(typeof(CustomerHandler)));
+                .HandledBy(TypeSystems.Default.FromClr(typeof(CustomerHandler)));
             FirstRegistration.Handlers[0].Name.ShouldBe("CustomerHandler");
         }
 

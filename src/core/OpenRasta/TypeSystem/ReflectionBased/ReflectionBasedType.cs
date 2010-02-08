@@ -1,5 +1,4 @@
 #region License
-
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:
@@ -11,8 +10,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using System.Diagnostics;
 using OpenRasta.Binding;
 using OpenRasta.DI;
 
@@ -21,21 +19,17 @@ namespace OpenRasta.TypeSystem.ReflectionBased
     /// <summary>
     /// Represents a CLR-based type.
     /// </summary>
+    [DebuggerDisplay("Name={TargetType.Name}, FullName={TargetType.ToString()}")]
     public class ReflectionBasedType : ReflectionBasedMember<ITypeBuilder>, IResolverAwareType
     {
-        public ReflectionBasedType(Type type)
-            : base(type)
+        public ReflectionBasedType(ITypeSystem typeSystem, Type type)
+            : base(typeSystem, type)
         {
-        }
-        public override ITypeBuilder CreateBuilder()
-        {
-            return new TypeBuilder(this);
         }
 
-        public object CreateInstance(IDependencyResolver resolver)
+        public override IType Type
         {
-            if (resolver == null) throw new ArgumentNullException("resolver");
-            return resolver.Resolve(TargetType, UnregisteredAction.AddAsTransient);
+            get { return this; }
         }
 
         public override bool Equals(object obj)
@@ -50,9 +44,33 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             return TargetType.GetHashCode();
         }
 
+        public int CompareTo(IType other)
+        {
+            INativeMember otherReflection;
+            if (other == null || (otherReflection = other as INativeMember) == null)
+                return -1;
+            return TargetType.GetInheritanceDistance(otherReflection.NativeType);
+        }
+
+        public object CreateInstance(IDependencyResolver resolver)
+        {
+            if (resolver == null) throw new ArgumentNullException("resolver");
+            return resolver.Resolve(TargetType, UnregisteredAction.AddAsTransient);
+        }
+
+        public ITypeBuilder CreateBuilder()
+        {
+            return new TypeBuilder(this);
+        }
+
         public virtual object CreateInstance()
         {
             return TargetType.CreateInstance();
+        }
+
+        public bool IsAssignableFrom(IType member)
+        {
+            return member != null && member.CompareTo(this) >= 0;
         }
 
         public bool TryCreateInstance<T>(IEnumerable<T> values, ValueConverter<T> converter, out object result)
@@ -70,14 +88,13 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             {
                 return false;
             }
+
             return result != null;
         }
     }
-
 }
 
 #region Full license
-
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -94,5 +111,4 @@ namespace OpenRasta.TypeSystem.ReflectionBased
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 #endregion

@@ -12,7 +12,7 @@ using OpenRasta.TypeSystem;
 
 namespace OpenRasta.Binding
 {
-    public class KeyedValuesBinderAttribute : BinderBaseAttribute
+    public class KeyedValuesBinderAttribute : BinderAttribute
     {
         public override IObjectBinder GetBinder(IMember memberInfo)
         {

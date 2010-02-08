@@ -22,7 +22,10 @@ Html
 openrasta
 args
 localhost
-Accessor</UserWords>
+Accessor
+surrogated
+Templated
+Markup</UserWords>
             </CustomDictionary>
             <CustomDictionary>
               <Name>en-GB</Name>
@@ -1087,7 +1090,9 @@ Accessor</UserWords>
       <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
       <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateConstants" />
-      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateStaticReadonly" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateStaticReadonly">
+        <ExtraRule Prefix="_" Suffix="" Style="aaBb" />
+      </PredefinedRule>
       <Abbreviation Text="OK" />
     </Naming2>
   </CodeStyleSettings>

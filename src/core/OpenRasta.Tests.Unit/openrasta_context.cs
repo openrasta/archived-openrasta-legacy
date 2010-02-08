@@ -26,7 +26,7 @@ namespace OpenRasta.Tests
 
         public openrasta_context()
         {
-            TypeSystem = new ReflectionBasedTypeSystem();
+            TypeSystem = TypeSystems.Default;
         }
 
         public PipelineContinuation Result { get; set; }
@@ -144,7 +144,7 @@ namespace OpenRasta.Tests
         protected void given_request_entity_body(string content)
         {
             var bytes = Encoding.UTF8.GetBytes(content);
-            Request.Entity = new HttpEntity(new HttpHeaderDictionary(), new MemoryStream(bytes)) { ContentLength = bytes.Length };
+            Request.Entity = new HttpEntity(Request.Entity.Headers, new MemoryStream(bytes)) { ContentLength = bytes.Length };
         }
 
         protected void given_request_header_accept(string p)
@@ -206,6 +206,7 @@ namespace OpenRasta.Tests
             if (!Resolver.HasDependency(typeof(IAuthenticationProvider)))
                 Resolver.AddDependency<IAuthenticationProvider, InMemAuthenticationProvider>();
             Resolver.AddDependencyInstance(typeof(IErrorCollector), Errors = new TestErrorCollector());
+            Resolver.AddDependency<IPathManager, PathManager>();
             
             manager.SetupCommunicationContext(Context = new InMemoryCommunicationContext());
             DependencyManager.SetResolver(Resolver);

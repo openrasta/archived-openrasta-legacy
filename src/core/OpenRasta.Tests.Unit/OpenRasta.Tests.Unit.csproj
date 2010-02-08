@@ -115,6 +115,7 @@
     <Compile Include="TypeSystem\Instances_Specification.cs" />
     <Compile Include="TypeSystem\PropertyPathManager_Specification.cs" />
     <Compile Include="TypeSystem\ReflectionExtensions_Specification.cs" />
+    <Compile Include="TypeSystem\Surrogate2_Specification.cs" />
     <Compile Include="TypeSystem\Surrogates_Specification.cs" />
     <Compile Include="Text\Rfc2047Encoding_Specification.cs" />
     <Compile Include="Fakes\Frodo.cs" />

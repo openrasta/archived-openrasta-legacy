@@ -11,18 +11,20 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using OpenRasta.Binding;
 
 namespace OpenRasta.TypeSystem.ReflectionBased
 {
+    [DebuggerDisplay("{global::OpenRasta.TypeSystem.DebuggerStrings.Property(this)}")]
     public class ReflectionBasedProperty : ReflectionBasedMember<IPropertyBuilder>, IProperty
     {
-        public ReflectionBasedProperty(IMember parent, PropertyInfo property, object[] propertyParameters)
-            : base(property.PropertyType)
+        public ReflectionBasedProperty(ITypeSystem typeSystem, IMember parent, PropertyInfo property, object[] propertyParameters)
+            : base(typeSystem, property.PropertyType)
         {
-            PropertyParameters = propertyParameters;
+            PropertyParameters = propertyParameters ?? new object[0];
             Property = property;
             Owner = parent;
         }
@@ -46,7 +48,6 @@ namespace OpenRasta.TypeSystem.ReflectionBased
         /// Defines the type owning this property
         /// </summary>
         public IMember Owner { get; private set; }
-
 
         public override bool CanSetValue(object value)
         {
@@ -76,9 +77,9 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             return true;
         }
 
-        public override IPropertyBuilder CreateBuilder()
+        public IPropertyBuilder CreateBuilder(IMemberBuilder parentBuilder)
         {
-            return new PropertyBuilder(this);
+            return new PropertyBuilder(parentBuilder, this);
         }
 
         public IEnumerable<IMember> GetCallStack()
@@ -93,12 +94,18 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                 else
                     break;
             }
-            yield break;
         }
 
         public virtual object GetValue(object target)
         {
-            return Property.GetValue(target, PropertyParameters);
+            try
+            {
+                return Property.GetValue(target, PropertyParameters);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public override bool Equals(object obj)

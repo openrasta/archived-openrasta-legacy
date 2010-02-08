@@ -181,9 +181,9 @@ namespace OpenRasta.Web.Markup.Modules
     /// </summary>
     public interface IFieldsetElement : IAttributesCommon,
                                         IContentSetForm,
-                                        IContentModel<IButtonElement, string>,
-                                        IContentModel<IButtonElement, ILegendElement>,
-                                        IContentModel<IButtonElement, IContentSetFlow>
+                                        IContentModel<IFieldsetElement, string>,
+                                        IContentModel<IFieldsetElement, ILegendElement>,
+                                        IContentModel<IFieldsetElement, IContentSetFlow>
     {
     }
     /// <summary>

@@ -15,8 +15,10 @@ using NUnit.Framework;
 using OpenRasta.Binding;
 using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Fakes;
+using OpenRasta.Tests.Unit.TypeSystem;
 using OpenRasta.TypeSystem;
 using OpenRasta.TypeSystem.ReflectionBased;
+using Frodo=OpenRasta.Tests.Unit.Fakes.Frodo;
 
 namespace Instances_Specification
 {
@@ -25,27 +27,27 @@ namespace Instances_Specification
         [Test]
         public void cannot_assign_properties_to_a_null_object()
         {
-            GivenTypeInstance<Customer>();
+            given_builder_for<Customer>();
 
-            Executing(() => ThenTypeBuilder.Apply(null)).ShouldThrow<ArgumentNullException>();
+            Executing(() => TypeBuilder.Update(null)).ShouldThrow<ArgumentNullException>();
         }
 
         [Test]
         public void the_properties_are_assigned()
         {
-            GivenTypeInstance<Customer>();
-            GivenProperty("username", "johndoe");
+            given_builder_for<Customer>();
+            given_property("username", "johndoe");
 
             var newCustomer = new Customer {FirstName = "John"};
 
-            ThenTypeBuilder.Apply(newCustomer);
+            TypeBuilder.Update(newCustomer);
 
             newCustomer.Username.ShouldBe("johndoe");
             newCustomer.FirstName.ShouldBe("John");
 
-            GivenProperty("lastname", "doe");
+            given_property("lastname", "doe");
             newCustomer = new Customer {FirstName = "John"};
-            ThenTypeBuilder.Apply(newCustomer);
+            TypeBuilder.Update(newCustomer);
 
             newCustomer.Username.ShouldBe("johndoe");
             newCustomer.FirstName.ShouldBe("John");
@@ -58,25 +60,25 @@ namespace Instances_Specification
         [Test]
         public void a_property_retrieved_twice_retrieves_the_same_object()
         {
-            GivenTypeInstance<string>();
+            given_builder_for<string>();
 
-            ThenTypeBuilder.GetProperty("Length").ShouldBeTheSameInstanceAs(ThenTypeBuilder.GetProperty("Length"));
+            TypeBuilder.GetProperty("Length").ShouldBeTheSameInstanceAs(TypeBuilder.GetProperty("Length"));
         }
 
         [Test]
         public void a_readonly_property_is_returned_as_non_writable()
         {
-            GivenTypeInstance<string>();
+            given_builder_for<string>();
 
-            ThenTypeBuilder.GetProperty("Length").CanWrite.ShouldBeFalse();
+            TypeBuilder.GetProperty("Length").CanWrite.ShouldBeFalse();
         }
 
         [Test]
         public void an_unknown_property_returns_null()
         {
-            GivenTypeInstance<string>();
+            given_builder_for<string>();
 
-            ThenTypeBuilder.GetProperty("unknown").ShouldBeNull();
+            TypeBuilder.GetProperty("unknown").ShouldBeNull();
         }
     }
 
@@ -85,56 +87,56 @@ namespace Instances_Specification
         [Test]
         public void a_property_retrieved_but_wihtout_a_value_is_not_present_in_the_changes()
         {
-            GivenTypeInstance<Customer>();
+            given_builder_for<Customer>();
 
-            ThenTypeBuilder.GetProperty("FirstName")
+            TypeBuilder.GetProperty("FirstName")
                 .TrySetValue(2).ShouldBeFalse();
 
-            ThenTypeBuilder.Changes.Count.ShouldBe(0);
+            TypeBuilder.Changes.Count.ShouldBe(0);
         }
 
         [Test]
         public void a_successfully_assigned_property_is_present_in_the_list_of_changes()
         {
-            GivenTypeInstance<Customer>();
+            given_builder_for<Customer>();
 
-            ThenTypeBuilder.GetProperty("FirstName").TrySetValue("Frodo");
+            TypeBuilder.GetProperty("FirstName").TrySetValue("Frodo");
 
-            ThenTypeBuilder.Changes.Count.ShouldBe(1);
-            ThenTypeBuilder.Changes.ContainsKey("FirstName").ShouldBeTrue();
+            TypeBuilder.Changes.Count.ShouldBe(1);
+            TypeBuilder.Changes.ContainsKey("FirstName").ShouldBeTrue();
         }
 
         [Test]
         public void accessing_the_indexer_with_an_unknown_key_throws()
         {
-            GivenTypeInstance<Customer>();
-            Executing(() => { IPropertyBuilder value = ThenTypeBuilder.Changes["firstname"]; })
+            given_builder_for<Customer>();
+            Executing(() => { IPropertyBuilder value = TypeBuilder.Changes["firstname"]; })
                 .ShouldThrow<ArgumentOutOfRangeException>();
         }
 
         [Test]
         public void the_change_list_is_readonly()
         {
-            GivenTypeInstance<Customer>();
+            given_builder_for<Customer>();
 
-            ThenTypeBuilder.Changes.IsReadOnly.ShouldBeTrue();
-            Executing(() => ThenTypeBuilder.Changes.Add(null, null))
+            TypeBuilder.Changes.IsReadOnly.ShouldBeTrue();
+            Executing(() => TypeBuilder.Changes.Add(null, null))
                 .ShouldThrow<NotSupportedException>();
 
-            Executing(() => ThenTypeBuilder.Changes.Remove(null))
+            Executing(() => TypeBuilder.Changes.Remove(null))
                 .ShouldThrow<NotSupportedException>();
 
-            Executing(() => ThenTypeBuilder.Changes["bla"] = null)
+            Executing(() => TypeBuilder.Changes["bla"] = null)
                 .ShouldThrow<NotSupportedException>();
         }
 
         [Test]
         public void the_keys_are_case_insensitive()
         {
-            GivenTypeInstance<Customer>();
-            ThenTypeBuilder.GetProperty("FirstName")
+            given_builder_for<Customer>();
+            TypeBuilder.GetProperty("FirstName")
                 .TrySetValue("Frodo");
-            ThenTypeBuilder.Changes["firstname"].Value.ShouldBe("Frodo");
+            TypeBuilder.Changes["firstname"].Value.ShouldBe("Frodo");
         }
     }
 
@@ -143,20 +145,20 @@ namespace Instances_Specification
         [Test]
         public void a_property_is_not_set_when_the_type_is_incompatible()
         {
-            GivenTypeInstance<Customer>();
+            given_builder_for<Customer>();
 
-            ThenTypeBuilder.GetProperty("Username").TrySetValue(3).ShouldBeFalse();
+            TypeBuilder.GetProperty("Username").TrySetValue(3).ShouldBeFalse();
         }
 
         [Test]
         public void a_writable_property_is_set_and_its_value_can_be_retrieved()
         {
-            GivenTypeInstance<Customer>();
+            given_builder_for<Customer>();
 
-            ThenTypeBuilder.GetProperty("Username").TrySetValue("hello")
+            TypeBuilder.GetProperty("Username").TrySetValue("hello")
                 .ShouldBeTrue();
 
-            ThenTypeBuilder.GetProperty("Username")
+            TypeBuilder.GetProperty("Username")
                 .Value.ShouldBe("hello");
         }
     }
@@ -171,14 +173,14 @@ namespace Instances_Specification
         [Test]
         public void a_new_instance_is_created_when_using_create()
         {
-            GivenTypeInstance<Customer>();
-            Customer customer = ThenTypeBuilder.Create().ShouldBeOfType<Customer>().ShouldNotBeNull();
+            given_builder_for<Customer>();
+            Customer customer = TypeBuilder.Create().ShouldBeOfType<Customer>().ShouldNotBeNull();
 
-            ThenTypeBuilder.GetProperty("FirstName").TrySetValue("Frodo")
+            TypeBuilder.GetProperty("FirstName").TrySetValue("Frodo")
                 .ShouldBeTrue();
 
             customer.LastName = "Baggins";
-            customer = ThenTypeBuilder.Create() as Customer;
+            customer = TypeBuilder.Create() as Customer;
 
             customer.FirstName.ShouldBe("Frodo");
             customer.LastName.ShouldBeNull();
@@ -187,47 +189,31 @@ namespace Instances_Specification
         [Test]
         public void assigning_properties_after_the_property_got_assigned_a_parent_updates_the_parent()
         {
-            GivenTypeInstance<Customer>();
-            var customerInstance = new Customer();
-            ThenTypeBuilder.TrySetValue(customerInstance);
+            given_builder_for<Customer>();
 
-            IPropertyBuilder firstName = ThenTypeBuilder.GetProperty("FirstName");
-            firstName.SetOwner(ThenTypeBuilder);
+            var customerInstance = new Customer();
+            TypeBuilder.TrySetValue(customerInstance);
+
+            IPropertyBuilder firstName = TypeBuilder.GetProperty("FirstName");
+            //firstName.SetOwner(TypeBuilder);
 
             firstName.TrySetValue(new[] {"Smeagol"}, IdentityConverter);
 
+            TypeBuilder.Update(customerInstance);
             customerInstance.FirstName.ShouldBe("Smeagol");
-        }
-
-        [Test]
-        public void cannot_assign_a_null_parent_to_a_property()
-        {
-            GivenTypeInstance<Customer>();
-            Executing(() => ThenTypeBuilder.GetProperty("FirstName").SetOwner(null))
-                .ShouldThrow<ArgumentNullException>();
-        }
-
-        [Test]
-        public void cannot_assign_a_parent_twice()
-        {
-            GivenTypeInstance<Customer>();
-            ThenTypeBuilder.GetProperty("FirstName").SetOwner(ThenTypeBuilder);
-            ITypeBuilder newBuilder = new ReflectionBasedType(typeof(Customer)).CreateBuilder();
-            Executing(() => ThenTypeBuilder.GetProperty("FirstName").SetOwner(newBuilder))
-                .ShouldThrow<InvalidOperationException>();
         }
 
         [Test]
         public void no_reference_is_kept_after_a_call_to_apply()
         {
-            GivenTypeInstance<Customer>();
+            given_builder_for<Customer>();
             var customer = new Customer();
-            ThenTypeBuilder.Apply(customer);
+            TypeBuilder.Update(customer);
 
-            ThenTypeBuilder.GetProperty("FirstName").TrySetValue("Frodo")
+            TypeBuilder.GetProperty("FirstName").TrySetValue("Frodo")
                 .ShouldBeTrue();
 
-            object newCustomer = ThenTypeBuilder.Create();
+            object newCustomer = TypeBuilder.Create();
             newCustomer.ShouldNotBeTheSameInstanceAs(customer);
             customer.FirstName.ShouldBe(null);
         }
@@ -244,18 +230,18 @@ namespace Instances_Specification
 
         void WhenCreatingTheObject()
         {
-            _result = ThenTypeBuilder.Create();
+            _result = TypeBuilder.Create();
         }
 
         [Test]
         public void a_type_instance_can_be_applied_twice()
         {
-            GivenTypeInstance<Customer>();
-            GivenProperty("Username", "johndoe");
+            given_builder_for<Customer>();
+            given_property("Username", "johndoe");
 
             WhenCreatingTheObject();
 
-            GivenProperty("FirstName", "John");
+            given_property("FirstName", "John");
             WhenCreatingTheObject();
 
             ThenTheObject<Customer>().FirstName.ShouldBe("John");
@@ -265,38 +251,30 @@ namespace Instances_Specification
         [Test]
         public void a_value_can_be_assigned_to_the_type_instance()
         {
-            GivenTypeInstance<int>();
+            given_builder_for<int>();
 
-            ThenTypeBuilder.TrySetValue(3)
+            TypeBuilder.TrySetValue(3)
                 .ShouldBeTrue();
-            ThenTypeBuilder.HasValue.ShouldBeTrue();
-            ThenTypeBuilder.Value.ShouldBe(3);
+            TypeBuilder.HasValue.ShouldBeTrue();
+            TypeBuilder.Value.ShouldBe(3);
         }
 
         [Test]
         public void a_value_of_the_incorrect_type_cannot_be_assinged()
         {
-            GivenTypeInstance<int>();
+            given_builder_for<int>();
 
-            ThenTypeBuilder.TrySetValue("hello")
+            TypeBuilder.TrySetValue("hello")
                 .ShouldBeFalse();
 
-            ThenTypeBuilder.HasValue.ShouldBeFalse();
+            TypeBuilder.HasValue.ShouldBeFalse();
         }
-
-        [Test]
-        public void creating_an_object_twice_returns_the_same_object()
-        {
-            GivenTypeInstance<Customer>();
-            ThenTypeBuilder.Create().ShouldBeTheSameInstanceAs(ThenTypeBuilder.Create());
-        }
-
         [Test]
         public void nested_properties_are_assigned()
         {
-            GivenTypeInstance<Customer>();
-            GivenProperty("Address.Line1", "Cadbury Street");
-            GivenProperty("Address.City", "London");
+            given_builder_for<Customer>();
+            given_property("Address.Line1", "Cadbury Street");
+            given_property("Address.City", "London");
 
             WhenCreatingTheObject();
 
@@ -307,10 +285,10 @@ namespace Instances_Specification
         [Test]
         public void setting_properties_on_children_of_indexers_works_as_expected()
         {
-            GivenTypeInstance<House>();
+            given_builder_for<House>();
 
-            GivenProperty("CustomersByName:john.FirstName", "John");
-            GivenProperty("CustomersByName:john.LastName", "Doe");
+            given_property("CustomersByName:john.FirstName", "John");
+            given_property("CustomersByName:john.LastName", "Doe");
             WhenCreatingTheObject();
             ThenTheObject<House>().CustomersByName["john"].FirstName.ShouldBe("John");
             ThenTheObject<House>().CustomersByName["john"].LastName.ShouldBe("Doe");
@@ -319,9 +297,9 @@ namespace Instances_Specification
         [Test]
         public void the_properties_are_assigned()
         {
-            GivenTypeInstance<Customer>();
-            GivenProperty("Username", "johndoe");
-            GivenProperty("FirstName", "john");
+            given_builder_for<Customer>();
+            given_property("Username", "johndoe");
+            given_property("FirstName", "john");
 
             WhenCreatingTheObject();
             ThenTheObject<Customer>().Username.ShouldBe("johndoe");
@@ -329,74 +307,24 @@ namespace Instances_Specification
         }
     }
 
-    public class when_assigning_a_value_to_a_parameter_binder : parameter_instance_context
+
+    public abstract class instance_context : context
     {
-        [Test]
-        public void the_parameter_has_a_value()
-        {
-            GivenParameterInstance((int a) => { });
-            GivenBinderKey("a", 1);
-
-            TheParameter.IsReadyForAssignment.ShouldBeTrue();
-        }
-    }
-
-    public class when_not_assigning_a_value_to_a_parameter : parameter_instance_context
-    {
-        public void MethodWithOptional([Optional] int a)
+        protected static ITypeSystem _ts = TypeSystems.Default;
+        public instance_context()
         {
         }
-
-        [Test]
-        public void an_optional_value_gives_the_parameter_a_value()
-        {
-            GivenParameterInstance<int>(MethodWithOptional);
-
-            TheParameter.IsReadyForAssignment.ShouldBeTrue();
-        }
-
-        [Test]
-        public void an_unfilled_parameter_doesnt_have_value()
-        {
-            GivenParameterInstance((int a) => { });
-
-            TheParameter.IsReadyForAssignment.ShouldBeFalse();
-        }
-    }
-
-    public class parameter_instance_context : instance_context
-    {
-        protected ParameterInstance TheParameter;
-
-        protected void GivenBinderKey<TValue>(string key, TValue value)
-        {
-            TheParameter.Binder.SetProperty(key, new[] {value}, (src, output) => BindingResult.Success(src))
-                .ShouldBeTrue();
-        }
-
-        protected void GivenParameterInstance<T>(Action<T> action)
-        {
-            var parameterType = new ReflectionBasedTypeSystem().FromClr(action.Method.GetParameters()[0].ParameterType);
-            TheParameter = new ParameterInstance(new ReflectionParameter(action.Method.GetParameters()[0]),
-                                                 new KeyedValuesBinder(
-                                                     parameterType,
-                                                     action.Method.GetParameters()[0].Name));
-        }
-    }
-
-    public class instance_context : context
-    {
         // ITypeSystem _typeSystem = new 
-        public void GivenTypeInstance<T1>()
+        public void given_builder_for<T1>()
         {
-            ThenTypeBuilder = new ReflectionBasedTypeSystem().FromClr(typeof(T1)).CreateBuilder();
+            TypeBuilder = _ts.FromClr(typeof(T1)).CreateBuilder();
         }
 
-        protected ITypeBuilder ThenTypeBuilder;
+        protected ITypeBuilder TypeBuilder;
 
-        protected void GivenProperty(string prop, object value)
+        protected void given_property(string prop, object value)
         {
-            ThenTypeBuilder.GetProperty(prop).TrySetValue(value).ShouldBeTrue();
+            TypeBuilder.GetProperty(prop).TrySetValue(value).ShouldBeTrue();
         }
     }
 }

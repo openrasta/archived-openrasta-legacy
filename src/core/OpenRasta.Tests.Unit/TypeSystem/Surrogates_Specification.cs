@@ -10,51 +10,56 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Instances_Specification;
 using NUnit.Framework;
 using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Fakes;
+using OpenRasta.Tests.Unit.TypeSystem;
 using OpenRasta.TypeSystem;
 using OpenRasta.TypeSystem.ReflectionBased;
+using Frodo = OpenRasta.Tests.Unit.Fakes.Frodo;
 
 namespace Surrogates_Specification
 {
-    public class when_using_ListOfT : context
+
+    public class when_using_ListOfT : instance_context
     {
         ITypeBuilder _theBuilder;
 
         [Test]
         public void indexer_values_are_ignored_and_values_are_appended()
         {
-            GivenTypeInstance();
+            given_builder();
 
             _theBuilder.GetProperty(":1").TrySetValue("hello").ShouldBeTrue();
             _theBuilder.GetProperty(":0").TrySetValue("hello2").ShouldBeTrue();
 
-            var theList = (List<string>) _theBuilder.Create();
+            var theList = (List<string>)_theBuilder.Create();
             theList[0].ShouldBe("hello");
             theList[1].ShouldBe("hello2");
         }
         [Test]
         public void the_indexer_is_surrogated()
         {
-            GivenTypeInstance();
+            given_builder();
 
             _theBuilder.GetProperty(":0").TrySetValue("hello")
                 .ShouldBeTrue();
 
-            var theList = (List<string>) _theBuilder.Create();
+            var theList = (List<string>)_theBuilder.Create();
             theList[0].ShouldBe("hello");
         }
 
-        void GivenTypeInstance()
+        void given_builder()
         {
-            _theBuilder = new ReflectionBasedTypeSystem().FromClr(typeof(List<string>)).CreateBuilder();
+            _theBuilder = _ts.FromClr(typeof(List<string>)).CreateBuilder();
         }
     }
 
-    public class when_using_ListOfT_as_a_nested_property : context
+    public class when_using_ListOfT_as_a_nested_property : instance_context
     {
         ITypeBuilder _theBuilder;
 
@@ -66,13 +71,13 @@ namespace Surrogates_Specification
             _theBuilder.GetProperty("ListOfStrings:0").TrySetValue("hello")
                 .ShouldBeTrue();
 
-            var theList = (ListContainer) _theBuilder.Create();
+            var theList = (ListContainer)_theBuilder.Create();
             theList.ListOfStrings[0].ShouldBe("hello");
         }
         [Test]
         public void indexer_value_is_ignored_when_surrogate_is_an_intermediary()
         {
-            var instance = new ReflectionBasedTypeSystem().FromClr(typeof(House)).CreateBuilder();
+            var instance = _ts.FromClr(typeof(House)).CreateBuilder();
 
             instance.GetProperty("Customers:4.FirstName").TrySetValue("Anakin");
             instance.GetProperty("Customers:0.FirstName").TrySetValue("Skywalker");
@@ -82,7 +87,7 @@ namespace Surrogates_Specification
         }
         void GivenTypeInstance()
         {
-            _theBuilder = new ReflectionBasedTypeSystem().FromClr(typeof(ListContainer)).CreateBuilder();
+            _theBuilder = _ts.FromClr(typeof(ListContainer)).CreateBuilder();
         }
 
         public class ListContainer
@@ -92,7 +97,7 @@ namespace Surrogates_Specification
     }
     public class when_using_surrogated_property : instance_context
     {
-        
+
     }
     public class when_using_DateTime_surrogate : instance_context
     {
@@ -101,35 +106,128 @@ namespace Surrogates_Specification
         [Test]
         public void nested_surrogate_types_are_used_for_read_only_properties()
         {
-            GivenTypeInstance<Customer>();
-            GivenProperty("DateOfBirth.Day", 14);
-            GivenProperty("DateOfBirth.Month", 12);
+            given_builder_for<Customer>();
+            given_property("DateOfBirth.Day", 14);
+            given_property("DateOfBirth.Month", 12);
 
-            WhenCreatingTheObject();
+            when_creating_object();
 
-            ThenTheObject<Customer>().DateOfBirth.Day.ShouldBe(14);
-            ThenTheObject<Customer>().DateOfBirth.Month.ShouldBe(12);
+            result_as<Customer>().DateOfBirth.Day.ShouldBe(14);
+            result_as<Customer>().DateOfBirth.Month.ShouldBe(12);
         }
 
         [Test]
         public void surrogate_types_are_used_for_read_only_properties()
         {
-            GivenTypeInstance<DateTime>();
-            GivenProperty("Day", 14);
+            given_builder_for<DateTime>();
+            given_property("Day", 14);
 
-            WhenCreatingTheObject();
+            when_creating_object();
 
-            ThenTheObject<DateTime>().Day.ShouldBe(14);
+            result_as<DateTime>().Day.ShouldBe(14);
         }
 
-        T ThenTheObject<T>()
+        T result_as<T>()
         {
-            return (T) _result;
+            return (T)_result;
         }
 
-        void WhenCreatingTheObject()
+        void when_creating_object()
         {
-            _result = ThenTypeBuilder.Create();
+            _result = TypeBuilder.Create();
+        }
+
+    }
+    public class indexer_for_enumerates : context.indexer_context<IEnumerable<string>,string>
+    {
+        [Test]
+        public void values_are_generated()
+        {
+            given_builder();
+            given_successful_property(":0", "zero");
+            given_successful_property(":1", "one");
+            given_successful_property(":3", "three");
+
+            when_object_built();
+
+            then_values_should_be("zero","one","three");
+        }
+    }
+
+    public class collection_for_enumerates : context.indexer_context<ICollection<string>, string>
+    {
+        [Test]
+        public void values_are_generated()
+        {
+            given_builder();
+            given_successful_property(":0", "zero");
+            given_successful_property(":1", "one");
+            given_successful_property(":3", "three");
+
+            when_object_built();
+
+            then_values_should_be("zero", "one", "three");
+        }
+    }
+
+    public class list_for_enumerates : context.indexer_context<IList<string>, string>
+    {
+        [Test]
+        public void values_are_generated()
+        {
+            given_builder();
+            given_successful_property(":0", "zero");
+            given_successful_property(":1", "one");
+            given_successful_property(":3", "three");
+
+            when_object_built();
+
+            then_values_should_be("zero", "one", "three");
+        }
+    }
+    public class Replicator : List<Frodo>{}
+    public class using_enumerable_types_with_indexer_surrogates : context.indexer_context<Replicator,Frodo>
+    {
+        public void multiple_values_are_added_to_the_same_object()
+        {
+            given_builder();
+            given_successful_property(":0.FirstName", "Frodo");
+            given_successful_property(":0.LastName", "Baggins");
+
+            when_object_built();
+
+            result.First().FirstName.ShouldBe("Frodo");
+            result.First().LastName.ShouldBe("Baggins");
+        }
+    }
+    namespace context
+    {
+        public class indexer_context<T,TValue> : OpenRasta.Testing.context
+            where T:IEnumerable<TValue>
+        {
+            protected static ITypeSystem TypeSystem = TypeSystems.Default;
+            protected ITypeBuilder builder;
+            protected T result;
+
+            protected void given_builder()
+            {
+                builder = TypeSystem.FromClr<T>().CreateBuilder();
+            }
+            protected void given_successful_property(string key, object value)
+            {
+                builder.GetProperty(key).TrySetValue(value).ShouldBeTrue();
+            }
+            protected void when_object_built()
+            {
+                result = (T)builder.Create();
+            }
+            protected void then_values_should_be(params object[] values)
+            {
+                for (int i = 0; i < values.Length; i++)
+                {
+                    result.Skip(i).FirstOrDefault().ShouldBe(values[i]);
+                }
+            }
         }
     }
 }

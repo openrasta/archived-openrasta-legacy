@@ -62,6 +62,7 @@
     <Compile Include="..\..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
+    <Compile Include="Binding\CustomSurrogates.cs" />
     <Compile Include="Regressions\92.cs" />
     <Compile Include="Codecs\HtmlForm_Specification.cs" />
     <Compile Include="Codecs\Json_Specification.cs" />
@@ -96,9 +97,6 @@
       <Project>{174DEE64-B4B2-4F30-ADA2-15D67ADE3320}</Project>
       <Name>OpenRasta.Testing</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Binding\" />
   </ItemGroup>
   <Import Project="..\..\..\build\defaults.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

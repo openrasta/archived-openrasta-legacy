@@ -23,12 +23,7 @@ namespace OpenRasta.Web
     public class TemplatedUriResolver : IUriResolver, IUriTemplateParser
     {
         UriTemplateTable _templates = new UriTemplateTable();
-
-        public TemplatedUriResolver()
-        {
-            TypeSystem = new ReflectionBasedTypeSystem();
-        }
-
+        public ITypeSystem TypeSystem { get; set; }
         public int Count
         {
             get { return _templates.KeyValuePairs.Count; }
@@ -39,18 +34,17 @@ namespace OpenRasta.Web
             get { return _templates.IsReadOnly; }
         }
 
-        /// <summary>
-        /// The TypeSystem to use for any resource key that is a type
-        /// </summary>
-        public ITypeSystem TypeSystem { get; set; }
-
+        public TemplatedUriResolver()
+        {
+            TypeSystem = TypeSystems.Default;
+        }
         /// <exception cref="InvalidOperationException">Cannot add a Uri mapping once the configuration has been done.</exception>
         /// <exception cref="ArgumentException">Cannot use a Type as the resourceKey. Use an <see cref="IType"/> instead or assign the <see cref="TypeSystem"/> property.</exception>
         public void Add(UriRegistration registration)
         {
             if (_templates.IsReadOnly)
                 throw new InvalidOperationException("Cannot add a Uri mapping once the configuration has been done.");
-            var resourceKey = EnsureTypeSystemUsage(registration.ResourceKey);
+            var resourceKey = EnsureIsNotType(registration.ResourceKey);
             var descriptor = new UrlDescriptor
             {
                 Uri = new UriTemplate(registration.UriTemplate), 
@@ -106,14 +100,14 @@ namespace OpenRasta.Web
         /// <exception cref="InvalidOperationException"><c>InvalidOperationException</c>.</exception>
         public Uri CreateUriFor(Uri baseAddress, object resourceKey, string uriName, NameValueCollection keyValues)
         {
-            resourceKey = EnsureTypeSystemUsage(resourceKey);
+            resourceKey = EnsureIsNotType(resourceKey);
             var template = FindBestMatchingTemplate(_templates, resourceKey, uriName, keyValues);
 
             if (template == null)
             {
                 throw new InvalidOperationException(
                     string.Format(
-                        "No suitable uri could be found for resource with key {0} with values {1}.", 
+                        "No suitable Uri could be found for resource with key {0} with values {1}.", 
                         resourceKey, 
                         keyValues.ToHtmlFormEncoding()));
             }
@@ -164,32 +158,20 @@ namespace OpenRasta.Web
                    requestResourceKey.Equals(templateResourceKey);
         }
 
-        static bool UriNameMatches(string requestUriName, string templateUriName)
-        {
-            return (!requestUriName.IsNullOrEmpty() &&
-                    requestUriName.EqualsOrdinalIgnoreCase(templateUriName)) ||
-                   (requestUriName.IsNullOrEmpty() &&
-                    templateUriName.IsNullOrEmpty());
-        }
-
-        object EnsureTypeSystemUsage(object resourceKey)
+        object EnsureIsNotType(object resourceKey)
         {
             var resourceType = resourceKey as Type;
-
-            if (resourceType != null && TypeSystem == null)
-                throw new ArgumentException("Cannot use a Type as the resourceKey. Use an IType instead or assign the TypeSystem property.");
-
             if (resourceType != null)
                 resourceKey = TypeSystem.FromClr(resourceType);
             return resourceKey;
         }
 
         UriTemplate FindBestMatchingTemplate(UriTemplateTable templates, 
-                                             object resourceKey, 
-                                             string uriName, 
-                                             NameValueCollection keyValues)
+                                                    object resourceKey, 
+                                                    string uriName, 
+                                                    NameValueCollection keyValues)
         {
-            resourceKey = EnsureTypeSystemUsage(resourceKey);
+            resourceKey = EnsureIsNotType(resourceKey);
             var matchingTemplates =
                 from template in templates.KeyValuePairs
                 let descriptor = (UrlDescriptor)template.Value
@@ -206,6 +188,14 @@ namespace OpenRasta.Web
                 select template.Key;
 
             return matchingTemplates.FirstOrDefault();
+        }
+
+        static bool UriNameMatches(string requestUriName, string templateUriName)
+        {
+            return (!requestUriName.IsNullOrEmpty() &&
+                    requestUriName.EqualsOrdinalIgnoreCase(templateUriName)) ||
+                   (requestUriName.IsNullOrEmpty() &&
+                    templateUriName.IsNullOrEmpty());
         }
 
         class UrlDescriptor

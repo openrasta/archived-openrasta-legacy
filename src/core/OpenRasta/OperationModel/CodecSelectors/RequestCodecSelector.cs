@@ -37,7 +37,10 @@ namespace OpenRasta.OperationModel.CodecSelectors
                           let requiredMembers = from member in operation.Inputs.Required()
                                                 where !member.IsReadyForAssignment
                                                 select member.Member
-                          let optionalMembers = from member in operation.Inputs.Optional()
+                          let optionalMembers = from member in 
+                                                    operation.Inputs.Optional().Union(
+                                                    operation.Inputs.Required()
+                                                        .Where(x => x.IsReadyForAssignment))
                                                 where member.IsReadyForAssignment
                                                 select member.Member
                           let hasMembersToFill = optionalMembers.Any() || requiredMembers.Any()

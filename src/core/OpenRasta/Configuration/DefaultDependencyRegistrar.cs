@@ -32,12 +32,17 @@ using OpenRasta.Pipeline;
 using OpenRasta.Pipeline.Contributors;
 using OpenRasta.TypeSystem;
 using OpenRasta.TypeSystem.ReflectionBased;
+using OpenRasta.TypeSystem.Surrogated;
+using OpenRasta.TypeSystem.Surrogates;
+using OpenRasta.TypeSystem.Surrogates.Static;
 using OpenRasta.Web;
 
 namespace OpenRasta.Configuration
 {
     public class DefaultDependencyRegistrar : IDependencyRegistrar
     {
+        protected Type PathManagerType;
+
         public DefaultDependencyRegistrar()
         {
             CodecTypes = new List<Type>();
@@ -49,7 +54,7 @@ namespace OpenRasta.Configuration
             OperationFilterTypes = new List<Type>();
             OperationHydratorTypes = new List<Type>();
             OperationCodecSelectorTypes = new List<Type>();
-
+            SurrogateBuilders = new List<Type>();
             LogSourceTypes = new List<Type>();
 
             SetTypeSystem<ReflectionBasedTypeSystem>();
@@ -64,6 +69,7 @@ namespace OpenRasta.Configuration
             SetOperationCreator<MethodBasedOperationCreator>();
             SetOperationExecutor<OperationExecutor>();
             SetOperationInterceptorProvider<SystemAndAttributesOperationInterceptorProvider>();
+            SetPathManager<PathManager>();
 
             AddMethodFilter<TypeExclusionMethodFilter<object>>();
 
@@ -75,6 +81,20 @@ namespace OpenRasta.Configuration
             AddOperationHydrators();
             AddOperationCodecResolvers();
             AddLogSources();
+            AddSurrogateBuilders();
+        }
+
+        public void AddSurrogateBuilders()
+        {
+            SurrogateBuilders.Add(typeof(ListIndexerSurrogateBuilder));
+            SurrogateBuilders.Add(typeof(DateTimeSurrogate));
+        }
+
+        protected IList<Type> SurrogateBuilders { get; private set; }
+
+        public void SetPathManager<T>()
+        {
+            PathManagerType = typeof(T);
         }
 
         protected Type CodecRepositoryType { get; set; }
@@ -185,14 +205,20 @@ namespace OpenRasta.Configuration
         public void Register(IDependencyResolver resolver)
         {
             RegisterCoreComponents(resolver);
+            RegisterSurrogateBuilders(resolver);
             RegisterLogging(resolver);
             RegisterMetaModelHandlers(resolver);
-            RegisterCodecs(resolver);
             RegisterContributors(resolver);
             RegisterCodeSnippeModifiers(resolver);
             RegisterMethodFilters(resolver);
             RegisterOperationModel(resolver);
             RegisterLogSources(resolver);
+            RegisterCodecs(resolver);
+        }
+
+        protected virtual void RegisterSurrogateBuilders(IDependencyResolver resolver)
+        {
+            SurrogateBuilders.ForEach(x => resolver.AddDependency(typeof(ISurrogateBuilder), x, DependencyLifetime.Transient));
         }
 
         protected void AddLogSources()
@@ -257,6 +283,8 @@ namespace OpenRasta.Configuration
             resolver.AddDependency(typeof(IOperationExecutor), OperationExecutorType, DependencyLifetime.Transient);
             resolver.AddDependency(typeof(IErrorCollector), ErrorCollectorType, DependencyLifetime.Transient);
             resolver.AddDependency(typeof(IOperationInterceptorProvider), OperationInterceptorProviderType, DependencyLifetime.Transient);
+            resolver.AddDependency(typeof(IPathManager), PathManagerType, DependencyLifetime.Singleton);
+            resolver.AddDependency(typeof(ISurrogateProvider), typeof(SurrogateBuilderProvider), DependencyLifetime.Singleton);
         }
 
         [Conditional("DEBUG")]

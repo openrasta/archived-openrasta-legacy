@@ -14,7 +14,7 @@ namespace HandlerRepository_Specification
     {
         public void canoot_add_the_same_handler_type_twice_to_the_same_key()
         {
-            var type = new ReflectionBasedTypeSystem().FromClr(typeof(string));
+            var type = TypeSystems.Default.FromClr(typeof(string));
             var repo = new HandlerRepository();
 
             repo.AddResourceHandler("ring of power",type);
@@ -25,8 +25,8 @@ namespace HandlerRepository_Specification
         }
         public void two_handlers_can_be_registered_for_the_same_key()
         {
-            var handler1 = new ReflectionBasedTypeSystem().FromClr(typeof(Sauron));
-            var handler2 = new ReflectionBasedTypeSystem().FromClr(typeof(Frodo));
+            var handler1 = TypeSystems.Default.FromClr(typeof(Sauron));
+            var handler2 = TypeSystems.Default.FromClr(typeof(Frodo));
 
             var repo = new HandlerRepository();
 
@@ -39,8 +39,8 @@ namespace HandlerRepository_Specification
         }
         public void the_first_handler_is_returned_when_two_handlers_are_registered_for_the_same_key()
         {
-            var handler1 = new ReflectionBasedTypeSystem().FromClr(typeof(Sauron));
-            var handler2 = new ReflectionBasedTypeSystem().FromClr(typeof(Frodo));
+            var handler1 = TypeSystems.Default.FromClr(typeof(Sauron));
+            var handler2 = TypeSystems.Default.FromClr(typeof(Frodo));
 
             var repo = new HandlerRepository();
 
@@ -54,7 +54,7 @@ namespace HandlerRepository_Specification
         {
             var repo = new HandlerRepository();
 
-            Executing(() => repo.AddResourceHandler(null, new ReflectionBasedTypeSystem().FromClr(typeof(Frodo))))
+            Executing(() => repo.AddResourceHandler(null, TypeSystems.Default.FromClr(typeof(Frodo))))
                 .ShouldThrow<ArgumentNullException>();
 
         }
@@ -62,12 +62,12 @@ namespace HandlerRepository_Specification
         {
             var repo = new HandlerRepository();
 
-            Executing(() => repo.AddResourceHandler(null, new ReflectionBasedTypeSystem().FromClr(typeof(Frodo))))
+            Executing(() => repo.AddResourceHandler(null, TypeSystems.Default.FromClr(typeof(Frodo))))
                 .ShouldThrow<ArgumentNullException>();
         }
         public void the_same_handler_can_be_registered_for_two_resources()
         {
-            var gilGalad = new ReflectionBasedTypeSystem().FromClr(typeof(GilGalad));
+            var gilGalad = TypeSystems.Default.FromClr(typeof(GilGalad));
 
             var repo = new HandlerRepository();
 
@@ -79,7 +79,7 @@ namespace HandlerRepository_Specification
         }
         public void enumerating_over_the_list_of_handlers_will_only_return_distinct_handlers()
         {
-            var gilGalad = new ReflectionBasedTypeSystem().FromClr(typeof(GilGalad));
+            var gilGalad = TypeSystems.Default.FromClr(typeof(GilGalad));
 
             var repo = new HandlerRepository();
 

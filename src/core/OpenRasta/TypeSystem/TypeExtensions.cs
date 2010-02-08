@@ -21,10 +21,5 @@ namespace OpenRasta.TypeSystem
         {
             return type.TypeSystem.FromClr<T>().Equals(type);
         }
-
-        public static bool IsAssignableTo(this IType type, Type parentType)
-        {
-            return type.IsAssignableTo(type.TypeSystem.FromClr(parentType));
-        }
     }
 }

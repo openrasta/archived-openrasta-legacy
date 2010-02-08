@@ -37,17 +37,17 @@ namespace OpenRasta.Codecs
         {
         }
 
-        public CodecRegistration FindByExtension(IMember resourceType, string extension)
+        public CodecRegistration FindByExtension(IMember resourceMember, string extension)
         {
             foreach (var codecRegistration in _codecs)
             {
                 var codecResourceType = codecRegistration.ResourceType;
                 if (codecRegistration.Extensions.Contains(extension, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (codecRegistration.IsStrict && resourceType.CompareTo(codecResourceType) == 0)
+                    if (codecRegistration.IsStrict && resourceMember.Type.CompareTo(codecResourceType) == 0)
                         return codecRegistration;
 
-                    if (resourceType.CompareTo(codecResourceType) >= 0)
+                    if (resourceMember.Type.CompareTo(codecResourceType) >= 0)
                         return codecRegistration;
                 }
             }
@@ -128,13 +128,13 @@ namespace OpenRasta.Codecs
                 yield return reg;
         }
 
-        static int CalculateDistance(IMember type, CodecRegistration registration)
+        static int CalculateDistance(IMember member, CodecRegistration registration)
         {
             if (registration.ResourceType == null)
                 return -1;
             if (registration.IsStrict)
-                return (type.CompareTo(registration.ResourceType) == 0) ? 0 : -1;
-            return type.CompareTo(registration.ResourceType);
+                return (member.Type.CompareTo(registration.ResourceType) == 0) ? 0 : -1;
+            return member.Type.CompareTo(registration.ResourceType);
         }
 
         Func<IEnumerable<CodecRegistration>, IGrouping<float, MediaType>, IEnumerable<CodecRegistration>> AppendMediaTypeWriterFor(IMember resourceType)

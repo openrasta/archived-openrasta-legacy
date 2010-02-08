@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenRasta.Binding;
 
 namespace OpenRasta.TypeSystem
@@ -18,11 +19,11 @@ namespace OpenRasta.TypeSystem
     public class PropertyBuilder : MemberBuilder, IPropertyBuilder
     {
         object _cachedValue;
-        bool _hasValue;
 
-        public PropertyBuilder(IProperty property)
-            : base(property)
+        public PropertyBuilder(IMemberBuilder parent, IProperty property)
+            : base(parent, property)
         {
+            Owner = parent;
         }
 
         public int IndexAtCreation { get; set; }
@@ -41,49 +42,24 @@ namespace OpenRasta.TypeSystem
 
         public override object Value
         {
-            get
-            {
-                if (Owner != null && _hasValue)
-                    return Property.GetValue(Owner.Value);
-                return _cachedValue;
-            }
+            get { return _cachedValue; }
         }
 
         public override bool HasValue
         {
-            get { return _hasValue; }
-        }
-
-        object CachedValue
-        {
-            get
-            {
-                return _cachedValue;
-            }
-
-            set
-            {
-                _cachedValue = value;
-                _hasValue = true;
-            }
+            get { return _cachedValue != null; }
         }
 
         public override bool TrySetValue(object value)
         {
-            if (Owner != null)
-            {
-                _hasValue = true;
-                return SetValueOnParent(value);
-            }
-            if (!Property.CanSetValue(value))
-                return false;
-            CachedValue = value;
+            if (!Property.CanSetValue(value)) return false;
 
+            _cachedValue = value;
             return true;
         }
 
         /// <summary>
-        /// Tries to assign a property value and return true if it was successfully assigned or if the parent wasn't available.
+        /// Tries to assign a property value and return <c>true</c> if it was successfully assigned or if the parent wasn't available.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="values"></param>
@@ -91,43 +67,40 @@ namespace OpenRasta.TypeSystem
         /// <returns></returns>
         public override bool TrySetValue<T>(IEnumerable<T> values, ValueConverter<T> converter)
         {
-            if (Owner != null)
+            if (Property.Type.IsEnumerable && _cachedValue != null)
             {
-                EnsureParentHasValue();
-                return Property.TrySetValue(Owner.Value, values, converter);
+                var addMethod = Property.Type.GetMethod("Add");
+                if (addMethod != null)
+                {
+                    var parameter = addMethod.InputMembers.FirstOrDefault();
+                    var builder = parameter.Type.CreateBuilder();
+                    if (builder.TrySetValue(values, converter))
+                    {
+                        addMethod.Invoke(_cachedValue, builder.Value);
+                        return true;
+                    }
+                }
             }
-
-            object convertedValue;
-            bool success = Property.Type.TryCreateInstance(values, converter, out convertedValue);
-
-            if (!success) return false;
-            CachedValue = convertedValue;
-
-            return true;
+            object newValue;
+            var success = Property.Type.TryCreateInstance(values, converter, out newValue);
+            if (success)
+                _cachedValue = newValue;
+            return success;
         }
 
-        /// <exception cref="ArgumentNullException"><c>parentBuilder</c> is null.</exception>
-        /// <exception cref="InvalidOperationException">The property instance has already been attached to a parent.</exception>
-        public virtual void SetOwner(IMemberBuilder parentBuilder)
+        public override object Apply(object target, out object assignedValue)
         {
-            if (parentBuilder == null) throw new ArgumentNullException("parentBuilder");
-            if (Owner != null)
-                throw new InvalidOperationException("The property instance has already been attached to a parent.");
-
-            Owner = parentBuilder;
-            SetValueOnParent(CachedValue);
-        }
-
-        protected virtual bool SetValueOnParent(object value)
-        {
-            EnsureParentHasValue();
-            return Property.TrySetValue(Owner.Value, value);
-        }
-
-        void EnsureParentHasValue()
-        {
-            if (Owner.Value == null)
-                Owner.TrySetValue(Owner.Member.Type.CreateInstance());
+            if (target == null)
+                target = Owner.Member.Type.CreateInstance();
+            if (_cachedValue != null)
+            {
+                Property.TrySetValue(target, assignedValue = _cachedValue);
+            }
+            else
+            {
+                assignedValue = Property.GetValue(target);
+            }
+            return target;
         }
     }
 }

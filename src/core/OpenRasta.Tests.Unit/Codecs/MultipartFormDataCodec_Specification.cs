@@ -301,7 +301,7 @@ Content-Type: application/octet-stream
             return new MultipartFormDataObjectCodec(Context,
                                                     DependencyManager.Codecs,
                                                     DependencyManager.GetService<IDependencyResolver>(),
-                                                    new ReflectionBasedTypeSystem(),
+                                                    TypeSystems.Default,
                                                     new DefaultObjectBinderLocator());
         }
         protected void ThenTheRawResultShouldContain(params Action<MultipartHttpEntity>[] builders)

@@ -151,7 +151,7 @@ namespace CodecRepository_Specification
 
     public class when_searching_for_content_type_writers_for_a_media_type : codec_repository_context
     {
-        readonly ITypeSystem typeSystem = new ReflectionBasedTypeSystem();
+        readonly ITypeSystem typeSystem = TypeSystems.Default;
         new IList<CodecRegistration> ThenTheResult;
 
         [Test]
@@ -263,7 +263,7 @@ namespace CodecRepository_Specification
         public ICodecRepository Codecs;
         public CodecRegistration ThenTheResult;
         public CodecMatch ThenTheResultScoring;
-        public ITypeSystem TypeSystem = new ReflectionBasedTypeSystem();
+        public ITypeSystem TypeSystem = TypeSystems.Default;
 
         [SetUp]
         public void Setup()
@@ -285,7 +285,7 @@ namespace CodecRepository_Specification
 
                 Codecs.Add(CodecRegistration.FromResourceType(resourceType,
                                                          typeof(TCodec),
-                                                         new ReflectionBasedTypeSystem(),
+                                                         TypeSystems.Default,
                                                          mediaType,
                                                          null,
                                                          config, false));

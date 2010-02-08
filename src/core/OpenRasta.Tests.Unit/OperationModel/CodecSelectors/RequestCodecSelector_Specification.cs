@@ -3,11 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
+using OpenRasta.Binding;
 using OpenRasta.Codecs;
 using OpenRasta.OperationModel;
 using OpenRasta.OperationModel.CodecSelectors;
 using OpenRasta.OperationModel.Hydrators;
 using OpenRasta.Testing;
+using OpenRasta.Tests.Unit.Fakes;
 using OpenRasta.Tests.Unit.OperationModel.Filters;
 using OpenRasta.Web;
 
@@ -75,6 +77,33 @@ namespace OpenRasta.Tests.Unit.OperationModel.CodecSelectors
 
             FilteredOperations.First(x => x.Name == "Get").GetRequestCodec().ShouldBeNull();   
         }
+        [Test]
+        public void operations_with_partially_filled_members_still_get_codec_assigned()
+        {
+            given_filter();
+            given_operations();
+            given_request_header_content_type(MediaType.ApplicationXWwwFormUrlencoded);
+
+            given_registration_codec<ApplicationXWwwFormUrlencodedKeyedValuesCodec>();
+            given_request_entity_body("firstname=Frodo");
+
+            given_operation_property(x => x.Name == "GetFrodo", "lastname", "baggins");
+
+            when_filtering_operations();
+
+            FilteredOperations.First(x => x.Name == "GetFrodo").GetRequestCodec()
+                .ShouldNotBeNull()
+                .CodecRegistration.CodecType
+                    .ShouldBe<ApplicationXWwwFormUrlencodedKeyedValuesCodec>();
+        }
+
+        void given_operation_property(Func<IOperation, bool> predicate, string propertyName, string propertyValue)
+        {
+            Operations.First(predicate).Inputs.First().Binder.SetProperty(
+                propertyName, 
+                new object[]{propertyValue},
+                (v,t)=>BindingResult.Success(v));
+        }
     }
     public class when_a_codec_is_not_found : requestcodecselector_context
     {
@@ -116,5 +145,10 @@ namespace OpenRasta.Tests.Unit.OperationModel.CodecSelectors
             
         }
         public void GetWithOptionalValue([Optional]int optionalIndex){}
+
+        public void GetFrodo(Frodo frodo)
+        {
+            
+        }
     }
 }

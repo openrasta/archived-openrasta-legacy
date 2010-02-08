@@ -10,20 +10,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 
 namespace OpenRasta.Binding
 {
     public class KeyedValuesBinder : IObjectBinder
     {
+        readonly bool _isEnumerable;
         readonly string _name;
         readonly string _typeName;
 
         object _cachedBuiltObject;
         bool _isInstanceConstructed;
-        bool _isEnumerable;
 
         public KeyedValuesBinder(IType target) : this(target, target.Name)
         {
@@ -31,8 +29,7 @@ namespace OpenRasta.Binding
 
         public KeyedValuesBinder(IType target, string name)
         {
-            TypeSystem = target.TypeSystem;
-            _isEnumerable = !target.Equals<string>() && target.Type.IsCollection;
+            _isEnumerable = !target.Equals<string>() && target.Type.IsEnumerable;
             Builder = target.CreateBuilder();
             _name = name;
             _typeName = target.TypeName;
@@ -41,18 +38,15 @@ namespace OpenRasta.Binding
             PathManager = new PathManager();
         }
 
-        protected IPathManager PathManager { get; set; }
-
         public bool IsEmpty
         {
-            get { return !_isEnumerable && !Builder.HasValue; }
+            get { return !Builder.HasValue; }
         }
 
         public ICollection<string> Prefixes { get; private set; }
 
-        public ITypeSystem TypeSystem { get; set; }
-
         protected ITypeBuilder Builder { get; private set; }
+        protected IPathManager PathManager { get; set; }
 
         public virtual BindingResult BuildObject()
         {
@@ -82,10 +76,10 @@ namespace OpenRasta.Binding
             var keyType = PathManager.GetPathType(Prefixes, key);
             bool success;
 
-                if (keyType.Type == PathComponentType.Constructor)
-                    success = SetConstructorValue(values, converter);
-                else
-                    success = SetPropertyValue(key, keyType.ParsedValue, values, converter);
+            if (keyType.Type == PathComponentType.Constructor)
+                success = SetConstructorValue(values, converter);
+            else
+                success = SetPropertyValue(key, keyType.ParsedValue, values, converter);
 
             if (!success)
                 success = SetPropertyValue(key, key, values, converter);
@@ -99,7 +93,7 @@ namespace OpenRasta.Binding
 
         bool SetPropertyValue<TValue>(string key, string property, IEnumerable<TValue> values, ValueConverter<TValue> converter)
         {
-            IPropertyBuilder propertyBuilder = Builder.GetProperty(property ?? key);
+            var propertyBuilder = Builder.GetProperty(property ?? key);
             if (propertyBuilder == null) return false;
             return propertyBuilder.TrySetValue(values, converter);
         }

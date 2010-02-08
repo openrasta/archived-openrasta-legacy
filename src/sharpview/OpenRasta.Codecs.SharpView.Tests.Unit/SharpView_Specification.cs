@@ -290,11 +290,21 @@ namespace SharpView_Specification
         [Test]
         public void the_foreach_is_not_executed_when_the_if_case_evaluates_to_false()
         {
-            var strings = new[] {"one", "two"};
+            var strings = new List<string> {"one", "two"};
             var e =
                 new InlineSharpViewElement(
                     () => Document.CreateElement<IDivElement>().ForEach(strings).Class("item").If(false));
             e.OuterXml.ShouldBe(string.Empty);
+        }
+        [Test, Ignore()]
+        public void current_in_if_is_rewritten()
+        {
+
+            var strings = new List<string> { "one", "two" };
+            var e =
+                new InlineSharpViewElement(
+                    () => Document.CreateElement<IDivElement>().ForEach(strings)).If(strings.Current());
+            e.OuterXml.ShouldBe("<div class=\"item\"></div>");
         }
     }
 

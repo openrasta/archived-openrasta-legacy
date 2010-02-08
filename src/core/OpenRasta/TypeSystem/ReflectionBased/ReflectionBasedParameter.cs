@@ -9,7 +9,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
         readonly ParameterInfo _parameterInfo;
 
         public ReflectionBasedParameter(ReflectionBasedMethod ownerMethod, ParameterInfo parameterInfo)
-            : base(parameterInfo.ParameterType)
+            : base(ownerMethod.TypeSystem, parameterInfo.ParameterType)
         {
             _ownerMethod = ownerMethod;
             _parameterInfo = parameterInfo;
@@ -43,14 +43,6 @@ namespace OpenRasta.TypeSystem.ReflectionBased
         public IMethod Owner
         {
             get { return _ownerMethod; }
-        }
-
-        public override IParameterBuilder CreateBuilder()
-        {
-            return null;
-
-
-// return new ParameterBuilder()
         }
     }
 }

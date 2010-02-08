@@ -14,7 +14,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
         {
             _methodInfo = methodInfo;
             Owner = ownerType;
-            TypeSystem = new ReflectionBasedTypeSystem();
+            TypeSystem = TypeSystems.Default;
             EnsureInputMembersExist();
             EnsureOutputMembersExist();
         }
@@ -48,7 +48,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
 
         public IEnumerable<object> Invoke(object target, params object[] members)
         {
-            yield return _methodInfo.Invoke(target, members);
+            return new[]{ _methodInfo.Invoke(target, members) };
         }
 
         void EnsureInputMembersExist()

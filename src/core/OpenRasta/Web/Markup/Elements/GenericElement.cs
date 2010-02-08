@@ -728,16 +728,20 @@ namespace OpenRasta.Web.Markup.Elements
             get { return this[child]; }
         }
 
-        IButtonElement IContentModel<IButtonElement, ILegendElement>.this[ILegendElement child]
+        IFieldsetElement IContentModel<IFieldsetElement, ILegendElement>.this[ILegendElement child]
         {
             get { return this[child]; }
         }
 
-        IButtonElement IContentModel<IButtonElement, IContentSetFlow>.this[IContentSetFlow child]
+        IFieldsetElement IContentModel<IFieldsetElement, IContentSetFlow>.this[IContentSetFlow child]
         {
             get { return this[child]; }
         }
 
+        IFieldsetElement IContentModel<IFieldsetElement, string>.this[string child]
+        {
+            get { return this[child]; }
+        }
         IHElement IContentModel<IHElement, IContentSetInline>.this[IContentSetInline child]
         {
             get { return this[child]; }

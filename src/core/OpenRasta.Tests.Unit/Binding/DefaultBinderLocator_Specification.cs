@@ -17,7 +17,7 @@ namespace DefaultBinderLocator_Specification
         [Test]
         public void the_binder_is_created_correctly()
         {
-            var type = new ReflectionBasedTypeSystem().FromClr(typeof(ClassWithStaticBinder));
+            var type = TypeSystems.Default.FromClr(typeof(ClassWithStaticBinder));
             var binderLocator = new DefaultObjectBinderLocator();
 
             binderLocator.GetBinder(type).ShouldBe(ClassWithStaticBinder.StaticBinder);

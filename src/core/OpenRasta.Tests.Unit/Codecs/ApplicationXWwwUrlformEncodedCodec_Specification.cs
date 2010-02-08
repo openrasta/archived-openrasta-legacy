@@ -160,10 +160,21 @@ namespace ApplicationXWwwUrlformEncodedCodec_Specification
             customer.FirstName
                     .ShouldBe("John");
             customer.LastName
-                    .ShouldBe("Doe");
+                      .ShouldBe("Doe");
 
             customer.DateOfBirth.Day
                     .ShouldBe(10);
+        }
+        [Test]
+        public void indexers_are_supported_when_encoded()
+        {
+            given_context();
+            given_request_stream("Customer.Attributes%3A1=blue&Customer.Attributes%3A2=red");
+
+            when_decoding<Customer>();
+
+            then_decoding_result<Customer>()
+                .Attributes.Count().ShouldBe(2);
         }
 
 
@@ -182,6 +193,7 @@ namespace ApplicationXWwwUrlformEncodedCodec_Specification
         public Customer(string firstname) { FirstName = firstname; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public IEnumerable<string> Attributes { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Address Address { get; set; }
     }

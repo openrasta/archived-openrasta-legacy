@@ -5,7 +5,6 @@ using System.Text;
 using NUnit.Framework;
 using OpenRasta.Testing;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 
 namespace PropertyPathManager_Specification
 {

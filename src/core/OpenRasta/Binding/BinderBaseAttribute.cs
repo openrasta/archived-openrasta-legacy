@@ -9,14 +9,12 @@
 #endregion
 
 using System;
-using OpenRasta.TypeSystem;
 
 namespace OpenRasta.Binding
 {
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
-    public abstract class BinderBaseAttribute : Attribute, IObjectBinderLocator
+    [Obsolete("The type was renamed. Please use BinderAttribute instead.")]
+    public abstract class BinderBaseAttribute : BinderAttribute
     {
-        public abstract IObjectBinder GetBinder(IMember parameterInfo);
     }
 }
 

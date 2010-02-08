@@ -33,7 +33,7 @@ namespace OpenRasta.Web.Markup.Attributes.Annotations
                                          b => b ? propName.ToLowerInvariant() : null,
                                          str => string.Compare(str, propName, StringComparison.OrdinalIgnoreCase) == 0)
             {
-                DefaultValue = propName
+                DefaultValue = null
             };
         }
     }

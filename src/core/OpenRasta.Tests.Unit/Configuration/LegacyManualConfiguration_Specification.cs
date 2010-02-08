@@ -32,7 +32,7 @@ namespace LegacyManualConfiguration_Specification
             var match = DependencyManager.Uris.Match(new Uri(new Uri("http://localhost/", UriKind.Absolute), uri));
             match.ShouldNotBeNull();
             match.UriCulture.ShouldBe(language);
-            match.ResourceKey.ShouldBe(new ReflectionBasedTypeSystem().FromClr(typeof(TResource)));
+            match.ResourceKey.ShouldBe(TypeSystems.Default.FromClr(typeof(TResource)));
             match.UriName.ShouldBe(name);
         }
 
@@ -76,7 +76,7 @@ namespace LegacyManualConfiguration_Specification
         CodecRegistration ThenTheCodecFor<TResource, TCodec>(string mediaType)
         {
             return
-                DependencyManager.Codecs.Where(codec => codec.ResourceType.CompareTo(new ReflectionBasedTypeSystem().FromClr(typeof (TResource)))==0 && codec.CodecType == typeof (TCodec) && codec.MediaType.MediaType == mediaType).
+                DependencyManager.Codecs.Where(codec => codec.ResourceType.CompareTo(TypeSystems.Default.FromClr(typeof (TResource)))==0 && codec.CodecType == typeof (TCodec) && codec.MediaType.MediaType == mediaType).
                     Distinct().SingleOrDefault();
         }
 
@@ -178,7 +178,7 @@ namespace LegacyManualConfiguration_Specification
 
             var handlerMatch = DependencyManager.Handlers.GetHandlerTypesFor(urimatch.ResourceKey).FirstOrDefault();
             handlerMatch.ShouldNotBeNull();
-            handlerMatch.ShouldBe(new ReflectionBasedTypeSystem().FromClr(typeof(THandler)));
+            handlerMatch.ShouldBe(TypeSystems.Default.FromClr(typeof(THandler)));
             return handlerMatch;
         }
 

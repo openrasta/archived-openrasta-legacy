@@ -1,5 +1,4 @@
 ﻿#region License
-
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:
@@ -15,7 +14,6 @@ using OpenRasta.DI;
 using OpenRasta.OperationModel;
 using OpenRasta.OperationModel.Interceptors;
 using OpenRasta.Web;
-using OpenRasta.Pipeline;
 
 namespace OpenRasta.Security
 {
@@ -24,12 +22,16 @@ namespace OpenRasta.Security
     {
         public override IEnumerable<IOperationInterceptor> GetInterceptors(IOperation operation)
         {
-            return new[] { DependencyManager.GetService<RequiresAuthenticationInterceptor>() };
+            return new[]
+            {
+                new RequiresAuthenticationInterceptor(DependencyManager.GetService<ICommunicationContext>())
+            };
         }
     }
+
     public class RequiresAuthenticationInterceptor : OperationInterceptor
     {
-        ICommunicationContext _context;
+        readonly ICommunicationContext _context;
 
         public RequiresAuthenticationInterceptor(ICommunicationContext context)
         {
@@ -43,13 +45,13 @@ namespace OpenRasta.Security
                 _context.OperationResult = new OperationResult.Unauthorized();
                 return false;
             }
+
             return true;
         }
     }
 }
 
 #region Full license
-
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -66,5 +68,4 @@ namespace OpenRasta.Security
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 #endregion
