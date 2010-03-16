@@ -13,6 +13,11 @@ namespace OpenRasta.TypeSystem.Surrogated
             _wrapped = member;
         }
 
+        public Type StaticType
+        {
+            get { return _wrapped.StaticType; }
+        }
+
         public virtual bool IsEnumerable
         {
             get { return _wrapped.IsEnumerable; }

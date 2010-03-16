@@ -2,8 +2,8 @@ using System;
 
 namespace OpenRasta.TypeSystem
 {
-    public interface INativeMember
-    {
-        Type NativeType { get; }
-    }
+    //public interface INativeMember
+    //{
+    //    Type NativeType { get; }
+    //}
 }

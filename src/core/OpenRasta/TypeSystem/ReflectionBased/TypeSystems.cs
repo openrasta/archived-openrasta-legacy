@@ -12,7 +12,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
                 {
                     new DateTimeSurrogate(), 
                     new ListIndexerSurrogateBuilder(), 
-                    new CollectionSurrogateBuilder()
+                    new CollectionIndexerSurrogateBuilder()
                 }), 
             new PathManager());
 

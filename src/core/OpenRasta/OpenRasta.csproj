@@ -276,7 +276,7 @@
     <Compile Include="TypeSystem\Surrogated\SurrogateBuilderProvider.cs" />
     <Compile Include="TypeSystem\Surrogates\ISurrogate.cs" />
     <Compile Include="TypeSystem\Surrogates\Static\CollectionIndexerSurrogate.cs" />
-    <Compile Include="TypeSystem\Surrogates\Static\CollectionSurrogateBuilder.cs" />
+    <Compile Include="TypeSystem\Surrogates\Static\CollectionIndexerSurrogateBuilder.cs" />
     <Compile Include="TypeSystem\Surrogates\Static\ListIndexerSurrogateBuilder.cs" />
     <Compile Include="TypeSystem\Surrogates\Static\AbstractStaticSurrogateBuilder.cs" />
     <Compile Include="TypeSystem\Surrogates\Static\AbstractStaticSurrogate.cs" />

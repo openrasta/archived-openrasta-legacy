@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OpenRasta.TypeSystem.Surrogated
 {
     public abstract class MemberWithSurrogates : WrappedMember
+
     {
         readonly IMember _wrappedMember;
 

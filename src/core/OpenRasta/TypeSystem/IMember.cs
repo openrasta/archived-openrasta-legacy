@@ -28,6 +28,8 @@ namespace OpenRasta.TypeSystem
         /// </summary>
         IType Type { get; }
 
+        Type StaticType { get; }
+
         /// <summary>
         /// Gets a value defining if the member is an enumerable.
         /// </summary>

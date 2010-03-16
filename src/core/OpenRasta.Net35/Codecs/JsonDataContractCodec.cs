@@ -7,6 +7,8 @@
  *      This file is distributed under the terms of the MIT License found at the end of this file.
  */
 #endregion
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
@@ -24,9 +26,10 @@ namespace OpenRasta.Codecs
 
         public object ReadFrom(IHttpEntity request, IType destinationType, string paramName)
         {
-            if (destinationType is INativeMember)
-                return new DataContractJsonSerializer(((INativeMember)destinationType).NativeType).ReadObject(request.Stream);
-            return Missing.Value;
+            if (destinationType.StaticType == null)
+                throw new InvalidOperationException();
+                return new DataContractJsonSerializer(destinationType.StaticType).ReadObject(request.Stream);
+            
         }
 
         public void WriteTo(object entity, IHttpEntity response, string[] paramneters)

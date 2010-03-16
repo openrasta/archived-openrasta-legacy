@@ -46,10 +46,9 @@ namespace OpenRasta.TypeSystem.ReflectionBased
 
         public int CompareTo(IType other)
         {
-            INativeMember otherReflection;
-            if (other == null || (otherReflection = other as INativeMember) == null)
+            if (other == null || other.StaticType == null)
                 return -1;
-            return TargetType.GetInheritanceDistance(otherReflection.NativeType);
+            return TargetType.GetInheritanceDistance(other.StaticType);
         }
 
         public object CreateInstance(IDependencyResolver resolver)

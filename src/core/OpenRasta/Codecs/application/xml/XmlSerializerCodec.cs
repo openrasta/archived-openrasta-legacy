@@ -20,11 +20,10 @@ namespace OpenRasta.Codecs
     {
         public override object ReadFrom(IHttpEntity request, IType destinationType, string parameterName)
         {
-            var nativeMember = destinationType as INativeMember;
-            if (nativeMember == null)
-                return null;
+            if (destinationType.StaticType == null)
+                throw new InvalidOperationException();
 
-            return new XmlSerializer(nativeMember.NativeType).Deserialize(request.Stream);
+            return new XmlSerializer(destinationType.StaticType).Deserialize(request.Stream);
         }
 
         public override void WriteToCore(object obj, IHttpEntity response)

@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace OpenRasta.TypeSystem.ReflectionBased
 {
-    public abstract class ReflectionBasedMember<T> : IMember, INativeMember
+    public abstract class ReflectionBasedMember<T> : IMember
         where T : IMemberBuilder
     {
         readonly Dictionary<string, IProperty> _propertiesCachedByPath =
@@ -36,7 +36,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             get { return TargetType.Name; }
         }
 
-        public Type NativeType
+        public Type StaticType
         {
             get { return TargetType; }
         }

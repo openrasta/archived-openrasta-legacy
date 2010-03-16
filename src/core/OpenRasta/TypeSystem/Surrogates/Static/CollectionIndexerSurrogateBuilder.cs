@@ -4,11 +4,12 @@ using OpenRasta.TypeSystem.ReflectionBased;
 
 namespace OpenRasta.TypeSystem.Surrogates.Static
 {
-    public class CollectionSurrogateBuilder : AbstractStaticSurrogateBuilder
+    public class CollectionIndexerSurrogateBuilder : AbstractStaticSurrogateBuilder
     {
         public override bool CanCreateFor(Type type)
         {
-            return type.FindInterface(typeof(ICollection<>)) != null;
+            return type.FindInterface(typeof(ICollection<>)) != null
+                && type.FindInterface(typeof(IList<>)) == null;
         }
 
         public override Type Create(Type type)
