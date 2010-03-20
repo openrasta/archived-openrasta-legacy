@@ -21,6 +21,8 @@ namespace OpenRasta.Pipeline.Contributors
 {
     public class ResponseEntityWriterContributor : KnownStages.IResponseCoding
     {
+        static readonly byte[] PADDING = Enumerable.Repeat((byte)0x20, 512).ToArray();
+
         public ILogger Log { get; set; }
         public void Initialize(IPipeline pipeline)
         {
@@ -91,8 +93,8 @@ namespace OpenRasta.Pipeline.Contributors
         {
             // IE display "friendly" messages for http errors unless the content sent is more than 512 bytes.
             if (context.OperationResult.IsClientError || context.OperationResult.IsServerError)
-                if (context.Response.Entity.Stream.Length <= 512)
-                    context.Response.Entity.Stream.Write(new byte[513 - context.Response.Entity.Stream.Length]);
+                if (context.Response.Entity.Stream.Length <= 512 && context.Response.Entity.ContentType == MediaType.Html)
+                    context.Response.Entity.Stream.Write(PADDING, 0, (int)(512 - context.Response.Entity.Stream.Length));
         }
     }
 }
