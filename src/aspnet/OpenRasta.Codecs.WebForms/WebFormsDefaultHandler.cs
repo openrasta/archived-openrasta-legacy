@@ -46,7 +46,7 @@ namespace OpenRasta.Codecs.WebForms
                 }
             }
 
-            if (resourceKey != null && resourceKey.CompareTo(_pageType) == 0)
+            if (resourceKey != null && resourceKey.CompareTo(_pageType) >= 0)
             {
                 return new OperationResult.OK
                     {

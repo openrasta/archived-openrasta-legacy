@@ -27,6 +27,8 @@ namespace OpenRasta.Codecs.WebForms
     [MediaType("application/xhtml+xml;q=0.9", "xhtml")]
     [MediaType("text/html", "html")]
     [MediaType("application/vnd.openrasta.htmlfragment+xml;q=0.5")]
+    [SupportedType(typeof(Page))]
+    [SupportedType(typeof(UserControl))]
     public class WebFormsCodec : IMediaTypeWriter
     {
         static readonly string[] DEFAULT_VIEW_NAMES = new[] { "index", "default", "view", "get" };
@@ -76,8 +78,7 @@ namespace OpenRasta.Codecs.WebForms
                 return GetDefaultVPath(codecConfiguration);
             }
 
-
-// if there's a codec parameter, take the first one and try to return the view if it exists
+            // if there's a codec parameter, take the first one and try to return the view if it exists
             string requestParameter = codecUriParameters[codecUriParameters.Length - 1];
             if (codecConfiguration.Keys.Contains(requestParameter))
                 return codecConfiguration[requestParameter];
