@@ -103,7 +103,7 @@ namespace OpenRasta.Web.Markup.Modules
                                        IValignAttribute
     {
         [Number(DefaultValue = "1")]
-        int Span { get; set; }
+        int? Span { get; set; }
     }
     /// <summary>
     /// Defines the &lt;col&gt; element.
@@ -131,10 +131,10 @@ namespace OpenRasta.Web.Markup.Modules
         string Axis { get; set; }
 
         [Number(DefaultValue = "1")]
-        int ColSpan { get; set; }
+        int? ColSpan { get; set; }
 
         [Number(DefaultValue = "1")]
-        int RowSpan { get; set; }
+        int? RowSpan { get; set; }
 
         [IDREFS]
         IList<string> Headers { get; set; }

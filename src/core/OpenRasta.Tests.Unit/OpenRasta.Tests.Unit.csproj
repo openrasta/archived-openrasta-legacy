@@ -196,6 +196,9 @@
   <ItemGroup>
     <None Include="Settings.StyleCop" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Codecs\CodeDom.Compiler\" />
+  </ItemGroup>
   <Import Project="..\..\..\build\defaults.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

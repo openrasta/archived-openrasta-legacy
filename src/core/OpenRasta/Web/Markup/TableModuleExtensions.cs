@@ -8,19 +8,19 @@ namespace OpenRasta.Web.Markup
 {
     public static class TableModuleExtensions
     {
-        public static T Border<T>(T element, int border)
+        public static T Border<T>(this T element, int border)
             where T:ITableElement
         {
             element.Border = border;
             return element;
         }
-        public static T CellPadding<T>(T element, int padding)
+        public static T CellPadding<T>(this T element, int padding)
             where T : ITableElement
         {
             element.CellPadding = padding.ToString();
             return element;
         }
-        public static T CellPadding<T>(T element, string padding)
+        public static T CellPadding<T>(this T element, string padding)
                     where T : ITableElement
         {
             element.CellPadding = padding;
@@ -28,7 +28,7 @@ namespace OpenRasta.Web.Markup
         }
 
 
-        public static T CellSpacing<T>(T element, int spacing)
+        public static T CellSpacing<T>(this T element, int spacing)
             where T : ITableElement
         {
             element.CellSpacing = spacing.ToString();
@@ -36,70 +36,70 @@ namespace OpenRasta.Web.Markup
         }
 
 
-        public static T CellSpacing<T>(T element, string spacing)
+        public static T CellSpacing<T>(this T element, string spacing)
             where T : ITableElement
         {
             element.CellSpacing = spacing;
             return element;
         }
-        public static T Frame<T>(T element, Frame frame)
+        public static T Frame<T>(this T element, Frame frame)
             where T : ITableElement
         {
             element.Frame = frame;
             return element;
         }
-        public static T Rules<T>(T element, Rules rules)
+        public static T Rules<T>(this T element, Rules rules)
            where T : ITableElement
         {
             element.Rules = rules;
             return element;
         }
-        public static T Summary<T>(T element, string summary)
+        public static T Summary<T>(this T element, string summary)
             where T : ITableElement
         {
             element.Summary = summary;
             return element;
         }
 
-        public static T Span<T>(T element, int span)
+        public static T Span<T>(this T element, int span)
             where T : IColElementBase
         {
             element.Span = span;
             return element;
         }
-        public static T Abbr<T>(T element, string abbr)
+        public static T Abbr<T>(this T element, string abbr)
             where T : ICellElementBase
         {
             element.Abbr = abbr;
             return element;
         }
-        public static T Axis<T>(T element, string axis)
+        public static T Axis<T>(this T element, string axis)
             where T : ICellElementBase
         {
             element.Axis = axis;
             return element;
         }
-        public static T ColSpan<T>(T element, int colspan)
+        public static T ColSpan<T>(this T element, int colspan)
            where T : ICellElementBase
         {
             element.ColSpan = colspan;
             return element;
         }
 
-        public static T RowSpan<T>(T element, int rowspan)
+        public static T RowSpan<T>(this T element, int rowspan)
            where T : ICellElementBase
         {
             element.RowSpan = rowspan;
             return element;
         }
-        public static T Headers<T>(T element, string idref)
+        public static T Headers<T>(this T element, string idref)
            where T : ICellElementBase
         {
             element.Headers.Add(idref);
             return element;
         }
 
-        public static T Scope<T>(T element, Scope scope)
+        public static T Scope<T>(this T element, Scope scope)
            where T : ICellElementBase
         {
             element.Scope = scope;
@@ -107,32 +107,32 @@ namespace OpenRasta.Web.Markup
         }
 
 
-        public static T Valign<T>(T element, VerticalAlignment alignment)
+        public static T Valign<T>(this T element, VerticalAlignment alignment)
            where T : IValignAttribute
         {
             element.Valign = alignment;
             return element;
         }
-        public static T Align<T>(T element, Alignment alignment)
+        public static T Align<T>(this T element, Alignment alignment)
            where T : IAlignAttribute
         {
             element.Align = alignment;
             return element;
         }
 
-        public static T Char<T>(T element, char ch)
+        public static T Char<T>(this T element, char ch)
           where T : ICharAttribute
         {
             element.Char = ch;
             return element;
         }
-        public static T CharOff<T>(T element, string length)
+        public static T CharOff<T>(this T element, string length)
           where T : ICharAttribute
         {
             element.CharOff = length;
             return element;
         }
-        public static T CharOff<T>(T element, int length)
+        public static T CharOff<T>(this T element, int length)
           where T : ICharAttribute
         {
             element.CharOff = length.ToString();

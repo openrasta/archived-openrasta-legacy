@@ -16,7 +16,7 @@ using OpenRasta.IO.Diagnostics;
 using OpenRasta.Testing;
 using NUnit.Framework;
 using OpenRasta.Codecs;
-using OpenRasta.TypeSystem.ReflectionBased;
+using OpenRasta.TypeSystem;
 using OpenRasta.Web;
 using OpenRasta.IO;
 using OpenRasta;

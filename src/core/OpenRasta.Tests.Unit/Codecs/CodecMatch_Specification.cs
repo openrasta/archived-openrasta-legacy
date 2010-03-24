@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using OpenRasta.Codecs;
 using OpenRasta.Testing;
-using OpenRasta.TypeSystem.ReflectionBased;
+using OpenRasta.TypeSystem;
 using OpenRasta.Web;
 
 namespace CodecMatch_Specification

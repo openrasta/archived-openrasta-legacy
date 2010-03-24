@@ -12,7 +12,6 @@ using System;
 using System.Linq;
 using OpenRasta.Diagnostics;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 
 namespace OpenRasta.Binding
 {

@@ -15,7 +15,7 @@ using System.Text;
 using OpenRasta.DI;
 using OpenRasta.IO;
 using OpenRasta.Testing;
-using OpenRasta.TypeSystem.ReflectionBased;
+using OpenRasta.TypeSystem;
 using OpenRasta.Web;
 
 namespace OpenRasta.Codecs

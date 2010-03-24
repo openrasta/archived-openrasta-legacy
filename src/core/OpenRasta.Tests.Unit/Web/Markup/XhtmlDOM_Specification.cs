@@ -41,7 +41,7 @@ namespace XhtmlDOM_Specification
             attribs["types"].SerializedValue.ShouldBe("application/xml");
         }
         [Test]
-        public void only_attributes_in_the_initial_list_can_be_added()
+        public void attributes_not_in_initial_list_are_added_as_generic_strings()
         {
             var attribs = new XhtmlAttributeCollection
             {
@@ -58,7 +58,9 @@ namespace XhtmlDOM_Specification
             attribs["name"].SerializedValue.ShouldBe("a name");
             attribs["value"].SerializedValue.ShouldBe("3");
 
-            Executing(() => attribs.SetAttribute("unkownValue", "25")).ShouldThrow<ArgumentOutOfRangeException>();
+            attribs.SetAttribute("unknownValue", "25");
+
+            attribs["unknownValue"].SerializedValue.ShouldBe("25");
         }
 
     }

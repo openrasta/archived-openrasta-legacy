@@ -16,7 +16,6 @@ using System.Globalization;
 using System.Linq;
 using OpenRasta.Collections;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 
 namespace OpenRasta.Web
 {

@@ -18,7 +18,6 @@ using OpenRasta;
 using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Fakes;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 using OpenRasta.Web;
 
 namespace TemplatedUriResolver_Specification

@@ -18,7 +18,7 @@ using OpenRasta.Pipeline.Contributors;
 using OpenRasta.Testing;
 using OpenRasta.Tests;
 using OpenRasta.Tests.Unit.Fakes;
-using OpenRasta.TypeSystem.ReflectionBased;
+using OpenRasta.TypeSystem;
 using OpenRasta.Web;
 using OpenRasta.Pipeline;
 

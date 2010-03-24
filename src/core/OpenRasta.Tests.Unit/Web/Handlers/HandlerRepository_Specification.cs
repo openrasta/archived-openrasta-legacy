@@ -6,7 +6,7 @@ using OpenRasta.HandlerRepository_Specification;
 using OpenRasta.Handlers;
 using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Fakes;
-using OpenRasta.TypeSystem.ReflectionBased;
+using OpenRasta.TypeSystem;
 
 namespace HandlerRepository_Specification
 {

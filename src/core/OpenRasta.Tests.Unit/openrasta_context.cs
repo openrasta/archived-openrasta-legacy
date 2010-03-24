@@ -14,7 +14,6 @@ using OpenRasta.Pipeline;
 using OpenRasta.Security;
 using OpenRasta.Testing;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 using OpenRasta.Web;
 
 namespace OpenRasta.Tests

@@ -20,7 +20,6 @@ using OpenRasta.DI;
 using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Configuration;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 using OpenRasta.Web;
 
 namespace LegacyManualConfiguration_Specification

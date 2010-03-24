@@ -17,7 +17,6 @@ using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Fakes;
 using OpenRasta.Tests.Unit.TypeSystem;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 using Frodo=OpenRasta.Tests.Unit.Fakes.Frodo;
 
 namespace Instances_Specification

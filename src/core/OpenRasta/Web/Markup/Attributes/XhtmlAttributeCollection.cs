@@ -1,5 +1,4 @@
 ﻿#region License
-
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:
@@ -7,7 +6,6 @@
  * License:
  *      This file is distributed under the terms of the MIT License found at the end of this file.
  */
-
 #endregion
 
 using System;
@@ -15,18 +13,24 @@ using System.Collections;
 using System.Collections.Generic;
 using OpenRasta.Collections;
 
+
 namespace OpenRasta.Web.Markup.Attributes
 {
     public class XhtmlAttributeCollection : IAttributeCollection
     {
         readonly NullBehaviorDictionary<string, IAttribute> _attributes = new NullBehaviorDictionary<string, IAttribute>();
 
-        bool dynamicAttributesPermitted
+        public IDictionary<string, Func<IAttribute>> AllowedAttributes { get; set; }
+
+        public int Count
         {
-            get { return AllowedAttributes == null; }
+            get { return _attributes.Count; }
         }
 
-        public IDictionary<string, Func<IAttribute>> AllowedAttributes { get; set; }
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
 
         public IAttribute this[string key]
         {
@@ -34,13 +38,20 @@ namespace OpenRasta.Web.Markup.Attributes
             {
                 if (_attributes[key] == null && AllowedAttributes != null)
                 {
-                    if (AllowedAttributes[key] == null)
-                        throw new InvalidOperationException("The attribute you requested doesn't exist on this object");
-                    _attributes[key] = AllowedAttributes[key]();
+                    if (AllowedAttributes.ContainsKey(key))
+                        _attributes[key] = AllowedAttributes[key]();
+                    else
+                        _attributes[key] = new PrimaryTypeAttributeNode<string>(key);
                 }
                 return _attributes[key];
             }
             set { _attributes[key] = value; }
+        }
+
+        IAttribute IList<IAttribute>.this[int index]
+        {
+            get { throw new NotSupportedException(); }
+            set { throw new NotSupportedException(); }
         }
 
         public string GetAttribute(string attributeName)
@@ -53,7 +64,7 @@ namespace OpenRasta.Web.Markup.Attributes
             IAttribute attrib;
             if (!_attributes.TryGetValue(attributeName, out attrib))
                 _attributes.Add(attributeName, attrib = CreateAttribute<T>(attributeName));
-            return ((IAttribute<T>) attrib).Value;
+            return ((IAttribute<T>)attrib).Value;
         }
 
         public void SetAttribute<T>(string attributeName, T value)
@@ -61,17 +72,7 @@ namespace OpenRasta.Web.Markup.Attributes
             IAttribute attrib;
             if (!_attributes.TryGetValue(attributeName, out attrib))
                 _attributes.Add(attributeName, attrib = CreateAttribute<T>(attributeName));
-            ((IAttribute<T>) attrib).Value = value;
-        }
-
-        public IEnumerator<IAttribute> GetEnumerator()
-        {
-            return _attributes.Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            ((IAttribute<T>)attrib).Value = value;
         }
 
         public void Add(IAttribute item)
@@ -99,14 +100,14 @@ namespace OpenRasta.Web.Markup.Attributes
             return _attributes.Remove(item.Name);
         }
 
-        public int Count
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            get { return _attributes.Count; }
+            return GetEnumerator();
         }
 
-        public bool IsReadOnly
+        public IEnumerator<IAttribute> GetEnumerator()
         {
-            get { return false; }
+            return _attributes.Values.GetEnumerator();
         }
 
         public int IndexOf(IAttribute item)
@@ -124,38 +125,32 @@ namespace OpenRasta.Web.Markup.Attributes
             throw new NotSupportedException();
         }
 
-        IAttribute IList<IAttribute>.this[int index]
-        {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
-        }
-
         IAttribute<T> CreateAttribute<T>(string name)
         {
-            Type attribType = typeof (T);
-            if (AllowedAttributes != null && AllowedAttributes.ContainsKey(name)) return (IAttribute<T>) AllowedAttributes[name]();
-            if (!dynamicAttributesPermitted)
-                throw new ArgumentOutOfRangeException("name", "Attribute {0} is not allowed on this element.".With(name));
+            Type attribType = typeof(T);
+            if (AllowedAttributes != null && AllowedAttributes.ContainsKey(name))
+                return (IAttribute<T>)AllowedAttributes[name]();
+            //if (!dynamicAttributesPermitted)
+            //    throw new ArgumentOutOfRangeException("name", "Attribute {0} is not allowed on this element.".With(name));
 
             if (attribType.IsValueType
-                || attribType == typeof (string)
-                || typeof (Nullable).IsAssignableFrom(attribType))
+                || attribType == typeof(string)
+                || typeof(Nullable).IsAssignableFrom(attribType))
                 return new PrimaryTypeAttributeNode<T>(name);
-            if (attribType == typeof (MediaType))
-                return (IAttribute<T>) new XhtmlAttributeNode<MediaType>(name, false, media => media.ToString(), str => new MediaType(str));
-            if (attribType == typeof (IList<Uri>))
-                return (IAttribute<T>) new CharacterSeparatedAttributeNode<Uri>(name, " ", uri => uri.ToString(), s => new Uri(s, UriKind.Absolute));
-            if (attribType == typeof (IList<MediaType>))
-                return (IAttribute<T>) new CharacterSeparatedAttributeNode<MediaType>(name," ", mediatype => mediatype.ToString(), str => new MediaType(str));
-            if (attribType == typeof (IList<string>))
-                return (IAttribute<T>) new CharacterSeparatedAttributeNode<string>(name," ", i => i, i => i);
-            throw new InvalidOperationException("Could not automatically create attribute of type " + typeof (T));
+            if (attribType == typeof(MediaType))
+                return (IAttribute<T>)new XhtmlAttributeNode<MediaType>(name, false, media => media.ToString(), str => new MediaType(str));
+            if (attribType == typeof(IList<Uri>))
+                return (IAttribute<T>)new CharacterSeparatedAttributeNode<Uri>(name, " ", uri => uri.ToString(), s => new Uri(s, UriKind.Absolute));
+            if (attribType == typeof(IList<MediaType>))
+                return (IAttribute<T>)new CharacterSeparatedAttributeNode<MediaType>(name, " ", mediatype => mediatype.ToString(), str => new MediaType(str));
+            if (attribType == typeof(IList<string>))
+                return (IAttribute<T>)new CharacterSeparatedAttributeNode<string>(name, " ", i => i, i => i);
+            throw new InvalidOperationException("Could not automatically create attribute of type " + typeof(T));
         }
     }
 }
 
 #region Full license
-
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -176,5 +171,4 @@ namespace OpenRasta.Web.Markup.Attributes
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
 #endregion

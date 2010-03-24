@@ -264,7 +264,7 @@
     <Compile Include="TypeSystem\ReflectionBased\ReflectionBasedParameter.cs" />
     <Compile Include="TypeSystem\ReflectionBased\ReflectionBasedProperty.cs" />
     <Compile Include="TypeSystem\PropertyBuilder.cs" />
-    <Compile Include="TypeSystem\ReflectionBased\TypeSystems.cs" />
+    <Compile Include="TypeSystem\TypeSystems.cs" />
     <Compile Include="TypeSystem\Surrogated\AlienMember.cs" />
     <Compile Include="TypeSystem\Surrogated\AlienOwnedProperty.cs" />
     <Compile Include="TypeSystem\Surrogated\AlienPropertyBuilder.cs" />

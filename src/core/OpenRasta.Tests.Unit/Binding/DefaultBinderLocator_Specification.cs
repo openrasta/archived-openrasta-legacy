@@ -7,7 +7,6 @@ using NUnit.Framework;
 using OpenRasta.Binding;
 using OpenRasta.Testing;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 
 namespace DefaultBinderLocator_Specification
 {

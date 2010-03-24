@@ -19,7 +19,6 @@ using OpenRasta.IO;
 using OpenRasta.Testing;
 using OpenRasta.Tests.Unit.Fakes;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 using OpenRasta.Web;
 
 namespace CodecRepository_Specification

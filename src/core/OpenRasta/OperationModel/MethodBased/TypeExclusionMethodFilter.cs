@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRasta.TypeSystem;
-using OpenRasta.TypeSystem.ReflectionBased;
 
 namespace OpenRasta.OperationModel.MethodBased
 {

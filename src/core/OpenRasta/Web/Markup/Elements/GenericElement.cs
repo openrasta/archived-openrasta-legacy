@@ -23,7 +23,7 @@ namespace OpenRasta.Web.Markup.Elements
                                   IAElement, IDlElement, IDtElement, IDdElement, IListElement, ILiElement, IEditElement, IImgElement, IFormElement, IInputCheckedElement,
                                   IInputTextElement, IInputImageElement, IOptionElement, IOptgroupElement, IObjectElement, IParamElement, IIFrameElement, IMetaElement,
                                   IStyleElement, ILinkElement, IScriptElement, INoScriptElement, ITextAreaElement, ISelectElement, ILabelElement, IFieldsetElement, ILegendElement,
-                                  IButtonElement
+                                  IButtonElement, ITableElement, ITrElement, ITdElement, ITHeadElement, ITBodyElement, ITFootElement, ICaptionElement, IColElement, IThElement
     {
         public GenericElement(string tagName)
             : base(tagName)
@@ -62,7 +62,7 @@ namespace OpenRasta.Web.Markup.Elements
         {
             get { return this[child]; }
         }
-        ILabelElement IContentModel<ILabelElement,string>.this[string child]
+        ILabelElement IContentModel<ILabelElement, string>.this[string child]
         {
             get { return this[child]; }
         }
@@ -747,6 +747,184 @@ namespace OpenRasta.Web.Markup.Elements
             get { return this[child]; }
         }
         IHElement IContentModel<IHElement, string>.this[string child]
+        {
+            get { return this[child]; }
+        }
+
+        ITableElement IContentModel<ITableElement, ICaptionElement>.this[ICaptionElement child]
+        {
+            get { return this[child]; }
+        }
+
+        ITableElement IContentModel<ITableElement, IColElement>.this[IColElement child]
+        {
+            get { return this[child]; }
+        }
+
+        ITableElement IContentModel<ITableElement, IColGroupElement>.this[IColGroupElement child]
+        {
+            get { return this[child]; }
+        }
+
+        ITableElement IContentModel<ITableElement, ITHeadElement>.this[ITHeadElement child]
+        {
+            get { return this[child]; }
+        }
+
+        ITableElement IContentModel<ITableElement, ITBodyElement>.this[ITBodyElement child]
+        {
+            get { return this[child]; }
+        }
+
+        ITableElement IContentModel<ITableElement, ITFootElement>.this[ITFootElement child]
+        {
+            get { return this[child]; }
+        }
+
+        public int? Border
+        {
+            get { return Attributes.GetAttribute<int?>("border"); }
+            set { Attributes.SetAttribute("border", value); }
+        }
+
+        public string CellPadding
+        {
+            get { return Attributes.GetAttribute("cellpadding"); }
+            set { Attributes.SetAttribute("cellpadding", value); }
+        }
+
+        public string CellSpacing
+        {
+            get { return Attributes.GetAttribute("cellspacing"); }
+            set { Attributes.SetAttribute("cellspacing", value); }
+        }
+
+        public Frame Frame
+        {
+            get { return Attributes.GetAttribute<Frame>("frame"); }
+            set { Attributes.SetAttribute("frame", value); }
+        }
+
+        public Rules Rules
+        {
+            get { return Attributes.GetAttribute<Rules>("rules"); }
+            set { Attributes.SetAttribute("rules", value); }
+        }
+
+        public string Summary
+        {
+            get { return Attributes.GetAttribute("summary"); }
+            set { Attributes.SetAttribute("summary", value); }
+        }
+
+        public Alignment Align
+        {
+            get { return Attributes.GetAttribute<Alignment>("align"); }
+            set { Attributes.SetAttribute("align", value); }
+        }
+
+        public char? Char
+        {
+            get { return Attributes.GetAttribute<char?>("char"); }
+            set { Attributes.SetAttribute("char", value); }
+        }
+
+        public string CharOff
+        {
+            get { return Attributes.GetAttribute("charoff"); }
+            set { Attributes.SetAttribute("cellspacing", value); }
+        }
+
+        public VerticalAlignment Valign
+        {
+            get { return Attributes.GetAttribute<VerticalAlignment>("valign"); }
+            set { Attributes.SetAttribute("valign", value); }
+        }
+
+        ITrElement IContentModel<ITrElement, ITdElement>.this[ITdElement child]
+        {
+            get { return this[child]; }
+        }
+
+        ITrElement IContentModel<ITrElement, IThElement>.this[IThElement child]
+        {
+            get { return this[child]; }
+        }
+
+        public string Abbr
+        {
+            get { return Attributes.GetAttribute("abbr"); }
+            set { Attributes.SetAttribute("abbr", value); }
+        }
+
+        public string Axis
+        {
+            get { return Attributes.GetAttribute("axis"); }
+            set { Attributes.SetAttribute("axis", value); }
+        }
+
+        public int? ColSpan
+        {
+            get { return Attributes.GetAttribute<int?>("colspan"); }
+            set { Attributes.SetAttribute("colspan", value); }
+        }
+
+        public int? RowSpan
+        {
+            get { return Attributes.GetAttribute<int?>("rowspan"); }
+            set { Attributes.SetAttribute("rowspan", value); }
+        }
+
+        public IList<string> Headers
+        {
+
+            get { return Attributes.GetAttribute<IList<string>>("headers"); }
+            set { Attributes.SetAttribute("headers", value); }
+        }
+
+        public Scope Scope
+        {
+            get { return Attributes.GetAttribute<Scope>("scope"); }
+            set { Attributes.SetAttribute("scope", value); }
+        }
+
+        ITdElement IContentModel<ITdElement, IContentSetFlow>.this[IContentSetFlow child]
+        {
+            get { return this[child]; }
+        }
+
+        ITdElement IContentModel<ITdElement, string>.this[string child]
+        {
+            get { return this[child]; }
+        }
+
+        ITHeadElement IContentModel<ITHeadElement, ITrElement>.this[ITrElement child]
+        {
+            get { return this[child]; }
+        }
+
+        ICaptionElement IContentModel<ICaptionElement, IContentSetInline>.this[IContentSetInline child]
+        {
+            get { return this[child]; }
+        }
+
+        ICaptionElement IContentModel<ICaptionElement, string>.this[string child]
+        {
+            get { return this[child]; }
+        }
+
+        public int? Span
+        {
+            get { return Attributes.GetAttribute<int?>("span"); }
+            set { Attributes.SetAttribute("span", value); }
+        }
+
+        IThElement IContentModel<IThElement, IContentSetFlow>.this[IContentSetFlow child]
+        {
+            get { return this[child]; }
+        }
+
+        IThElement IContentModel<IThElement, string>.this[string child]
         {
             get { return this[child]; }
         }
