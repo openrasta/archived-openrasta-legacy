@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using OpenRasta.Web;
 
 namespace OpenRasta.Hosting.HttpListener
@@ -56,7 +57,7 @@ namespace OpenRasta.Hosting.HttpListener
             {
                 _tempStream.WriteTo(_nativeResponse.OutputStream);
             }
-            catch (Exception ex)
+            catch (HttpListenerException ex)
             {
                 if (_context != null)
                     _context.ServerErrors.Add(new Error { Message = ex.ToString() });
