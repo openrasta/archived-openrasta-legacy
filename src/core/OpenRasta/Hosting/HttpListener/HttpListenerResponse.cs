@@ -51,7 +51,16 @@ namespace OpenRasta.Hosting.HttpListener
             HeadersSent = true;
             _nativeResponse.ContentLength64 = Headers.ContentLength.GetValueOrDefault();
 
-            _tempStream.WriteTo(_nativeResponse.OutputStream);
+            // Guard against a possible HttpListenerException : The specified network name is no longer available
+            try
+            {
+                _tempStream.WriteTo(_nativeResponse.OutputStream);
+            }
+            catch (Exception ex)
+            {
+                if (_context != null)
+                    _context.ServerErrors.Add(new Error { Message = ex.ToString() });
+            }
         }
     }
 }
