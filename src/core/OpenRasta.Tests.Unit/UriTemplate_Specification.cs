@@ -29,7 +29,7 @@ namespace UriTemplate_Specification
         public IEnumerable<string> BindingUriByName(string template, object values)
         {
             foreach (Uri baseUri in BaseUris)
-                yield return new UriTemplate(template)
+                yield return new OpenRasta.UriTemplate(template)
                     .BindByName(baseUri, values.ToNameValueCollection()).ToString();
         }
 
@@ -45,7 +45,7 @@ namespace UriTemplate_Specification
         [Test]
         public void all_valid_variables_are_returned()
         {
-            new UriTemplate("weather/{state}/{city}").PathSegmentVariableNames
+            new OpenRasta.UriTemplate("weather/{state}/{city}").PathSegmentVariableNames
                 .ShouldHaveSameElementsAs(new[] {"STATE", "CITY"});
         }
     }
@@ -89,7 +89,7 @@ namespace UriTemplate_Specification
     [TestFixture]
     public class when_matching_urls : uritemplate_context
     {
-        UriTemplateMatch ThenTheMatch;
+        OpenRasta.UriTemplateMatch ThenTheMatch;
 
         void GivenAMatching(string template, string candidate)
         {
@@ -98,7 +98,7 @@ namespace UriTemplate_Specification
 
         void GivenAMatching(string baseUri, string template, string candidate)
         {
-            ThenTheMatch = new UriTemplate(template).Match(baseUri.ToUri(), candidate.ToUri());
+            ThenTheMatch = new OpenRasta.UriTemplate(template).Match(baseUri.ToUri(), candidate.ToUri());
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace UriTemplate_Specification
         [Test]
         public void matching_urls_with_different_host_names_returns_no_match()
         {
-            var table = new UriTemplate("/temp");
+            var table = new OpenRasta.UriTemplate("/temp");
             table.Match(new Uri("http://localhost"), new Uri("http://notlocalhost/temp")).ShouldBeNull();
         }
 
@@ -188,7 +188,7 @@ namespace UriTemplate_Specification
             NameValueCollection variableValues = new NameValueCollection().With("state", "washington").With("CitY",
                                                                                                             "seattle");
 
-            new UriTemplate("weather/{state}/{city}/*").BindByName(baseUri, variableValues)
+            new OpenRasta.UriTemplate("weather/{state}/{city}/*").BindByName(baseUri, variableValues)
                 .ShouldBe("http://localhost/weather/washington/seattle/".ToUri());
         }
 
@@ -199,7 +199,7 @@ namespace UriTemplate_Specification
             NameValueCollection variableValues = new NameValueCollection().With("StAte", "washington").With("CitY",
                                                                                                             "seattle");
 
-            new UriTemplate("weather/{state}/{city}/").BindByName(baseUri, variableValues)
+            new OpenRasta.UriTemplate("weather/{state}/{city}/").BindByName(baseUri, variableValues)
                 .ShouldBe("http://localhost/weather/washington/seattle/".ToUri());
         }
 
@@ -209,7 +209,7 @@ namespace UriTemplate_Specification
             NameValueCollection variableValues = new NameValueCollection().With("state", "washington").With("city",
                                                                                                             "seattle");
 
-            new UriTemplate("weather/{state}/{city}/").BindByName("http://localhost".ToUri(), variableValues)
+            new OpenRasta.UriTemplate("weather/{state}/{city}/").BindByName("http://localhost".ToUri(), variableValues)
                 .ShouldBe("http://localhost/weather/washington/seattle/");
         }
     }
@@ -219,15 +219,15 @@ namespace UriTemplate_Specification
         [Test]
         public void a_query_parameter_with_no_variable_is_ignored()
         {
-            var template = new UriTemplate("/test?query=3");
+            var template = new OpenRasta.UriTemplate("/test?query=3");
             template.QueryValueVariableNames.Count.ShouldBe(0);
         }
 
         [Test]
         public void a_url_matching_result_in_the_query_value_variable_being_set()
         {
-            var table = new UriTemplate("/test?query={queryValue}");
-            UriTemplateMatch match = table.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query=search"));
+            var table = new OpenRasta.UriTemplate("/test?query={queryValue}");
+            OpenRasta.UriTemplateMatch match = table.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query=search"));
 
             match.ShouldNotBeNull();
 
@@ -237,22 +237,22 @@ namespace UriTemplate_Specification
         [Test]
         public void a_url_not_matching_a_literal_query_string_will_not_match()
         {
-            var table = new UriTemplate("/test?query=literal");
-            UriTemplateMatch match = table.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query=notliteral"));
+            var table = new OpenRasta.UriTemplate("/test?query=literal");
+            OpenRasta.UriTemplateMatch match = table.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query=notliteral"));
             match.ShouldBeNull();
         }
 
         [Test]
         public void multiple_query_parameters_are_processed()
         {
-            var template = new UriTemplate("/test?query1={test}&query2={test2}");
+            var template = new OpenRasta.UriTemplate("/test?query1={test}&query2={test2}");
             template.QueryValueVariableNames.Contains("test").ShouldBeTrue();
             template.QueryValueVariableNames.Contains("test2").ShouldBeTrue();
         }
          [Test]  
         public void a_url_matching_multiple_query_parameters_should_match()  
         {  
-           var template = new UriTemplate("/test?query1={test}&query2={test2}");  
+           var template = new OpenRasta.UriTemplate("/test?query1={test}&query2={test2}");  
            var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query1=test1&query2=test2"));  
            match.ShouldNotBeNull();  
         }  
@@ -260,7 +260,7 @@ namespace UriTemplate_Specification
         [Test]  
         public void a_url_different_by_last_letter_to_query_parameters_should_not_match()  
         {  
-           var template = new UriTemplate("/test?query1={test}&query2={test2}");  
+           var template = new OpenRasta.UriTemplate("/test?query1={test}&query2={test2}");  
            var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query1=test1&query3=test2"));  
            match.ShouldBeNull();  
         }  
@@ -268,7 +268,7 @@ namespace UriTemplate_Specification
         [Test]  
         public void more_than_two_query_parameters_with_similar_names_are_processed()  
         {  
-           var template = new UriTemplate("/test?query1={test}&query2={test2}&query3={test3}");  
+           var template = new OpenRasta.UriTemplate("/test?query1={test}&query2={test2}&query3={test3}");  
            template.QueryValueVariableNames.Contains("test").ShouldBeTrue();  
            template.QueryValueVariableNames.Contains("test2").ShouldBeTrue();  
            template.QueryValueVariableNames.Contains("test3").ShouldBeTrue();  
@@ -277,8 +277,8 @@ namespace UriTemplate_Specification
         [Test]  
         public void a_url_matching_three_query_string_parameters_will_match()  
         {  
-           var table = new UriTemplate("/test?q={searchTerm}&p={pageNumber}&s={pageSize}");  
-           UriTemplateMatch match = table.Match(new Uri("http://localhost"), new Uri("http://localhost/test?q=&p=1&s=10"));  
+           var table = new OpenRasta.UriTemplate("/test?q={searchTerm}&p={pageNumber}&s={pageSize}");  
+           OpenRasta.UriTemplateMatch match = table.Match(new Uri("http://localhost"), new Uri("http://localhost/test?q=&p=1&s=10"));  
            match.ShouldNotBeNull();  
            match.QueryParameters["searchTerm"].ShouldBe(string.Empty);  
            match.QueryParameters["pageNumber"].ShouldBe("1");  
@@ -288,8 +288,8 @@ namespace UriTemplate_Specification
         [Test]  
         public void a_url_with_extra_query_string_parameters_will_match()  
         {  
-           var template = new UriTemplate("/test?q={searchTerm}&p={pageNumber}&s={pageSize}");  
-           UriTemplateMatch match = template.Match(new Uri("http://localhost/"), new Uri("http://localhost/test?q=test&p=1&s=10&contentType=json"));  
+           var template = new OpenRasta.UriTemplate("/test?q={searchTerm}&p={pageNumber}&s={pageSize}");  
+           OpenRasta.UriTemplateMatch match = template.Match(new Uri("http://localhost/"), new Uri("http://localhost/test?q=test&p=1&s=10&contentType=json"));  
            match.ShouldNotBeNull();  
         }  
    
@@ -297,7 +297,7 @@ namespace UriTemplate_Specification
         [Test]
         public void the_query_parameters_are_exposed()
         {
-            var table = new UriTemplate("/test?query={queryValue}");
+            var table = new OpenRasta.UriTemplate("/test?query={queryValue}");
             table.QueryValueVariableNames.Contains("queryValue").ShouldBeTrue();
         }
     }
@@ -309,13 +309,13 @@ namespace UriTemplate_Specification
 
         public void GivenTwoTemplates(string template1, string template2)
         {
-            TheResult = new UriTemplate(template1).IsEquivalentTo(new UriTemplate(template2));
+            TheResult = new OpenRasta.UriTemplate(template1).IsEquivalentTo(new OpenRasta.UriTemplate(template2));
         }
 
         [Test]
         public void a_template_isnt_equivalent_to_a_null_reference()
         {
-            TheResult = new UriTemplate("weather/{state}/{city}").IsEquivalentTo(null);
+            TheResult = new OpenRasta.UriTemplate("weather/{state}/{city}").IsEquivalentTo(null);
 
             TheResult.ShouldBeFalse();
         }
