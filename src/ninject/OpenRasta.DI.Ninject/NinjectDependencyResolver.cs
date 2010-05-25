@@ -130,7 +130,7 @@ namespace OpenRasta.DI.Ninject
             }
             else
             {
-                var bindingBuilder = new BindingBuilder<object>(binding);
+                var bindingBuilder = new BindingBuilder<object>(binding, _kernel);
                 var bindingScope = bindingBuilder.To(concreteType);
                 if (lifetime == DependencyLifetime.Singleton)
                     bindingScope.InSingletonScope();
@@ -157,7 +157,7 @@ namespace OpenRasta.DI.Ninject
                 _kernel.AddBinding(binding);
             }
 
-            var builder = new BindingBuilder<object>(binding);
+            var builder = new BindingBuilder<object>(binding, _kernel);
             if (lifetime == DependencyLifetime.PerRequest)
             {
                 if (foundExistingBinding && binding.Target != BindingTarget.Method)
@@ -245,7 +245,7 @@ namespace OpenRasta.DI.Ninject
             }
 
             var bindings = GetBindings(serviceType);
-            var request = _kernel.CreateRequest(serviceType, null, EmptyParameters, false);
+            var request = _kernel.CreateRequest(serviceType, null, EmptyParameters, false, false);
             return bindings.Any(b =>
                                     {
                                         if (b.Target != BindingTarget.Type) return false;
