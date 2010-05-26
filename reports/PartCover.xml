@@ -1,6 +1,0 @@
-<PartCoverSettings>
-  <Target>C:\Program Files (x86)\TestDriven.NET 2.0\NUnit\2.4\nunit-console.exe</Target>
-  <TargetWorkDir>C:\src\caff\openrasta\trunk\bin\OpenRasta.Tests.Unit\dbg</TargetWorkDir>
-  <TargetArgs>OpenRasta.Tests.Unit.dll</TargetArgs>
-  <Rule>+[OpenRasta*]*</Rule>
-</PartCoverSettings>
