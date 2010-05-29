@@ -50,7 +50,7 @@ namespace OpenRasta.Pipeline.Contributors
             if (operations.Count() > 0)
             {
                 foreach (var operation in operations)
-                    Logger.WriteDebug("Created operation named {0} wth signature {1}", operation.Name, operation.ToString());
+                    Logger.WriteDebug("Created operation named {0} with signature {1}", operation.Name, operation.ToString());
             }
             else
             {
