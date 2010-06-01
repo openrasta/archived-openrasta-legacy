@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regressions\78.cs" />
     <Compile Include="Regressions\96.cs" />
+    <Compile Include="Regressions\135.cs" />
     <Compile Include="Security\DigestAuthentication_Specification.cs" />
     <Compile Include="server_context.cs" />
     <Compile Include="Stubs\Customer.cs" />

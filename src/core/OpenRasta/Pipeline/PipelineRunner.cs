@@ -11,7 +11,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 using OpenRasta.Collections.Specialized;
 using OpenRasta.DI;
 using OpenRasta.Diagnostics;
@@ -107,11 +109,9 @@ namespace OpenRasta.Pipeline
                         case PipelineContinuation.Abort:
                             AbortPipeline(context);
                             goto case PipelineContinuation.RenderNow;
-
                         case PipelineContinuation.RenderNow:
                             RenderNow(context, stage);
-                            break;
-
+                            return;
                         case PipelineContinuation.Finished:
                             FinishPipeline(context);
                             return;
@@ -125,15 +125,35 @@ namespace OpenRasta.Pipeline
             PipelineLog.WriteDebug("Pipeline is in RenderNow mode.");
             if (!stage.ResumeFrom<KnownStages.IOperationResultInvocation>())
             {
+                if (stage.OwnerStage != null)
+                {
+                    PipelineLog.WriteError("Trying to launch nested pipeline to render error failed.");
+                    AttemptCatastrophicErrorNotification(context);
+                    return;
+                }
                 using (PipelineLog.Operation(this, "Rendering contributor has already been executed. Calling a nested pipeline to render the error."))
                 {
-                    var nestedPipeline = new PipelineStage(this);
+                    var nestedPipeline = new PipelineStage(this, stage);
                     if (!nestedPipeline.ResumeFrom<KnownStages.IOperationResultInvocation>())
                         throw new InvalidOperationException("Could not find an IOperationResultInvocation in the new pipeline.");
                     RunCallGraph(context, nestedPipeline);
                 }
             }
         }
+
+        void AttemptCatastrophicErrorNotification(ICommunicationContext context)
+        {
+            try
+            {
+                string fatalError = "An error in one of the rendering components of OpenRasta prevents the error message from being sent back.";
+                context.Response.StatusCode = 500;
+                context.Response.Entity.ContentLength = fatalError.Length;
+                context.Response.Entity.Stream.Write(Encoding.ASCII.GetBytes(fatalError), 0, fatalError.Length);
+                context.Response.WriteHeaders();
+            }
+            catch
+            {}
+    }
 
         bool CanBeExecuted(ContributorCall call)
         {

@@ -21,7 +21,7 @@ namespace OpenRasta.Pipeline.Contributors
 {
     public class ResponseEntityWriterContributor : KnownStages.IResponseCoding
     {
-        static readonly byte[] PADDING = Enumerable.Repeat((byte)0x20, 512).ToArray();
+        static readonly byte[] PADDING = Enumerable.Repeat((byte)' ', 512).ToArray();
 
         public ILogger Log { get; set; }
         public void Initialize(IPipeline pipeline)
