@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace OpenRasta
 {
@@ -76,7 +77,7 @@ namespace OpenRasta
                                                         - potentialMatch.WildcardPathSegments.Count;
                     for (int i = 0; i < potentialMatch.BoundVariables.Count; i++)
                         if (potentialMatch.QueryParameters == null ||
-                            potentialMatch.QueryParameters[potentialMatch.BoundVariables.GetKey(i)] == null)
+                            potentialMatch.BoundQueryParameters[potentialMatch.BoundVariables.GetKey(i)] == null)
                             currentMaxLiteralSegmentCount -= 1;
 
                     potentialMatch.Data = template.Value;
@@ -84,7 +85,6 @@ namespace OpenRasta
                     if (currentMaxLiteralSegmentCount > lastMaxLiteralSegmentCount)
                     {
                         lastMaxLiteralSegmentCount = currentMaxLiteralSegmentCount;
-                        matches.Clear();
                     }
                     else if (currentMaxLiteralSegmentCount < lastMaxLiteralSegmentCount)
                     {
@@ -95,7 +95,17 @@ namespace OpenRasta
                 }
             }
 
-            return matches;
+            return SortByMatchQuality(matches);
+        }
+
+        Collection<UriTemplateMatch> SortByMatchQuality(Collection<UriTemplateMatch> matches)
+        {
+            return new Collection<UriTemplateMatch>((
+           from m in matches
+                let qsDistance = Math.Abs(m.BoundQueryParameters.Count - m.QueryParameters.Count)
+                let bound = m.BoundVariables.Count + m.BoundQueryParameters.Count
+                orderby bound descending , qsDistance
+                select m).ToList());
         }
 
         /// <exception cref="UriTemplateMatchException">Several matching templates were found.</exception>

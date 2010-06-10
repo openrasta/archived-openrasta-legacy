@@ -114,6 +114,7 @@ namespace TemplatedUriResolver_Specification
 
             Result.ShouldBe("http://localhost/theshire");
         }
+
         [Test]
         public void uris_are_generated_correctly_when_base_uri_has_trailing_slash()
         {
@@ -132,6 +133,17 @@ namespace TemplatedUriResolver_Specification
             when_creating_uri<Frodo>("http://localhost/lotr".ToUri(), null);
 
             Result.ShouldBe("http://localhost/lotr/theshire");
+        }
+
+        [Test]
+        public void uris_are_generated_correctly_for_minimum_query_fit()
+        {
+            given_uri_mapping("/theshire/{character}", typeof(Frodo), CultureInfo.InvariantCulture, null);
+            given_uri_mapping("/theshire{character}?q={query}", typeof(Frodo), CultureInfo.InvariantCulture, null);
+
+            when_creating_uri<Frodo>(new NameValueCollection{{"character", "frodo"}});
+
+            Result.ShouldBe("http://localhost/theshire/frodo");
         }
     }
     namespace context

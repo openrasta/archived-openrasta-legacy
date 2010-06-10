@@ -270,6 +270,7 @@ namespace OpenRasta
 
             var queryMatches = new NameValueCollection();
             Dictionary<string, QuerySegment> requestQueryString = ParseQueries(candidate);
+            var queryParams = new Collection<string>();
 
             foreach (QuerySegment querySegment in _templateQuerySegments.Values)
             {
@@ -279,18 +280,20 @@ namespace OpenRasta
                     return null;
                 else if (querySegment.Type == SegmentType.Variable)
                 {
-                    if (!requestQueryString.ContainsKey(querySegment.Key))
-                        return null;
-                    // TODO: Decide on a behavior when there is several queries of the same name. Think it should turn it into an array
-                    queryMatches[querySegment.Value] = requestQueryString[querySegment.Key].Value;
+                    if (requestQueryString.ContainsKey(querySegment.Key))
+                    {
+                        queryMatches[querySegment.Value] = requestQueryString[querySegment.Key].Value;
+                    }
                 }
+                queryParams.Add(querySegment.Key);
             }
             return new UriTemplateMatch
             {
                 BaseUri = baseAddress,
                 Data = 0,
                 BoundVariables = boundVariables,
-                QueryParameters = queryMatches,
+                QueryParameters = queryParams,
+                BoundQueryParameters = queryMatches,
                 RelativePathSegments = new Collection<string>(candidateSegments),
                 RequestUri = candidate,
                 Template = this,
