@@ -129,7 +129,7 @@ namespace OpenRasta.Web
                 var allVariables = new NameValueCollection
                 {
                     tableMatch.BoundVariables, 
-                    tableMatch.QueryParameters
+                    tableMatch.BoundQueryParameters
                 };
                 result.UriTemplateParameters.Add(allVariables);
             }
