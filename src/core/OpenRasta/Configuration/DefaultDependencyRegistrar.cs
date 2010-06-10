@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:

@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using NUnit.Framework;
 using OpenRasta.Diagnostics;
@@ -13,6 +14,36 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
 {
     namespace UriParameters_Specification
     {
+        public class when_there_is_one_optional_parameter : uri_optionalparameters_context
+        {
+            [Test]
+            public void an_operation_having_all_parameters_is_selected()
+            {
+                given_filter();
+                given_operations();
+                given_pipeline_uriparams(new NameValueCollection { { "index", "42" }, { "content", "value" } });
+
+                when_filtering_operations();
+
+                FilteredOperations.ShouldHaveCountOf(1).First().Name.ShouldBe("Post");
+                Errors.Errors.Count.ShouldBe(0);
+            }
+
+            [Test]
+            public void an_operation_having_all_mandatory_parameters_is_selected()
+            {
+                given_filter();
+                given_operations();
+                given_pipeline_uriparams(new NameValueCollection { { "index", "42" } });
+
+                when_filtering_operations();
+
+                FilteredOperations.ShouldHaveCountOf(2).First().Name.ShouldBe("Get");
+                Errors.Errors.Count.ShouldBe(0);
+
+            }
+        }
+
         public class when_there_is_no_uri_parameter : uriparameters_context
         {
             [Test]
@@ -44,6 +75,7 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
                 Errors.Errors.Count.ShouldBe(0);
                 
             }
+
             [Test]
             public void operations_not_having_the_correct_parameter_is_excluded()
             {
@@ -70,6 +102,7 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
             }
         }
     }
+
     public abstract class uriparameters_context : operation_filter_context<UriParameterFakeHandler, UriParametersFilter>
     {
         protected override void SetUp()
@@ -85,15 +118,45 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
         }
     }
 
+    public abstract class uri_optionalparameters_context : operation_filter_context<UriOptionalParameterHandler, UriParametersFilter>
+    {
+        protected override void SetUp()
+        {
+            base.SetUp();
+            Context.PipelineData.SelectedResource = new UriRegistration(null, null);// { UriTemplateParameters = new List<NameValueCollection>() };
+        }
+
+        protected override UriParametersFilter create_filter()
+        {
+
+            return new UriParametersFilter(Context, Errors);
+        }
+    }
+
     public class UriParameterFakeHandler
     {
-        public object Get(int index)
-        {
-            return null;
-        }
         public object Post(int index, string content)
         {
             return null;
         }
+    }
+
+    public class UriOptionalParameterHandler
+    {
+        public object Get()
+        {
+            return null;
+        }
+
+        public object Get(int index, [Optional]string content)
+        {
+            return null;            
+        }
+
+        public object Get([Optional]string hindu, [Optional]string reason)
+        {
+            return null;
+        }
+        
     }
 }
