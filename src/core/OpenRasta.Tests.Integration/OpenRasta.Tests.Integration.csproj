@@ -63,6 +63,7 @@
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
     <Compile Include="Binding\CustomSurrogates.cs" />
+    <Compile Include="Regressions\148.1.cs" />
     <Compile Include="Regressions\92.cs" />
     <Compile Include="Codecs\HtmlForm_Specification.cs" />
     <Compile Include="Codecs\Json_Specification.cs" />

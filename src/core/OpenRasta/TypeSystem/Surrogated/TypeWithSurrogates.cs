@@ -38,6 +38,11 @@ namespace OpenRasta.TypeSystem.Surrogated
             return _wrappedType.CreateInstance();
         }
 
+        public object CreateInstance(params object[] arguments)
+        {
+            return _wrappedType.CreateInstance(arguments);
+        }
+
         public bool IsAssignableFrom(IType type)
         {
             return _wrappedType.IsAssignableFrom(type);
