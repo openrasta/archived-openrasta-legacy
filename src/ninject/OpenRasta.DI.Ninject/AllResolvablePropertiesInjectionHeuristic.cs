@@ -51,7 +51,7 @@ namespace OpenRasta.DI.Ninject
                 || ((propertyInfo.DeclaringType.IsAssignableFrom(propertyInfo.PropertyType))))
                 return false;
 
-            var request = _kernel.CreateRequest(propertyInfo.PropertyType, null, EmptyParameters, true);
+            var request = _kernel.CreateRequest(propertyInfo.PropertyType, null, EmptyParameters, true, false);
             return _kernel.CanResolve(request);
         }
     }
