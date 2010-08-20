@@ -112,6 +112,7 @@
     <Compile Include="Collections\Specialized\DependencyTree%271.cs" />
     <Compile Include="Configuration\CodecDefinitionExtensions.cs" />
     <Compile Include="Configuration\CodecParentDefinitionExtensions.cs" />
+    <Compile Include="Configuration\Fluent\INoIzObject.cs" />
     <Compile Include="Configuration\HasExtensions.cs" />
     <Compile Include="Configuration\LegacyHasExtensions.cs" />
     <Compile Include="Configuration\MetaModel\MediaTypeModel.cs" />
