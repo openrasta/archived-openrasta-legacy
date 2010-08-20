@@ -48,7 +48,7 @@ namespace OpenRasta.Data
         }
 
         /// <summary>
-        /// Applies the changes in this <see cref="ChangeSet&lt;T&gt;"/> to the provided instance.
+        /// Applies the changes in this <see cref="ChangeSet{T}"/> to the provided instance.
         /// </summary>
         /// <param name="testObject">The instance of an object on which to apply the changes.</param>
         public void Apply(T testObject)
