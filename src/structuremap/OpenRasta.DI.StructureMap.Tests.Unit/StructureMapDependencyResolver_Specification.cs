@@ -111,7 +111,7 @@ namespace OpenRasta.DI.StructureMap.Tests.Unit
 	{
 		public override IDependencyResolver CreateResolver()
 		{
-			return new StructureMapDependencyResolver();
+			return new StructureMapDependencyResolver(new Container());
 		}
 
 		[Test]
@@ -161,7 +161,7 @@ namespace OpenRasta.DI.StructureMap.Tests.Unit
 	{
 		public override IDependencyResolver CreateResolver()
 		{
-			return new StructureMapDependencyResolver();
+			return new StructureMapDependencyResolver(new Container());
 		}
 	}
 
