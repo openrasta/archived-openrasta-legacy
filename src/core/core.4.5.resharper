@@ -1,7 +1,6 @@
 <Configuration>
   <CodeStyleSettings>
-    <ExternalPath IsNull="False">
-    </ExternalPath>
+    <ExternalPath IsNull="False" />
     <Sharing>SOLUTION</Sharing>
     <AgentSmithCSharpStyleSettings version="1">
       <CodeStyleSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -802,8 +801,7 @@ Markup</UserWords>
         </KeepImports>
       </UsingsSettings>
       <Naming2>
-        <ExceptionName IsNull="False">
-        </ExceptionName>
+        <ExceptionName IsNull="False" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
         <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
         <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
@@ -1073,8 +1071,7 @@ Markup</UserWords>
     </VB>
     <GenerateMemberBody />
     <Naming2>
-      <ExceptionName IsNull="False">
-      </ExceptionName>
+      <ExceptionName IsNull="False" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="MethodPropertyEvent" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
       <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
