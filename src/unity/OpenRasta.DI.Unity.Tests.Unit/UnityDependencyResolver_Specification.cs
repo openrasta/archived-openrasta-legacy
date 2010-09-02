@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Linq;
 using InternalDependencyResolver_Specification;
 using Microsoft.Practices.Unity;

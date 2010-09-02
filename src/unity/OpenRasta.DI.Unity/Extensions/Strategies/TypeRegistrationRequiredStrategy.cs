@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.ObjectBuilder2;
+using Microsoft.Practices.ObjectBuilder2;
 using OpenRasta.DI.Unity.Extensions.Policies;
 
 namespace OpenRasta.DI.Unity.Extensions.Strategies
