@@ -111,7 +111,7 @@ namespace OpenRasta.Pipeline
                             goto case PipelineContinuation.RenderNow;
                         case PipelineContinuation.RenderNow:
                             RenderNow(context, stage);
-                            return;
+                            break;
                         case PipelineContinuation.Finished:
                             FinishPipeline(context);
                             return;
@@ -141,7 +141,7 @@ namespace OpenRasta.Pipeline
             }
         }
 
-        void AttemptCatastrophicErrorNotification(ICommunicationContext context)
+        static void AttemptCatastrophicErrorNotification(ICommunicationContext context)
         {
             try
             {
