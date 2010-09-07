@@ -3,7 +3,7 @@ using OpenRasta.TypeSystem;
 
 namespace OpenRasta.Configuration.Fluent
 {
-    public interface IFluentTarget
+    public interface IFluentTarget : INoIzObject
     {
         IMetaModelRepository Repository { get; }
         ITypeSystem TypeSystem { get; }
