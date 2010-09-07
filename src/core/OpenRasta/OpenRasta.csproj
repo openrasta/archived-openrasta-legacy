@@ -142,7 +142,6 @@
     <Compile Include="Configuration\MetaModel\Handlers\DependencyRegistrationModelHandler.cs" />
     <Compile Include="Handlers\HandlerRepository.cs" />
     <Compile Include="Handlers\IHandlerRepository.cs" />
-    <Compile Include="INoIzObject.cs" />
     <Compile Include="Configuration\Fluent\ICodecDefinition.cs" />
     <Compile Include="Configuration\Fluent\ICodecParentDefinition.cs" />
     <Compile Include="Configuration\Fluent\ICodecWithMediaTypeDefinition.cs" />
