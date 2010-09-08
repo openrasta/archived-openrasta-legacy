@@ -16,6 +16,11 @@ namespace OpenRasta.Pipeline
         public interface IBegin : IPipelineContributor { }
 
         /// <summary>
+        /// Represents the stage at which http authentication will take place
+        /// </summary>
+        public interface IAuthentication : IPipelineContributor { }
+
+        /// <summary>
         /// Represents the stage at which the URI is matched to find a resource.
         /// </summary>
         public interface IUriMatching : IPipelineContributor { }

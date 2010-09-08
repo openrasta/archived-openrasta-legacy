@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Text;
-using DigestAuthentication_Specification;
 using NUnit.Framework;
 using OpenRasta.Configuration;
 using OpenRasta.Configuration.Fluent;
@@ -47,8 +46,6 @@ namespace Dynamic_surrogates
         {
             ConfigureServer(() =>
             {
-                DependencyManager.GetService<IDependencyResolver>()
-                    .AddDependency<IAuthenticationProvider, FakeAuthProvider>();
 
                 ResourceSpace.Has.ResourcesOfType<Customer>()
                     .AtUri("/customer/{id}")

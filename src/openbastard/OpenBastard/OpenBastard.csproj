@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\OpenRasta.Codecs.SharpView\OpenRasta.Codecs.SharpView.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\bin\vs\bin\Debug\OpenBastard\OpenBastard.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
