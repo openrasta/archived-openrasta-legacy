@@ -3,7 +3,7 @@
   
   <PropertyGroup>
     <RootPath Condition="'$(RootPath)' == ''">$(MSBuildProjectDirectory)\..\..\..</RootPath>
-    <CastleWindsor>2.0</CastleWindsor>
+    <CastleWindsor>2.5.1</CastleWindsor>
     <OpenRasta>2.0</OpenRasta>
   </PropertyGroup>
   <Import Project="$(RootPath)\Build\dependencymanager.proj"/>

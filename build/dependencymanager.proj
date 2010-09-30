@@ -22,16 +22,19 @@
       <HintPath>$(CastleDirectory)\Castle.Core.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
     </Reference>
-    <Reference Include="Castle.MicroKernel">
-      <HintPath>$(CastleDirectory)\Castle.MicroKernel.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
     <Reference Include="Castle.Windsor">
       <HintPath>$(CastleDirectory)\Castle.Windsor.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
     </Reference>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(CastleWindsor)' != '2.5.1'">
+    <Reference Include="Castle.MicroKernel">
+      <HintPath>$(CastleDirectory)\Castle.MicroKernel.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  
   <PropertyGroup>
     <OpenRastaAssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta)' != ''">$(OpenRastaDirectory)\OpenRasta.dll</OpenRastaAssemblyPath>
     <OpenRasta-Hosting-AspNet-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-AspNet)' != ''">$(OpenRastaDirectory)\OpenRasta.Hosting.AspNet.dll</OpenRasta-Hosting-AspNet-AssemblyPath>
