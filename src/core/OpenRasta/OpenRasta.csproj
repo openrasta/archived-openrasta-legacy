@@ -60,6 +60,11 @@
     <Compile Include="..\..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
+    <Compile Include="Authentication\AuthenticationResult.cs" />
+    <Compile Include="Authentication\Basic\BasicAuthenticationScheme.cs" />
+    <Compile Include="Authentication\Basic\BasicAuthRequestHeader.cs" />
+    <Compile Include="Authentication\Basic\IBasicAuthenticator.cs" />
+    <Compile Include="Authentication\IAuthenticationScheme.cs" />
     <Compile Include="Binding\BinderAttribute.cs" />
     <Compile Include="Binding\DefaultObjectBinderLocator.cs" />
     <Compile Include="Binding\BindingResult.cs" />
@@ -112,6 +117,7 @@
     <Compile Include="Collections\Specialized\DependencyTree%271.cs" />
     <Compile Include="Configuration\CodecDefinitionExtensions.cs" />
     <Compile Include="Configuration\CodecParentDefinitionExtensions.cs" />
+    <Compile Include="Configuration\Fluent\INoIzObject.cs" />
     <Compile Include="Configuration\HasExtensions.cs" />
     <Compile Include="Configuration\LegacyHasExtensions.cs" />
     <Compile Include="Configuration\MetaModel\MediaTypeModel.cs" />
@@ -121,6 +127,11 @@
     <Compile Include="Diagnostics\LogSource.cs" />
     <Compile Include="Diagnostics\NullErrorCollector.cs" />
     <Compile Include="Diagnostics\OperationContextErrorCollector.cs" />
+    <Compile Include="Pipeline\Contributors\AuthenticationChallengerContributor.cs" />
+    <Compile Include="Pipeline\Contributors\AuthenticationContributor.cs" />
+    <Compile Include="Pipeline\Contributors\DigestAuthorizerContributor.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Pipeline\Diagnostics\PipelineLogSource.cs" />
     <Compile Include="DI\Internal\ContextStoreDependency.cs" />
     <Compile Include="DI\Internal\ContextStoreExtensions.cs" />
@@ -141,7 +152,6 @@
     <Compile Include="Configuration\MetaModel\Handlers\DependencyRegistrationModelHandler.cs" />
     <Compile Include="Handlers\HandlerRepository.cs" />
     <Compile Include="Handlers\IHandlerRepository.cs" />
-    <Compile Include="INoIzObject.cs" />
     <Compile Include="Configuration\Fluent\ICodecDefinition.cs" />
     <Compile Include="Configuration\Fluent\ICodecParentDefinition.cs" />
     <Compile Include="Configuration\Fluent\ICodecWithMediaTypeDefinition.cs" />
@@ -216,6 +226,16 @@
     <Compile Include="OperationModel\OutputMember.cs" />
     <Compile Include="Pipeline\IContextStore.cs" />
     <Compile Include="Pipeline\IContextStoreDependencyCleaner.cs" />
+    <Compile Include="Security\Credentials.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\DigestHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\IAuthenticationProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\RequiresAuthenticationInterceptor.cs" />
     <Compile Include="Security\RequiresRoleAttribute.cs" />
     <Compile Include="Security\RequiresRoleInterceptor.cs" />
     <Compile Include="TypeSystem\DebuggerStrings.cs" />
@@ -412,9 +432,6 @@
     <Compile Include="IO\ByteArrayExtension.cs" />
     <Compile Include="IO\HistoryStream.cs" />
     <Compile Include="IO\StreamExtensions.cs" />
-    <Compile Include="Security\DigestHeader.cs" />
-    <Compile Include="Security\IAuthenticationProvider.cs" />
-    <Compile Include="Security\Credentials.cs" />
     <Compile Include="UriTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UriTemplateEqualityComparer.cs" />
@@ -432,7 +449,6 @@
     <Compile Include="Pipeline\ContributorCall.cs" />
     <Compile Include="Pipeline\Contributors\AbstractOperationProcessing.cs" />
     <Compile Include="Pipeline\Contributors\BootstrapperContributor.cs" />
-    <Compile Include="Pipeline\Contributors\DigestAuthorizerContributor.cs" />
     <Compile Include="OperationModel\IOperationCreator.cs" />
     <Compile Include="OperationModel\IOperation.cs" />
     <Compile Include="OperationModel\IOperationFilter.cs" />

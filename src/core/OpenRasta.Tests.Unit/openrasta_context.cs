@@ -56,6 +56,12 @@ namespace OpenRasta.Tests
             get { return Resolver.Resolve<IUriResolver>(); }
         }
 
+        public void given_dependency<TInterface>(TInterface instance)
+        {
+            Resolver.AddDependencyInstance(typeof(TInterface), instance, DependencyLifetime.Singleton);
+
+        }
+
         public T given_pipeline_contributor<T>() where T : class, IPipelineContributor
         {
             return given_pipeline_contributor<T>(null);
@@ -189,11 +195,6 @@ namespace OpenRasta.Tests
             Context.OperationResult = new OperationResult.OK { ResponseResource = responseEntity };
         }
 
-        protected void GivenAUser(string username, string password)
-        {
-            var provider = Resolver.Resolve<IAuthenticationProvider>() as InMemAuthenticationProvider;
-            provider.Passwords[username] = password;
-        }
         protected TestErrorCollector Errors { get; private set; }
         protected override void SetUp()
         {
@@ -202,8 +203,6 @@ namespace OpenRasta.Tests
             Pipeline = null;
             _actions = new Dictionary<Type, Func<ICommunicationContext, PipelineContinuation>>();
             var manager = Host.HostManager;
-            if (!Resolver.HasDependency(typeof(IAuthenticationProvider)))
-                Resolver.AddDependency<IAuthenticationProvider, InMemAuthenticationProvider>();
             Resolver.AddDependencyInstance(typeof(IErrorCollector), Errors = new TestErrorCollector());
             Resolver.AddDependency<IPathManager, PathManager>();
             
@@ -215,23 +214,6 @@ namespace OpenRasta.Tests
         {
             base.TearDown();
             DependencyManager.UnsetResolver();
-        }
-
-        public class InMemAuthenticationProvider : IAuthenticationProvider
-        {
-            public Dictionary<string, string> Passwords = new Dictionary<string, string>();
-
-            public Credentials GetByUsername(string username)
-            {
-                if (username == null || !Passwords.ContainsKey(username))
-                    return null;
-                return new Credentials
-                {
-                    Username = username,
-                    Password = Passwords[username],
-                    Roles = new string[0]
-                };
-            }
         }
 
         public class SinglePipeline<T> : IPipeline, IPipelineExecutionOrder, IPipelineExecutionOrderAnd where T : class, IPipelineContributor

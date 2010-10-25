@@ -3,7 +3,7 @@ using OpenRasta.Codecs;
 
 namespace OpenRasta.Configuration.Fluent
 {
-    public interface ICodecParentDefinition
+    public interface ICodecParentDefinition :INoIzObject
     {
         ICodecDefinition TranscodedBy<TCodec>(object configuration)
             where TCodec : ICodec;

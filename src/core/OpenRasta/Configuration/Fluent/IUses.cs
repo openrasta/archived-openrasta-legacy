@@ -12,7 +12,7 @@ using OpenRasta.DI;
 
 namespace OpenRasta.Configuration.Fluent
 {
-    public interface IUses : IDependencyResolverAccessor, INoIzObject
+    public interface IUses  : INoIzObject, IDependencyResolverAccessor
     {
     }
 }

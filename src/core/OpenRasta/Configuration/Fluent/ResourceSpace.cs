@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.ComponentModel;
 using OpenRasta.Configuration.Fluent;
 using OpenRasta.Configuration.Fluent.Implementation;
 
@@ -27,6 +28,19 @@ namespace OpenRasta.Configuration
         {
             get { return new FluentTarget(); }
         }
+
+        #region Hide static object members
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new static bool Equals(object objA, object objB)
+        {
+            return object.Equals(objA, objB);
+        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new static bool ReferenceEquals(object objA, object objB)
+        {
+            return object.ReferenceEquals(objA, objB);
+        }
+        #endregion
     }
 }
 

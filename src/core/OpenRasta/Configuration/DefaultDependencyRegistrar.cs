@@ -41,6 +41,8 @@ namespace OpenRasta.Configuration
 {
     public class DefaultDependencyRegistrar : IDependencyRegistrar
     {
+        protected Type PathManagerType;
+
         public DefaultDependencyRegistrar()
         {
             CodecTypes = new List<Type>();
@@ -82,9 +84,21 @@ namespace OpenRasta.Configuration
             AddSurrogateBuilders();
         }
 
-        protected Type PathManagerType;
+        public void AddSurrogateBuilders()
+        {
+            SurrogateBuilders.Add(typeof(ListIndexerSurrogateBuilder));
+            SurrogateBuilders.Add(typeof(DateTimeSurrogate));
+        }
+
         protected IList<Type> SurrogateBuilders { get; private set; }
+
+        public void SetPathManager<T>()
+        {
+            PathManagerType = typeof(T);
+        }
+
         protected Type CodecRepositoryType { get; set; }
+
         protected IList<Type> CodecTypes { get; private set; }
         protected IList<Type> CodeSnippetModifierTypes { get; private set; }
         protected Type ErrorCollectorType { get; set; }
@@ -138,11 +152,6 @@ namespace OpenRasta.Configuration
             PipelineContributorTypes.Add(typeof(T));
         }
 
-        public void SetPathManager<T>()
-        {
-            PathManagerType = typeof(T);
-        }
-
         public void SetCodecRepository<T>() where T : ICodecRepository
         {
             CodecRepositoryType = typeof(T);
@@ -193,109 +202,7 @@ namespace OpenRasta.Configuration
             UriResolverType = typeof(T);
         }
 
-        public void SetOperationInterceptorProvider<T>()
-        {
-            OperationInterceptorProviderType = typeof(T);
-        }
-
-        public void SetOperationCreator<T>()
-            where T : IOperationCreator
-        {
-            OperationCreatorType = typeof(T);
-        }
-
-        public void AddSurrogateBuilders()
-        {
-            SurrogateBuilders.Add(typeof(ListIndexerSurrogateBuilder));
-            SurrogateBuilders.Add(typeof(DateTimeSurrogate));
-        }
-
-        protected virtual void AddLogSources()
-        {
-            LogSourcedLoggerType = typeof(TraceSourceLogger<>);
-            LogSourceTypes.AddRange(Assembly.GetExecutingAssembly().GetTypes().Where(x => !x.IsAbstract && !x.IsInterface && x.IsAssignableTo<ILogSource>()));
-        }
-
-        protected virtual void AddOperationCodecResolvers()
-        {
-            AddOperationCodecSelector<RequestCodecSelector>();
-        }
-
-        protected virtual void AddOperationFilter<T>() where T : IOperationFilter
-        {
-            OperationFilterTypes.Add(typeof(T));
-        }
-
-        protected virtual void AddOperationHydrator<T>()
-        {
-            OperationHydratorTypes.Add(typeof(T));
-        }
-
-        protected virtual void AddOperationHydrators()
-        {
-            AddOperationHydrator<RequestEntityReaderHydrator>();
-        }
-
-        protected virtual void AddCSharpCodeSnippetModifiers()
-        {
-            AddCodeSnippetModifier<MarkupElementModifier>();
-            AddCodeSnippetModifier<UnencodedOutputModifier>();
-        }
-
-        protected virtual void AddDefaultCodecs()
-        {
-            AddCodec<HtmlErrorCodec>();
-            AddCodec<TextPlainCodec>();
-            AddCodec<ApplicationXWwwFormUrlencodedKeyedValuesCodec>();
-            AddCodec<ApplicationXWwwFormUrlencodedObjectCodec>();
-            AddCodec<MultipartFormDataObjectCodec>();
-            AddCodec<MultipartFormDataKeyedValuesCodec>();
-            AddCodec<ApplicationOctetStreamCodec>();
-            AddCodec<OperationResultCodec>();
-        }
-
-        protected virtual void AddDefaultContributors()
-        {
-            AddPipelineContributor<ResponseEntityCodecResolverContributor>();
-            AddPipelineContributor<ResponseEntityWriterContributor>();
-            AddPipelineContributor<BootstrapperContributor>();
-            AddPipelineContributor<HttpMethodOverriderContributor>();
-            AddPipelineContributor<UriDecoratorsContributor>();
-
-            AddPipelineContributor<ResourceTypeResolverContributor>();
-            AddPipelineContributor<HandlerResolverContributor>();
-
-            AddPipelineContributor<DigestAuthorizerContributor>();
-
-            AddPipelineContributor<OperationCreatorContributor>();
-            AddPipelineContributor<OperationFilterContributor>();
-            AddPipelineContributor<OperationHydratorContributor>();
-            AddPipelineContributor<OperationCodecSelectorContributor>();
-            AddPipelineContributor<OperationInvokerContributor>();
-            AddPipelineContributor<OperationResultInvokerContributor>();
-
-            AddPipelineContributor<OperationInterceptorContributor>();
-
-            AddPipelineContributor<EndContributor>();
-        }
-
-        protected virtual void AddDefaultMetaModelHandlers()
-        {
-            AddMetaModelHandler<TypeRewriterMetaModelHandler>();
-            AddMetaModelHandler<CodecMetaModelHandler>();
-            AddMetaModelHandler<HandlerMetaModelHandler>();
-            AddMetaModelHandler<UriRegistrationMetaModelHandler>();
-            AddMetaModelHandler<DependencyRegistrationMetaModelHandler>();
-        }
-
-        protected virtual void AddOperationFilters()
-        {
-            AddOperationFilter<HttpMethodOperationFilter>();
-            AddOperationFilter<UriNameOperationFilter>();
-            AddOperationFilter<UriParametersFilter>();
-        }
-
-        public virtual void Register(IDependencyResolver resolver)
+        public void Register(IDependencyResolver resolver)
         {
             RegisterCoreComponents(resolver);
             RegisterSurrogateBuilders(resolver);
@@ -312,6 +219,32 @@ namespace OpenRasta.Configuration
         protected virtual void RegisterSurrogateBuilders(IDependencyResolver resolver)
         {
             SurrogateBuilders.ForEach(x => resolver.AddDependency(typeof(ISurrogateBuilder), x, DependencyLifetime.Transient));
+        }
+
+        protected void AddLogSources()
+        {
+            LogSourcedLoggerType = typeof(TraceSourceLogger<>);
+            LogSourceTypes.AddRange(Assembly.GetExecutingAssembly().GetTypes().Where(x => !x.IsAbstract && !x.IsInterface && x.IsAssignableTo<ILogSource>()));
+        }
+
+        protected virtual void AddOperationCodecResolvers()
+        {
+            AddOperationCodecSelector<RequestCodecSelector>();
+        }
+
+        protected virtual void AddOperationFilter<T>() where T : IOperationFilter
+        {
+            OperationFilterTypes.Add(typeof(T));
+        }
+
+        protected void AddOperationHydrator<T>()
+        {
+            OperationHydratorTypes.Add(typeof(T));
+        }
+
+        protected virtual void AddOperationHydrators()
+        {
+            AddOperationHydrator<RequestEntityReaderHydrator>();
         }
 
         protected virtual void RegisterCodecs(IDependencyResolver resolver)
@@ -379,21 +312,91 @@ namespace OpenRasta.Configuration
             TraceSourceListenerTypes.ForEach(x => resolver.AddDependency(typeof(TraceListener), x, DependencyLifetime.Transient));
         }
 
-        protected virtual void RegisterLogSources(IDependencyResolver resolver)
+        protected void SetOperationCreator<T>() where T : IOperationCreator
+        {
+            OperationCreatorType = typeof(T);
+        }
+
+        void AddCSharpCodeSnippetModifiers()
+        {
+            AddCodeSnippetModifier<MarkupElementModifier>();
+            AddCodeSnippetModifier<UnencodedOutputModifier>();
+        }
+
+        void AddDefaultCodecs()
+        {
+            AddCodec<HtmlErrorCodec>();
+            AddCodec<TextPlainCodec>();
+            AddCodec<ApplicationXWwwFormUrlencodedKeyedValuesCodec>();
+            AddCodec<ApplicationXWwwFormUrlencodedObjectCodec>();
+            AddCodec<MultipartFormDataObjectCodec>();
+            AddCodec<MultipartFormDataKeyedValuesCodec>();
+            AddCodec<ApplicationOctetStreamCodec>();
+            AddCodec<OperationResultCodec>();
+        }
+
+        void AddDefaultContributors()
+        {
+            AddPipelineContributor<ResponseEntityCodecResolverContributor>();
+            AddPipelineContributor<ResponseEntityWriterContributor>();
+            AddPipelineContributor<BootstrapperContributor>();
+            AddPipelineContributor<HttpMethodOverriderContributor>();
+            AddPipelineContributor<UriDecoratorsContributor>();
+
+            AddPipelineContributor<ResourceTypeResolverContributor>();
+            AddPipelineContributor<HandlerResolverContributor>();
+
+            AddPipelineContributor<AuthenticationContributor>();
+            AddPipelineContributor<AuthenticationChallengerContributor>();
+
+            AddPipelineContributor<OperationCreatorContributor>();
+            AddPipelineContributor<OperationFilterContributor>();
+            AddPipelineContributor<OperationHydratorContributor>();
+            AddPipelineContributor<OperationCodecSelectorContributor>();
+            AddPipelineContributor<OperationInvokerContributor>();
+            AddPipelineContributor<OperationResultInvokerContributor>();
+
+            AddPipelineContributor<OperationInterceptorContributor>();
+
+            AddPipelineContributor<EndContributor>();
+        }
+
+        void AddDefaultMetaModelHandlers()
+        {
+            AddMetaModelHandler<TypeRewriterMetaModelHandler>();
+            AddMetaModelHandler<CodecMetaModelHandler>();
+            AddMetaModelHandler<HandlerMetaModelHandler>();
+            AddMetaModelHandler<UriRegistrationMetaModelHandler>();
+            AddMetaModelHandler<DependencyRegistrationMetaModelHandler>();
+        }
+
+        void AddOperationFilters()
+        {
+            AddOperationFilter<HttpMethodOperationFilter>();
+            AddOperationFilter<UriNameOperationFilter>();
+            AddOperationFilter<UriParametersFilter>();
+        }
+
+        void RegisterLogSources(IDependencyResolver resolver)
         {
             LogSourceTypes.ForEach(x => resolver.AddDependency(typeof(ILogger<>).MakeGenericType(x), LogSourcedLoggerType.MakeGenericType(x), DependencyLifetime.Transient));
         }
 
-        protected virtual void RegisterMethodFilters(IDependencyResolver resolver)
+        void RegisterMethodFilters(IDependencyResolver resolver)
         {
             MethodFilterTypes.ForEach(x => resolver.AddDependency(typeof(IMethodFilter), x, DependencyLifetime.Transient));
         }
 
-        protected virtual void RegisterOperationModel(IDependencyResolver resolver)
+        void RegisterOperationModel(IDependencyResolver resolver)
         {
             OperationFilterTypes.ForEach(x => resolver.AddDependency(typeof(IOperationFilter), x, DependencyLifetime.Transient));
             OperationHydratorTypes.ForEach(x => resolver.AddDependency(typeof(IOperationHydrator), x, DependencyLifetime.Transient));
             OperationCodecSelectorTypes.ForEach(x => resolver.AddDependency(typeof(IOperationCodecSelector), x, DependencyLifetime.Transient));
+        }
+
+        void SetOperationInterceptorProvider<T>()
+        {
+            OperationInterceptorProviderType = typeof(T);
         }
     }
 }
