@@ -131,7 +131,6 @@ namespace OpenRasta.DI.Ninject
             else
             {
                 var bindingBuilder = new BindingBuilder<object>(binding, _kernel);
-
                 var bindingScope = bindingBuilder.To(concreteType);
                 if (lifetime == DependencyLifetime.Singleton)
                     bindingScope.InSingletonScope();

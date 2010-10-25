@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Practices.Unity;
 using OpenRasta.DI.Unity.Extensions.Policies;

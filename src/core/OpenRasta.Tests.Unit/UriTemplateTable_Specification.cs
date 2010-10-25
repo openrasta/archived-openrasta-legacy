@@ -13,8 +13,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using NUnit.Framework;
-using OpenRasta;
 using OpenRasta.Testing;
 
 namespace UriTemplateTable_Specification
@@ -23,7 +23,7 @@ namespace UriTemplateTable_Specification
     public class when_matching_a_template_table
     {
         [Test]
-        public void out_of_two_templates_with_one_query_parameter_only_the_correct_one_is_used()
+        public void out_of_two_templates_with_one_query_parameter_only_the_correct_one_is_listed_first()
         {
             var table = new OpenRasta.UriTemplateTable(new Uri("http://localhost"), new List<KeyValuePair<OpenRasta.UriTemplate, object>>
             {
@@ -31,8 +31,78 @@ namespace UriTemplateTable_Specification
                 new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1?query2={queryText}"), null)
             });
             Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1?query=testing a query"));
-            match.Count.ShouldBe(1);
-            match[0].QueryParameters["queryText"].ShouldBe("testing a query");
+            match.Count.ShouldBe(2);
+            match[0].BoundQueryParameters.Count.ShouldBe(1);
+            match[1].BoundQueryParameters.Count.ShouldBe(0);
+            match[0].BoundQueryParameters["queryText"].ShouldBe("testing a query");
+        }
+
+        [Test]
+        public void a_template_with_no_params_is_the_best_match_for_a_uri_with_no_params()
+        {
+            var table = new OpenRasta.UriTemplateTable(new Uri("http://localhost"), new List<KeyValuePair<OpenRasta.UriTemplate, object>>
+            {
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1?query={queryText}&query2={queryiestText}"), null),
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1"), null),
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1?query={queryText}"), null)
+            });
+            Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1"));
+
+            match.Count.ShouldBe(3);
+            match[0].BoundVariables.Count.ShouldBe(0);
+            match[0].BoundVariables.Count.ShouldBe(0);
+        }
+
+        [Test]
+        public void a_template_with_one_param_is_the_best_match_for_a_uri_with_one_param()
+        {
+            var table = new OpenRasta.UriTemplateTable(new Uri("http://localhost"), new List<KeyValuePair<OpenRasta.UriTemplate, object>>
+            {
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1?query={queryText}&query2={queryiestText}"), null),
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1"), null),
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1?query={quasiText}"), null)
+            });
+            Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1?query=ceci_nest_pas_un_value"));
+
+            match.Count.ShouldBe(3);
+            match[0].BoundQueryParameters.Count.ShouldBe(1);
+            match[0].QueryParameters.Count.ShouldBe(1);
+            match[0].BoundQueryParameters["quasiText"].ShouldBe("ceci_nest_pas_un_value");
+        }
+
+        [Test]
+        public void irrelevant_params_do_not_affect_the_ordering()
+        {
+            var table = new OpenRasta.UriTemplateTable(new Uri("http://localhost"), new List<KeyValuePair<OpenRasta.UriTemplate, object>>
+            {
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1?query={queryText}&query2={queryiestText}"), null),
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1?query={queryText}&query3={queryiestText}"), null),
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1"), null),
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1?query={quasiText}"), null)
+            });
+            Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1?query=ceci_nest_pas_un_value&irrelevant=value"));
+
+            match.Count.ShouldBe(4);
+            match[0].BoundQueryParameters.Count.ShouldBe(1);
+            match[0].QueryParameters.Count.ShouldBe(1);
+            match[0].BoundQueryParameters["quasiText"].ShouldBe("ceci_nest_pas_un_value");
+        }
+
+        [Test]
+        public void equidistant_matches_are_ordered_by_bound_params()
+        {
+            var table = new OpenRasta.UriTemplateTable(new Uri("http://localhost"), new List<KeyValuePair<OpenRasta.UriTemplate, object>>
+            {
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1/{resourceId}"), null),
+                new KeyValuePair<OpenRasta.UriTemplate, object>(new OpenRasta.UriTemplate("resource1/{resourceId}?query={queryText}&query2={queryiestText}"), null),
+            });
+
+            Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1/123?query=ceci_nest_pas_un_value"));
+            
+            match.Count.ShouldBe(2);
+            match.First().BoundQueryParameters.Count.ShouldBe(1);
+            match.First().BoundVariables.Count.ShouldBe(1);
+            match.First().QueryParameters.Count.ShouldBe(2);
         }
     }
 }

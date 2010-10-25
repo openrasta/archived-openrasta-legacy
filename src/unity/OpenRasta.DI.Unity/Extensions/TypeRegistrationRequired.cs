@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.ObjectBuilder;
 using OpenRasta.DI.Unity.Extensions.Strategies;
 

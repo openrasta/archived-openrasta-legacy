@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 using NUnit.Framework;
-using OpenRasta.Diagnostics;
 using OpenRasta.OperationModel.Filters;
 using OpenRasta.Testing;
 using OpenRasta.Web;
@@ -44,6 +42,7 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
                 Errors.Errors.Count.ShouldBe(0);
                 
             }
+
             [Test]
             public void operations_not_having_the_correct_parameter_is_excluded()
             {
@@ -70,6 +69,7 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
             }
         }
     }
+
     public abstract class uriparameters_context : operation_filter_context<UriParameterFakeHandler, UriParametersFilter>
     {
         protected override void SetUp()
@@ -87,10 +87,6 @@ namespace OpenRasta.Tests.Unit.OperationModel.Filters
 
     public class UriParameterFakeHandler
     {
-        public object Get(int index)
-        {
-            return null;
-        }
         public object Post(int index, string content)
         {
             return null;
