@@ -31,7 +31,7 @@ namespace OpenRasta.DI.Ninject
         /// </returns>
         public static bool IsBindable(this Type serviceType, IKernel kernel)
         {
-            var request = kernel.CreateRequest(serviceType, null, new IParameter[] { }, false);
+            var request = kernel.CreateRequest(serviceType, null, new IParameter[] { }, false, false);
             return kernel.CanResolve(request);
         }
 
