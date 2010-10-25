@@ -67,6 +67,11 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             return TargetType.CreateInstance();
         }
 
+        public virtual object CreateInstance(params object[] arguments)
+        {
+            return TargetType.CreateInstance(arguments);
+        }
+
         public bool IsAssignableFrom(IType member)
         {
             return member != null && member.CompareTo(this) >= 0;

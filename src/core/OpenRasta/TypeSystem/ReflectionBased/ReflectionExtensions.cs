@@ -36,6 +36,18 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             return target.ToString();
         }
 
+        public static object CreateInstance(this Type type, params object[] constructorArguments)
+        {
+            try
+            {
+                return Activator.CreateInstance(type, constructorArguments);
+            }
+            catch (Exception)
+            {
+                return CreateInstance(type);
+            }
+        }
+
         public static object CreateInstance(this Type type)
         {
             if (type.IsInterface)

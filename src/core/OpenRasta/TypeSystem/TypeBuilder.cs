@@ -74,7 +74,10 @@ namespace OpenRasta.TypeSystem
         /// <exception cref="ArgumentNullException"><c>instance</c> is null.</exception>
         public object Create()
         {
-            return AssignFrame(_cacheValue ?? Type.CreateInstance(), Assignment);
+            var args = (from arg in Assignment.Children.Values
+                        select arg.Builder.Value).ToArray();
+
+            return AssignFrame(_cacheValue ?? Type.CreateInstance(args.ToArray()), Assignment);
         }
 
         /// <exception cref="ArgumentNullException"><c>instance</c> is null.</exception>

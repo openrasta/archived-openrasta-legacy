@@ -25,7 +25,14 @@ namespace OpenRasta.TypeSystem
         /// </summary>
         /// <returns>An instance of this type.</returns>
         object CreateInstance();
-        
+
+        /// <summary>
+        /// Tries to create an instance of this type using the arguments supplied. If no constructor signature matches then the empty constructor is used if available
+        /// </summary>
+        /// <param name="arguments">The arguments to try and use when instantiating.</param>
+        /// <returns>An instance of this type.</returns>
+        object CreateInstance(params object[] arguments);
+
         /// <summary>
         /// Returns a builder used to aggregate values to assign to an object of this type.
         /// </summary>
