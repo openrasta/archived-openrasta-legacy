@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -61,6 +61,7 @@
     <Compile Include="..\..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
+    <Compile Include="Authentication\Basic\BasicAuthenticationScheme_Specification.cs" />
     <Compile Include="Binding\DefaultBinderLocator_Specification.cs" />
     <Compile Include="Binding\KeyedValuesBinder_Specification.cs" />
     <Compile Include="Codecs\ApplicationOctetStreamCodec_Specification.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="OperationModel\MethodBased\MethodBasedOperation_Specification.cs" />
     <Compile Include="OperationModel\MethodBased\TypeExclusionFilter_Specification.cs" />
     <Compile Include="OperationModel\OperationHydration_Spec.cs" />
+    <Compile Include="Pipeline\Contributors\AuthenticationChallenger_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\Authentication_Specification.cs" />
     <Compile Include="Security\RequiresAuthenticationInterceptor_Specification.cs" />
     <Compile Include="Security\RequiresRoleInterceptor_Specification.cs" />
     <Compile Include="TypeSystem\Members_Specification.cs" />
@@ -149,20 +152,19 @@
     <Compile Include="Web\Markup\TextArea_Specification.cs" />
     <Compile Include="Web\Markup\TextNode_Specification.cs" />
     <Compile Include="Web\Markup\XhtmlDOM_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\HandlerMethodFiltersInvoker_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\OperationCreationContributor_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\OperationProcessors_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\ResponseEntityWriter_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\ResponseEntityCodecResolver_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\HandlerMethodInvoker_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\RequestEntityReader_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\InvalidRequestEntityRemover_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\HandlerResolver_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\HttpMethodOverrider_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\ResourceTypeResolver_Specification.cs" />
-    <Compile Include="Web\Pipeline\Contributors\UriDecoratorsController_Specification.cs" />
-    <Compile Include="Web\Pipeline\DigestCredentialsReader_Specification.cs" />
-    <Compile Include="Web\Pipeline\PipelineRunner_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\HandlerMethodFiltersInvoker_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\OperationCreationContributor_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\OperationProcessors_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\ResponseEntityWriter_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\ResponseEntityCodecResolver_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\HandlerMethodInvoker_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\RequestEntityReader_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\InvalidRequestEntityRemover_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\HandlerResolver_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\HttpMethodOverrider_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\ResourceTypeResolver_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\UriDecoratorsController_Specification.cs" />
+    <Compile Include="Pipeline\PipelineRunner_Specification.cs" />
     <Compile Include="UriTemplate_Specification.cs" />
     <Compile Include="Web\Reflection_Specification.cs" />
     <Compile Include="Web\TemplatedUriResolver_Specification.cs" />

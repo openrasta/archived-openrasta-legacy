@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:
@@ -21,7 +21,7 @@ namespace OpenRasta.Binding
     public class ChangeSetBinder<T> : KeyedValuesBinder where T : class
     {
         /// <summary>
-        /// Constructs a new binder for types of type <see cref="ChangeSet"/>.
+        /// Constructs a new binder for types of type <see cref="ChangeSet{T}"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="objectName"></param>

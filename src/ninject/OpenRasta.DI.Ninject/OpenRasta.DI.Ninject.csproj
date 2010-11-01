@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C3A87FBD-770B-402F-968F-0B240C2E2560}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -34,9 +34,9 @@
     <DocumentationFile>..\..\..\bin\vs\bin\Release\OpenRasta.DI.Ninject\OpenRasta.DI.Ninject.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ninject, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+    <Reference Include="Ninject, Version=2.0.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\ninject-2.0\Ninject.dll</HintPath>
+      <HintPath>..\..\..\lib\ninject-2.0.1.0\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="OpenRasta, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e04bf464d7caae73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

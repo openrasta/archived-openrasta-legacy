@@ -231,7 +231,7 @@ namespace UriTemplate_Specification
 
             match.ShouldNotBeNull();
 
-            match.QueryParameters["queryValue"].ShouldBe("search");
+            match.BoundQueryParameters["queryValue"].ShouldBe("search");
         }
 
         [Test]
@@ -258,11 +258,13 @@ namespace UriTemplate_Specification
         }  
    
         [Test]  
-        public void a_url_different_by_last_letter_to_query_parameters_should_not_match()  
+        public void a_parameter_different_by_last_letter_to_query_parameters_should_not_match()  
         {  
            var template = new OpenRasta.UriTemplate("/test?query1={test}&query2={test2}");  
-           var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query1=test1&query3=test2"));  
-           match.ShouldBeNull();  
+           var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query1=test1&query3=test2"));
+           match.ShouldNotBeNull();
+           match.BoundVariables.Count.ShouldBe(1);
+           match.QueryParameters.Count.ShouldBe(2);
         }  
    
         [Test]  
@@ -280,9 +282,9 @@ namespace UriTemplate_Specification
            var table = new OpenRasta.UriTemplate("/test?q={searchTerm}&p={pageNumber}&s={pageSize}");  
            OpenRasta.UriTemplateMatch match = table.Match(new Uri("http://localhost"), new Uri("http://localhost/test?q=&p=1&s=10"));  
            match.ShouldNotBeNull();  
-           match.QueryParameters["searchTerm"].ShouldBe(string.Empty);  
-           match.QueryParameters["pageNumber"].ShouldBe("1");  
-           match.QueryParameters["pageSize"].ShouldBe("10");  
+           match.BoundQueryParameters["searchTerm"].ShouldBe(string.Empty);
+           match.BoundQueryParameters["pageNumber"].ShouldBe("1");
+           match.BoundQueryParameters["pageSize"].ShouldBe("10");  
         }  
    
         [Test]  
@@ -299,6 +301,28 @@ namespace UriTemplate_Specification
         {
             var table = new OpenRasta.UriTemplate("/test?query={queryValue}");
             table.QueryValueVariableNames.Contains("queryValue").ShouldBeTrue();
+        }
+
+        [Test]
+        public void the_template_matches_when_query_strings_are_not_present()
+        {
+            var template = new UriTemplate("/temperature?unit={unit}");
+            var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/temperature"));
+
+            match.ShouldNotBeNull();
+            match.BoundVariables.Count.ShouldBe(0);
+            match.QueryParameters.Count.ShouldBe(1);
+        }
+
+        [Test]
+        public void the_template_matches_when_query_strings_are_present()
+        {
+            var template = new UriTemplate("/temperature?unit={unit}");
+            var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/temperature"));
+
+            match.ShouldNotBeNull();
+            match.BoundVariables.Count.ShouldBe(0);
+            match.QueryParameters.Count.ShouldBe(1);
         }
     }
 

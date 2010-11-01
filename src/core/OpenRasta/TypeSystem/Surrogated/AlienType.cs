@@ -33,6 +33,11 @@ namespace OpenRasta.TypeSystem.Surrogated
             throw new NotImplementedException();
         }
 
+        public object CreateInstance(params object[] arguments)
+        {
+            return OriginalAlienType.CreateInstance();
+        }
+
         public object CreateInstance()
         {
             return OriginalAlienType.CreateInstance();

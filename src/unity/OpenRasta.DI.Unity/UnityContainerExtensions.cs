@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity;
 using OpenRasta.DI.Unity.Extensions;
 
 namespace OpenRasta.DI.Unity

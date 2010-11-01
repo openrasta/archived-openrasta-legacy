@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using OpenRasta.Configuration;
 using OpenRasta.DI;
@@ -15,7 +15,9 @@ namespace OpenRasta.Hosting
 
         static HostManager()
         {
-            Log = new TraceSourceLogger();
+            Log = DependencyManager.IsAvailable
+                ? DependencyManager.GetService<ILogger>()
+                : new TraceSourceLogger();
         }
 
         HostManager(IHost host)

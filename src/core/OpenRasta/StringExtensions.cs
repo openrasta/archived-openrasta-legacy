@@ -10,6 +10,7 @@
 #endregion
 
 using System;
+using System.Text;
 
 namespace OpenRasta
 {
@@ -23,9 +24,25 @@ namespace OpenRasta
         {
             return target == string.Empty;
         }
+
         public static bool IsNullOrEmpty(this string target)
         {
             return string.IsNullOrEmpty(target);
+        }
+
+        public static bool IsNullOrWhiteSpace(this string target)
+        {
+            return string.IsNullOrEmpty(target) || target.IsWhiteSpace() ;
+        }
+
+        public static bool IsWhiteSpace(this string target)
+        {
+            return target.Trim() == string.Empty;
+        }
+
+        public static string FromBase64String(this string value)
+        {
+            return Encoding.UTF8.GetString(Convert.FromBase64String(value));
         }
 
         public static Uri ToUri(this string target)

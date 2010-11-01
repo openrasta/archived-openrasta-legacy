@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.AspNet35", "aspnet35/OpenRasta.AspNet35.csproj", "{5F35FBA7-9DB8-43B1-A80F-8C15433FEFC2}"
