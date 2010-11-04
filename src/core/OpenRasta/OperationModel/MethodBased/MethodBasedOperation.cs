@@ -55,7 +55,8 @@ namespace OpenRasta.OperationModel.MethodBased
             if (!Inputs.AllReady())
                 throw new InvalidOperationException("The operation is not ready for invocation.");
 
-            var handler = _ownerType.CreateInstance(Resolver);
+            var handler = CreateInstance(_ownerType, Resolver);
+
             var bindingResults = from kv in _parameterBinders
                                  let param = kv.Key
                                  let binder = kv.Value
@@ -80,6 +81,18 @@ namespace OpenRasta.OperationModel.MethodBased
                 };
             }
             return new OutputMember[0];
+        }
+
+        /// <summary>
+        /// Returns an instance of the type, optionally through the container if it is supported.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="resolver"></param>
+        /// <returns></returns>
+        static object CreateInstance(IType type, IDependencyResolver resolver)
+        {
+            var typeForResolver = type as IResolverAwareType;
+            return resolver == null || typeForResolver == null ? type.CreateInstance() : typeForResolver.CreateInstance(resolver);
         }
 
         IEnumerable<object> GetParameters(IEnumerable<BindingResult> results)
