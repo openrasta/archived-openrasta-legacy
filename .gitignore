@@ -1,12 +1,8 @@
 obj
 bin
-bin/*
 deploy
-deploy/*
-_ReSharper.*
-*.csproj.user
-*.resharper.user
-*.ReSharper.user
+*ReSharper*
+*.user
 *.suo
 *.cache
 *.Cache
@@ -15,4 +11,3 @@ Thumbs.db
 *.cache
 .svn
 reports
-reports/*
