@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
-  <ItemGroup>
-    <Projects Include="$(SourcePath)\OpenRasta.DI.Windsor-1.0.rc3\OpenRasta.DI.Windsor-1.0.rc3.csproj">
-      <MinVersion>20</MinVersion>
-      <Merged>false</Merged>
-    </Projects>
-    <Projects Include="$(SourcePath)\OpenRasta.DI.Windsor-1.0.rc3.Tests.Unit\OpenRasta.DI.Windsor-1.0.rc3.Tests.Unit.csproj">
-      <UnitTest>true</UnitTest>
-    </Projects>
-    
+  <ItemGroup>   
     <Projects Include="$(SourcePath)\OpenRasta.DI.Windsor\OpenRasta.DI.Windsor.csproj"/>
     <Projects Include="$(SourcePath)\OpenRasta.DI.Windsor.Tests.Unit\OpenRasta.DI.Windsor.Tests.Unit.csproj">
       <UnitTest>true</UnitTest>
