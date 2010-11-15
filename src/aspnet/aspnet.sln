@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Hosting.AspNet", "OpenRasta.Hosting.AspNet\OpenRasta.Hosting.AspNet.csproj", "{FE290BB8-9CB4-454E-89BE-E047674BB34F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Codecs.WebForms", "OpenRasta.Codecs.WebForms\OpenRasta.Codecs.WebForms.csproj", "{B4EC606E-48A7-4653-AD88-3614A5FF360A}"

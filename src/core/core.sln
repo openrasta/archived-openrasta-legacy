@@ -1,24 +1,5 @@
-
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta", "OpenRasta\OpenRasta.csproj", "{C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Tests.Unit", "OpenRasta.Tests.Unit\OpenRasta.Tests.Unit.csproj", "{562EC958-6078-4DBD-B536-6E9FE1228867}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F349FB0E-3E62-489A-978A-0BDFA857B70E} = {F349FB0E-3E62-489A-978A-0BDFA857B70E}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Testing", "OpenRasta.Testing\OpenRasta.Testing.csproj", "{174DEE64-B4B2-4F30-ADA2-15D67ADE3320}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Net30", "OpenRasta.Net30\OpenRasta.Net30.csproj", "{F349FB0E-3E62-489A-978A-0BDFA857B70E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Net35", "OpenRasta.Net35\OpenRasta.Net35.csproj", "{B277A767-9008-4A29-B27F-57DB4BF4F4FB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Tests.Integration", "OpenRasta.Tests.Integration\OpenRasta.Tests.Integration.csproj", "{C938666D-4CA8-4EF0-9EF5-03A508312037}"
-	ProjectSection(ProjectDependencies) = postProject
-		{562EC958-6078-4DBD-B536-6E9FE1228867} = {562EC958-6078-4DBD-B536-6E9FE1228867}
-	EndProjectSection
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2EEC5803-1935-413B-AC35-7E5575CD59B6}"
 	ProjectSection(SolutionItems) = preProject
 		..\CommonInfo.cs = ..\CommonInfo.cs
@@ -49,6 +30,24 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{1F008650-D99B-4DE5-A623-0BE1FAAA8A6D}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\build\deploy\ohloh.xml = ..\..\build\deploy\ohloh.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta", "OpenRasta\OpenRasta.csproj", "{C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Tests.Unit", "OpenRasta.Tests.Unit\OpenRasta.Tests.Unit.csproj", "{562EC958-6078-4DBD-B536-6E9FE1228867}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F349FB0E-3E62-489A-978A-0BDFA857B70E} = {F349FB0E-3E62-489A-978A-0BDFA857B70E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Testing", "OpenRasta.Testing\OpenRasta.Testing.csproj", "{174DEE64-B4B2-4F30-ADA2-15D67ADE3320}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Net30", "OpenRasta.Net30\OpenRasta.Net30.csproj", "{F349FB0E-3E62-489A-978A-0BDFA857B70E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Net35", "OpenRasta.Net35\OpenRasta.Net35.csproj", "{B277A767-9008-4A29-B27F-57DB4BF4F4FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.Tests.Integration", "OpenRasta.Tests.Integration\OpenRasta.Tests.Integration.csproj", "{C938666D-4CA8-4EF0-9EF5-03A508312037}"
+	ProjectSection(ProjectDependencies) = postProject
+		{562EC958-6078-4DBD-B536-6E9FE1228867} = {562EC958-6078-4DBD-B536-6E9FE1228867}
 	EndProjectSection
 EndProject
 Global

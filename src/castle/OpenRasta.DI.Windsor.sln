@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.DI.Windsor", "OpenRasta.DI.Windsor\OpenRasta.DI.Windsor.csproj", "{6A21F664-E78C-4D74-9D05-88C92EC06780}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRasta.DI.Windsor.Tests.Unit", "OpenRasta.DI.Windsor.Tests.Unit\OpenRasta.DI.Windsor.Tests.Unit.csproj", "{85C76D1F-0690-4A47-A6C6-3BF3796774F1}"
