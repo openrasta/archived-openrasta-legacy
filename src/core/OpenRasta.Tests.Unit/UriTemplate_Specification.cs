@@ -260,10 +260,10 @@ namespace UriTemplate_Specification
         [Test]  
         public void a_parameter_different_by_last_letter_to_query_parameters_should_not_match()  
         {  
-           var template = new OpenRasta.UriTemplate("/test?query1={test}&query2={test2}");  
+           var template = new UriTemplate("/test?query1={test}&query2={test2}");
            var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query1=test1&query3=test2"));
            match.ShouldNotBeNull();
-           match.BoundVariables.Count.ShouldBe(1);
+           match.BoundQueryParameters.Count.ShouldBe(1);
            match.QueryParameters.Count.ShouldBe(2);
         }  
    
