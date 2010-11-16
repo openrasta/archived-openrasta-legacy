@@ -1,1 +1,1 @@
-%windir%\Microsoft.NET\Framework\v3.5\msbuild.exe build\build.proj /p:RunTests=false;Configuration=Debug
+%windir%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe build\build.proj /p:RunTests=true;Configuration=Debug
