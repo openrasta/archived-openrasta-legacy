@@ -87,7 +87,7 @@ namespace OpenRasta
                         Value = valAsVariable ?? val,
                         Type = valAsVariable == null ? SegmentType.Literal : SegmentType.Variable
                     };
-                    nc[segment.Key] = segment;
+                    nc[segment.Key.ToUpperInvariant()] = segment;
                 }
             }
             return nc;
@@ -283,14 +283,16 @@ namespace OpenRasta
                 if (querySegment.Type == SegmentType.Literal && (!requestQueryString.ContainsKey(querySegment.Key)
                                                                  || requestQueryString[querySegment.Key].Value != querySegment.Value))
                     return null;
-                else if (querySegment.Type == SegmentType.Variable)
-                {
-                    if (requestQueryString.ContainsKey(querySegment.Key))
-                    {
-                        queryMatches[querySegment.Value] = requestQueryString[querySegment.Key].Value;
-                    }
-                }
-                queryParams.Add(querySegment.Key);
+            	
+				if (querySegment.Type == SegmentType.Variable)
+				{
+					var key = querySegment.Key.ToUpperInvariant();
+					if (requestQueryString.ContainsKey(key))
+            		{
+            			queryMatches[querySegment.Value] = requestQueryString[key].Value;
+            		}
+				}
+            	queryParams.Add(querySegment.Key);
             }
             return new UriTemplateMatch
             {

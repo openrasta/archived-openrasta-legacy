@@ -296,7 +296,6 @@ namespace UriTemplate_Specification
            match.ShouldNotBeNull();  
         }  
    
-
         [Test]
         public void the_query_parameters_are_exposed()
         {
@@ -338,6 +337,18 @@ namespace UriTemplate_Specification
 			match.ShouldNotBeNull();
 			match.BoundQueryParameters.Count.ShouldBe(1);
 			match.BoundQueryParameters["searchTerm"].ShouldBe(searchTerm);
+		}
+
+		[Test]
+		public void query_param_binding_should_be_case_insensitive()
+		{
+			var template = new UriTemplate("/test?page={page}");
+
+			var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/test?pAgE=2"));
+
+			match.ShouldNotBeNull();
+			match.BoundQueryParameters.Count.ShouldBe(1);
+			match.BoundQueryParameters["PAGE"].ShouldBe("2");
 		}
     }
 
