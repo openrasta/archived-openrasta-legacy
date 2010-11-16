@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Web;
 using NUnit.Framework;
 using OpenRasta;
 using OpenRasta.Collections;
@@ -324,6 +325,20 @@ namespace UriTemplate_Specification
             match.BoundVariables.Count.ShouldBe(0);
             match.QueryParameters.Count.ShouldBe(1);
         }
+
+		[Test]
+		public void bound_query_params_should_be_escaped()
+		{
+			const string searchTerm = "test $&+,/ test";
+			var encodedString = HttpUtility.UrlEncode(searchTerm);
+			var template = new UriTemplate("/test?q={searchTerm}");
+
+			var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/test?q=" + encodedString));
+
+			match.ShouldNotBeNull();
+			match.BoundQueryParameters.Count.ShouldBe(1);
+			match.BoundQueryParameters["searchTerm"].ShouldBe(searchTerm);
+		}
     }
 
     [TestFixture]

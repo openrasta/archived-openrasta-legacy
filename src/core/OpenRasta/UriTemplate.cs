@@ -66,7 +66,12 @@ namespace OpenRasta
             var nc = new Dictionary<string, QuerySegment>();
             foreach (string value in pairs)
             {
-                string unescapedString = Uri.UnescapeDataString(value);
+                // the UnescapeDataString method does not convert plus characters into spaces 
+                // because this behavior is not standard across all URI schemes (apparently!).
+                // http://msdn.microsoft.com/en-us/library/system.uri.unescapedatastring.aspx
+                var unescapedString = value.Replace('+', ' ');
+                unescapedString = Uri.UnescapeDataString(unescapedString);
+
                 if (unescapedString.Length == 0)
                     continue;
                 int variableStart = unescapedString[0] == '?' ? 1 : 0;
