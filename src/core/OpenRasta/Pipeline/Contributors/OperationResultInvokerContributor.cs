@@ -16,6 +16,11 @@ namespace OpenRasta.Pipeline.Contributors
 {
     public class OperationResultInvokerContributor : KnownStages.IOperationResultInvocation
     {
+    	public OperationResultInvokerContributor()
+    	{
+    		Log = new NullLogger();
+    	}
+
         public ILogger Log { get; set; }
 
         public PipelineContinuation RunOperationResult(ICommunicationContext context)
