@@ -11,6 +11,10 @@
       Condition="'$(CastleDirectory)' == ''">$(OpenRastaLibPath)\castle-$(CastleWindsor)</CastleDirectory>
   </PropertyGroup>
   
+  <PropertyGroup Condition="'$(StructureMap)' != ''">
+    <StructureMapDirectory Condition="'$(StructureMapDirectory)' == ''">$(OpenRastaLibPath)\structuremap-$(StructureMap)</StructureMapDirectory>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(OpenRastaDirectory)' == '' And '$(FrameworkProfile)' != ''">
     <OpenRastaDirectory>$(RootPath)\bin\$(Configuration)\net-$(FrameworkProfile)</OpenRastaDirectory>
   </PropertyGroup>
@@ -31,6 +35,13 @@
   <ItemGroup Condition="'$(CastleWindsor)' != '2.5.1'">
     <Reference Include="Castle.MicroKernel">
       <HintPath>$(CastleDirectory)\Castle.MicroKernel.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(StructureMap)' != ''">
+    <Reference Include="StructureMap">
+      <HintPath>$(StructureMapDirectory)\StructureMap.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
     </Reference>
   </ItemGroup>
