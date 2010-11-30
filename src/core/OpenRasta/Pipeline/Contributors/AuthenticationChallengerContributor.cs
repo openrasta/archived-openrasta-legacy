@@ -13,6 +13,7 @@ namespace OpenRasta.Pipeline.Contributors
         public AuthenticationChallengerContributor(IDependencyResolver resolver)
         {
             _resolver = resolver;
+			Log = NullLogger.Instance;
         }
 
         public void Initialize(IPipeline pipelineRunner)

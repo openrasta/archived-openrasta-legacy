@@ -18,7 +18,7 @@ namespace OpenRasta.Pipeline.Contributors
     {
     	public OperationResultInvokerContributor()
     	{
-    		Log = new NullLogger();
+			Log = NullLogger.Instance;
     	}
 
         public ILogger Log { get; set; }

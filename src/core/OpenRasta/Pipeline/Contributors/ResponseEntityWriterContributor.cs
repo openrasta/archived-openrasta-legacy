@@ -13,9 +13,7 @@ using System.Linq;
 using OpenRasta.Codecs;
 using OpenRasta.DI;
 using OpenRasta.Diagnostics;
-using OpenRasta.IO;
 using OpenRasta.Web;
-using OpenRasta.Pipeline;
 
 namespace OpenRasta.Pipeline.Contributors
 {
@@ -29,6 +27,7 @@ namespace OpenRasta.Pipeline.Contributors
             pipeline.Notify(WriteResponse).After<KnownStages.ICodecResponseSelection>();
             //.And
             //.Before<KnownStages.IEnd>();
+			Log = NullLogger.Instance;
         }
 
         public PipelineContinuation WriteResponse(ICommunicationContext context)

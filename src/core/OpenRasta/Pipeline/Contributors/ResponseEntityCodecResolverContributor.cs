@@ -15,7 +15,6 @@ using OpenRasta.Codecs;
 using OpenRasta.Diagnostics;
 using OpenRasta.TypeSystem;
 using OpenRasta.Web;
-using OpenRasta.Pipeline;
 
 namespace OpenRasta.Pipeline.Contributors
 {
@@ -29,6 +28,7 @@ namespace OpenRasta.Pipeline.Contributors
         {
             _codecs = repository;
             _typeSystem = typeSystem;
+			Log = NullLogger.Instance;
         }
 
         public ILogger Log { get; set; }
