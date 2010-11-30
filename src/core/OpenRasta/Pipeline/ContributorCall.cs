@@ -37,6 +37,11 @@ namespace OpenRasta.Pipeline
             }
         }
         public Func<ICommunicationContext, PipelineContinuation> Action { get; set; }
+
+		public override string ToString()
+		{
+			return Target.GetType().Name; // helpful for debugging
+		}
     }
 }
 
