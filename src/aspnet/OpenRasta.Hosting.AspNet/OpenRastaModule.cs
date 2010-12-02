@@ -31,6 +31,7 @@ namespace OpenRasta.Hosting.AspNet
         static OpenRastaModule()
         {
             Host = new AspNetHost();
+        	Log = NullLogger<AspNetLogSource>.Instance;
         }
 
         public static AspNetCommunicationContext CommunicationContext
