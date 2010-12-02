@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using OpenRasta.Diagnostics;
 using StructureMap;
 
 namespace OpenRasta.DI.StructureMap
@@ -17,7 +19,12 @@ namespace OpenRasta.DI.StructureMap
 		public StructureMapDependencyResolver(IContainer container)
 		{
 			_container = container;
-		}
+            _container.Configure(ex =>
+            {
+                ex.For<TraceSource>().Use(new TraceSource("openrasta"));
+                ex.FillAllPropertiesOfType<ILogger>();
+            });
+        }
 
 		protected override void AddDependencyCore(Type serviceType, Type concreteType, DependencyLifetime lifetime)
 		{
