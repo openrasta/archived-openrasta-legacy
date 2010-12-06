@@ -363,9 +363,13 @@ namespace OpenRasta.Configuration
 
         protected virtual void RegisterLogging(IDependencyResolver resolver)
         {
-            resolver.AddDependency(typeof(ILogger), LoggerType, DependencyLifetime.Singleton);
+			var loggerInterfaceType = typeof(ILogger);
+			if (resolver.HasDependency(loggerInterfaceType) == false)
+			{
+				resolver.AddDependency(loggerInterfaceType, LoggerType, DependencyLifetime.Singleton);
+			}
 
-            RegisterTraceSourceListeners(resolver);
+        	RegisterTraceSourceListeners(resolver);
             RegisterDefaultTraceListener(resolver);
         }
 
