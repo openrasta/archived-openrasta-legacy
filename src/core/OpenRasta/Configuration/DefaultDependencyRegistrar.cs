@@ -365,7 +365,7 @@ namespace OpenRasta.Configuration
         {
             resolver.AddDependency(typeof(ILogger), LoggerType, DependencyLifetime.Singleton);
 
-            RegisterTraceSourceLiseners(resolver);
+            RegisterTraceSourceListeners(resolver);
             RegisterDefaultTraceListener(resolver);
         }
 
@@ -374,7 +374,7 @@ namespace OpenRasta.Configuration
             MetaModelHandlerTypes.ForEach(x => resolver.AddDependency(typeof(IMetaModelHandler), x, DependencyLifetime.Transient));
         }
 
-        protected virtual void RegisterTraceSourceLiseners(IDependencyResolver resolver)
+        protected virtual void RegisterTraceSourceListeners(IDependencyResolver resolver)
         {
             TraceSourceListenerTypes.ForEach(x => resolver.AddDependency(typeof(TraceListener), x, DependencyLifetime.Transient));
         }
