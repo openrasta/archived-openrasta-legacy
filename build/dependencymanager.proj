@@ -7,100 +7,157 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(CastleWindsor)' != ''">
-    <CastleDirectory
-      Condition="'$(CastleDirectory)' == ''">$(OpenRastaLibPath)\castle-$(CastleWindsor)</CastleDirectory>
+    <CastleDirectory Condition="'$(CastleDirectory)' == ''">$(OpenRastaLibPath)\castle-$(CastleWindsor)</CastleDirectory>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(StructureMap)' != ''">
     <StructureMapDirectory Condition="'$(StructureMapDirectory)' == ''">$(OpenRastaLibPath)\structuremap-$(StructureMap)</StructureMapDirectory>
   </PropertyGroup>
   
+  <PropertyGroup Condition="'$(NUnit)' != ''">
+    <NUnitDirectory Condition="'$(NUnitDirectory)' == ''">$(OpenRastaLibPath)\nunit-$(NUnit)</NUnitDirectory>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Moq)' != ''">
+    <MoqDirectory Condition="'$(MoqDirectory)' == ''">$(OpenRastaLibPath)\moq-$(Moq)</MoqDirectory>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(OpenRastaDirectory)' == '' And '$(FrameworkProfile)' != ''">
     <OpenRastaDirectory>$(RootPath)\bin\$(Configuration)\net-$(FrameworkProfile)</OpenRastaDirectory>
   </PropertyGroup>
+  
   <Import Project="$(RootPath)\build\defaults.targets" />
-  
-  
-  <ItemGroup Condition="'$(CastleWindsor)' != ''">
-    <Reference Include="Castle.Core">
-      <HintPath>$(CastleDirectory)\Castle.Core.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-    <Reference Include="Castle.Windsor">
-      <HintPath>$(CastleDirectory)\Castle.Windsor.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-  </ItemGroup>
+    
+  <Choose>
+	<When Condition="'$(CastleWindsor)' != ''">
+	  <ItemGroup>
+		<Reference Include="Castle.Core">
+		  <HintPath>$(CastleDirectory)\Castle.Core.dll</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+		<Reference Include="Castle.Windsor">
+		  <HintPath>$(CastleDirectory)\Castle.Windsor.dll</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+	  </ItemGroup>
+	</When>
+  </Choose>
 
-  <ItemGroup Condition="'$(CastleWindsor)' != '2.5.1'">
-    <Reference Include="Castle.MicroKernel">
-      <HintPath>$(CastleDirectory)\Castle.MicroKernel.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-  </ItemGroup>
+  <Choose>
+	<When Condition="'$(CastleWindsor)' != '' And '$(CastleWindsor)' != '2.5.1'">
+	  <ItemGroup>
+		<Reference Include="Castle.MicroKernel">
+		  <HintPath>$(CastleDirectory)\Castle.MicroKernel.dll</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+	  </ItemGroup>
+	</When>
+  </Choose>
   
-  <ItemGroup Condition="'$(StructureMap)' != ''">
-    <Reference Include="StructureMap">
-      <HintPath>$(StructureMapDirectory)\StructureMap.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-  </ItemGroup>
+  <Choose>
+	<When Condition="'$(StructureMap)' != ''">
+	  <ItemGroup>
+		<Reference Include="StructureMap">
+		  <HintPath>$(StructureMapDirectory)\StructureMap.dll</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+	  </ItemGroup>
+	</When>
+  </Choose>
+	  
+  <Choose>
+	<When Condition="'$(Moq)' != ''">
+	  <ItemGroup>
+		<Reference Include="Moq">
+		  <HintPath>$(MoqDirectory)\Moq.dll</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+	  </ItemGroup>
+	</When>
+  </Choose>
   
+  <Choose>
+	<When Condition="'$(NUnit)' != ''">
+	  <ItemGroup>
+		<Reference Include="nunit.framework">
+		  <HintPath>$(NUnitDirectory)\nunit.framework.dll</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+	  </ItemGroup>
+	</When>
+  </Choose>
+
   <PropertyGroup>
     <OpenRastaAssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta)' != ''">$(OpenRastaDirectory)\OpenRasta.dll</OpenRastaAssemblyPath>
     <OpenRasta-Hosting-AspNet-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-AspNet)' != ''">$(OpenRastaDirectory)\OpenRasta.Hosting.AspNet.dll</OpenRasta-Hosting-AspNet-AssemblyPath>
     <OpenRasta-Codecs-WebForms-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-AspNet)' != ''">$(OpenRastaDirectory)\OpenRasta.Codecs.WebForms.dll</OpenRasta-Codecs-WebForms-AssemblyPath>  
-	<OpenRasta-Testing-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-AspNet)' != ''">$(OpenRastaDirectory)\OpenRasta.Testing.dll</OpenRasta-Testing-AssemblyPath>  
-	<OpenRasta-UnitTesting-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-AspNet)' != ''">$(OpenRastaDirectory)\OpenRasta.Tests.Unit.dll</OpenRasta-UnitTesting-AssemblyPath>
+	<OpenRasta-Testing-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-Test)' != ''">$(OpenRastaDirectory)\OpenRasta.Testing.dll</OpenRasta-Testing-AssemblyPath>  
+	<OpenRasta-UnitTesting-AssemblyPath Condition="'$(OpenRastaDirectory)' != '' And '$(OpenRasta-Test)' != ''">$(OpenRastaDirectory)\OpenRasta.Tests.Unit.dll</OpenRasta-UnitTesting-AssemblyPath>
   </PropertyGroup>
   
   <!--
   OpenRasta Core Library
   -->
-  <ItemGroup Condition="'$(OpenRastaAssemblyPath)' != ''">
-    <Reference Include="OpenRasta">
-      <HintPath>$(OpenRastaAssemblyPath)</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-    <Reference Condition="'$(FrameworkProfile)' == '35'" Include="System.Core" />
-  </ItemGroup>
-
+  <Choose>
+	<When Condition="'$(OpenRastaAssemblyPath)' != ''">
+      <ItemGroup>
+		<Reference Include="OpenRasta">
+		  <HintPath>$(OpenRastaAssemblyPath)</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+		<Reference Condition="'$(FrameworkProfile)' == '35'" Include="System.Core" />
+	  </ItemGroup>
+	</When>
+  </Choose>
+	  
   <!--
   Asp.net module
   -->
-  <ItemGroup Condition="'$(OpenRasta-AspNet)' != '' and '$(OpenRasta-Hosting-AspNet-AssemblyPath)' != ''">
-    <Reference Include="OpenRasta.Hosting.AspNet">
-      <HintPath>$(OpenRasta-Hosting-AspNet-AssemblyPath)</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-    <Reference Include="OpenRasta.Codecs.WebForms" Condition="'$(OpenRasta-AspNet)' != ''">
-      <HintPath>$(OpenRasta-Codecs-WebForms-AssemblyPath)</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-  </ItemGroup>
+  <Choose>
+	<When Condition="'$(OpenRasta-AspNet)' != '' And '$(OpenRasta-Hosting-AspNet-AssemblyPath)' != ''">
+	  <ItemGroup>
+		<Reference Include="OpenRasta.Hosting.AspNet">
+		  <HintPath>$(OpenRasta-Hosting-AspNet-AssemblyPath)</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+		<Reference Include="OpenRasta.Codecs.WebForms" Condition="'$(OpenRasta-AspNet)' != ''">
+		  <HintPath>$(OpenRasta-Codecs-WebForms-AssemblyPath)</HintPath>
+		  <SpecificVersion>false</SpecificVersion>
+		</Reference>
+	  </ItemGroup>
+	 </When>
+  </Choose>
 
   <!--
   OpenRasta Windsor support
   -->
-  <ItemGroup Condition="'$(OpenRasta-DI-WindsorAssemblyPath)' != ''">
-    <Reference Include="OpenRasta.DI.Windsor">
-      <HintPath>$(OpenRasta-DI-WindsorAssemblyPath)</HintPath>
-    </Reference>
-  </ItemGroup>
+  <Choose>
+	<When Condition="'$(OpenRasta-DI-WindsorAssemblyPath)' != ''">
+	  <ItemGroup>
+		<Reference Include="OpenRasta.DI.Windsor">
+		  <HintPath>$(OpenRasta-DI-WindsorAssemblyPath)</HintPath>
+		</Reference>
+	  </ItemGroup>
+	 </When>
+  </Choose>
   
   <!--
   Test infrastructure
   -->
-  <ItemGroup Condition="'$(OpenRasta-Test)' != '' and '$(OpenRasta-AssemblyPath)' != ''">
-    <Reference Include="OpenRasta.Hosting.AspNet">
-      <HintPath>$(OpenRasta-Hosting-AspNet-AssemblyPath)</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-    <Reference Include="OpenRasta.Codecs.WebForms" Condition="'$(OpenRasta-AspNet)' != ''">
-      <HintPath>$(OpenRasta-Codecs-WebForms-AssemblyPath)</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-  </ItemGroup>
+  <Choose>
+	<When Condition="'$(OpenRasta-Test)' != ''">
+	  <ItemGroup>
+		<Reference Include="OpenRasta.Testing">
+		  <SpecificVersion>False</SpecificVersion>
+		  <HintPath>$(OpenRasta-Testing-AssemblyPath)</HintPath>
+		</Reference>
+		<Reference Include="OpenRasta.Tests.Unit">
+		  <SpecificVersion>False</SpecificVersion>
+		  <HintPath>$(OpenRasta-UnitTesting-AssemblyPath)</HintPath>
+		</Reference>
+	  </ItemGroup>
+	 </When>
+  </Choose>
   
   <Target Name="VerifyDependencies">
     <Error Condition="'$(OpenRasta-DI-Windsor)' != '' and '$(CastleWindsor)' == ''" Text="If you add Windsor as a dependency, you need to specify which version with the CastleWindsor property." />
