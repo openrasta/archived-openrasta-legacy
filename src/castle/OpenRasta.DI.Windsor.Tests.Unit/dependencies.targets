@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <PropertyGroup>
+    <RootPath Condition="'$(RootPath)' == ''">$(MSBuildProjectDirectory)\..\..\..</RootPath>
+    <CastleWindsor>2.5.1</CastleWindsor>
+    <OpenRasta>2.0</OpenRasta>
+	<OpenRasta-Test>2.0</OpenRasta-Test>
+  </PropertyGroup>
+  <Import Project="$(RootPath)\Build\dependencymanager.proj"/>
+</Project>
