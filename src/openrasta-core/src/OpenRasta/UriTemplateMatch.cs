@@ -16,10 +16,10 @@ namespace OpenRasta
     public class UriTemplateMatch
     {
         public Uri BaseUri { get; set; }
-        public NameValueCollection BoundVariables { get; internal set; }
+        public NameValueCollection PathSegmentVariables { get; internal set; }
         public object Data { get; set; }
         public Collection<string> QueryParameters { get; set; }
-        public NameValueCollection BoundQueryParameters { get; internal set; }
+        public NameValueCollection QueryStringVariables { get; internal set; }
         public Collection<string> RelativePathSegments { get; internal set; }
         public Uri RequestUri { get; set; }
         public UriTemplate Template { get; set; }

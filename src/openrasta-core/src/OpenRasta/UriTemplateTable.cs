@@ -75,9 +75,9 @@ namespace OpenRasta
                     // this calculates and keep only what matches the maximum possible amount of literal segments
                     int currentMaxLiteralSegmentCount = potentialMatch.RelativePathSegments.Count
                                                         - potentialMatch.WildcardPathSegments.Count;
-                    for (int i = 0; i < potentialMatch.BoundVariables.Count; i++)
+                    for (int i = 0; i < potentialMatch.PathSegmentVariables.Count; i++)
                         if (potentialMatch.QueryParameters == null ||
-                            potentialMatch.BoundQueryParameters[potentialMatch.BoundVariables.GetKey(i)] == null)
+                            potentialMatch.QueryStringVariables[potentialMatch.PathSegmentVariables.GetKey(i)] == null)
                             currentMaxLiteralSegmentCount -= 1;
 
                     potentialMatch.Data = template.Value;
@@ -102,8 +102,8 @@ namespace OpenRasta
         {
             return new Collection<UriTemplateMatch>((
            from m in matches
-                let qsDistance = Math.Abs(m.BoundQueryParameters.Count - m.QueryParameters.Count)
-                let bound = m.BoundVariables.Count + m.BoundQueryParameters.Count
+                let qsDistance = Math.Abs(m.QueryStringVariables.Count - m.QueryParameters.Count)
+                let bound = m.PathSegmentVariables.Count + m.QueryStringVariables.Count
                 orderby bound descending , qsDistance
                 select m).ToList());
         }

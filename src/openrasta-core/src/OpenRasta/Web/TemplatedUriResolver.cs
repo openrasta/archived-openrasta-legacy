@@ -128,8 +128,8 @@ namespace OpenRasta.Web
             {
                 var allVariables = new NameValueCollection
                 {
-                    tableMatch.BoundVariables, 
-                    tableMatch.BoundQueryParameters
+                    tableMatch.PathSegmentVariables, 
+                    tableMatch.QueryStringVariables
                 };
                 result.UriTemplateParameters.Add(allVariables);
             }
@@ -139,7 +139,7 @@ namespace OpenRasta.Web
 
         public IEnumerable<string> GetQueryParameterNamesFor(string uriTemplate)
         {
-            return new UriTemplate(uriTemplate).QueryValueVariableNames;
+            return new UriTemplate(uriTemplate).QueryStringVariableNames;
         }
 
         public IEnumerable<string> GetTemplateParameterNamesFor(string uriTemplate)
@@ -177,7 +177,7 @@ namespace OpenRasta.Web
                 where CompatibleKeys(resourceKey, descriptor.ResourceKey)
                 where UriNameMatches(uriName, descriptor.UriName)
                 let templateParameters =
-                    template.Key.PathSegmentVariableNames.Concat(template.Key.QueryValueVariableNames).ToList()
+                    template.Key.PathSegmentVariableNames.Concat(template.Key.QueryStringVariableNames).ToList()
                 let hasKeys = keyValues != null && keyValues.HasKeys()
                 where (templateParameters.Count == 0) ||
                       (templateParameters.Count > 0

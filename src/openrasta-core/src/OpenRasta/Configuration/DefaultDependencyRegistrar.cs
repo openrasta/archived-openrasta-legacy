@@ -355,22 +355,6 @@ namespace OpenRasta.Configuration
             TraceSourceListenerTypes.ForEach(x => resolver.AddDependency(typeof(TraceListener), x, DependencyLifetime.Transient));
         }
 
-        protected virtual void RegisterLogSources(IDependencyResolver resolver)
-        {
-            LogSourceTypes.ForEach(x => resolver.AddDependency(typeof(ILogger<>).MakeGenericType(x), LogSourcedLoggerType.MakeGenericType(x), DependencyLifetime.Transient));
-        }
-
-        protected virtual void RegisterMethodFilters(IDependencyResolver resolver)
-        {
-            MethodFilterTypes.ForEach(x => resolver.AddDependency(typeof(IMethodFilter), x, DependencyLifetime.Transient));
-        }
-
-        protected virtual void RegisterOperationModel(IDependencyResolver resolver)
-        {
-            OperationFilterTypes.ForEach(x => resolver.AddDependency(typeof(IOperationFilter), x, DependencyLifetime.Transient));
-            OperationHydratorTypes.ForEach(x => resolver.AddDependency(typeof(IOperationHydrator), x, DependencyLifetime.Transient));
-            OperationCodecSelectorTypes.ForEach(x => resolver.AddDependency(typeof(IOperationCodecSelector), x, DependencyLifetime.Transient));
-        }
         protected void SetOperationCreator<T>() where T : IOperationCreator
         {
             OperationCreatorType = typeof(T);

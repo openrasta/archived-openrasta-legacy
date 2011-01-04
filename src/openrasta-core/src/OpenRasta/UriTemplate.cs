@@ -24,7 +24,7 @@ namespace OpenRasta
         const string WILDCARD_TEXT = "*";
         Dictionary<string, UrlSegment> _pathSegmentVariables;
         List<UrlSegment> _segments;
-        Dictionary<string, QuerySegment> _templateQuerySegments;
+        Dictionary<string, QuerySegment> _queryStringVariables;
         Uri _templateUri;
 
         public UriTemplate(string template)
@@ -32,16 +32,16 @@ namespace OpenRasta
             _templateUri = ParseTemplate(template);
             _segments = ParseSegments(_templateUri);
             _pathSegmentVariables = ParseSegmentVariables(_segments);
-            _templateQuerySegments = ParseQueries(_templateUri);
+            _queryStringVariables = ParseQueryStringVariables(_templateUri);
 
             PathSegmentVariableNames = new ReadOnlyCollection<string>(new List<string>(_pathSegmentVariables.Keys));
-            QueryValueVariableNames = new ReadOnlyCollection<string>(new List<string>(GetQueryValueVariableNames(_templateQuerySegments)));
+            QueryStringVariableNames = new ReadOnlyCollection<string>(new List<string>(GetQueryStringVariableNames(_queryStringVariables)));
         }
 
         public ReadOnlyCollection<string> PathSegmentVariableNames { get; private set; }
-        public ReadOnlyCollection<string> QueryValueVariableNames { get; private set; }
+        public ReadOnlyCollection<string> QueryStringVariableNames { get; private set; }
 
-        IEnumerable<string> GetQueryValueVariableNames(Dictionary<string, QuerySegment> valueCollection)
+        IEnumerable<string> GetQueryStringVariableNames(Dictionary<string, QuerySegment> valueCollection)
         {
             foreach (var qsegment in valueCollection)
                 if (qsegment.Value.Type == SegmentType.Variable)
@@ -59,7 +59,7 @@ namespace OpenRasta
             return returnDic;
         }
 
-        static Dictionary<string, QuerySegment> ParseQueries(Uri templateUri)
+        static Dictionary<string, QuerySegment> ParseQueryStringVariables(Uri templateUri)
         {
             string queries = templateUri.Query;
             string[] pairs = queries.Split('&');
@@ -155,10 +155,10 @@ namespace OpenRasta
                 if (segment.TrailingSeparator)
                     path.Append('/');
             }
-            if (_templateQuerySegments.Count > 0)
+            if (_queryStringVariables.Count > 0)
             {
                 path.Append('?');
-                foreach (var querySegment in _templateQuerySegments)
+                foreach (var querySegment in _queryStringVariables)
                 {
                     path.Append(querySegment.Value.Key).Append("=").Append(parameters[querySegment.Value.Value]).Append(";");
                 }
@@ -205,7 +205,7 @@ namespace OpenRasta
                 return false;
             if (_segments.Count != other._segments.Count)
                 return false;
-            if (_templateQuerySegments.Count != other._templateQuerySegments.Count)
+            if (_queryStringVariables.Count != other._queryStringVariables.Count)
                 return false;
             for (int i = 0; i < _segments.Count; i++)
             {
@@ -216,11 +216,11 @@ namespace OpenRasta
                 if (thisSegment.Type == SegmentType.Literal && thisSegment.Text != otherSegment.Text)
                     return false;
             }
-            foreach (var thisSegment in _templateQuerySegments)
+            foreach (var thisSegment in _queryStringVariables)
             {
-                if (!other._templateQuerySegments.ContainsKey(thisSegment.Key))
+                if (!other._queryStringVariables.ContainsKey(thisSegment.Key))
                     return false;
-                QuerySegment otherSegment = other._templateQuerySegments[thisSegment.Key];
+                QuerySegment otherSegment = other._queryStringVariables[thisSegment.Key];
 
                 if (thisSegment.Value.Type != otherSegment.Type)
                     return false;
@@ -269,10 +269,10 @@ namespace OpenRasta
             }
 
             var queryMatches = new NameValueCollection();
-            Dictionary<string, QuerySegment> requestQueryString = ParseQueries(candidate);
+            Dictionary<string, QuerySegment> requestQueryString = ParseQueryStringVariables(candidate);
             var queryParams = new Collection<string>();
 
-            foreach (QuerySegment querySegment in _templateQuerySegments.Values)
+            foreach (QuerySegment querySegment in _queryStringVariables.Values)
             {
                 // if you match text exactly
                 if (querySegment.Type == SegmentType.Literal && (!requestQueryString.ContainsKey(querySegment.Key)
@@ -291,9 +291,9 @@ namespace OpenRasta
             {
                 BaseUri = baseAddress,
                 Data = 0,
-                BoundVariables = boundVariables,
+                PathSegmentVariables = boundVariables,
                 QueryParameters = queryParams,
-                BoundQueryParameters = queryMatches,
+                QueryStringVariables = queryMatches,
                 RelativePathSegments = new Collection<string>(candidateSegments),
                 RequestUri = candidate,
                 Template = this,

@@ -32,9 +32,9 @@ namespace UriTemplateTable_Specification
             });
             Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1?query=testing a query"));
             match.Count.ShouldBe(2);
-            match[0].BoundQueryParameters.Count.ShouldBe(1);
-            match[1].BoundQueryParameters.Count.ShouldBe(0);
-            match[0].BoundQueryParameters["queryText"].ShouldBe("testing a query");
+            match[0].QueryStringVariables.Count.ShouldBe(1);
+            match[1].QueryStringVariables.Count.ShouldBe(0);
+            match[0].QueryStringVariables["queryText"].ShouldBe("testing a query");
         }
 
         [Test]
@@ -49,8 +49,8 @@ namespace UriTemplateTable_Specification
             Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1"));
 
             match.Count.ShouldBe(3);
-            match[0].BoundVariables.Count.ShouldBe(0);
-            match[0].BoundVariables.Count.ShouldBe(0);
+            match[0].PathSegmentVariables.Count.ShouldBe(0);
+            match[0].PathSegmentVariables.Count.ShouldBe(0);
         }
 
         [Test]
@@ -65,9 +65,9 @@ namespace UriTemplateTable_Specification
             Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1?query=ceci_nest_pas_un_value"));
 
             match.Count.ShouldBe(3);
-            match[0].BoundQueryParameters.Count.ShouldBe(1);
+            match[0].QueryStringVariables.Count.ShouldBe(1);
             match[0].QueryParameters.Count.ShouldBe(1);
-            match[0].BoundQueryParameters["quasiText"].ShouldBe("ceci_nest_pas_un_value");
+            match[0].QueryStringVariables["quasiText"].ShouldBe("ceci_nest_pas_un_value");
         }
 
         [Test]
@@ -83,9 +83,9 @@ namespace UriTemplateTable_Specification
             Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1?query=ceci_nest_pas_un_value&irrelevant=value"));
 
             match.Count.ShouldBe(4);
-            match[0].BoundQueryParameters.Count.ShouldBe(1);
+            match[0].QueryStringVariables.Count.ShouldBe(1);
             match[0].QueryParameters.Count.ShouldBe(1);
-            match[0].BoundQueryParameters["quasiText"].ShouldBe("ceci_nest_pas_un_value");
+            match[0].QueryStringVariables["quasiText"].ShouldBe("ceci_nest_pas_un_value");
         }
 
         [Test]
@@ -100,8 +100,8 @@ namespace UriTemplateTable_Specification
             Collection<OpenRasta.UriTemplateMatch> match = table.Match(new Uri("http://localhost/resource1/123?query=ceci_nest_pas_un_value"));
             
             match.Count.ShouldBe(2);
-            match.First().BoundQueryParameters.Count.ShouldBe(1);
-            match.First().BoundVariables.Count.ShouldBe(1);
+            match.First().QueryStringVariables.Count.ShouldBe(1);
+            match.First().PathSegmentVariables.Count.ShouldBe(1);
             match.First().QueryParameters.Count.ShouldBe(2);
         }
     }

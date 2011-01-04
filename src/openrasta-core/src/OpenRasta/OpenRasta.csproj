@@ -544,6 +544,7 @@
     <Compile Include="Web\Wadl\WadlRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Authentication\Digest\" />
     <Folder Include="Compat\" />
     <Folder Include="Configuration\Settings\" />
     <Folder Include="Web\Codecs\" />
