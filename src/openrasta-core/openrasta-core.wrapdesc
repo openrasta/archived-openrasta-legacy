@@ -1,0 +1,6 @@
+﻿depends: openwrap content
+depends: nunit
+description: The core OpenRasta framework.
+build: msbuild;profile=net35;project=src\openrasta\openrasta.csproj;project=src\openrasta.testing\openrasta.testing.csproj
+name: openrasta-core
+depends: moq

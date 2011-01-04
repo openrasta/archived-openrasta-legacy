@@ -1,0 +1,358 @@
+<CodeStyleSettings>
+  <CSharp>
+    <FormatSettings>
+      <ANONYMOUS_METHOD_DECLARATION_BRACES>NEXT_LINE</ANONYMOUS_METHOD_DECLARATION_BRACES>
+      <BLANK_LINES_INSIDE_REGION>0</BLANK_LINES_INSIDE_REGION>
+      <CASE_BLOCK_BRACES>NEXT_LINE</CASE_BLOCK_BRACES>
+      <CONTINUOUS_INDENT_MULTIPLIER>2</CONTINUOUS_INDENT_MULTIPLIER>
+      <EXPLICIT_PRIVATE_MODIFIER>False</EXPLICIT_PRIVATE_MODIFIER>
+      <INDENT_ANONYMOUS_METHOD_BLOCK>False</INDENT_ANONYMOUS_METHOD_BLOCK>
+      <INDENT_EMBRACED_INITIALIZER_BLOCK>False</INDENT_EMBRACED_INITIALIZER_BLOCK>
+      <INITIALIZER_BRACES>NEXT_LINE</INITIALIZER_BRACES>
+      <MODIFIERS_ORDER IsNull="False">
+        <Item>public</Item>
+        <Item>protected</Item>
+        <Item>internal</Item>
+        <Item>private</Item>
+        <Item>new</Item>
+        <Item>abstract</Item>
+        <Item>virtual</Item>
+        <Item>override</Item>
+        <Item>sealed</Item>
+        <Item>static</Item>
+        <Item>readonly</Item>
+        <Item>extern</Item>
+        <Item>unsafe</Item>
+        <Item>volatile</Item>
+      </MODIFIERS_ORDER>
+      <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
+      <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
+      <SPACE_BEFORE_SIZEOF_PARENTHESES>False</SPACE_BEFORE_SIZEOF_PARENTHESES>
+      <SPACE_BEFORE_TYPEOF_PARENTHESES>False</SPACE_BEFORE_TYPEOF_PARENTHESES>
+      <SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES>True</SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES>
+      <WRAP_ARGUMENTS_STYLE>CHOP_IF_LONG</WRAP_ARGUMENTS_STYLE>
+      <WRAP_EXTENDS_LIST_STYLE>CHOP_IF_LONG</WRAP_EXTENDS_LIST_STYLE>
+      <WRAP_LIMIT>200</WRAP_LIMIT>
+      <WRAP_PARAMETERS_STYLE>CHOP_IF_LONG</WRAP_PARAMETERS_STYLE>
+    </FormatSettings>
+    <UsingsSettings>
+      <KeepImports IsNull="False">
+        <Item>System</Item>
+      </KeepImports>
+    </UsingsSettings>
+    <Naming2>
+      <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+      <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
+      <ExceptionName IsNull="False">
+      </ExceptionName>
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
+      <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
+      <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="MethodPropertyEvent" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Locals" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Constants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+      <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
+      <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
+    </Naming2>
+    <CustomMemberReorderingPatterns><![CDATA[<Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns">
+
+    <!-- Do not reorder COM interfaces -->
+    <Pattern>
+        <Match>
+            <And Weight="2000">
+                <Kind Is="interface"/>
+                <HasAttribute CLRName="System.Runtime.InteropServices.InterfaceTypeAttribute"
+                              Inherit="true"/>
+            </And>
+        </Match>
+    </Pattern>
+
+    <!-- Do not reorder P/Invoke structs -->
+    <Pattern>
+        <Match>
+            <And Weight="2000">
+                <Or>
+                    <Kind Is="struct"/>
+                    <Kind Is="class"/>
+                </Or>
+                <HasAttribute CLRName="System.Runtime.InteropServices.StructLayoutAttribute"
+                              Inherit="true"/>
+            </And>
+        </Match>
+    </Pattern>
+
+    <!-- Do not reorder P/Invoke classes (called xxxNativeMethods) -->
+    <Pattern>
+        <Match>
+            <And Weight="2000">
+                <Kind Is="class"/>
+                <Name Is=".*NativeMethods" />
+            </And>
+        </Match>
+    </Pattern>
+
+    <!-- StyleCop pattern -->
+    <Pattern RemoveAllRegions="true">
+        <Match>
+            <Or Weight="1000" >
+                <Kind Is="class" />
+                <Kind Is="struct" />
+            </Or>
+        </Match>
+
+        <!-- constants and fields -->
+        <Entry>
+            <Match>
+                <Or>
+                    <Kind Is="constant"/>
+                    <Kind Is="field"/>
+                </Or>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private"/>
+                <Kind Order="constant field"/>
+                <Readonly/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- constructors -->
+        <Entry>
+            <Match>
+                <Or Weight="200">
+                    <Kind Is="constructor"/>
+                    <Kind Is="destructor"/>
+                </Or>
+            </Match>
+            <Sort>
+                <Static/>
+                <Kind Order="constructor destructor"/>
+                <Access Order="public internal protected-internal protected private"/>
+            </Sort>
+        </Entry>
+
+        <!-- delegates and events -->
+        <Entry>
+            <Match>
+                <Or>
+                    <Kind Is="delegate"/>
+                    <Kind Is="event"/>
+                </Or>
+            </Match>
+            <Sort>
+                <Kind Order="delegate event"/>
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- enum -->
+        <Entry>
+            <Match>
+                <Kind Is="enum"/>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- interfaces -->
+        <Entry>
+            <Match>
+                <Kind Is="interface" />
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- properties -->
+        <Entry>
+            <Match>
+                <Kind Is="property"/>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private"/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- indexers -->
+        <Entry>
+            <Match>
+                <Kind Is="indexer"
+                      Weight="300" />
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private" />
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- operator -->
+        <Entry>
+            <Match>
+                <Kind Is="operator"/>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private" />
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- public methods -->
+        <Entry>
+            <Match>
+                <And>
+                    <Kind Is="method"/>
+                    <Access Is="public"/>
+                </And>
+            </Match>
+            <Sort>
+                <Access Order="public"/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- Implemented Interfaces -->
+        <Entry>
+            <Match>
+                <And Weight="500">
+                    <Kind Is="method"/>
+                    <ImplementsInterface CLRName=".*"/>
+                </And>
+            </Match>
+            <Sort>
+                <ImplementsInterface />
+                <Access Order="public internal protected-internal protected private"/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- other methods -->
+        <Entry>
+            <Match>
+                <Kind Is="method"/>
+            </Match>
+            <Sort>
+                <Access Order="public internal protected-internal protected private"/>
+                <Static/>
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- Event handlers -->
+        <Entry>
+            <Match>
+                <HandlesEvent Weight="400" />
+            </Match>
+            <Sort>
+                <Static />
+                <Access Order="public internal protected-internal protected private" />
+                <Override/>
+                <Name/>
+            </Sort>
+        </Entry>
+        <!-- Nested structs -->
+        <Entry>
+            <Match>
+                <Kind Is="struct"
+                      Weight="600" />
+            </Match>
+            <Sort>
+                <Static />
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- Nested classes -->
+        <Entry>
+            <Match>
+                <Kind Is="class"
+                      Weight="700" />
+            </Match>
+            <Sort>
+                <Static />
+                <Access Order="public internal protected-internal protected private" />
+                <Name/>
+            </Sort>
+        </Entry>
+
+        <!-- all other members -->
+        <Entry/>
+
+    </Pattern>
+</Patterns>]]></CustomMemberReorderingPatterns>
+  </CSharp>
+  <VB>
+    <FormatSettings />
+    <ImportsSettings>
+      <KeepImports IsNull="False">
+        <Item>System</Item>
+      </KeepImports>
+    </ImportsSettings>
+    <Naming2>
+      <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+      <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
+    </Naming2>
+  </VB>
+  <Web>
+    <Naming2 />
+  </Web>
+  <Xaml>
+    <Naming2>
+      <UserRule Name="XAML_FIELD" Inspect="True" Prefix="_" Suffix="" Style="aaBb" />
+      <UserRule Name="NAMESPACE_ALIAS" Inspect="True" Prefix="" Suffix="" Style="AaBb" />
+      <UserRule Name="XAML_RESOURCE" Inspect="True" Prefix="" Suffix="" Style="AaBb" />
+    </Naming2>
+  </Xaml>
+  <XML>
+    <FormatSettings />
+  </XML>
+  <GenerateMemberBody />
+  <Naming2>
+    <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+    <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
+    <ExceptionName IsNull="False">
+    </ExceptionName>
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="MethodPropertyEvent" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
+    <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
+    <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Locals" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="Constants" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+    <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
+    <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateConstants" />
+    <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="PrivateStaticReadonly">
+      <ExtraRule Prefix="_" Suffix="" Style="aaBb" />
+    </PredefinedRule>
+    <Abbreviation Text="OK" />
+    <Abbreviation Text="IO" />
+    <Abbreviation Text="MS" />
+    <Abbreviation Text="GAC" />
+  </Naming2>
+</CodeStyleSettings>

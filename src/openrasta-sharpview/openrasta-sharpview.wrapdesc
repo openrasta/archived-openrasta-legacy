@@ -1,0 +1,4 @@
+﻿name: openrasta-sharpview
+depends: openwrap anchored content
+depends: openrasta-core
+build: msbuild; profile=net35; project=src\OpenRasta.Codecs.SharpView\OpenRasta.Codecs.SharpView.csproj
