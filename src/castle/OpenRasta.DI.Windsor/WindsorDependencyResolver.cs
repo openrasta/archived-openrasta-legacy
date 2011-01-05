@@ -16,12 +16,13 @@ using System.Linq;
 using Castle.Core;
 using Castle.MicroKernel;
 using Castle.MicroKernel.ComponentActivator;
+#if CASTLE_20
+using Castle.MicroKernel.Context;
+using Castle.MicroKernel.Registration;
+#endif
 using Castle.Windsor;
 using OpenRasta.DI.Internal;
 using OpenRasta.Pipeline;
-#if CASTLE_20
-using Castle.MicroKernel.Registration;
-#endif
 
 namespace OpenRasta.DI.Windsor
 {
@@ -71,7 +72,11 @@ namespace OpenRasta.DI.Windsor
             foreach (var handler in AvailableHandlers(handlers))
                 try
                 {
+#if CASTLE_20
+                    resolved.Add((TService) _windsorContainer.Resolve(handler.ComponentModel.Name, typeof(TService)));
+#else
                     resolved.Add((TService) _windsorContainer.Resolve(handler.ComponentModel.Name));
+#endif
                 }
                 catch
                 {
@@ -135,8 +140,11 @@ namespace OpenRasta.DI.Windsor
                     component.CustomComponentActivator = typeof (ContextStoreInstanceActivator);
                     component.ExtendedProperties[Constants.REG_IS_INSTANCE_KEY] = true;
                     component.Name = component.Name;
-
+#if CASTLE_20
+                    _windsorContainer.Kernel.Register(Component.For(component));
+#else
                     _windsorContainer.Kernel.AddCustomComponent(component);
+#endif
                     store[component.Name] = instance;
                 }
             }
@@ -151,7 +159,7 @@ namespace OpenRasta.DI.Windsor
             AddDependencyCore(handlerType, handlerType, lifetime);
         }
 
-        IEnumerable<IHandler> AvailableHandlers(IEnumerable<IHandler> handlers)
+        IEnumerable<IHandler> AvailableHandlers(IHandler[] handlers)
         {
             return from handler in handlers
                    where handler.CurrentState == HandlerState.Valid

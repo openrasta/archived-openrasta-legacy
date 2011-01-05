@@ -1,5 +1,9 @@
 using System;
+#if CASTLE_20
+using Castle.MicroKernel.Context;
+#else
 using Castle.MicroKernel;
+#endif
 using Castle.MicroKernel.Lifestyle;
 using OpenRasta.DI.Internal;
 using OpenRasta.Pipeline;
