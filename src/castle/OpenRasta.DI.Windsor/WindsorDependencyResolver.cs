@@ -27,6 +27,8 @@ namespace OpenRasta.DI.Windsor
 {
     public class WindsorDependencyResolver : DependencyResolverCore, IDependencyResolver
     {
+        private static readonly object _syncLock = new object();
+
         readonly IWindsorContainer _windsorContainer;
 
         public WindsorDependencyResolver(IWindsorContainer container)
@@ -82,67 +84,75 @@ namespace OpenRasta.DI.Windsor
 
         protected override void AddDependencyCore(Type dependent, Type concrete, DependencyLifetime lifetime)
         {
-            string componentName = Guid.NewGuid().ToString();
-            if (lifetime != DependencyLifetime.PerRequest)
+            lock (_syncLock)
             {
+                string componentName = Guid.NewGuid().ToString();
+                if (lifetime != DependencyLifetime.PerRequest)
+                {
 #if CASTLE_20
-                _windsorContainer.AddComponentLifeStyle(componentName, dependent, concrete, 
-                                                        ConvertLifestyles.ToLifestyleType(lifetime));
+                    _windsorContainer.AddComponentLifeStyle(componentName,
+                                                            dependent,
+                                                            concrete,
+                                                            ConvertLifestyles.ToLifestyleType(lifetime));
 #elif CASTLE_10
                  _windsorContainer.AddComponentWithLifestyle(componentName, dependent, concrete, ConvertLifestyles.ToLifestyleType(lifetime));
 #endif
-            }
-            else
-            {
+                }
+                else
+                {
 #if CASTLE_20
-                _windsorContainer.Register(
-                    Component.For(dependent).Named(componentName).ImplementedBy(concrete).LifeStyle.Custom(typeof (ContextStoreLifetime)));
+                    _windsorContainer.Register(
+                        Component.For(dependent).Named(componentName).ImplementedBy(concrete).LifeStyle.Custom(typeof(ContextStoreLifetime)));
 #elif CASTLE_10
                                 ComponentModel component = _windsorContainer.Kernel.ComponentModelBuilder.BuildModel(componentName, dependent, concrete, null);
                 component.LifestyleType = ConvertLifestyles.ToLifestyleType(lifetime);
                 component.CustomLifestyle = typeof (ContextStoreLifetime);
                 _windsorContainer.Kernel.AddCustomComponent(component);
 #endif
+                }
             }
         }
 
         protected override void AddDependencyInstanceCore(Type serviceType, object instance, DependencyLifetime lifetime)
         {
-            string key = Guid.NewGuid().ToString();
-            if (lifetime == DependencyLifetime.PerRequest)
+            lock (_syncLock)
             {
-                // try to see if we have a registration already
-                var store = (IContextStore) Resolve(typeof (IContextStore));
-                if (_windsorContainer.Kernel.HasComponent(serviceType))
+                string key = Guid.NewGuid().ToString();
+                if (lifetime == DependencyLifetime.PerRequest)
                 {
-                    var handler = _windsorContainer.Kernel.GetHandler(serviceType);
-                    if (handler.ComponentModel.ExtendedProperties[Constants.REG_IS_INSTANCE_KEY] != null)
+                    // try to see if we have a registration already
+                    var store = (IContextStore)Resolve(typeof(IContextStore));
+                    if (_windsorContainer.Kernel.HasComponent(serviceType))
                     {
-                        // if there's already an instance registration we update the store with the correct reg.
-                        store[handler.ComponentModel.Name] = instance;
+                        var handler = _windsorContainer.Kernel.GetHandler(serviceType);
+                        if (handler.ComponentModel.ExtendedProperties[Constants.REG_IS_INSTANCE_KEY] != null)
+                        {
+                            // if there's already an instance registration we update the store with the correct reg.
+                            store[handler.ComponentModel.Name] = instance;
+                        }
+                        else
+                        {
+                            throw new DependencyResolutionException("Cannot register an instance for a type already registered");
+                        }
                     }
                     else
                     {
-                        throw new DependencyResolutionException("Cannot register an instance for a type already registered");
+                        var component = new ComponentModel(key, serviceType, instance.GetType());
+                        var customLifestyle = typeof(ContextStoreLifetime);
+                        component.LifestyleType = LifestyleType.Custom;
+                        component.CustomLifestyle = customLifestyle;
+                        component.CustomComponentActivator = typeof(ContextStoreInstanceActivator);
+                        component.ExtendedProperties[Constants.REG_IS_INSTANCE_KEY] = true;
+                        component.Name = component.Name;
+
+                        _windsorContainer.Kernel.AddCustomComponent(component);
+                        store[component.Name] = instance;
                     }
                 }
-                else
+                else if (lifetime == DependencyLifetime.Singleton)
                 {
-                    var component = new ComponentModel(key, serviceType, instance.GetType());
-                    var customLifestyle = typeof (ContextStoreLifetime);
-                    component.LifestyleType = LifestyleType.Custom;
-                    component.CustomLifestyle = customLifestyle;
-                    component.CustomComponentActivator = typeof (ContextStoreInstanceActivator);
-                    component.ExtendedProperties[Constants.REG_IS_INSTANCE_KEY] = true;
-                    component.Name = component.Name;
-
-                    _windsorContainer.Kernel.AddCustomComponent(component);
-                    store[component.Name] = instance;
+                    _windsorContainer.Kernel.AddComponentInstance(key, serviceType, instance);
                 }
-            }
-            else if (lifetime == DependencyLifetime.Singleton)
-            {
-                _windsorContainer.Kernel.AddComponentInstance(key, serviceType, instance);
             }
         }
 
