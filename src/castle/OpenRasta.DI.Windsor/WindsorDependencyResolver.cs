@@ -27,7 +27,7 @@ namespace OpenRasta.DI.Windsor
 {
     public class WindsorDependencyResolver : DependencyResolverCore, IDependencyResolver
     {
-        private static readonly object _syncLock = new object();
+        private static readonly object _syncRoot = new object();
 
         readonly IWindsorContainer _windsorContainer;
 
@@ -84,7 +84,7 @@ namespace OpenRasta.DI.Windsor
 
         protected override void AddDependencyCore(Type dependent, Type concrete, DependencyLifetime lifetime)
         {
-            lock (_syncLock)
+            lock (_syncRoot)
             {
                 string componentName = Guid.NewGuid().ToString();
                 if (lifetime != DependencyLifetime.PerRequest)
@@ -115,7 +115,7 @@ namespace OpenRasta.DI.Windsor
 
         protected override void AddDependencyInstanceCore(Type serviceType, object instance, DependencyLifetime lifetime)
         {
-            lock (_syncLock)
+            lock (_syncRoot)
             {
                 string key = Guid.NewGuid().ToString();
                 if (lifetime == DependencyLifetime.PerRequest)
