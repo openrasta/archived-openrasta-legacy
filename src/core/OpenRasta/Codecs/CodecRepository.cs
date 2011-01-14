@@ -110,7 +110,7 @@ namespace OpenRasta.Codecs
         public IEnumerable<CodecRegistration> FindMediaTypeWriter(IMember resourceType, 
                                                                   IEnumerable<MediaType> requestedMediaTypes)
         {
-            var orderedMediaTypes = requestedMediaTypes.OrderByDescending(mt => mt);
+            var orderedMediaTypes = requestedMediaTypes.Where(x => x != null).OrderByDescending(mt => mt);
             var mediaTypesByQuality = orderedMediaTypes.GroupBy(key => key.Quality);
             return mediaTypesByQuality
                 .Aggregate(new List<CodecRegistration>(), AppendMediaTypeWriterFor(resourceType));

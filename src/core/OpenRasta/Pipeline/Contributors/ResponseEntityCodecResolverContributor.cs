@@ -45,6 +45,7 @@ namespace OpenRasta.Pipeline.Contributors
 
             IEnumerable<MediaType> acceptedContentTypes =
                 MediaType.Parse(string.IsNullOrEmpty(acceptHeader) ? "*/*" : acceptHeader);
+
             IType responseEntityType = _typeSystem.FromInstance(context.Response.Entity.Instance);
 
             IEnumerable<CodecRegistration> sortedCodecs = _codecs.FindMediaTypeWriter(responseEntityType,
@@ -63,6 +64,7 @@ namespace OpenRasta.Pipeline.Contributors
                 context.OperationResult = ResponseEntityHasNoCodec(acceptHeader, responseEntityType);
                 return PipelineContinuation.RenderNow;
             }
+
             return PipelineContinuation.Continue;
         }
 

@@ -149,6 +149,52 @@ namespace ResponseEntityCodecResolver_Specification
             
         }
 
+		[Test]
+		public void the_server_should_respond_ok_if_not_understood_media_type_requested_but_default_also_there()
+		{
+			given_pipeline_contributor<ResponseEntityCodecResolverContributor>();
+			given_response_entity(new Customer());
+			given_registration_codec<CustomerCodec, Customer>("text/xml");
+
+			given_request_header_accept("*,*/*");
+
+			when_running_pipeline();
+
+			Assert.That(Context.OperationResult.StatusCode, Is.EqualTo(200));
+		}
+
+		[Test]
+		public void the_server_should_respond_406_if_not_understood_media_type_requested()
+		{
+			given_pipeline_contributor<ResponseEntityCodecResolverContributor>();
+			given_response_entity(new Customer());
+			given_registration_codec<CustomerCodec, Customer>("text/xml");
+
+			given_request_header_accept("*");
+
+			when_sending_notification<KnownStages.IOperationResultInvocation>()
+							.ShouldBe(PipelineContinuation.RenderNow);
+
+			Assert.That(Context.OperationResult.StatusCode, Is.EqualTo(406));
+		}
+
+		[Test]
+		public void the_server_should_default_if_no_media_type_requested()
+		{
+			given_pipeline_contributor<ResponseEntityCodecResolverContributor>();
+			given_response_entity(new Customer());
+			given_registration_codec<CustomerCodec, Customer>("text/xml");
+
+			given_request_header_accept("");
+
+			when_running_pipeline();
+
+			Assert.That(Context.OperationResult.StatusCode, Is.EqualTo(200));
+			Assert.That(Context.Response.Entity.ContentType.MediaType, Is.EqualTo("text/xml"));
+		}
+
+
+
         void when_running_pipeline()
         {
             when_sending_notification<KnownStages.IOperationResultInvocation>()

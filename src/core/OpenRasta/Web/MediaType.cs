@@ -214,10 +214,12 @@ namespace OpenRasta.Web
             if (contentTypeList == null)
                 return new List<MediaType>();
 
-            return from mediaTypeComponent in contentTypeList.Split(',')
-                   let mediatype = new MediaType(mediaTypeComponent.Trim())
-                   orderby mediatype descending
-                   select mediatype;
+        	string[] strings = contentTypeList.Split(',');
+
+			return
+				strings
+				.Select(mediaTypeComponent => new { mediaTypeComponent, mediatype = CreateMediaType(mediaTypeComponent.Trim()) })
+				.OrderByDescending(@t => @t.mediatype).Select(@t => @t.mediatype);
         }
 
         public class MediaTypeEqualityComparer : IEqualityComparer<MediaType>
@@ -226,6 +228,17 @@ namespace OpenRasta.Web
 
             public int GetHashCode(MediaType obj) { return obj.TopLevelMediaType.GetHashCode() ^ obj.Subtype.GetHashCode(); }
         }
+
+		public static MediaType CreateMediaType(string typename)
+		{
+			MediaType output;
+			try
+			{
+				output = new MediaType(typename);
+			}catch(Exception ex)
+			{output = null;}
+			return output;
+		}
     }
 }
 
