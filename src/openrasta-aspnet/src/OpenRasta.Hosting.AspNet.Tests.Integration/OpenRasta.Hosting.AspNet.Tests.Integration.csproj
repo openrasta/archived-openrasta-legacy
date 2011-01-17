@@ -72,7 +72,6 @@
     <Compile Include="server_context.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dependencies.targets" />
     <EmbeddedResource Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,7 +104,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <Import Project="..\..\build\common.project.properties"/>
+  <Import Project="..\..\build\common.project.properties" />
   <Import Project="..\..\wraps\openwrap\build\OpenWrap.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

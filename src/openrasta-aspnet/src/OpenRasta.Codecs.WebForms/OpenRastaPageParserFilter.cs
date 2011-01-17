@@ -1,4 +1,5 @@
 #region License
+
 /* Authors:
  *      Sebastien Lambla (seb@serialseb.com)
  * Copyright:
@@ -6,6 +7,7 @@
  * License:
  *      This file is distributed under the terms of the MIT License found at the end of this file.
  */
+
 #endregion
 
 using System;
@@ -22,17 +24,35 @@ namespace OpenRasta.Codecs.WebForms
 {
     public class OpenRastaPageParserFilter : PageParserFilter
     {
-        static readonly Dictionary<string, Type> TypeReplacements = new Dictionary<string, Type>
-            {
-                { "ResourceView(", typeof(ResourceView<>) }, 
-                { "MasterView(", typeof(MasterPageView<>) }, 
-                { "ResourceSubView(", typeof(ResourceSubView<>) }, 
-                { "ResourceView", typeof(ResourceView) }, 
-                { "ResourceSubView", typeof(ResourceSubView) }, 
-                { "MasterView", typeof(MasterPageView) }
-            };
+        private static readonly Dictionary<string, Type> TypeReplacements = new Dictionary<string, Type>
+                                                                                {
+                                                                                    {
+                                                                                        "ResourceView(",
+                                                                                        typeof (ResourceView<>)
+                                                                                        },
+                                                                                    {
+                                                                                        "MasterView(",
+                                                                                        typeof (MasterPageView<>)
+                                                                                        },
+                                                                                    {
+                                                                                        "ResourceSubView(",
+                                                                                        typeof (ResourceSubView<>)
+                                                                                        },
+                                                                                    {
+                                                                                        "ResourceView",
+                                                                                        typeof (ResourceView)
+                                                                                        },
+                                                                                    {
+                                                                                        "ResourceSubView",
+                                                                                        typeof (ResourceSubView)
+                                                                                        },
+                                                                                    {
+                                                                                        "MasterView",
+                                                                                        typeof (MasterPageView)
+                                                                                        }
+                                                                                };
 
-        readonly List<string> _importedNamespaces = new List<string>();
+        private readonly List<string> _importedNamespaces = new List<string>();
 
         public override bool AllowCode
         {
@@ -62,13 +82,16 @@ namespace OpenRasta.Codecs.WebForms
         public static Type GetTypeFromFriendlyType(string typeName, IEnumerable<string> namespaces)
         {
             int firstBracketPosition = typeName.IndexOf('(');
-            string friendlyName = firstBracketPosition == -1 ? typeName : typeName.Substring(0, firstBracketPosition + 1);
+            string friendlyName = firstBracketPosition == -1
+                                      ? typeName
+                                      : typeName.Substring(0, firstBracketPosition + 1);
             Type rootType;
             if (TypeReplacements.TryGetValue(friendlyName, out rootType))
             {
                 if (firstBracketPosition != -1)
                 {
-                    string resourceTypeName = typeName.Substring(firstBracketPosition + 1, typeName.Length - firstBracketPosition - 2);
+                    string resourceTypeName = typeName.Substring(firstBracketPosition + 1,
+                                                                 typeName.Length - firstBracketPosition - 2);
                     var resourceType = new TypeBuilder("(", ")", namespaces).Parse(resourceTypeName);
                     if (resourceType != null)
                         return rootType.MakeGenericType(resourceType);
@@ -122,16 +145,17 @@ namespace OpenRasta.Codecs.WebForms
             }
             bool isPageInstruction = string.Compare(directiveName, "page", StringComparison.OrdinalIgnoreCase) == 0
                                      || string.Compare(directiveName, "master", StringComparison.OrdinalIgnoreCase) == 0
-                                     || string.Compare(directiveName, "control", StringComparison.OrdinalIgnoreCase) == 0;
+                                     ||
+                                     string.Compare(directiveName, "control", StringComparison.OrdinalIgnoreCase) == 0;
 
             if (isPageInstruction)
             {
                 if (attributes.Contains("Inherits"))
-                    attributes["Inherits"] = ParseInheritsAttribute((string)attributes["Inherits"]);
+                    attributes["Inherits"] = ParseInheritsAttribute((string) attributes["Inherits"]);
                 if (attributes.Contains("Title"))
                 {
-                    var parentType = BuildManager.GetType((string)attributes["Inherits"], false);
-                    if (parentType != null && (parentType.Namespace == typeof(ResourceView).Namespace))
+                    var parentType = BuildManager.GetType((string) attributes["Inherits"], false);
+                    if (parentType != null && (parentType.Namespace == typeof (ResourceView).Namespace))
                     {
                         attributes["PageTitle"] = attributes["Title"];
                         attributes.Remove("Title");
@@ -145,7 +169,7 @@ namespace OpenRasta.Codecs.WebForms
             return false;
         }
 
-        static IEnumerable<string> AssemblyNames()
+        private static IEnumerable<string> AssemblyNames()
         {
             var section = WebConfigurationManager.GetSection("system.web/compilation") as CompilationSection;
             if (section == null) yield break;
@@ -156,32 +180,42 @@ namespace OpenRasta.Codecs.WebForms
                 yield return ns.FullName;
         }
 
-        static Type FindType(string typeName, IEnumerable<string> namespaces, IEnumerable<string> assemblyNames)
+        private static Type FindType(string typeName, IEnumerable<string> namespaces, IEnumerable<string> assemblyNames)
         {
             var type = Type.GetType(typeName);
             if (type != null) return type;
-            foreach (string ns in namespaces)
+            foreach (var ns in namespaces)
             {
                 if (typeName.IndexOf(',') != -1 && (type = Type.GetType(ns + "." + typeName)) != null)
                     return type;
                 if (typeName.IndexOf(',') == -1)
-                    foreach (string assembly in assemblyNames)
+                    foreach (var assembly in assemblyNames)
                         if ((type = Type.GetType(ns + "." + typeName + ", " + assembly)) != null)
                             return type;
+            }
+            // Type name includes the namespace ? (based on a class name not including a .)
+            // Ignoring possiblity that the type name that assembly name qualified at this stage, but if so would have been taken care of by the first Type.GetType attempt
+            // Have also ignored precedense with regards to which cases should be tried first, but this looks like it would be the least popular and so should be the last attempt, unless we loop on the assemblies in the previous block
+            if (typeName.IndexOf('.') > -1)
+            {
+                foreach (var assembly in assemblyNames)
+                    if ((type = Type.GetType(typeName + ", " + assembly)) != null)
+                        return type;
             }
             return null;
         }
 
-        static void RaiseResourceViewSyntaxError(string resourceName)
+
+        private static void RaiseResourceViewSyntaxError(string resourceName)
         {
             throw new TypeLoadException(
                 "The resource named {0} couldn't be found.\r\nTry importing the namespace this resource exists in in the namespaces tag in web.config, or by inserting an @Import directive before the @Page directive.\r\nAlternatively, fully qualify the type."
                     .With(resourceName));
         }
 
-        IEnumerable<string> Namespaces()
+        private IEnumerable<string> Namespaces()
         {
-            foreach (string ns in _importedNamespaces)
+            foreach (var ns in _importedNamespaces)
                 yield return ns;
 
             var section = WebConfigurationManager.GetSection("system.web/pages") as PagesSection;
@@ -195,16 +229,18 @@ namespace OpenRasta.Codecs.WebForms
                                     from type in assembly.GetTypes()
                                     select type.Namespace;
 
-                foreach (string ns in allNamespaces.Distinct())
+                foreach (var ns in allNamespaces.Distinct())
                     yield return ns;
             }
         }
 
-        class TypeBuilder
+        #region Nested type: TypeBuilder
+
+        private class TypeBuilder
         {
-            readonly string _genericTypeDefClose;
-            readonly string _genericTypeDefOpen;
-            readonly IEnumerable<string> _namespaces;
+            private readonly string _genericTypeDefClose;
+            private readonly string _genericTypeDefOpen;
+            private readonly IEnumerable<string> _namespaces;
 
             public TypeBuilder(string genericTypeDefOpen, string genericTypeDefClose, IEnumerable<string> namespaces)
             {
@@ -251,11 +287,15 @@ namespace OpenRasta.Codecs.WebForms
             }
         }
 
-        class TypeDef
+        #endregion
+
+        #region Nested type: TypeDef
+
+        private class TypeDef
         {
             public readonly List<Type> GenericTypeArguments = new List<Type>();
             public readonly StringBuilder TypeName = new StringBuilder();
-            readonly IEnumerable<string> _namespaces;
+            private readonly IEnumerable<string> _namespaces;
 
             public TypeDef(IEnumerable<string> namespaces)
             {
@@ -274,10 +314,13 @@ namespace OpenRasta.Codecs.WebForms
                 return type.MakeGenericType(GenericTypeArguments.ToArray());
             }
         }
+
+        #endregion
     }
 }
 
 #region Full license
+
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -294,4 +337,5 @@ namespace OpenRasta.Codecs.WebForms
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion

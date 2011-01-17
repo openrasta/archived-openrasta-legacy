@@ -85,37 +85,40 @@ namespace OpenRasta.Hosting.AspNet
 
         static void VerifyIisDetected(HttpContext context)
         {
-            if (Iis == null)
+            lock (_syncRoot)
             {
-                if (context == null)
-                    throw new InvalidOperationException();
-                Iis iisVersion = null;
-                string serverSoftwareHeader = context.Request.ServerVariables[SERVER_SOFTWARE_KEY];
-
-                int slashPos = serverSoftwareHeader != null ? serverSoftwareHeader.IndexOf('/') : -1;
-                if (slashPos != -1)
+                if (Iis == null)
                 {
-                    string productName = serverSoftwareHeader.Substring(0, slashPos);
-                    Version parsedVersion;
-                    try
+                    if (context == null)
+                        throw new InvalidOperationException();
+                    Iis iisVersion = null;
+                    string serverSoftwareHeader = context.Request.ServerVariables[SERVER_SOFTWARE_KEY];
+
+                    int slashPos = serverSoftwareHeader != null ? serverSoftwareHeader.IndexOf('/') : -1;
+                    if (slashPos != -1)
                     {
-                        parsedVersion = new Version(serverSoftwareHeader.Substring(slashPos + 1, serverSoftwareHeader.Length - slashPos - 1).Trim());
-                    }
-                    catch
-                    {
-                        parsedVersion = null;
+                        string productName = serverSoftwareHeader.Substring(0, slashPos);
+                        Version parsedVersion;
+                        try
+                        {
+                            parsedVersion = new Version(serverSoftwareHeader.Substring(slashPos + 1, serverSoftwareHeader.Length - slashPos - 1).Trim());
+                        }
+                        catch
+                        {
+                            parsedVersion = null;
+                        }
+
+                        if (productName.EqualsOrdinalIgnoreCase("microsoft-iis") &&
+                            parsedVersion != null &&
+                            parsedVersion.Major >= 7)
+                        {
+                            iisVersion = new Iis7();
+                        }
                     }
 
-                    if (productName.EqualsOrdinalIgnoreCase("microsoft-iis") &&
-                        parsedVersion != null &&
-                        parsedVersion.Major >= 7)
-                    {
-                        iisVersion = new Iis7();
-                    }
+                    Iis = iisVersion ?? new Iis6();
+                    Log.IisDetected(Iis, serverSoftwareHeader);
                 }
-
-                Iis = iisVersion ?? new Iis6();
-                Log.IisDetected(Iis, serverSoftwareHeader);
             }
         }
 

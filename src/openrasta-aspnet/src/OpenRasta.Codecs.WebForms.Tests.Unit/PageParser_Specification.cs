@@ -31,7 +31,8 @@ namespace PageParser_Specification
 
         [TestCase("OpenRasta.Codecs.WebForms.MasterPageView<HomeResource>", typeof (MasterPageView<HomeResource>))]
         [TestCase("OpenRasta.Codecs.WebForms.ResourceView<HomeResource>", typeof (ResourceView<HomeResource>))]
-        [TestCase("OpenRasta.Codecs.WebForms.ResourceSubView<HomeResource>", typeof (ResourceSubView<HomeResource>))]
+        [TestCase("OpenRasta.Codecs.WebForms.ResourceSubView<PageParser_Specification.HomeResource>", typeof(ResourceSubView<HomeResource>))]
+        [TestCase("OpenRasta.Codecs.WebForms.ResourceSubView<HomeResource>", typeof(ResourceSubView<HomeResource>))]
         [TestCase("IList<HomeResource>", typeof (IList<HomeResource>))]
         [TestCase("DarthVador(Of StarWars)", null, TestName = "Unknown names return null")]
         public void csharp_names_are_rewritten(string typeName, Type expectedType)
@@ -52,7 +53,8 @@ namespace PageParser_Specification
             ExpectedException = typeof (TypeLoadException))]
         [TestCase("OpenRasta.Codecs.WebForms.MasterPageView<HomeResource>", typeof (MasterPageView<HomeResource>))]
         [TestCase("OpenRasta.Codecs.WebForms.ResourceView<HomeResource>", typeof (ResourceView<HomeResource>))]
-        [TestCase("OpenRasta.Codecs.WebForms.ResourceSubView<HomeResource>", typeof (ResourceSubView<HomeResource>))]
+        [TestCase("OpenRasta.Codecs.WebForms.ResourceSubView<HomeResource>", typeof(ResourceSubView<HomeResource>))]
+        [TestCase("OpenRasta.Codecs.WebForms.ResourceSubView<PageParser_Specification.HomeResource>", typeof(ResourceSubView<HomeResource>))]
         [TestCase("IList<HomeResource>", typeof (IList<HomeResource>))]
         [TestCase("DarthVador(Of StarWars)", null,
             TestName = "Unknown names return null",

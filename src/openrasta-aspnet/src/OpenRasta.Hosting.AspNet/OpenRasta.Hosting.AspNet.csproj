@@ -79,7 +79,6 @@
     <Compile Include="AspNetRequest.cs" />
     <Compile Include="AspNetResponse.cs" />
     <Compile Include="HttpHandlerRegistration.cs" />
-    <Compile Include="HttpInputStream.cs" />
     <Compile Include="AspNetHttpListener\HttpListenerWorkerRequest.cs" />
     <Compile Include="AspNetHttpListener\HttpListenerAspNetHost.cs" />
     <Compile Include="Iis7.cs" />
@@ -112,7 +111,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <Import Project="..\..\build\common.project.properties"/>
+  <Import Project="..\..\build\common.project.properties" />
   <Import Project="..\..\wraps\openwrap\build\OpenWrap.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
