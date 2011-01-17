@@ -11,7 +11,7 @@
 
 
     <OpenWrap-EnableVisualStudioIntegration Condition="'$(OpenWrap-EnableVisualStudioIntegration)' == ''">false</OpenWrap-EnableVisualStudioIntegration>
-    <!-- We detect the root path based on the existence of a .wraps folder -->
+    <!-- We detect the root path based on the existence of a /wraps folder -->
     <OpenWrap-ProjectRepositoryPath Condition="'$(OpenWrap-ProjectRepositoryPath)' == ''">$(MSBuildProjectDirectory)\..\wraps</OpenWrap-ProjectRepositoryPath>
     <OpenWrap-ProjectRepositoryPath Condition="!Exists('$(OpenWrap-ProjectRepositoryPath)')">$(MSBuildProjectDirectory)\..\..\wraps</OpenWrap-ProjectRepositoryPath>
     <OpenWrap-ProjectRepositoryPath Condition="!Exists('$(OpenWrap-ProjectRepositoryPath)')">$(MSBuildProjectDirectory)\..\..\..\wraps</OpenWrap-ProjectRepositoryPath>
@@ -20,15 +20,18 @@
 
     <RootSolutionDirectory>$(OpenWrap-ProjectRepositoryPath)\..</RootSolutionDirectory>
 
+    <!-- These properties are defined so we can default the build when ran outside of the msbuild runner (ie within VS). -->
     <OpenWrap-TargetProfile Condition="'$(OpenWrap-TargetProfile)' == '' and '$(TargetFrameworkVersion)' == 'v2.0'">net20</OpenWrap-TargetProfile>
     <OpenWrap-TargetProfile Condition="'$(OpenWrap-TargetProfile)' == '' and '$(TargetFrameworkVersion)' == 'v3.0'">net30</OpenWrap-TargetProfile>
     <OpenWrap-TargetProfile Condition="'$(OpenWrap-TargetProfile)' == '' and '$(TargetFrameworkVersion)' == 'v3.5'">net35</OpenWrap-TargetProfile>
     <OpenWrap-TargetProfile Condition="'$(OpenWrap-TargetProfile)' == '' and '$(TargetFrameworkVersion)' == 'v4.0'">net40</OpenWrap-TargetProfile>
+    
     <OpenWrap-TargetPlatform Condition="'$(OpenWrap-TargetPlatform)' == ''">$(Platform)</OpenWrap-TargetPlatform>
     <OpenWrap-TargetPlatform Condition="'$(OpenWrap-TargetPlatform)' == ''">AnyCPU</OpenWrap-TargetPlatform>
     <OpenWrap-ExportName Condition="'$(OpenWrap-ExportName)' == ''">bin-$(OpenWrap-TargetProfile)</OpenWrap-ExportName>
     <DefineConstants>$(DefineConstants);__OW_PLATFORM_$(OpenWrap-TargetPlatform)__;__OW_PROFILE_$(OpenWrap-TargetProfile)__;</DefineConstants>
     <OpenWrap-AllowBinDuplicates Condition="'$(OpenWrap-AllowBinDuplicates)' == ''">false</OpenWrap-AllowBinDuplicates>
+    <OpenWrap-CopyLocal Condition="'$(OpenWrap-CopyLocal)' == ''">false</OpenWrap-CopyLocal>
   </PropertyGroup>
 
 
@@ -37,6 +40,7 @@
     <_WrapFile Include="$(MSBuildProjectDirectory)\*.wrapdesc" />
     <_WrapFile Include="$(MSBuildProjectDirectory)\..\*.wrapdesc" Condition="!Exists(@(_WrapFile->'%(FullPath)'))" />
     <_WrapFile Include="$(MSBuildProjectDirectory)\..\..\*.wrapdesc" Condition="!Exists(@(_WrapFile->'%(FullPath)'))" />
+    <_WrapFile Include="$(MSBuildProjectDirectory)\..\..\..\*.wrapdesc" Condition="!Exists(@(_WrapFile->'%(FullPath)'))" />
   </ItemGroup>
   <Target Name="_Initialize">
     <InitializeOpenWrap StartDebug="$(OpenWrap-StartDebug)" >
@@ -74,7 +78,7 @@
       ProjectFilePath="$(MSBuildProjectFullPath)"
       ExcludeAssemblies="$(AssemblyName);$(OpenWrap-ExcludeAssemblies)"
       InputReferences="@(Reference)"
-      CopyLocal="true">
+      CopyLocal="$(OpenWrap-CopyLocal)">
       <Output TaskParameter="OutputReferences" ItemName="Reference" />
 
     </ResolveWrapReferences>

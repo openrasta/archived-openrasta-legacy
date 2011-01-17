@@ -2,6 +2,7 @@
 depends: openfilesystem
 depends: openwrap content
 anchored: true
-build: msbuild; profile=net35; project=src\OpenWrap\OpenWrap.csproj; project=src\OpenWrap.Build.Tasks\OpenWrap.Build.Tasks.csproj; project=src\OpenWrap.Commands\OpenWrap.Commands.csproj; project=src\OpenWrap.Tests\OpenWrap.Tests.csproj;
+build: msbuild; profile=net35; project=src\OpenWrap\OpenWrap.csproj; project=src\OpenWrap.Build.Tasks\OpenWrap.Build.Tasks.csproj; project=src\OpenWrap.Commands\OpenWrap.Commands.csproj; project=src\OpenWrap.Testing\OpenWrap.Testing.csproj; project=src\OpenWrap.Tests\OpenWrap.Tests.csproj;
 name: openwrap
-version: 1.0.0.48241277
+depends: tdnet-framework
+version: 1.0.0.48804840
