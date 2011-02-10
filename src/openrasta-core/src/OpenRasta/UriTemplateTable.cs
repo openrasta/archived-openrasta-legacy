@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using OpenRasta.Collections;
 
 namespace OpenRasta
 {
@@ -63,7 +64,6 @@ namespace OpenRasta
 
         public Collection<UriTemplateMatch> Match(Uri uri)
         {
-            // TODO: Rewrite to leverage a tree shape for the matching process
             int lastMaxLiteralSegmentCount = 0;
             var matches = new Collection<UriTemplateMatch>();
             foreach (var template in KeyValuePairs)
@@ -95,17 +95,17 @@ namespace OpenRasta
                 }
             }
 
-            return SortByMatchQuality(matches);
+            return SortByMatchQuality(matches).ToCollection();
         }
 
-        Collection<UriTemplateMatch> SortByMatchQuality(Collection<UriTemplateMatch> matches)
+        IEnumerable<UriTemplateMatch> SortByMatchQuality(Collection<UriTemplateMatch> matches)
         {
-            return new Collection<UriTemplateMatch>((
-           from m in matches
-                let qsDistance = Math.Abs(m.QueryStringVariables.Count - m.QueryParameters.Count)
-                let bound = m.PathSegmentVariables.Count + m.QueryStringVariables.Count
-                orderby bound descending , qsDistance
-                select m).ToList());
+            return from m in matches
+                   let missingQueryStringParameters = Math.Abs(m.QueryStringVariables.Count - m.QueryParameters.Count)
+                   let matchedVariables = m.PathSegmentVariables.Count + m.QueryStringVariables.Count
+                   let literalSegments = m.RelativePathSegments.Count - m.PathSegmentVariables.Count
+                   orderby literalSegments descending, matchedVariables descending, missingQueryStringParameters
+                   select m;
         }
 
         /// <exception cref="UriTemplateMatchException">Several matching templates were found.</exception>

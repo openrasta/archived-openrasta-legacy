@@ -31,7 +31,7 @@
     <OpenWrap-ExportName Condition="'$(OpenWrap-ExportName)' == ''">bin-$(OpenWrap-TargetProfile)</OpenWrap-ExportName>
     <DefineConstants>$(DefineConstants);__OW_PLATFORM_$(OpenWrap-TargetPlatform)__;__OW_PROFILE_$(OpenWrap-TargetProfile)__;</DefineConstants>
     <OpenWrap-AllowBinDuplicates Condition="'$(OpenWrap-AllowBinDuplicates)' == ''">false</OpenWrap-AllowBinDuplicates>
-    <OpenWrap-CopyLocal Condition="'$(OpenWrap-CopyLocal)' == ''">false</OpenWrap-CopyLocal>
+    <OpenWrap-CopyLocal Condition="'$(OpenWrap-CopyLocal)' == ''">true</OpenWrap-CopyLocal>
   </PropertyGroup>
 
 

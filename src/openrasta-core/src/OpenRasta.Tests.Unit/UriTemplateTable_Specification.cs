@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using NUnit.Framework;
+using OpenRasta;
 using OpenRasta.Testing;
 
 namespace UriTemplateTable_Specification
@@ -103,6 +104,20 @@ namespace UriTemplateTable_Specification
             match.First().QueryStringVariables.Count.ShouldBe(1);
             match.First().PathSegmentVariables.Count.ShouldBe(1);
             match.First().QueryParameters.Count.ShouldBe(2);
+        }
+        [Test]
+        public void literal_takes_precedence_over_template()
+        {
+            var table = new UriTemplateTable(new Uri("http://localhost"),
+                                             new List<KeyValuePair<UriTemplate, object>>
+                                             {
+                                                 new KeyValuePair<UriTemplate,object>(new UriTemplate("resource1/{resourceId}"), null),
+                                                 new KeyValuePair<UriTemplate, object>(new UriTemplate("resource1/new"), null)
+                                             });
+            var match = table.Match("http://localhost/resource1/new".ToUri());
+
+            match.ShouldHaveCountOf(2)
+                    .First().Template.ToString().ShouldBe("/resource1/new");
         }
     }
 }

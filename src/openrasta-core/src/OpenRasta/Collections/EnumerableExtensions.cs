@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace OpenRasta.Collections
@@ -49,6 +50,10 @@ namespace OpenRasta.Collections
             return toConvert.ToDictionary(keyFinder, elementFinder, StringComparer.CurrentCultureIgnoreCase);
         }
 
+        public static Collection<T> ToCollection<T>(this IEnumerable<T> source)
+        {
+            return new Collection<T>(source.ToList());
+        }
         public static TCollectionType ToCollection<TSource, TDestination, TCollectionType>(
             this IEnumerable<TSource> source, Func<TSource, TDestination> converter)
             where TCollectionType : ICollection<TDestination>, new()

@@ -9,7 +9,7 @@ namespace OpenRasta.Authentication.Basic
         public string Username { get; private set; }
         public string Password { get; private set; }
 
-        internal BasicAuthRequestHeader(string username, string password)
+        public BasicAuthRequestHeader(string username, string password)
         {
             Username = username;
             Password = password;
