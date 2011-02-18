@@ -104,6 +104,13 @@ namespace OpenRasta.Web
             }
         }
 
+        public class Conflict : OperationResult
+        {
+            public Conflict() : base(409)
+            {
+            }
+        }
+
         /// <summary>
         /// Represents a 302 Found response: the requested resource resides temporarily under a different URI.
         /// </summary>
