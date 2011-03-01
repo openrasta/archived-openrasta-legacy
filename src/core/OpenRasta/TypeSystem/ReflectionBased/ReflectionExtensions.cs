@@ -429,6 +429,10 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             {
                 try
                 {
+                    if (type.IsValueType && propertyValue.IsNullOrEmpty())
+                    {
+                        propertyValue = type.CreateInstance().ToString();
+                    }
                     return Convert.ChangeType(propertyValue, type);
                 }
                 catch

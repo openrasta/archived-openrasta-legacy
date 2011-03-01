@@ -23,23 +23,44 @@ namespace Extensions_Specification
         [Test]
         public void array_types_are_parsed()
         {
-            typeof (int[]).CreateInstanceFrom(new[] {"1"})
+            typeof(int[]).CreateInstanceFrom(new[] { "1" })
                 .ShouldBeOfType<int[]>()
                 .ShouldContain(1);
         }
 
         [Test]
+        public void null_ints_are_parsed()
+        {
+            typeof(int).CreateInstanceFrom("")
+                .ShouldBeOfType<int>().ShouldBe(0);
+        }
+
+        [Test]
+        public void null_bools_are_parsed()
+        {
+            typeof(bool).CreateInstanceFrom("")
+                .ShouldBeOfType<bool>().ShouldBe(false);
+        }
+
+        [Test]
+        public void null_longs_are_parsed()
+        {
+            typeof(long).CreateInstanceFrom("")
+                .ShouldBeOfType<long>().ShouldBe(0);
+        }
+
+        [Test]
         public void arrays_of_strings_return_the_provided_values()
         {
-            typeof (string[]).CreateInstanceFrom(new[] {"one", "two", "three"})
+            typeof(string[]).CreateInstanceFrom(new[] { "one", "two", "three" })
                 .ShouldBeOfType<string[]>()
-                .ShouldHaveSameElementsAs(new[] {"one", "two", "three"});
+                .ShouldHaveSameElementsAs(new[] { "one", "two", "three" });
         }
 
         [Test]
         public void lists_are_parsed()
         {
-            typeof (List<string>).CreateInstanceFrom(new[] {"one", "two"})
+            typeof(List<string>).CreateInstanceFrom(new[] { "one", "two" })
                 .ShouldBeOfType<List<string>>()
                 .ShouldContain("one")
                 .ShouldContain("two");
@@ -48,14 +69,14 @@ namespace Extensions_Specification
         [Test]
         public void non_array_types_are_not_parsed_if_there_are_multiple_values()
         {
-            Executing(() => typeof (int).CreateInstanceFrom(new[] {"1", "2"}))
+            Executing(() => typeof(int).CreateInstanceFrom(new[] { "1", "2" }))
                 .ShouldThrow<NotSupportedException>();
         }
 
         [Test]
         public void non_array_types_are_parsed_if_theres_one_value()
         {
-            typeof (int).CreateInstanceFrom(new[] {"1"})
+            typeof(int).CreateInstanceFrom(new[] { "1" })
                 .ShouldBeOfType<int>()
                 .ShouldBe(1);
         }
@@ -63,7 +84,7 @@ namespace Extensions_Specification
         [Test]
         public void types_implementing_ICollection_of_T_are_parsed()
         {
-            typeof (LinkedList<string>).CreateInstanceFrom(new[] {"one", "two"})
+            typeof(LinkedList<string>).CreateInstanceFrom(new[] { "one", "two" })
                 .ShouldBeOfType<LinkedList<string>>()
                 .ShouldContain("one")
                 .ShouldContain("two");
@@ -82,21 +103,21 @@ namespace Extensions_Specification
         [Test]
         public void nested_types_use_the_dot_syntax()
         {
-            typeof (SimpleType.NestedType).GetTypeString()
+            typeof(SimpleType.NestedType).GetTypeString()
                 .ShouldBe("SimpleType.NestedType");
         }
 
         [Test]
         public void null_types_result_in_an_error()
         {
-            Executing(() => ((Type) null).GetTypeString())
+            Executing(() => ((Type)null).GetTypeString())
                 .ShouldThrow<ArgumentNullException>();
         }
 
         [Test]
         public void the_name_without_the_namespace_is_returned()
         {
-            typeof (SimpleType).GetTypeString()
+            typeof(SimpleType).GetTypeString()
                 .ShouldBe("SimpleType");
         }
     }
@@ -106,28 +127,28 @@ namespace Extensions_Specification
         [Test]
         public void generic_type_strings_are_defined_with_parenthesis()
         {
-            typeof (GenericType<string>).GetTypeString()
+            typeof(GenericType<string>).GetTypeString()
                 .ShouldBe("GenericType(String)");
         }
 
         [Test]
         public void generic_types_that_are_not_constructed_do_not_have_a_typestring()
         {
-            Executing(() => typeof (GenericType<>).GetTypeString())
+            Executing(() => typeof(GenericType<>).GetTypeString())
                 .ShouldThrow<InvalidOperationException>();
         }
 
         [Test]
         public void nested_generic_type_uses_the_generics_syntax()
         {
-            typeof (SimpleType.NestedGenericType<string>).GetTypeString()
+            typeof(SimpleType.NestedGenericType<string>).GetTypeString()
                 .ShouldBe("SimpleType.NestedGenericType(String)");
         }
 
         [Test, Ignore("Need to understand how the generics reflection api works first.")]
         public void recursive_generic_types_use_the_generic_syntax()
         {
-            typeof (GenericType<GenericType<string>>.NestedGenericType<string>).GetTypeString()
+            typeof(GenericType<GenericType<string>>.NestedGenericType<string>).GetTypeString()
                 .ShouldBe("GenericType(GenericType(string)).NestedGenericType(String)");
         }
     }
@@ -137,49 +158,49 @@ namespace Extensions_Specification
         [Test]
         public void a_type_implementing_an_interface_has_a_distance_of_0_to_that_interface()
         {
-            typeof (IList<string>).GetInheritanceDistance(typeof (IEnumerable))
+            typeof(IList<string>).GetInheritanceDistance(typeof(IEnumerable))
                 .ShouldBe(0);
         }
 
         [Test]
         public void an_interface_has_a_distance_of_minus_one_to_a_concrete_type()
         {
-            typeof (IList).GetInheritanceDistance(typeof (string))
+            typeof(IList).GetInheritanceDistance(typeof(string))
                 .ShouldBe(-1);
         }
 
         [Test]
         public void an_interface_has_a_distance_of_minus_one_to_an_interface_it_doesnt_implement()
         {
-            typeof (IList<string>).GetInheritanceDistance(typeof (IList))
+            typeof(IList<string>).GetInheritanceDistance(typeof(IList))
                 .ShouldBe(-1);
         }
 
         [Test]
         public void an_interface_has_a_distance_of_one_to_object()
         {
-            typeof (IList).GetInheritanceDistance(typeof (object))
+            typeof(IList).GetInheritanceDistance(typeof(object))
                 .ShouldBe(1);
         }
 
         [Test]
         public void any_type_has_a_distance_of_zero_to_itself()
         {
-            typeof (int).GetInheritanceDistance(typeof (int))
+            typeof(int).GetInheritanceDistance(typeof(int))
                 .ShouldBe(0);
         }
 
         [Test]
         public void comparing_to_a_type_not_in_the_inheritance_tree_returns_minus_one()
         {
-            typeof (int).GetInheritanceDistance(typeof (string))
+            typeof(int).GetInheritanceDistance(typeof(string))
                 .ShouldBe(-1);
         }
 
         [Test]
         public void primitive_types_return_one()
         {
-            typeof (int).GetInheritanceDistance(typeof (ValueType))
+            typeof(int).GetInheritanceDistance(typeof(ValueType))
                 .ShouldBe(1);
         }
         [Test]
@@ -194,14 +215,14 @@ namespace Extensions_Specification
         [Test]
         public void reference_types_return_null()
         {
-            typeof (SimpleType).GetDefaultValue()
+            typeof(SimpleType).GetDefaultValue()
                 .ShouldBeNull();
         }
 
         [Test]
         public void value_types_return_a_default_instance()
         {
-            typeof (int).GetDefaultValue()
+            typeof(int).GetDefaultValue()
                 .ShouldBe(0);
         }
     }
@@ -213,13 +234,13 @@ namespace Extensions_Specification
             public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture,
                                              object value, Type destinationType)
             {
-                if (destinationType == typeof (string))
+                if (destinationType == typeof(string))
                     return "ValueFromConverter";
                 return null;
             }
         }
 
-        [TypeConverter(typeof (Converter))]
+        [TypeConverter(typeof(Converter))]
         class TypeWithConverter
         {
         }
