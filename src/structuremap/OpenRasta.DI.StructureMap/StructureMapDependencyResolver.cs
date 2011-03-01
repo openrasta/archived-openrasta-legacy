@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using OpenRasta.DI.StructureMap.Pipeline.Contributors;
 using OpenRasta.Diagnostics;
+using OpenRasta.Pipeline;
 using StructureMap;
 
 namespace OpenRasta.DI.StructureMap
@@ -19,8 +20,12 @@ namespace OpenRasta.DI.StructureMap
 		public StructureMapDependencyResolver(IContainer container)
 		{
 			_container = container;
-            _container.Configure(ex => ex.FillAllPropertiesOfType<ILogger>());
-        }
+			_container.Configure(ex =>
+			{
+				ex.FillAllPropertiesOfType<ILogger>();
+				ex.For<IPipelineContributor>().Add<ReleaseAndDisposeAllHttpScopedObjects>();
+			});
+		}
 
 		protected override void AddDependencyCore(Type serviceType, Type concreteType, DependencyLifetime lifetime)
 		{
