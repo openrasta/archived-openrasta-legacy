@@ -77,7 +77,7 @@ namespace OpenRasta.TypeSystem.ReflectionBased
             return FindAttributes<TAttribute>().FirstOrDefault();
         }
 
-        public IEnumerable<TAttribute> FindAttributes<TAttribute>() where TAttribute : class
+        public virtual IEnumerable<TAttribute> FindAttributes<TAttribute>() where TAttribute : class
         {
             return Attribute.GetCustomAttributes(TargetType, true).OfType<TAttribute>();
         }

@@ -156,6 +156,24 @@ namespace OpenRasta.Tests.Unit.OperationModel.MethodBased
             Operation.FindAttributes<AttributeUsageAttribute>().ShouldNotBeNull().ShouldBeEmpty();
         }
     }
+
+    public class when_reading_attributes_from_a_method_parameter : operation_context<MockOperationHandler>
+    {
+        [Test]
+        public void an_attribute_defined_on_a_parameter_is_returned()
+        {
+            given_operation("Delete", typeof(int));
+
+            var onlyInput = Operation.Inputs.First();
+            onlyInput.ShouldNotBeNull();
+            onlyInput.Member.FindAttributes<ParameterDecoratorAttribute>().FirstOrDefault().ShouldNotBeNull().ShouldBeOfType<ParameterDecoratorAttribute>();
+        }
+    }
+    
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class ParameterDecoratorAttribute : Attribute
+    { }
+
     [Useless("type attribute")]
     public class OperationHandlerForAttributes
     {
@@ -190,6 +208,10 @@ namespace OpenRasta.Tests.Unit.OperationModel.MethodBased
         public object Search([Optional, DefaultParameterValue("*")]string searchString)
         {
             return 0;
+        }
+        public object Delete([ParameterDecorator] int someIdentifier)
+        {
+            return null;
         }
     }
 

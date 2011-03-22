@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace OpenRasta.TypeSystem.ReflectionBased
@@ -43,6 +45,11 @@ namespace OpenRasta.TypeSystem.ReflectionBased
         public IMethod Owner
         {
             get { return _ownerMethod; }
+        }
+
+        public override IEnumerable<TAttribute> FindAttributes<TAttribute>()
+        {
+            return _parameterInfo.GetCustomAttributes(true).Where(a => a is TAttribute).Cast<TAttribute>();
         }
     }
 }
