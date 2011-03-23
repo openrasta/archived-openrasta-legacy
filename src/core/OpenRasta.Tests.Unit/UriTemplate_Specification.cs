@@ -263,7 +263,7 @@ namespace UriTemplate_Specification
            var template = new OpenRasta.UriTemplate("/test?query1={test}&query2={test2}");  
            var match = template.Match(new Uri("http://localhost"), new Uri("http://localhost/test?query1=test1&query3=test2"));
            match.ShouldNotBeNull();
-           match.BoundVariables.Count.ShouldBe(1);
+           match.BoundQueryParameters.Count.ShouldBe(1);
            match.QueryParameters.Count.ShouldBe(2);
         }  
    
