@@ -46,7 +46,9 @@ namespace OpenRasta.Codecs.jsonp
             var qs = uri.Query.TrimStart('?');
             var values = from pair in qs.Split('&')
                          let kvp = pair.Split('=')
-                         select new KeyValuePair<string, string>(kvp[0], kvp[1]);
+                         let key = kvp[0]
+                         let value = kvp.Length == 2 ? kvp[1] : null
+                         select new KeyValuePair<string, string>(key, value);
 
             string callback = null;
             if (values.Any(v => v.Key == _config.QueryString))
