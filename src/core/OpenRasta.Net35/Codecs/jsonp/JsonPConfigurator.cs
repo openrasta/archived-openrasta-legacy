@@ -6,12 +6,10 @@ namespace OpenRasta.Codecs.jsonp
 {
     public class JsonPConfigurator
     {
-        readonly IUses _uses;
         IDependencyResolver _dependencyResolver;
 
         public JsonPConfigurator(IUses uses)
         {
-            _uses = uses;
             uses.UriDecorator<JsonPUriDecorator>();
             _dependencyResolver = DependencyManager.GetService<IDependencyResolver>();
             _dependencyResolver.AddDependency(typeof(JsonPConfiguration), DependencyLifetime.Singleton);

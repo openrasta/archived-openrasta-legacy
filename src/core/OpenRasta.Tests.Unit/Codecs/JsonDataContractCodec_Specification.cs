@@ -7,15 +7,16 @@
  *      This file is distributed under the terms of the MIT License found at the end of this file.
  */
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using OpenRasta.Codecs;
+using OpenRasta.Codecs.jsonp;
+using OpenRasta.Configuration;
 using OpenRasta.Hosting.InMemory;
 using OpenRasta.Testing;
 using NUnit.Framework;
-using OpenRasta.Web;
+using OpenRasta.Tests.Unit.Codecs;
+using OpenRasta.TypeSystem;
 
 namespace JsonDataContractCodec_Specification
 {
@@ -32,6 +33,15 @@ namespace JsonDataContractCodec_Specification
                 .ShouldNotBe(0);
         }
         public class Customer { public string Name { get; set; } }
+    }
+
+    public class when_configuring_jsonp
+    {
+        [Test]
+        public void the_foo_is_barred()
+        {
+            ResourceSpace.Uses.JsonP().WithQueryString("jsonp").WithJsonCodec<JsonDataContractCodec>();
+        }
     }
 }
 
