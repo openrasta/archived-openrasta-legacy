@@ -44,6 +44,9 @@ namespace OpenRasta.Codecs.jsonp
         string GetCallback(Uri uri)
         {
             var qs = uri.Query.TrimStart('?');
+            if (string.Empty == qs)
+                return null;
+
             var values = from pair in qs.Split('&')
                          let kvp = pair.Split('=')
                          let key = kvp[0]
