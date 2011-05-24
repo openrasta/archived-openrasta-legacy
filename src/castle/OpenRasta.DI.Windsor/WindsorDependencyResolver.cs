@@ -28,6 +28,7 @@ namespace OpenRasta.DI.Windsor
     public class WindsorDependencyResolver : DependencyResolverCore, IDependencyResolver
     {
         readonly IWindsorContainer _windsorContainer;
+        readonly object _containerLock = new object();
 
         public WindsorDependencyResolver(IWindsorContainer container)
         {
@@ -86,22 +87,34 @@ namespace OpenRasta.DI.Windsor
             if (lifetime != DependencyLifetime.PerRequest)
             {
 #if CASTLE_20
-                _windsorContainer.AddComponentLifeStyle(componentName, dependent, concrete, 
-                                                        ConvertLifestyles.ToLifestyleType(lifetime));
+                lock (_containerLock)
+                {
+                    _windsorContainer.AddComponentLifeStyle(componentName, dependent, concrete, 
+                                                            ConvertLifestyles.ToLifestyleType(lifetime));
+                }
 #elif CASTLE_10
-                 _windsorContainer.AddComponentWithLifestyle(componentName, dependent, concrete, ConvertLifestyles.ToLifestyleType(lifetime));
+                lock (_containerLock)
+                {
+                  _windsorContainer.AddComponentWithLifestyle(componentName, dependent, concrete, ConvertLifestyles.ToLifestyleType(lifetime));
+                }
 #endif
             }
             else
             {
 #if CASTLE_20
-                _windsorContainer.Register(
-                    Component.For(dependent).Named(componentName).ImplementedBy(concrete).LifeStyle.Custom(typeof (ContextStoreLifetime)));
+                lock (_containerLock)
+                {
+                    _windsorContainer.Register(
+                        Component.For(dependent).Named(componentName).ImplementedBy(concrete).LifeStyle.Custom(typeof (ContextStoreLifetime)));
+                }
 #elif CASTLE_10
-                                ComponentModel component = _windsorContainer.Kernel.ComponentModelBuilder.BuildModel(componentName, dependent, concrete, null);
-                component.LifestyleType = ConvertLifestyles.ToLifestyleType(lifetime);
-                component.CustomLifestyle = typeof (ContextStoreLifetime);
-                _windsorContainer.Kernel.AddCustomComponent(component);
+                lock (_containerLock)
+                {
+                    ComponentModel component = _windsorContainer.Kernel.ComponentModelBuilder.BuildModel(componentName, dependent, concrete, null);
+                    component.LifestyleType = ConvertLifestyles.ToLifestyleType(lifetime);
+                    component.CustomLifestyle = typeof (ContextStoreLifetime);
+                    _windsorContainer.Kernel.AddCustomComponent(component);
+                }
 #endif
             }
         }
