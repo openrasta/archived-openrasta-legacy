@@ -13,7 +13,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Module Include="core.proj;aspnet.proj;castle.proj;ninject.proj;sharpview.proj;vside.proj;openbastard.proj" />
+    <Module Include="core.proj;aspnet.proj;castle.proj;ninject.proj;sharpview.proj;vside.proj;openbastard.proj;structuremap.proj" />
     <Installer Include="$(RootPath)\src\install\OpenRasta.Installer\OpenRasta.Installer.wixproj"/>
   </ItemGroup>
   
