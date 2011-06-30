@@ -28,7 +28,7 @@ namespace OpenRasta.DI.Windsor
     public class WindsorDependencyResolver : DependencyResolverCore, IDependencyResolver
     {
         readonly IWindsorContainer _windsorContainer;
-        readonly object _containerLock = new object();
+        static readonly object _containerLock = new object();
 
         public WindsorDependencyResolver(IWindsorContainer container)
         {
@@ -87,34 +87,30 @@ namespace OpenRasta.DI.Windsor
             if (lifetime != DependencyLifetime.PerRequest)
             {
 #if CASTLE_20
-                lock (_containerLock)
-                {
-                    _windsorContainer.AddComponentLifeStyle(componentName, dependent, concrete, 
-                                                            ConvertLifestyles.ToLifestyleType(lifetime));
-                }
+                _windsorContainer.Register(
+                    Component
+                        .For(dependent)
+                        .ImplementedBy(concrete)
+                        .Named(componentName)
+                        .LifeStyle.Is(ConvertLifestyles.ToLifestyleType(lifetime)));
 #elif CASTLE_10
-                lock (_containerLock)
-                {
-                  _windsorContainer.AddComponentWithLifestyle(componentName, dependent, concrete, ConvertLifestyles.ToLifestyleType(lifetime));
-                }
+                _windsorContainer.AddComponentWithLifestyle(componentName, dependent, concrete, ConvertLifestyles.ToLifestyleType(lifetime));
 #endif
             }
             else
             {
 #if CASTLE_20
-                lock (_containerLock)
-                {
-                    _windsorContainer.Register(
-                        Component.For(dependent).Named(componentName).ImplementedBy(concrete).LifeStyle.Custom(typeof (ContextStoreLifetime)));
-                }
+                _windsorContainer.Register(
+                    Component
+                        .For(dependent)
+                        .Named(componentName)
+                        .ImplementedBy(concrete)
+                        .LifeStyle.Custom(typeof(ContextStoreLifetime)));
 #elif CASTLE_10
-                lock (_containerLock)
-                {
-                    ComponentModel component = _windsorContainer.Kernel.ComponentModelBuilder.BuildModel(componentName, dependent, concrete, null);
-                    component.LifestyleType = ConvertLifestyles.ToLifestyleType(lifetime);
-                    component.CustomLifestyle = typeof (ContextStoreLifetime);
-                    _windsorContainer.Kernel.AddCustomComponent(component);
-                }
+                ComponentModel component = _windsorContainer.Kernel.ComponentModelBuilder.BuildModel(componentName, dependent, concrete, null);
+                component.LifestyleType = ConvertLifestyles.ToLifestyleType(lifetime);
+                component.CustomLifestyle = typeof (ContextStoreLifetime);
+                _windsorContainer.Kernel.AddCustomComponent(component);
 #endif
             }
         }
@@ -124,9 +120,28 @@ namespace OpenRasta.DI.Windsor
             string key = Guid.NewGuid().ToString();
             if (lifetime == DependencyLifetime.PerRequest)
             {
-                // try to see if we have a registration already
                 var store = (IContextStore) Resolve(typeof (IContextStore));
-                if (_windsorContainer.Kernel.HasComponent(serviceType))
+                // try to see if we have a registration already
+                if (_windsorContainer.Kernel.HasComponent(serviceType) == false)
+                {
+                    lock (_containerLock)
+                    {
+                        if (_windsorContainer.Kernel.HasComponent(serviceType) == false)
+                        {
+                            var component = new ComponentModel(key, serviceType, instance.GetType());
+                            var customLifestyle = typeof(ContextStoreLifetime);
+                            component.LifestyleType = LifestyleType.Custom;
+                            component.CustomLifestyle = customLifestyle;
+                            component.CustomComponentActivator = typeof(ContextStoreInstanceActivator);
+                            component.ExtendedProperties[Constants.REG_IS_INSTANCE_KEY] = true;
+                            component.Name = component.Name;
+
+                            _windsorContainer.Kernel.AddCustomComponent(component);
+                            store[component.Name] = instance;
+                        }
+                    }
+                }
+                else
                 {
                     var handler = _windsorContainer.Kernel.GetHandler(serviceType);
                     if (handler.ComponentModel.ExtendedProperties[Constants.REG_IS_INSTANCE_KEY] != null)
@@ -139,23 +154,13 @@ namespace OpenRasta.DI.Windsor
                         throw new DependencyResolutionException("Cannot register an instance for a type already registered");
                     }
                 }
-                else
-                {
-                    var component = new ComponentModel(key, serviceType, instance.GetType());
-                    var customLifestyle = typeof (ContextStoreLifetime);
-                    component.LifestyleType = LifestyleType.Custom;
-                    component.CustomLifestyle = customLifestyle;
-                    component.CustomComponentActivator = typeof (ContextStoreInstanceActivator);
-                    component.ExtendedProperties[Constants.REG_IS_INSTANCE_KEY] = true;
-                    component.Name = component.Name;
-
-                    _windsorContainer.Kernel.AddCustomComponent(component);
-                    store[component.Name] = instance;
-                }
             }
             else if (lifetime == DependencyLifetime.Singleton)
             {
-                _windsorContainer.Kernel.AddComponentInstance(key, serviceType, instance);
+                lock (_containerLock)
+                {
+                    _windsorContainer.Kernel.AddComponentInstance(key, serviceType, instance);
+                }
             }
         }
 
