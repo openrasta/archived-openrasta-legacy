@@ -132,27 +132,37 @@ namespace OpenRasta.Hosting.AspNet
         static void HandleHttpApplicationPostResolveRequestCacheEvent(object sender, EventArgs e)
         {
             VerifyIisDetected(HttpContext.Current);
-            if (!HostingEnvironment.VirtualPathProvider.FileExists(HttpContext.Current.Request.Path)
-                && (HttpContext.Current.Request.Path == "/" || !HostingEnvironment.VirtualPathProvider.DirectoryExists(HttpContext.Current.Request.Path))
-                && !HandlerAlreadyMapped(HttpContext.Current.Request.HttpMethod, HttpContext.Current.Request.Url))
-            {
-                Log.StartPreExecution();
-                var context = CommunicationContext;
-                var stage = context.PipelineData.PipelineStage;
-                if (stage == null)
-                    context.PipelineData.PipelineStage = stage = new PipelineStage(HostManager.Resolver.Resolve<IPipeline>());
-                stage.SuspendAfter<KnownStages.IUriMatching>();
-                Host.RaiseIncomingRequestReceived(context);
 
-                if (context.PipelineData.ResourceKey != null || context.OperationResult != null)
-                {
-                    HttpContext.Current.Items[ORIGINAL_PATH_KEY] = HttpContext.Current.Request.Path;
-                    HttpContext.Current.RewritePath(VirtualPathUtility.ToAppRelative("~/ignoreme.rastahook"), false);
-                    Log.PathRewrote();
-                    return;
-                }
-                Log.IgnoredRequest();
+            if (HostingEnvironment.VirtualPathProvider.FileExists(HttpContext.Current.Request.Path) ) 
+                return; //don't process file files on disk
+
+            if( HttpContext.Current.Request.Path == "/" )
+                return; //don't handle root '/' requests in IIS whatsoever.
+
+            if( HttpContext.Current.Request.Path != "/" && HostingEnvironment.VirtualPathProvider.DirectoryExists(HttpContext.Current.Request.Path)) 
+                return; //don't handle actual directories that exist
+
+            if( HandlerAlreadyMapped(HttpContext.Current.Request.HttpMethod, HttpContext.Current.Request.Url)) 
+                return; //don't process requests that are handled by IIS handlers
+
+            //else continue processing with OpenRasta
+
+            Log.StartPreExecution();
+            var context = CommunicationContext;
+            var stage = context.PipelineData.PipelineStage;
+            if (stage == null)
+                context.PipelineData.PipelineStage = stage = new PipelineStage(HostManager.Resolver.Resolve<IPipeline>());
+            stage.SuspendAfter<KnownStages.IUriMatching>();
+            Host.RaiseIncomingRequestReceived(context);
+
+            if (context.PipelineData.ResourceKey != null || context.OperationResult != null)
+            {
+                HttpContext.Current.Items[ORIGINAL_PATH_KEY] = HttpContext.Current.Request.Path;
+                HttpContext.Current.RewritePath(VirtualPathUtility.ToAppRelative("~/ignoreme.rastahook"), false);
+                Log.PathRewrote();
+                return;
             }
+            Log.IgnoredRequest();
         }
     }
 }
