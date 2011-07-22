@@ -23,7 +23,7 @@ namespace OpenRasta.Hosting.AspNet
     {
         internal const string COMM_CONTEXT_KEY = "__OR_COMM_CONTEXT";
         internal const string ORIGINAL_PATH_KEY = "__ORIGINAL_PATH";
-        internal const string SERVER_SOFTWARE_KEY = "SERVER_SOFTWARE_KEY";
+        internal const string SERVER_SOFTWARE_KEY = "SERVER_SOFTWARE";
 
         internal static HostManager HostManager;
         static readonly object _syncRoot = new object();
