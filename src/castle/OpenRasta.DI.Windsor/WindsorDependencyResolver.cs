@@ -84,34 +84,37 @@ namespace OpenRasta.DI.Windsor
         protected override void AddDependencyCore(Type dependent, Type concrete, DependencyLifetime lifetime)
         {
             string componentName = Guid.NewGuid().ToString();
-            if (lifetime != DependencyLifetime.PerRequest)
+            lock (_containerLock)
             {
+                if (lifetime != DependencyLifetime.PerRequest)
+                {
 #if CASTLE_20
-                _windsorContainer.Register(
-                    Component
-                        .For(dependent)
-                        .ImplementedBy(concrete)
-                        .Named(componentName)
-                        .LifeStyle.Is(ConvertLifestyles.ToLifestyleType(lifetime)));
+                    _windsorContainer.Register(
+                        Component
+                            .For(dependent)
+                            .ImplementedBy(concrete)
+                            .Named(componentName)
+                            .LifeStyle.Is(ConvertLifestyles.ToLifestyleType(lifetime)));
 #elif CASTLE_10
-                _windsorContainer.AddComponentWithLifestyle(componentName, dependent, concrete, ConvertLifestyles.ToLifestyleType(lifetime));
+                    _windsorContainer.AddComponentWithLifestyle(componentName, dependent, concrete, ConvertLifestyles.ToLifestyleType(lifetime));
 #endif
-            }
-            else
-            {
+                }
+                else
+                {
 #if CASTLE_20
-                _windsorContainer.Register(
-                    Component
-                        .For(dependent)
-                        .Named(componentName)
-                        .ImplementedBy(concrete)
-                        .LifeStyle.Custom(typeof(ContextStoreLifetime)));
+                    _windsorContainer.Register(
+                        Component
+                            .For(dependent)
+                            .Named(componentName)
+                            .ImplementedBy(concrete)
+                            .LifeStyle.Custom(typeof(ContextStoreLifetime)));
 #elif CASTLE_10
-                ComponentModel component = _windsorContainer.Kernel.ComponentModelBuilder.BuildModel(componentName, dependent, concrete, null);
-                component.LifestyleType = ConvertLifestyles.ToLifestyleType(lifetime);
-                component.CustomLifestyle = typeof (ContextStoreLifetime);
-                _windsorContainer.Kernel.AddCustomComponent(component);
+                    ComponentModel component = _windsorContainer.Kernel.ComponentModelBuilder.BuildModel(componentName, dependent, concrete, null);
+                    component.LifestyleType = ConvertLifestyles.ToLifestyleType(lifetime);
+                    component.CustomLifestyle = typeof(ContextStoreLifetime);
+                    _windsorContainer.Kernel.AddCustomComponent(component);
 #endif
+                }
             }
         }
 
