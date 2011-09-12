@@ -29,13 +29,13 @@ namespace OpenRasta.DI.StructureMap
 			switch (lifetime)
 			{
 				case DependencyLifetime.PerRequest:
-					return InstanceScope.HttpContext;
+					return InstanceScope.Hybrid;
 				case DependencyLifetime.Singleton:
 					return InstanceScope.Singleton;
 				case DependencyLifetime.Transient:
 					return InstanceScope.Transient;
 				default:
-					return InstanceScope.HttpContext;
+                    return InstanceScope.Hybrid;
 			}
 		}
 
