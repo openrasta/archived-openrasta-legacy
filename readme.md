@@ -11,7 +11,7 @@ The OpenRasta project is a web framework that les you build web applications as 
     
 OpenRasta is the most popular alternative http framework on the .net platform.
 
-## This code has ceased to live...
+## The code has moved...
 The code on this branch is there for historical reasons only (the 2.0 version) and is not maintained anymore.
 
 Since OpenRasta 2.1, all code is available in separate packages, each with their own repositories:
