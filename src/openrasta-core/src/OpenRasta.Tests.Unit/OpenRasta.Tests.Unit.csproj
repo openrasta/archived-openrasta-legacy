@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OpenWrap-ExportName>tests</OpenWrap-ExportName>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{562EC958-6078-4DBD-B536-6E9FE1228867}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OpenRasta.Tests.Unit</RootNamespace>
+    <AssemblyName>OpenRasta.Tests.Unit</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <NoWarn>1591</NoWarn>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authentication\Basic\BasicAuthenticationScheme_Specification.cs" />
+    <Compile Include="Binding\DefaultBinderLocator_Specification.cs" />
+    <Compile Include="Binding\KeyedValuesBinder_Specification.cs" />
+    <Compile Include="Codecs\ApplicationOctetStreamCodec_Specification.cs" />
+    <Compile Include="Codecs\ApplicationXWwwUrlformEncodedCodec_Specification.cs" />
+    <Compile Include="Codecs\CodecMatch_Specification.cs" />
+    <Compile Include="Codecs\codec_context.cs" />
+    <Compile Include="Codecs\media_type_reader_context.cs" />
+    <Compile Include="Codecs\media_type_writer_context.cs" />
+    <Compile Include="CodeDom.Compiler\ExtensibleCompiler_Specification.cs" />
+    <Compile Include="Collections\ObservableIterator_Specification.cs" />
+    <Compile Include="Collections\ResumableIterator_Specification.cs" />
+    <Compile Include="Configuration\MetaModelHandler_Specification.cs" />
+    <Compile Include="Configuration\MetaModel_Specification.cs" />
+    <Compile Include="Diagnostics\LogSource_Specification.cs" />
+    <Compile Include="Fakes\Address.cs" />
+    <Compile Include="Fakes\Customer.cs" />
+    <Compile Include="Fakes\CustomerHandler.cs" />
+    <Compile Include="Fakes\CustomerWriterCodec.cs" />
+    <Compile Include="Fakes\CustomerReaderCodec.cs" />
+    <Compile Include="Codecs\JsonDataContractCodec_Specification.cs" />
+    <Compile Include="Codecs\MediaTypeDictionary_Specification.cs" />
+    <Compile Include="Codecs\MultipartFormDataCodec_Specification.cs" />
+    <Compile Include="Collections\CollectionExtensions_Specification.cs" />
+    <Compile Include="Configuration\configuration_context.cs" />
+    <Compile Include="Configuration\LegacyManualConfiguration_Specification.cs" />
+    <Compile Include="DI\DependencyManager_Specification.cs" />
+    <Compile Include="DI\dependency_resolver_context.cs" />
+    <Compile Include="DI\InternalDependencyResolver_Specification.cs" />
+    <Compile Include="DI\MockTypes.cs" />
+    <Compile Include="DI\when_resolving_instances.cs" />
+    <Compile Include="Fakes\Elrond.cs" />
+    <Compile Include="Fakes\GilGalad.cs" />
+    <Compile Include="Fakes\House.cs" />
+    <Compile Include="IO\ByteArrayExtension_Specification.cs" />
+    <Compile Include="IO\DeterministicStreamWriter_Specification.cs" />
+    <Compile Include="IO\LengthTrackingStream_Specification.cs" />
+    <Compile Include="openrasta_context.cs" />
+    <Compile Include="OperationModel\CodecSelectors\RequestCodecSelector_Specification.cs" />
+    <Compile Include="OperationModel\Filters\HttpMethodOperationFilter_Specification.cs" />
+    <Compile Include="OperationModel\Filters\operation_filter_context.cs" />
+    <Compile Include="OperationModel\Filters\UriNameOperationFilter_Specification.cs" />
+    <Compile Include="OperationModel\Filters\UriParametersFilter_Specification.cs" />
+    <Compile Include="OperationModel\Hydrators\RequestEntityReaderHydrator_Specification.cs" />
+    <Compile Include="OperationModel\Interceptors\Interceptors_Specification.cs" />
+    <Compile Include="OperationModel\MethodBased\MethodBasedOperationCreator_Specification.cs" />
+    <Compile Include="OperationModel\MethodBased\MethodBasedOperation_Specification.cs" />
+    <Compile Include="OperationModel\MethodBased\TypeExclusionFilter_Specification.cs" />
+    <Compile Include="OperationModel\OperationHydration_Spec.cs" />
+    <Compile Include="Pipeline\Contributors\AuthenticationChallenger_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\Authentication_Specification.cs" />
+    <Compile Include="Security\RequiresAuthenticationInterceptor_Specification.cs" />
+    <Compile Include="Security\RequiresRoleInterceptor_Specification.cs" />
+    <Compile Include="TypeSystem\Members_Specification.cs" />
+    <Compile Include="TypeSystem\Instances_Specification.cs" />
+    <Compile Include="TypeSystem\PropertyPathManager_Specification.cs" />
+    <Compile Include="TypeSystem\ReflectionExtensions_Specification.cs" />
+    <Compile Include="TypeSystem\Surrogate2_Specification.cs" />
+    <Compile Include="TypeSystem\Surrogates_Specification.cs" />
+    <Compile Include="Text\Rfc2047Encoding_Specification.cs" />
+    <Compile Include="Fakes\Frodo.cs" />
+    <Compile Include="Fakes\Gandalf.cs" />
+    <Compile Include="Web\Handlers\HandlerRepository_Specification.cs" />
+    <Compile Include="Fakes\Sauron.cs" />
+    <Compile Include="Web\HttpHeaders_Specification.cs" />
+    <Compile Include="Web\Markup\StyleSheetModule_Specification.cs" />
+    <Compile Include="Web\Markup\ElementExtensions_Specification.cs" />
+    <Compile Include="Web\Markup\Element_Specification.cs" />
+    <Compile Include="Web\Markup\ExpressionTreeXHtmlProducer_Specification.cs" />
+    <Compile Include="TypeSystem\PropertyPathExpressionTree_Specification.cs" />
+    <Compile Include="UriTemplateTable_Specification.cs" />
+    <Compile Include="Data\PagedData_Specification.cs" />
+    <Compile Include="IO\MultipartWriter_Specification.cs" />
+    <Compile Include="IO\stream_context.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IO\BoundaryStreamReader_Specification.cs" />
+    <Compile Include="IO\HistoryStream_Specification.cs" />
+    <Compile Include="IO\MultipartReader_Specification.cs" />
+    <Compile Include="Codecs\CodecRepository_Specification.cs" />
+    <Compile Include="TypeSystem\Extensions_Specification.cs" />
+    <Compile Include="TestErrorCollector.cs" />
+    <Compile Include="Web\IUriResolverExtensions_Specification.cs" />
+    <Compile Include="Web\Markup\FormElement_Specification.cs" />
+    <Compile Include="Web\Markup\IIframeModule_Specification.cs" />
+    <Compile Include="Web\Markup\markup_element_context.cs" />
+    <Compile Include="Fakes\CustomerCodec.cs" />
+    <Compile Include="Fakes\FailingCodec.cs" />
+    <Compile Include="Web\Markup\SelectElement_Specification.cs" />
+    <Compile Include="Web\Markup\TextArea_Specification.cs" />
+    <Compile Include="Web\Markup\TextNode_Specification.cs" />
+    <Compile Include="Web\Markup\XhtmlDOM_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\HandlerMethodFiltersInvoker_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\OperationCreationContributor_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\OperationProcessors_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\ResponseEntityWriter_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\ResponseEntityCodecResolver_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\HandlerMethodInvoker_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\RequestEntityReader_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\InvalidRequestEntityRemover_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\HandlerResolver_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\HttpMethodOverrider_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\ResourceTypeResolver_Specification.cs" />
+    <Compile Include="Pipeline\Contributors\UriDecoratorsController_Specification.cs" />
+    <Compile Include="Pipeline\PipelineRunner_Specification.cs" />
+    <Compile Include="UriTemplate_Specification.cs" />
+    <Compile Include="Web\Reflection_Specification.cs" />
+    <Compile Include="Web\TemplatedUriResolver_Specification.cs" />
+    <Compile Include="Web\MediaType_Specification.cs" />
+    <Compile Include="Web\UriDecorators\ContentTypeExtension_Specification.cs" />
+    <Compile Include="Web\WhenUsingCollectionExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenRasta\OpenRasta.csproj">
+      <Project>{C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647}</Project>
+      <Name>OpenRasta</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenRasta.Testing\OpenRasta.Testing.csproj">
+      <Project>{174DEE64-B4B2-4F30-ADA2-15D67ADE3320}</Project>
+      <Name>OpenRasta.Testing</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Settings.StyleCop" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Codecs\CodeDom.Compiler\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="..\..\build\common.project.properties" />
+  <Import Project="..\..\wraps\openwrap\build\OpenWrap.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Notes="&lt;Notes Project=&quot;562ec958-6078-4dbd-b536-6e9fe1228867&quot; xmlns=&quot;clr-namespace:StickyNotes.Model;assembly=StickyNotes&quot;&gt;&lt;Notes.StickyNotes&gt;&lt;Note FilePath=&quot;&quot; Content=&quot;&quot; Date=&quot;2008-09-22T22:04:18.7172242+01:00&quot; /&gt;&lt;/Notes.StickyNotes&gt;&lt;/Notes&gt;" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

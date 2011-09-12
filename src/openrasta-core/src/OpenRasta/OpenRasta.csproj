@@ -1,0 +1,572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C3ED9CCE-A140-4D0F-AE00-FBBF4CD27647}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OpenRasta</RootNamespace>
+    <AssemblyName>OpenRasta</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <NoWarn>1591</NoWarn>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <NoWarn>1591</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.ServiceModel.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" Condition="'$(RuntimeTargetFrameworkVersion)' == 'v3.5'" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authentication\AuthenticationResult.cs" />
+    <Compile Include="Authentication\Basic\BasicAuthenticationScheme.cs" />
+    <Compile Include="Authentication\Basic\BasicAuthRequestHeader.cs" />
+    <Compile Include="Authentication\Basic\IBasicAuthenticator.cs" />
+    <Compile Include="Authentication\IAuthenticationScheme.cs" />
+    <Compile Include="Binding\BinderAttribute.cs" />
+    <Compile Include="Binding\DefaultObjectBinderLocator.cs" />
+    <Compile Include="Binding\BindingResult.cs" />
+    <Compile Include="Binding\ChangeSetBinder.cs" />
+    <Compile Include="Binding\IObjectBinderLocator.cs" />
+    <Compile Include="Binding\KeyedValues.cs" />
+    <Compile Include="Binding\ValueConverter.cs" />
+    <Compile Include="Binding\KeyedValues`1.cs" />
+    <Compile Include="Binding\KeyedValuesBinderAttribute.cs" />
+    <Compile Include="Codecs\application\json\JsonDataContractCodec.cs" />
+    <Compile Include="Codecs\application\octet-stream\ApplicationOctetStreamCodec.cs" />
+    <Compile Include="Binding\BinderBaseAttribute.cs" />
+    <Compile Include="Codecs\application\x-www-form-urlencoded\AbstractApplicationXWwwFormUrlencodedCodec.cs" />
+    <Compile Include="Codecs\application\x-www-form-urlencoded\ApplicationXWwwFormUrlencodedObjectCodec.cs" />
+    <Compile Include="Codecs\application\xhtml+xml\OperationResultCodec.cs" />
+    <Compile Include="Codecs\application\xhtml+xml\OperationResultPage.cs" />
+    <Compile Include="Codecs\application\xml\XmlDataContractCodec.cs" />
+    <Compile Include="Codecs\CodecExtensions.cs" />
+    <Compile Include="Codecs\CodecMatch.cs" />
+    <Compile Include="Codecs\HtmlErrorPage.cs" />
+    <Compile Include="Codecs\IKeyedValuesMediaTypeReader.cs" />
+    <Compile Include="Codecs\IMediaTypeReader.cs" />
+    <Compile Include="Codecs\IMediaTypeWriter.cs" />
+    <Compile Include="Binding\IObjectBinder.cs" />
+    <Compile Include="Binding\KeyedValuesBinder.cs" />
+    <Compile Include="Codecs\multipart\form-data\AbstractMultipartFormDataCodec.cs" />
+    <Compile Include="Codecs\multipart\form-data\MultipartFormDataKeyedValuesCodec.cs" />
+    <Compile Include="Codecs\Strictly.cs" />
+    <Compile Include="Codecs\application\x-www-form-urlencoded\ApplicationXWwwFormUrlencodedKeyedValuesCodec.cs" />
+    <Compile Include="Codecs\Codec.cs" />
+    <Compile Include="Codecs\MediaTypeAttribute.cs" />
+    <Compile Include="Codecs\HtmlErrorCodec.cs" />
+    <Compile Include="Codecs\MediaTypeDictionary.cs" />
+    <Compile Include="Codecs\multipart\form-data\MultipartFormDataObjectCodec.cs" />
+    <Compile Include="Codecs\SupportedTypeAttribute.cs" />
+    <Compile Include="Codecs\text\plain\TextPlainCodec.cs" />
+    <Compile Include="CodeDom.Compiler\ExtensibleCSharpCodeProvider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CodeDom.Compiler\ICodeSnippetModifier.cs" />
+    <Compile Include="CodeDom.Compiler\ICodeSnippetTextModifier.cs" />
+    <Compile Include="CodeDom.Compiler\MarkupElementModifier.cs">
+    </Compile>
+    <Compile Include="CodeDom.Compiler\UnencodedOutputModifier.cs" />
+    <Compile Include="Collections\CollectionExtensions.cs" />
+    <Compile Include="Collections\DictionaryBase.cs" />
+    <Compile Include="Collections\EnumerableExtensions.cs" />
+    <Compile Include="Collections\ObservableIteratorExtensions.cs" />
+    <Compile Include="Collections\ObservableIterator.cs" />
+    <Compile Include="Collections\ResumableIterator.cs" />
+    <Compile Include="Collections\Specialized\DependencyNode%271.cs" />
+    <Compile Include="Collections\Specialized\DependencyTree%271.cs" />
+    <Compile Include="Configuration\CodecDefinitionExtensions.cs" />
+    <Compile Include="Configuration\CodecParentDefinitionExtensions.cs" />
+    <Compile Include="Configuration\Fluent\INoIzObject.cs" />
+    <Compile Include="Configuration\HasExtensions.cs" />
+    <Compile Include="Configuration\JsonConfigurationExtensions.cs" />
+    <Compile Include="Configuration\LegacyHasExtensions.cs" />
+    <Compile Include="Configuration\MetaModel\MediaTypeModel.cs" />
+    <Compile Include="Configuration\UsesExtensions.cs" />
+    <Compile Include="Configuration\XmlConfigurationExtensions.cs" />
+    <Compile Include="Configuration\XmlSeralizerConfiguration.cs" />
+    <Compile Include="Data\PagedData.cs" />
+    <Compile Include="Diagnostics\LogCategoryAttribute.cs" />
+    <Compile Include="Diagnostics\LogSource.cs" />
+    <Compile Include="Diagnostics\NullErrorCollector.cs" />
+    <Compile Include="Diagnostics\OperationContextErrorCollector.cs" />
+    <Compile Include="ObjectPaths.cs" />
+    <Compile Include="Pipeline\Contributors\AuthenticationChallengerContributor.cs" />
+    <Compile Include="Pipeline\Contributors\AuthenticationContributor.cs" />
+    <Compile Include="Pipeline\Contributors\DigestAuthorizerContributor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Diagnostics\PipelineLogSource.cs" />
+    <Compile Include="DI\Internal\ContextStoreDependency.cs" />
+    <Compile Include="DI\Internal\ContextStoreExtensions.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="ErrorFrom.cs" />
+    <Compile Include="FuncExtensions.cs" />
+    <Compile Include="Collections\ItemChanged.cs" />
+    <Compile Include="Collections\NullBehaviorDictionary.cs" />
+    <Compile Include="Collections\NotifyCollection.cs" />
+    <Compile Include="Configuration\Fluent\Implementation\CodecDefinition.cs" />
+    <Compile Include="Configuration\Fluent\Implementation\CodecMediaTypeDefinition.cs" />
+    <Compile Include="Configuration\Fluent\Implementation\CodecParentDefinition.cs" />
+    <Compile Include="Configuration\Fluent\Implementation\FluentTarget.cs" />
+    <Compile Include="Configuration\Fluent\IFluentTarget.cs" />
+    <Compile Include="Configuration\Fluent\IUses.cs" />
+    <Compile Include="Configuration\Fluent\IHas.cs" />
+    <Compile Include="Configuration\MetaModel\DependencyRegistrationModel.cs" />
+    <Compile Include="Configuration\MetaModel\Handlers\DependencyRegistrationModelHandler.cs" />
+    <Compile Include="Handlers\HandlerRepository.cs" />
+    <Compile Include="Handlers\IHandlerRepository.cs" />
+    <Compile Include="Configuration\Fluent\ICodecDefinition.cs" />
+    <Compile Include="Configuration\Fluent\ICodecParentDefinition.cs" />
+    <Compile Include="Configuration\Fluent\ICodecWithMediaTypeDefinition.cs" />
+    <Compile Include="Configuration\Fluent\IHandlerForResourceWithUriDefinition.cs" />
+    <Compile Include="Configuration\Fluent\IHandlerParentDefinition.cs" />
+    <Compile Include="Configuration\Fluent\IRepeatableDefinition.cs" />
+    <Compile Include="Configuration\Fluent\IResourceDefinition.cs" />
+    <Compile Include="Configuration\Fluent\IUriDefinition.cs" />
+    <Compile Include="Configuration\MetaModel\CodecModel.cs" />
+    <Compile Include="Configuration\MetaModel\Handlers\CodecMetaModelHandler.cs" />
+    <Compile Include="Configuration\MetaModel\Handlers\HandlerMetaModelHandler.cs" />
+    <Compile Include="Configuration\MetaModel\Handlers\IMetaModelHandler.cs" />
+    <Compile Include="Configuration\MetaModel\Handlers\TypeRewriterMetaModelHandler.cs" />
+    <Compile Include="Configuration\MetaModel\Handlers\UriRegistrationMetaModelHandler.cs" />
+    <Compile Include="Configuration\MetaModel\MetaModelRepository.cs" />
+    <Compile Include="Configuration\MetaModel\IMetaModelRepository.cs" />
+    <Compile Include="Configuration\MetaModel\ResourceModel.cs" />
+    <Compile Include="Configuration\MetaModel\UriModel.cs" />
+    <Compile Include="Configuration\Fluent\Implementation\ResourceDefinition.cs" />
+    <Compile Include="Configuration\Fluent\Implementation\UriDefinition.cs" />
+    <Compile Include="DI\Internal\DependencyRegistration.cs" />
+    <Compile Include="DI\Internal\DependencyRegistrationCollection.cs" />
+    <Compile Include="DI\IDependencyResolverAccessor.cs" />
+    <Compile Include="Configuration\Fluent\ResourceSpace.cs" />
+    <Compile Include="Diagnostics\DebuggerLoggingTraceListener.cs" />
+    <Compile Include="Diagnostics\ILogger.cs" />
+    <Compile Include="Diagnostics\LoggerExtensions.cs" />
+    <Compile Include="Diagnostics\NullLogger.cs" />
+    <Compile Include="Diagnostics\TraceSourceLogger.cs" />
+    <Compile Include="Configuration\DefaultDependencyRegistrar.cs" />
+    <Compile Include="DI\DependencyManager.cs" />
+    <Compile Include="DI\DependencyResolutionException.cs" />
+    <Compile Include="DI\DependencyResolverCore.cs" />
+    <Compile Include="DI\DependencyResolverExtensions.cs" />
+    <Compile Include="Data\ChangeSet`1.cs" />
+    <Compile Include="Configuration\IDependencyRegistrar.cs" />
+    <Compile Include="DI\Internal\ObjectBuilder.cs" />
+    <Compile Include="DI\Internal\PerRequestLifetimeManager.cs" />
+    <Compile Include="DI\Internal\ResolveContext.cs" />
+    <Compile Include="DI\Internal\SingletonLifetimeManager.cs" />
+    <Compile Include="DI\Internal\TransientLifetimeManager.cs" />
+    <Compile Include="DI\UnregisteredAction.cs" />
+    <Compile Include="EventHandlerExtensions.cs" />
+    <Compile Include="Hosting\AmbientContext.cs" />
+    <Compile Include="Hosting\AmbientContextStore.cs" />
+    <Compile Include="Hosting\ContextScope.cs" />
+    <Compile Include="Hosting\HostManager.cs" />
+    <Compile Include="Hosting\HttpListener\HttpListenerCommunicationContext.cs" />
+    <Compile Include="Hosting\HttpListener\HttpListenerHost.cs" />
+    <Compile Include="Hosting\HttpListener\AppDomainHost.cs" />
+    <Compile Include="Hosting\HttpListener\HttpListenerRequest.cs" />
+    <Compile Include="Hosting\HttpListener\HttpListenerResponse.cs" />
+    <Compile Include="Hosting\IHost.cs" />
+    <Compile Include="Hosting\IncomingRequestEventArgs.cs" />
+    <Compile Include="Hosting\InMemory\InMemoryContextStore.cs" />
+    <Compile Include="Hosting\InMemory\InMemoryHost.cs" />
+    <Compile Include="IO\DeterministicStreamWriter.cs" />
+    <Compile Include="IO\Diagnostics\IOLogSource.cs" />
+    <Compile Include="IO\IFile.cs" />
+    <Compile Include="IO\LengthTrackingStream.cs" />
+    <Compile Include="IO\StreamActionOnDispose.cs" />
+    <Compile Include="IO\WrapperStream.cs" />
+    <Compile Include="Configuration\MetaModel\Handlers\AbstractMetaModelHandler.cs" />
+    <Compile Include="NullableExtensions.cs" />
+    <Compile Include="OperationModel\Diagnostics\OperationModelLogSource.cs" />
+    <Compile Include="OperationModel\IOperationProcessor`1.cs" />
+    <Compile Include="OperationModel\Hydrators\Diagnostics\CodecLogSource.cs" />
+    <Compile Include="OperationModel\Hydrators\Diagnostics\CodecLogSourceExtensions.cs" />
+    <Compile Include="OperationModel\Interceptors\OperationInterceptor.cs" />
+    <Compile Include="OperationModel\IOperationProcessor.cs" />
+    <Compile Include="OperationModel\OperationRequestCodecExtensions.cs" />
+    <Compile Include="OperationModel\OutputMember.cs" />
+    <Compile Include="Pipeline\IContextStore.cs" />
+    <Compile Include="Pipeline\IContextStoreDependencyCleaner.cs" />
+    <Compile Include="Reflection\ExpressionComparer.cs" />
+    <Compile Include="Reflection\ExpressionExtensions.cs" />
+    <Compile Include="Reflection\ExpressionVisitor.cs" />
+    <Compile Include="Reflection\LocalReferenceResolver.cs" />
+    <Compile Include="Reflection\PropertyPath.cs" />
+    <Compile Include="Reflection\PropertyPathExpressionTree.cs" />
+    <Compile Include="Reflection\PropertyPathForInstance.cs" />
+    <Compile Include="Reflection\PropertyPathForType.cs" />
+    <Compile Include="Reflection\PropertyPathVisitor.cs" />
+    <Compile Include="Reflection\ScopedDictionary.cs" />
+    <Compile Include="Security\Credentials.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\DigestHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\IAuthenticationProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\RequiresAuthenticationInterceptor.cs" />
+    <Compile Include="Security\RequiresRoleAttribute.cs" />
+    <Compile Include="Security\RequiresRoleInterceptor.cs" />
+    <Compile Include="TypeSystem\DebuggerStrings.cs" />
+    <Compile Include="TypeSystem\INativeMember.cs" />
+    <Compile Include="TypeSystem\IParameter.cs" />
+    <Compile Include="Pipeline\Contributors\EndContributor.cs" />
+    <Compile Include="Pipeline\Contributors\OperationInterceptorContributor.cs" />
+    <Compile Include="OperationModel\Interceptors\SystemAndAttributesOperationInterceptorProvider.cs" />
+    <Compile Include="OperationModel\Interceptors\InterceptorAttribute.cs" />
+    <Compile Include="OperationModel\Interceptors\InterceptorException.cs" />
+    <Compile Include="OperationModel\Interceptors\IOperationInterceptor.cs" />
+    <Compile Include="OperationModel\Interceptors\IOperationInterceptorProvider.cs" />
+    <Compile Include="OperationModel\Interceptors\OperationWithInterceptors.cs" />
+    <Compile Include="OperationModel\IOperationCodecSelector.cs" />
+    <Compile Include="OperationModel\Filters\HttpMethodOperationFilter.cs" />
+    <Compile Include="IErrorCollector.cs" />
+    <Compile Include="OperationModel\Filters\UriParametersFilter.cs" />
+    <Compile Include="OperationModel\CodecSelectors\RequestCodecSelector.cs" />
+    <Compile Include="OperationModel\Filters\UriNameOperationFilter.cs" />
+    <Compile Include="OperationModel\Hydrators\RequestEntityReaderHydrator.cs" />
+    <Compile Include="OperationModel\MethodBased\IMethodFilter.cs" />
+    <Compile Include="OperationModel\MethodBased\TypeExclusionMethodFilter.cs" />
+    <Compile Include="OperationModel\OperationExecutor.cs" />
+    <Compile Include="OperationModel\OperationExtensions.cs" />
+    <Compile Include="RecursionException.cs" />
+    <Compile Include="TypeSystem\IAttributeProvider.cs" />
+    <Compile Include="TypeSystem\IMember.cs" />
+    <Compile Include="TypeSystem\IMemberBuilder.cs" />
+    <Compile Include="TypeSystem\IMethod.cs" />
+    <Compile Include="TypeSystem\IProperty.cs" />
+    <Compile Include="TypeSystem\IPropertyBuilder.cs" />
+    <Compile Include="TypeSystem\ISurrogateProvider.cs" />
+    <Compile Include="TypeSystem\IType.cs" />
+    <Compile Include="TypeSystem\ITypeBuilder.cs" />
+    <Compile Include="TypeSystem\ITypeSystem.cs" />
+    <Compile Include="TypeSystem\IPathManager.cs" />
+    <Compile Include="TypeSystem\MemberExtensions.cs" />
+    <Compile Include="TypeSystem\PathComponent.cs" />
+    <Compile Include="TypeSystem\PathComponentType.cs" />
+    <Compile Include="TypeSystem\PathManager.cs" />
+    <Compile Include="TypeSystem\IParameterBuilder.cs" />
+    <Compile Include="TypeSystem\PropertyExtensions.cs" />
+    <Compile Include="TypeSystem\ReflectionBased\ReflectionBasedMember.cs" />
+    <Compile Include="TypeSystem\MemberBuilder.cs" />
+    <Compile Include="TypeSystem\ReflectionBased\ReflectionBasedMethod.cs" />
+    <Compile Include="TypeSystem\ReflectionBased\ReflectionBasedParameter.cs" />
+    <Compile Include="TypeSystem\ReflectionBased\ReflectionBasedProperty.cs" />
+    <Compile Include="TypeSystem\PropertyBuilder.cs" />
+    <Compile Include="TypeSystem\TypeSystems.cs" />
+    <Compile Include="TypeSystem\Surrogated\AlienMember.cs" />
+    <Compile Include="TypeSystem\Surrogated\AlienOwnedProperty.cs" />
+    <Compile Include="TypeSystem\Surrogated\AlienPropertyBuilder.cs" />
+    <Compile Include="TypeSystem\Surrogated\AlienType.cs" />
+    <Compile Include="TypeSystem\Surrogated\IHasWrappedMember.cs" />
+    <Compile Include="TypeSystem\Surrogated\IKeepSurrogateInstances.cs" />
+    <Compile Include="TypeSystem\Surrogated\PropertyWithSurrogates.cs" />
+    <Compile Include="TypeSystem\Surrogated\PropertyWithSurrogatesBuilder.cs" />
+    <Compile Include="TypeSystem\Surrogated\SurrogateBuilderProvider.cs" />
+    <Compile Include="TypeSystem\Surrogates\ISurrogate.cs" />
+    <Compile Include="TypeSystem\Surrogates\Static\CollectionIndexerSurrogate.cs" />
+    <Compile Include="TypeSystem\Surrogates\Static\CollectionIndexerSurrogateBuilder.cs" />
+    <Compile Include="TypeSystem\Surrogates\Static\ListIndexerSurrogateBuilder.cs" />
+    <Compile Include="TypeSystem\Surrogates\Static\AbstractStaticSurrogateBuilder.cs" />
+    <Compile Include="TypeSystem\Surrogates\Static\AbstractStaticSurrogate.cs" />
+    <Compile Include="TypeSystem\Surrogates\ISurrogateBuilder.cs" />
+    <Compile Include="TypeSystem\Surrogates\Static\ListIndexerSurrogate.cs" />
+    <Compile Include="TypeSystem\Surrogated\MemberWithSurrogates.cs" />
+    <Compile Include="TypeSystem\Surrogated\TypeWithSurrogates.cs" />
+    <Compile Include="TypeSystem\Surrogated\TypeWithSurrogatesBuilder.cs" />
+    <Compile Include="TypeSystem\Surrogated\WrappedMember.cs" />
+    <Compile Include="TypeSystem\Surrogated\WrappedProperty.cs" />
+    <Compile Include="TypeSystem\TypeBuilder.cs" />
+    <Compile Include="TypeSystem\ReflectionBased\ReflectionBasedTypeSystem.cs" />
+    <Compile Include="Security\RequiresAuthenticationAttribute.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="System.Core\Action.cs" />
+    <Compile Include="System.Core\Collections.Generic\HashSet.cs" />
+    <Compile Include="System.Core\Func.cs" />
+    <Compile Include="System.Core\Linq\Check.cs" />
+    <Compile Include="System.Core\Linq\Enumerable.cs" />
+    <Compile Include="System.Core\Linq\Grouping.cs" />
+    <Compile Include="System.Core\Linq\IGrouping.cs" />
+    <Compile Include="System.Core\Linq\ILookup.cs" />
+    <Compile Include="System.Core\Linq\IOrderedEnumerable.cs" />
+    <Compile Include="System.Core\Linq\Lookup.cs" />
+    <Compile Include="System.Core\Linq\OrderedEnumerable.cs" />
+    <Compile Include="System.Core\Linq\OrderedSequence.cs" />
+    <Compile Include="System.Core\Linq\QuickSort.cs" />
+    <Compile Include="System.Core\Linq\SortContext.cs" />
+    <Compile Include="System.Core\Linq\SortDirection.cs" />
+    <Compile Include="System.Core\Linq\SortSequenceContext.cs" />
+    <Compile Include="System.Core\Runtime.CompilerServices\ExtensionAttribute.cs" />
+    <Compile Include="Text\Rfc2047Encoding.cs" />
+    <Compile Include="Web\ContentDispositionHeader.cs" />
+    <Compile Include="Web\Handlers\HttpMethodNameHandlerMethodSelector.cs" />
+    <Compile Include="Web\HttpEntityFile.cs" />
+    <Compile Include="Web\IHttpMessage.cs" />
+    <Compile Include="Web\Internal\CommunicationContextExtensions.cs" />
+    <Compile Include="Web\ISupportsTextWriter.cs" />
+    <Compile Include="Web\IUriTemplateParser.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\CharsetAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\CharsetsAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\IDAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\IDREFAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\IDREFSAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\LanguageCodeAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\LinkTypesAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\MediaDescAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\NAMEAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\NMTOKENAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\PixelsAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\TextAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\CharacterAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\DatetimeAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Nodes\CharacterSplitterCollection.cs" />
+    <Compile Include="Web\Markup\Attributes\Nodes\CommaSeparatedTextAttributeNode.cs" />
+    <Compile Include="Web\Markup\Attributes\Nodes\EnumAttributeNode.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\EnumAttributeCore.cs" />
+    <Compile Include="Web\Markup\Attributes\Nodes\NMTOKENSAttributeNode.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\NumberAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\PrimaryTypeAttributeCore.cs" />
+    <Compile Include="Web\Markup\ExpressionTreeXhtmlExtensions.cs" />
+    <Compile Include="Web\Markup\IAttributesI18NExtensions.cs" />
+    <Compile Include="Web\Markup\Controls\ValidationSummaryControl.cs" />
+    <Compile Include="Web\Markup\EditModuleExtensions.cs" />
+    <Compile Include="Web\Markup\Elements\Element.cs" />
+    <Compile Include="Web\Markup\FormModuleExtensions.cs" />
+    <Compile Include="Web\Markup\IAttributesCoreExtensions.cs" />
+    <Compile Include="Web\Markup\Direction.cs" />
+    <Compile Include="Web\Markup\Document.cs" />
+    <Compile Include="Web\Markup\IIFrameModuleExtensions.cs" />
+    <Compile Include="Web\Markup\IMetaElementExtensions.cs" />
+    <Compile Include="Web\Markup\ITextNode.cs" />
+    <Compile Include="Web\Markup\Modules\BidirectionalTextModule.cs" />
+    <Compile Include="Web\Markup\Modules\BaseModule.cs" />
+    <Compile Include="Web\Markup\Modules\TableModule.cs" />
+    <Compile Include="Web\Markup\Modules\IContentModel.cs" />
+    <Compile Include="Web\Markup\IXhtmlAnchorSite.cs" />
+    <Compile Include="Web\Markup\ButtonType.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\DigitBooleanAttribute.cs" />
+    <Compile Include="Web\Markup\OptionElement.cs" />
+    <Compile Include="Web\Markup\Rendering\IXhtmlTagBuilder.cs" />
+    <Compile Include="Web\Markup\Rendering\XhtmlNodeWriter.cs" />
+    <Compile Include="Web\Markup\Attributes\ButtonTypeAttributeAttribute.cs" />
+    <Compile Include="Web\Markup\CommonAttributeExtensions.cs" />
+    <Compile Include="Web\Markup\Attributes\IAttributesCommon.cs" />
+    <Compile Include="Web\Markup\Attributes\IAttributesCore.cs" />
+    <Compile Include="Web\Markup\Attributes\IAttributesI18N.cs" />
+    <Compile Include="Web\Markup\Attributes\CommonAttributes.cs" />
+    <Compile Include="Web\Markup\Attributes\IAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\IAttributeCollection.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\ContentTypeAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\ContentTypesAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\BooleanAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Nodes\CharacterSeparatedAttributeNode.cs" />
+    <Compile Include="Web\Markup\Attributes\Nodes\PrimaryTypeAttributeNode.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\CDATAAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\NMTOKENSAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\URIAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\URIsAttribute.cs" />
+    <Compile Include="Web\Markup\Attributes\Nodes\XhtmlAttributeNode.cs" />
+    <Compile Include="Web\Markup\Elements\GenericElement.cs" />
+    <Compile Include="Web\Markup\IElement.cs" />
+    <Compile Include="Web\Markup\Modules\ContentSets.cs" />
+    <Compile Include="Web\Markup\Modules\FormsModule.cs" />
+    <Compile Include="Web\Markup\Modules\HypertextModule.cs" />
+    <Compile Include="Web\Markup\Modules\EditModule.cs" />
+    <Compile Include="Web\Markup\Modules\IframeModule.cs" />
+    <Compile Include="Web\Markup\Modules\ImageModule.cs" />
+    <Compile Include="Web\Markup\Modules\LinkModule.cs" />
+    <Compile Include="Web\Markup\Modules\ListModule.cs" />
+    <Compile Include="Web\Markup\Modules\MetaInformationModule.cs" />
+    <Compile Include="Web\Markup\Modules\ObjectModule.cs" />
+    <Compile Include="Web\Markup\Modules\ScriptingModule.cs" />
+    <Compile Include="Web\Markup\Modules\StructureModule.cs" />
+    <Compile Include="Web\Markup\Modules\StyleSheetModule.cs" />
+    <Compile Include="Web\Markup\Modules\TextAndPresentationModule.cs" />
+    <Compile Include="Web\Markup\Controls\FormElement.cs" />
+    <Compile Include="Web\Markup\IXhtmlAnchor.cs" />
+    <Compile Include="Web\Markup\FormsExtensions.cs" />
+    <Compile Include="Web\Markup\Rendering\IXhtmlWriter.cs" />
+    <Compile Include="Web\Markup\r.cs" />
+    <Compile Include="Web\Markup\SelectElement.cs" />
+    <Compile Include="Web\Markup\Elements\TextNode.cs" />
+    <Compile Include="Web\Markup\TableModuleExtensions.cs" />
+    <Compile Include="Web\Markup\UnencodedOutput.cs" />
+    <Compile Include="Web\Markup\XhtmlAnchor.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\XhtmlAttributeCore.cs" />
+    <Compile Include="Web\Markup\Attributes\XhtmlAttributeCollection.cs" />
+    <Compile Include="Web\Markup\Attributes\Annotations\XmlSpaceAttribute.cs" />
+    <Compile Include="Web\Markup\XhtmlMode.cs" />
+    <Compile Include="Web\Markup\Rendering\XhtmlTextWriter.cs" />
+    <Compile Include="Web\MultipartHttpEntity.cs" />
+    <Compile Include="IO\BoundaryStreamReader.cs" />
+    <Compile Include="IO\BoundaryStreamWriter.cs" />
+    <Compile Include="IO\ByteArrayExtension.cs" />
+    <Compile Include="IO\HistoryStream.cs" />
+    <Compile Include="IO\StreamExtensions.cs" />
+    <Compile Include="UriTemplate.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UriTemplateEqualityComparer.cs" />
+    <Compile Include="UriTemplateMatch.cs" />
+    <Compile Include="UriTemplateMatchException.cs" />
+    <Compile Include="UriTemplateTable.cs" />
+    <Compile Include="Configuration\IConfigurationSource.cs" />
+    <Compile Include="OperationModel\Interceptors\InterceptorProviderAttribute.cs" />
+    <Compile Include="Web\HttpHeaderDictionary.cs" />
+    <Compile Include="Web\HttpMethod.cs" />
+    <Compile Include="Web\IHttpEntity.cs" />
+    <Compile Include="Web\IUriResolverExtensions.cs" />
+    <Compile Include="Web\MultipartReader.cs" />
+    <Compile Include="Web\MultipartWriter.cs" />
+    <Compile Include="Pipeline\ContributorCall.cs" />
+    <Compile Include="Pipeline\Contributors\AbstractOperationProcessing.cs" />
+    <Compile Include="Pipeline\Contributors\BootstrapperContributor.cs" />
+    <Compile Include="OperationModel\IOperationCreator.cs" />
+    <Compile Include="OperationModel\IOperation.cs" />
+    <Compile Include="OperationModel\IOperationFilter.cs" />
+    <Compile Include="OperationModel\IOperationHydrator.cs" />
+    <Compile Include="OperationModel\MethodBased\MethodBasedOperation.cs" />
+    <Compile Include="OperationModel\MethodBased\MethodBasedOperationCreator.cs" />
+    <Compile Include="OperationModel\IOperationExecutor.cs" />
+    <Compile Include="Pipeline\Contributors\OperationCodecSelectorContributor.cs" />
+    <Compile Include="Pipeline\Contributors\OperationCreatorContributor.cs" />
+    <Compile Include="OperationModel\InputMember.cs" />
+    <Compile Include="Pipeline\Contributors\OperationFilterContributor.cs" />
+    <Compile Include="Pipeline\Contributors\OperationHydratorContributor.cs" />
+    <Compile Include="Pipeline\Contributors\OperationInvokerContributor.cs" />
+    <Compile Include="Pipeline\Contributors\OperationResultInvokerContributor.cs" />
+    <Compile Include="Pipeline\Contributors\ResponseEntityWriterContributor.cs" />
+    <Compile Include="Pipeline\Contributors\HandlerResolverContributor.cs" />
+    <Compile Include="Pipeline\Contributors\HttpMethodOverriderContributor.cs" />
+    <Compile Include="Pipeline\Contributors\ResourceTypeResolverContributor.cs" />
+    <Compile Include="TypeSystem\TypeExtensions.cs" />
+    <Compile Include="Pipeline\Contributors\UriDecoratorsContributor.cs" />
+    <Compile Include="Hosting\InMemory\InMemoryCommunicationContext.cs" />
+    <Compile Include="Hosting\InMemory\InMemoryRequest.cs" />
+    <Compile Include="Hosting\InMemory\InMemoryResponse.cs" />
+    <Compile Include="Pipeline\InMemory\TextWriterEnabledEntity.cs" />
+    <Compile Include="Pipeline\IPipelineExecutionOrder.cs" />
+    <Compile Include="Pipeline\IPipelineExecutionOrderAnd.cs" />
+    <Compile Include="Pipeline\KnownStages.cs" />
+    <Compile Include="Pipeline\LegacyPipelineExtensions.cs" />
+    <Compile Include="Pipeline\PipelineContinuation.cs" />
+    <Compile Include="TypeSystem\ReflectionBased\ReflectionExtensions.cs" />
+    <Compile Include="TypeSystem\Surrogates\Static\DateTimeSurrogate.cs" />
+    <Compile Include="TypeSystem\ReflectionBased\ReflectionBasedType.cs" />
+    <Compile Include="Configuration\OpenRastaConfigurationException.cs" />
+    <Compile Include="Web\HttpEntity.cs" />
+    <Compile Include="DI\DependencyLifetime.cs" />
+    <Compile Include="DI\IDependencyResolver.cs" />
+    <Compile Include="DI\InternalDependencyResolver.cs" />
+    <Compile Include="Web\MediaType.cs" />
+    <Compile Include="Web\HttpOperationAttribute.cs" />
+    <Compile Include="Web\ICommunicationContext.cs" />
+    <Compile Include="Web\IRequest.cs" />
+    <Compile Include="Web\IResponse.cs" />
+    <Compile Include="Codecs\ICodecRepository.cs" />
+    <Compile Include="Web\IUriResolver.cs" />
+    <Compile Include="Web\OperationResult.cs" />
+    <Compile Include="Pipeline\IPipeline.cs" />
+    <Compile Include="Pipeline\IPipelineContributor.cs" />
+    <Compile Include="Pipeline\PipelineData.cs" />
+    <Compile Include="Pipeline\PipelineExecutionOrderExtensions.cs" />
+    <Compile Include="Pipeline\PipelineRunner.cs" />
+    <Compile Include="Pipeline\Contributors\ResponseEntityCodecResolverContributor.cs" />
+    <Compile Include="Pipeline\PipelineStage.cs" />
+    <Compile Include="Web\ServerErrorList.cs" />
+    <Compile Include="Web\TemplatedUriResolverLegacyExtensions.cs" />
+    <Compile Include="Web\UriDecorators\HttpMethodOverrideUriDecorator.cs" />
+    <Compile Include="Web\UriDecorators\PathSegmentAsParameterUriDecorator.cs" />
+    <Compile Include="Web\UriDecorators\ContentTypeExtensionUriDecorator.cs" />
+    <Compile Include="Web\UriDecorators\CultureParenthesisUriDecorator.cs" />
+    <Compile Include="Web\UriDecorators\IUriDecorator.cs" />
+    <Compile Include="Configuration\OpenRastaConfiguration.cs" />
+    <Compile Include="Codecs\CodecRepository.cs" />
+    <Compile Include="Codecs\ICodec.cs" />
+    <Compile Include="Codecs\CodecRegistration.cs" />
+    <Compile Include="Codecs\application\xml\XmlCodec.cs" />
+    <Compile Include="Codecs\application\xml\XmlSerializerCodec.cs" />
+    <Compile Include="Web\ResourceHandlerException.cs" />
+    <Compile Include="Web\ResourceMatch.cs" />
+    <Compile Include="Web\ResourceNotFoundException.cs" />
+    <Compile Include="UriExtensions.cs" />
+    <Compile Include="Web\TemplatedUriResolver.cs" />
+    <Compile Include="Web\Wadl\WadlApplication.cs" />
+    <Compile Include="Web\Wadl\WadlHandler.cs" />
+    <Compile Include="Web\Wadl\WadlRenderer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Authentication\Digest\" />
+    <Folder Include="Compat\" />
+    <Folder Include="Configuration\Settings\" />
+    <Folder Include="Web\Codecs\" />
+    <Folder Include="Web\Pipeline\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="..\..\build\common.project.properties" />
+  <Import Project="..\..\wraps\openwrap\build\OpenWrap.CSharp.targets" />
+</Project>
